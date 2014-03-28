@@ -1,4 +1,4 @@
-name          'puppet-rundeck'
+name          'opentable-rundeck'
 version       '0.1.0'
 source        'git://github.com/opentable/puppet-rundeck.git'
 author        'opentable'
