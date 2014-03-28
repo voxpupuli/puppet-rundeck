@@ -1,11 +1,31 @@
 # == Class: rundeck
 #
-# Full description of class rundeck here.
+# This will install rundeck (http://rundeck.org/) and manage it's configration and plugins
+#
+# === Requirements/Dependencies
+#
+# Currently reequires the puppetlabs/stdlib module on the Puppet Forge in
+# order to validate much of the the provided configuration.
 #
 # === Parameters
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
+# [*package_version*]
+# The version of rundeck to be installed
+#
+# [*jre_name*]
+# The name of the jre to be installed if using a custom jre.
+#
+# [*jre_version*]
+# The version of the jre to be installed if using a custom jre.
+#
+# === Examples
+#
+# Installing rundeck with a custom jre:
+#
+# class { 'rundeck':
+#   jre_name    => 'openjdk-7-jre',
+#   jre_version => '7u51-2.4.4-0ubuntu0.12.04.2'
+# }
 #
 class rundeck (
   $package_version = $rundeck::params::package_version,
@@ -13,7 +33,9 @@ class rundeck (
   $jre_version = $rundeck::params::jre_version
 ) inherits rundeck::params {
 
-  # validate parameters here
+  validate_string($package_version)
+  validate_string($jre_name)
+  validate_string($jre_version)
 
   class { 'rundeck::install': } ->
   class { 'rundeck::config': } ~>

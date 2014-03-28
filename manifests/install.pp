@@ -1,5 +1,7 @@
 # == Class rundeck::install
 #
+# This private class installs the rundeck package and it's dependencies
+#
 class rundeck::install {
 
   ensure_resource('package', $rundeck::jre_name, {'ensure' => $rundeck::jre_version} )

@@ -22,33 +22,7 @@ Status](https://secure.travis-ci.org/opentable/puppet-rundeck.png)](https://secu
 
 This module provides a way to manage the installation and configuration of rundeck, it's projects, jobs and plugins.
 
-##Setup
-
-###What rundeck affects
-
-* Installs OpenJDK-JRE (if not already installed by another module) as a prerequisite.
-* Installs rundeck packages
-* Manages configuration in /etc/rundeck and /var/lib/rundeck
-
-
-###Beginning with rundeck
-
-Installing rundeck:
-
-```puppet
-   class { 'rundeck': }
-```
-
-Installing rundeck with a custom jre:
-
-```puppet
-   class { 'rundeck':
-     jre_name    => 'openjdk-7-jre',
-     jre_version => '7u51-2.4.4-0ubuntu0.12.04.2'
-   }
-```
-
-##Usage
+##Setup`
 
 ###Classes and Defined Types
 
