@@ -25,8 +25,65 @@ class rundeck::params {
   }
 
 
+  $rdeck_base = '/var/lib/rundeck'
+  $projects_root = '/var/rundeck/projects'
+  $properties_dir = '/etc/rundeck'
+  $plugin_dir = "${rdeck_base}/libext"
+  $logs_dir = "${rdeck_base}/logs"
+  $tmp_dir = "${rdeck_base}/var/tmp"
+  $var_dir = "${rdeck_base}/var"
+  $log_dir = '/var/log/rundeck'
 
+  $ssh_keypath = "${rdeck_base}/.ssh/id_rsa"
+  $ssh_timeout = 0
+  $ssh_user = 'rundeck'
 
+  $auth_type = 'file'
 
+  $server_name = 'localhost'
+  $server_hostname = 'localhost'
+  $server_port = '4440'
+  $server_url = 'http://localhost:4440'
+  $cli_username = 'admin'
+  $cli_password = 'admin'
 
+  $admin_user = 'admin'
+  $admin_password = 'admin'
+
+  $projects_default_org = ''
+  $projects_default_desc = ''
+
+  $file_copier_provider = 'jsch-scp'
+  $node_executor_provider = 'jsch-ssh'
+
+  $url_cache = true
+  $url_timeout = '30'
+
+  $resource_format = 'resourcexml'
+  $include_server_node = false
+  $default_source_type = 'file'
+
+  $script_args_quoted = true
+  $script_interpreter = '/bin/bash'
+  $script_format = 'resourcexml'
+
+  $user = 'rundeck'
+  $group = 'rundeck'
+
+  $loglevel = 'INFO'
+  $rss_enabled = false
+
+  $grails_server_url = 'http://localhost:4440'
+  $dataSource_dbCreate = 'update'
+  $dataSource_url = "jdbc:h2:file:${rdeck_base}/data/rundeckdb;MVCC=true"
+
+  $keystore = "${properties_dir}/ssl/keystore"
+  $keystore_password = 'adminadmin'
+  $key_password = 'adminadmin'
+  $truststore = "${properties_dir}/ssl/truststore"
+  $truststore_password = 'adminadmin'
+
+  $resource_sources = {}
+
+  $file_users = {}
 }

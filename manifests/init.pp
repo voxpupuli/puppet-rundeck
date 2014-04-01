@@ -30,8 +30,12 @@
 class rundeck (
   $package_version = $rundeck::params::package_version,
   $jre_name = $rundeck::params::jre_name,
-  $jre_version = $rundeck::params::jre_version
+  $jre_version = $rundeck::params::jre_version,
+  $auth_type = $rundeck::params::auth_type,
+  $users = $rundeck::params::file_users
 ) inherits rundeck::params {
+
+  #TODO: add all options from params.pp
 
   validate_string($package_version)
   validate_string($jre_name)

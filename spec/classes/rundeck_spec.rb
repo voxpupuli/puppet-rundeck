@@ -9,24 +9,29 @@ describe 'rundeck' do
           :osfamily => osfamily,
         }}
 
-        #it { should compile.with_all_deps }
-
         it { should contain_class('rundeck::params') }
         it { should contain_class('rundeck::install').that_comes_before('rundeck::config') }
         it { should contain_class('rundeck::config') }
         it { should contain_class('rundeck::service').that_subscribes_to('rundeck::config') }
+        it { should contain_class('rundeck').that_requires('rundeck::service') }
 
-        it { should contain_service('rundeckd') }
-        #it { should contain_package('rundeck').with_ensure('present') }
+        if osfamily.eql?('RedHat')
+          it { should contain_package('java-1.6.0-openjdk') }
+        else
+          it { should contain_package('openjdk-6-jre') }
+        end
+
       end
     end
   end
 
+  #TODO: write test for class parameters
+
   context 'unsupported operating system' do
     describe 'rundeck class without any parameters on Solaris/Nexenta' do
       let(:facts) {{
-        :osfamily        => 'Solaris',
-        :operatingsystem => 'Nexenta',
+          :osfamily        => 'Solaris',
+          :operatingsystem => 'Nexenta',
       }}
 
       it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, /Nexenta not supported/) }

@@ -8,6 +8,8 @@ class rundeck::install {
 
   # why isn't this in a package repo?
 
+  #TODO: configure bintray as a package repo
+
   case $::osfamily {
     'RedHat': {
       exec { 'download rundeck-config package':
