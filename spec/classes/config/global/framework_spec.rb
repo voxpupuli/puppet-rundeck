@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck::config::global::framework' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    SUPPORTED_FAMILIES.each do |osfamily|
       describe "rundeck::config::global::framework class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{

@@ -1,10 +1,10 @@
 #
 define rundeck::config::project(
-  $ssh_keypath = '',
-  $file_copier_provider = '',
+  $ssh_keypath            = '',
+  $file_copier_provider   = '',
   $node_executor_provider = '',
-  $resource_sources = '',
-  $projects_root = ''
+  $resource_sources       = '',
+  $projects_dir           = ''
 ) {
 
   include rundeck::params
@@ -33,18 +33,20 @@ define rundeck::config::project(
     $res_sources = $resource_sources
   }
 
-  if "x${projects_root}x" == 'xx' {
-    $pr = $rundeck::params::projects_root
+  if "x${projects_dir}x" == 'xx' {
+    $pr = $rundeck::params::projects_dir
   } else {
-    $pr = $projects_root
+    $pr = $projects_dir
   }
 
   $project_dir = "${pr}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"
 
-  #TODO: validate params
-  validate_string($name)
+  validate_absolute_path($skp)
+  validate_re($fcp, ['jsch-scp','script-copy','stub'])
+  validate_re($nep, ['jsch-ssh', 'script-exec', 'stub'])
   validate_hash($res_sources)
+  validate_absolute_path($pr)
 
   ensure_resource(file, $pr, {'ensure' => 'directory'})
 
@@ -90,9 +92,9 @@ define rundeck::config::project(
     require => File[$properties_file]
   }
 
-  #TODO: add defaults
   create_resources(rundeck::config::resource_source, $res_sources)
 
+  #TODO: there are more settings to be added here for both filecopier and nodeexecutor
   ini_setting { 'service.FileCopier.default.provider':
     ensure  => present,
     path    => $properties_file,

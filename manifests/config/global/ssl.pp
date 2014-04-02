@@ -1,12 +1,16 @@
 #
 class rundeck::config::global::ssl(
-  $keystore = $rundeck::params::keystore,
-  $keystore_password = $rundeck::params::keystore_password,
-  $key_password = $rundeck::params::key_password,
-  $truststore = $rundeck::params::truststore,
+  $keystore            = $rundeck::params::keystore,
+  $keystore_password   = $rundeck::params::keystore_password,
+  $key_password        = $rundeck::params::key_password,
+  $truststore          = $rundeck::params::truststore,
   $truststore_password = $rundeck::params::truststore_password,
-  $properties_dir = $rundeck::params::properties_dir
+  $properties_dir      = $rundeck::params::properties_dir
 ) inherits rundeck::params {
+
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
 
   $properties_file = "${properties_dir}/ssl/ssl.properties"
 

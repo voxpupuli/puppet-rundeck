@@ -2,8 +2,8 @@
 define rundeck::config::plugin(
   $source,
   $plugin_dir = '',
-  $user = '',
-  $group = ''
+  $user       = '',
+  $group      = ''
 ) {
 
   include rundeck::params
@@ -26,7 +26,10 @@ define rundeck::config::plugin(
     $g = $group
   }
 
-  #TODO: validate source (file or http)
+  validate_string($source)
+  validate_absolute_path($pd)
+  validate_re($u, '[a-zA-Z0-9]{3,}')
+  validate_re($g, '[a-zA-Z0-9]{3,}')
 
   ensure_resource(file, $pd, {'ensure' => 'directory'})
 

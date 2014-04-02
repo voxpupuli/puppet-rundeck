@@ -1,22 +1,27 @@
 #
 class rundeck::config::global::framework(
-  $server_name = $rundeck::params::server_name,
+  $server_name     = $rundeck::params::server_name,
   $server_hostname = $rundeck::params::server_hostname,
-  $server_port = $rundeck::params::server_port,
-  $server_url = $rundeck::params::server_url,
-  $cli_username = $rundeck::params::cli_username,
-  $cli_password = $rundeck::params::cli_password,
-  $rdeck_base = $rundeck::params::rdeck_base,
-  $projects_root = $rundeck::params::projects_root,
-  $properties_dir = $rundeck::params::properties_dir,
-  $var_dir = $rundeck::params::var_dir,
-  $tmp_dir = $rundeck::params::tmp_dir,
-  $logs_dir = $rundeck::params::logs_dir,
-  $plugin_dir = $rundeck::params::plugin_dir,
-  $ssh_keypath = $rundeck::params::ssh_keypath,
-  $ssh_user = $rundeck::params::ssh_user,
-  $ssh_timeout = $rundeck::params::ssh_timeout
+  $server_port     = $rundeck::params::server_port,
+  $server_url      = $rundeck::params::server_url,
+  $cli_username    = $rundeck::params::cli_username,
+  $cli_password    = $rundeck::params::cli_password,
+  $rdeck_base      = $rundeck::params::rdeck_base,
+  $projects_dir    = $rundeck::params::projects_dir,
+  $properties_dir  = $rundeck::params::properties_dir,
+  $var_dir         = $rundeck::params::var_dir,
+  $tmp_dir         = $rundeck::params::tmp_dir,
+  $logs_dir        = $rundeck::params::logs_dir,
+  $plugin_dir      = $rundeck::params::plugin_dir,
+  $ssh_keypath     = $rundeck::params::ssh_keypath,
+  $ssh_user        = $rundeck::params::ssh_user,
+  $ssh_timeout     = $rundeck::params::ssh_timeout
+
 ) inherits rundeck::params {
+
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
 
   $properties_file = "${properties_dir}/framework.properties"
 
@@ -81,7 +86,7 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.projects.dir',
-    value   => $projects_root
+    value   => $projects_dir
   }
 
   ini_setting { 'framework.etc.dir':

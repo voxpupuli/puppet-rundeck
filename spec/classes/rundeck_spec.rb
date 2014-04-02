@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    SUPPORTED_FAMILIES.each do |osfamily|
       describe "rundeck class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
@@ -12,7 +12,7 @@ describe 'rundeck' do
         it { should contain_class('rundeck::params') }
         it { should contain_class('rundeck::install').that_comes_before('rundeck::config') }
         it { should contain_class('rundeck::config') }
-        it { should contain_class('rundeck::service').that_subscribes_to('rundeck::config') }
+        it { should contain_class('rundeck::service').that_comes_before('rundeck') }
         it { should contain_class('rundeck').that_requires('rundeck::service') }
 
         if osfamily.eql?('RedHat')

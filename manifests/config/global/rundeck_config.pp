@@ -1,13 +1,17 @@
 #
 class rundeck::config::global::rundeck_config(
-  $rd_loglevel = $rundeck::params::loglevel,
-  $rdeck_base = $rundeck::params::rdeck_base,
-  $rss_enabled = $rundeck::params::rss_enabled,
-  $grails_server_url = $rundeck::params::grails_server_url,
+  $rd_loglevel         = $rundeck::params::loglevel,
+  $rdeck_base          = $rundeck::params::rdeck_base,
+  $rss_enabled         = $rundeck::params::rss_enabled,
+  $grails_server_url   = $rundeck::params::grails_server_url,
   $dataSource_dbCreate = $rundeck::params::dataSource_dbCreate,
-  $dataSource_url = $rundeck::params::dataSource_url,
-  $properties_dir = $rundeck::params::properties_dir
+  $dataSource_url      = $rundeck::params::dataSource_url,
+  $properties_dir      = $rundeck::params::properties_dir
 ) inherits rundeck::params {
+
+  if $caller_module_name != $module_name {
+    fail("Use of private class ${name} by ${caller_module_name}")
+  }
 
   $properties_file = "${properties_dir}/rundeck-config.properties"
 

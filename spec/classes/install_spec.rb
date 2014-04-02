@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe 'rundeck::install' do
+describe 'rundeck' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
-      describe "rundeck::install class without any parameters on #{osfamily}" do
+    SUPPORTED_FAMILIES.each do |osfamily|
+      describe "rundeck class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
           :osfamily => osfamily,

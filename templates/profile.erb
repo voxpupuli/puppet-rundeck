@@ -1,12 +1,7 @@
-RDECK_BASE=/var/lib/rundeck
+RDECK_BASE=<%= @rdeck_base %>
 export RDECK_BASE
 
 JAVA_CMD=java
-
-#
-# If JAVA_HOME is set, then add it to home and set JAVA_CMD to use the version specified in that
-# path.  JAVA_HOME can be set in the rundeck profile.  Or set in this file.
-#JAVA_HOME=<path/to/JDK or JRE/install>
 
 if [ ! -z $JAVA_HOME ]; then
 PATH=$PATH:$JAVA_HOME/bin
@@ -14,28 +9,27 @@ export PATH
 JAVA_CMD=$JAVA_HOME/bin/java
 fi
 
+export CLI_CP=$(find <%= @rdeck_base %>/cli -name \*.jar -printf %p:)
+export BOOTSTRAP_CP=$(find <%= @rdeck_base %>/bootstrap -name \*.jar -printf %p:)
+export RDECK_JVM="-Drdeck.config=<%= @properties_dir %> \
+-Drdeck.base=<%= @rdeck_base %> \
+-Drundeck.server.configDir=<%= @properties_dir %> \
+-Dserver.datastore.path=<%= @rdeck_base %>/data \
+-Drundeck.server.serverDir=<%= @rdeck_base %> \
+-Drdeck.projects=<%= @projects_dir %> \
+-Drdeck.runlogs=<%= @logs_dir %> \
+-Drundeck.config.location=<%= @properties_dir %>/rundeck-config.properties
+<% if @auth_type.eql?('file') %>
+-Djava.security.auth.login.config=<%= @properties_dir %>/jaas-loginmodule.conf \
+-Dloginmodule.name=RDpropertyfilelogin
+<% end %>"
 
 
-export CLI_CP=$(find /var/lib/rundeck/cli -name \*.jar -printf %p:)
-export BOOTSTRAP_CP=$(find /var/lib/rundeck/bootstrap -name \*.jar -printf %p:)
-export RDECK_JVM="-Djava.security.auth.login.config=/etc/rundeck/jaas-loginmodule.conf \
--Dloginmodule.name=RDpropertyfilelogin \
--Drdeck.config=/etc/rundeck \
--Drdeck.base=/var/lib/rundeck \
--Drundeck.server.configDir=/etc/rundeck \
--Dserver.datastore.path=/var/lib/rundeck/data \
--Drundeck.server.serverDir=/var/lib/rundeck \
--Drdeck.projects=/var/rundeck/projects \
--Drdeck.runlogs=/var/lib/rundeck/logs \
--Drundeck.config.location=/etc/rundeck/rundeck-config.properties"
-#
-# Set min/max heap size
-#
-RDECK_JVM="$RDECK_JVM -Xmx1024m -Xms256m -server"
-#
-# SSL Configuration - Uncomment the following to enable.  Check SSL.properties for details.
-#
-#export RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=/etc/rundeck/ssl/ssl.properties -Dserver.https.port=4443"
+RDECK_JVM="$RDECK_JVM <%= @jvm_args %>"
+
+<% if @ssl_enabled %>
+export RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=<%= @properties_dir %>/ssl/ssl.properties -Dserver.https.port=<%= @ssl_port %>"
+<% end %>
 
 export RDECK_SSL_OPTS="-Djavax.net.ssl.trustStore=$RDECK_BASE/ssl/truststore -Djavax.net.ssl.trustStoreType=jks -Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol"
 

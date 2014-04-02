@@ -1,20 +1,19 @@
 #
 define rundeck::config::resource_source(
   $project_name,
-  $number = '',
-  $source_type = '',
+  $number              = '',
+  $source_type         = '',
   $include_server_node = '',
-  $resource_format = '',
-  $url = '',
-  $url_timeout = '',
-  $url_cache = '',
-  $directory = '',
-  $projects_dir = '',
-  $script_args_quoted = '',
-  $script_interpreter = '',
-  $script_file = '',
-  $script_format = '',
-  $script_args = ''
+  $resource_format     = '',
+  $url                 = '',
+  $url_timeout         = '',
+  $url_cache           = '',
+  $directory           = '',
+  $projects_dir        = '',
+  $script_args_quoted  = '',
+  $script_interpreter  = '',
+  $script_file         = '',
+  $script_args         = ''
 
 ) {
 
@@ -56,8 +55,14 @@ define rundeck::config::resource_source(
     $cache = $url_cache
   }
 
+  if "x${directory}x" == 'xx' {
+    $dir = $rundeck::params::default_resource_dir
+  } else {
+    $dir = $directory
+  }
+
   if "x${projects_dir}x" == 'xx' {
-    $pd = $rundeck::params::projects_root
+    $pd = $rundeck::params::projects_dir
   } else {
     $pd = $projects_dir
   }
@@ -74,13 +79,11 @@ define rundeck::config::resource_source(
     $sci = $script_interpreter
   }
 
-  if "x${script_format}x" == 'xx' {
-    $sf = $rundeck::params::script_format
-  } else {
-    $sf = $script_format
-  }
-
-  #TODO validate params
+  validate_string($project_name)
+  validate_re($num, '[1-9]*')
+  validate_re($type, ['^file$', '^directory$', '^url$', '^script$'])
+  validate_bool($inc_server)
+  validate_absolute_path($pd)
 
   $properties_file = "${pd}/${project_name}/etc/project.properties"
 
@@ -94,6 +97,7 @@ define rundeck::config::resource_source(
 
   case downcase($type) {
     'file': {
+      validate_re($format, ['^resourcexml$','^resourceyaml$'])
 
       ini_setting { "resources.source.${num}.config.requireFileExists":
         ensure  => present,
@@ -136,6 +140,11 @@ define rundeck::config::resource_source(
       }
     }
     'url': {
+
+      validate_string($url)
+      validate_re($timeout, '[0-9]*')
+      validate_bool($cache)
+
       ini_setting { "resources.source.${num}.config.url":
         ensure  => present,
         path    => $properties_file,
@@ -161,6 +170,8 @@ define rundeck::config::resource_source(
       }
     }
     'directory': {
+      validate_absolute_path($dir)
+
       ini_setting { "resources.source.${num}.config.directory":
         ensure  => present,
         path    => $properties_file,
@@ -170,6 +181,12 @@ define rundeck::config::resource_source(
       }
     }
     'script': {
+      validate_re($format, ['^resourcexml$','^resourceyaml$'])
+      validate_bool($saq)
+      validate_string($sci)
+      validate_absolute_path($script_file)
+      validate_string($script_args)
+
       ini_setting { "resources.source.${num}.config.file":
         ensure  => present,
         path    => $properties_file,
@@ -191,7 +208,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.format",
-        value   => $sf
+        value   => $format
       }
 
       ini_setting { "resources.source.${num}.config.interpreter":

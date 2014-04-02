@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck::config::global::ssl' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    SUPPORTED_FAMILIES.each do |osfamily|
       describe "rundeck::config::global::ssl class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{

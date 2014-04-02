@@ -4,6 +4,7 @@
 # It sets variables according to platform
 #
 class rundeck::params {
+
   case $::osfamily {
     'Debian': {
       $package_name = 'rundeck'
@@ -26,7 +27,7 @@ class rundeck::params {
 
 
   $rdeck_base = '/var/lib/rundeck'
-  $projects_root = '/var/rundeck/projects'
+  $projects_dir = '/var/rundeck/projects'
   $properties_dir = '/etc/rundeck'
   $plugin_dir = "${rdeck_base}/libext"
   $logs_dir = "${rdeck_base}/logs"
@@ -39,6 +40,7 @@ class rundeck::params {
   $ssh_user = 'rundeck'
 
   $auth_type = 'file'
+  $auth_users = {}
 
   $server_name = 'localhost'
   $server_hostname = 'localhost'
@@ -62,10 +64,10 @@ class rundeck::params {
   $resource_format = 'resourcexml'
   $include_server_node = false
   $default_source_type = 'file'
+  $default_resource_dir = '/'
 
   $script_args_quoted = true
   $script_interpreter = '/bin/bash'
-  $script_format = 'resourcexml'
 
   $user = 'rundeck'
   $group = 'rundeck'
@@ -85,5 +87,8 @@ class rundeck::params {
 
   $resource_sources = {}
 
-  $file_users = {}
+  $jvm_args = '-Xmx1024m -Xms256m -server'
+
+  $ssl_enabled = false
+  $ssl_port = '4443'
 }
