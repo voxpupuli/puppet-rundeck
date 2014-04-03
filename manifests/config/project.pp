@@ -102,7 +102,7 @@ define rundeck::config::project(
   $project_dir = "${pr}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"
 
-  ensure_resource(file, $pr, {'ensure' => 'directory'})
+  ensure_resource(file, $pr, {'ensure' => 'directory', 'owner' => $user, 'group' => $group})
 
   file { $properties_file:
     ensure  => present,

@@ -22,7 +22,7 @@
 #
 # This sets the default user accounts for the Rundeck app
 #
-<%= @admin_user%>\:<%= @admin_password %>,user,admin,architect,deploy,build
+<%= @admin_user%>:<%= @admin_password %>,user,admin,architect,deploy,build
 <% @auth_users.each do |key,value|
      if key.eql?('username') %>
 <%= value %>:

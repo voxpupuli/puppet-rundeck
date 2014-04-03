@@ -57,7 +57,7 @@ define rundeck::config::plugin(
   validate_re($u, '[a-zA-Z0-9]{3,}')
   validate_re($g, '[a-zA-Z0-9]{3,}')
 
-  ensure_resource(file, $pd, {'ensure' => 'directory'})
+  ensure_resource(file, $pd, {'ensure' => 'directory', 'owner' => $user, 'group' => $group})
 
   #TODO: add only-if
   exec { "download plugin ${name}":

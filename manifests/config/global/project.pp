@@ -17,7 +17,7 @@ class rundeck::config::global::project(
 
   $properties_file = "${properties_dir}/project.properties"
 
-  ensure_resource('file', $properties_dir, {'ensure' => 'directory'} )
+  ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 
   file { $properties_file:
     ensure  => present,

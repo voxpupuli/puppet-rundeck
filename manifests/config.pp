@@ -42,7 +42,7 @@ class rundeck::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  ensure_resource('file', $properties_dir, {'ensure' => 'directory'} )
+  ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 
   if $auth_type == 'file' {
     file { "${properties_dir}/jaas-loginmodule.conf":
