@@ -1,2 +1,7 @@
+2014-04-04 Release 0.2.0
+  - adding definitions for plugins, projects, and resource sources
+  - adding support for managing the majority of the Rundeck configuration
+  - more tests
+
 2014-03-28 Release 0.1.0
   - initial release
