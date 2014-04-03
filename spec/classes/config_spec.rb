@@ -25,7 +25,7 @@ describe 'rundeck::config' do
         it { should contain_file('/etc/rundeck/realm.properties') }
         it 'should generate valid content for realm.properties' do
           content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
-          content.should include('admin\\:admin,user,admin,architect,deploy,build')
+          content.should include('admin:admin,user,admin,architect,deploy,build')
         end
 
         it { should contain_file('/etc/rundeck/log4j.properties') }
