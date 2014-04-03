@@ -29,7 +29,7 @@ describe 'rundeck::config::plugin', :type => :define do
           'ensure' => 'present',
           'mode'   => '0600',
           'owner'  => 'rundeck',
-          'group'  => 'rundeck',
+          'group'  => 'rundeck'
         )}
       end
     end
