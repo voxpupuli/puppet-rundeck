@@ -7,3 +7,4 @@ description   'Install and manage the configuration of the rundeck orchestration
 project_page  'https://github.com/opentable/puppet-rundeck'
 license       'MIT'
 dependency    'puppetlabs/stdlib'
+dependency    'puppetlabs/inifile'
