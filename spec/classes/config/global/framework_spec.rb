@@ -27,6 +27,8 @@ describe 'rundeck::config::global::framework' do
           'framework.ssh.timeout' => '0'
         }
 
+        it { should contain_file('/etc/rundeck/framework.properties') }
+
         framework_details.each do |key,value|
           it { should contain_ini_setting(key).with(
             'path'    => '/etc/rundeck/framework.properties',

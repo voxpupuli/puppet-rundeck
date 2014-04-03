@@ -1,10 +1,50 @@
+# == Define rundeck::config::project
+#
+# This definition is used to configure rundeck projects
+#
+# === Parameters
+#
+# [*file_copier_provider*]
+#  The type of proivder that will be used for copying files to each of the nodes
+#
+# [*node_executor_provider*]
+#  The type of provider that will be used to gather node resources
+#
+# [*resource_sources*]
+#  A hash of rundeck::config::resource_source that will be used to specifiy the node
+#  resources for this project
+#
+# [*ssh_keypath*]
+#   The path the the ssh key that will be used by the ssh/scp providers
+#
+# [*projects_dir*]
+#   The directory where rundeck is configured to store project information
+#
+# [*user*]
+#   The user that rundeck is installed as.
+#
+# [*group*]
+#   The group permission that rundeck is installed as.
+#
+# === Examples
+#
+# Create and manage a rundeck project:
+#
+# rundeck::config::project { 'test project':
+#  ssh_keypath            => '/var/lib/rundeck/.ssh/id_rsa',
+#  file_copier_provider   => 'jsch-scp',
+#  node_executor_provider => 'jsch-ssh',
+#  resource_sources       => $resource_hash
+# }
 #
 define rundeck::config::project(
-  $ssh_keypath            = '',
   $file_copier_provider   = '',
   $node_executor_provider = '',
   $resource_sources       = '',
-  $projects_dir           = ''
+  $ssh_keypath            = '',
+  $projects_dir           = '',
+  $user                   = '',
+  $group                  = '',
 ) {
 
   include rundeck::params
@@ -39,30 +79,50 @@ define rundeck::config::project(
     $pr = $projects_dir
   }
 
-  $project_dir = "${pr}/${name}"
-  $properties_file = "${project_dir}/etc/project.properties"
+  if "x${user}x" == 'xx' {
+    $u = $rundeck::params::user
+  } else {
+    $u = $user
+  }
+
+  if "x${group}x" == 'xx' {
+    $g = $rundeck::params::group
+  } else {
+    $g = $group
+  }
 
   validate_absolute_path($skp)
   validate_re($fcp, ['jsch-scp','script-copy','stub'])
   validate_re($nep, ['jsch-ssh', 'script-exec', 'stub'])
   validate_hash($res_sources)
   validate_absolute_path($pr)
+  validate_re($u, '[a-zA-Z0-9]{3,}')
+  validate_re($g, '[a-zA-Z0-9]{3,}')
+
+  $project_dir = "${pr}/${name}"
+  $properties_file = "${project_dir}/etc/project.properties"
 
   ensure_resource(file, $pr, {'ensure' => 'directory'})
 
+  file { $properties_file:
+    ensure  => present,
+    owner   => $u,
+    group   => $g,
+    require => File["${project_dir}/etc"]
+  }
+
   file { "${project_dir}/var":
     ensure  => directory,
+    owner   => $u,
+    group   => $g,
     require => File[$pr]
   }
 
   file { "${project_dir}/etc":
     ensure  => directory,
+    owner   => $u,
+    group   => $g,
     require => File[$project_dir]
-  }
-
-  file { $properties_file:
-    ensure  => present,
-    require => File["${project_dir}/etc"]
   }
 
   ini_setting { 'project.name':

@@ -17,6 +17,7 @@ class rundeck::install(
   # why isn't this in a package repo?
 
   #TODO: configure bintray as a package repo
+  #TODO: add only-if for exec's
 
   case $::osfamily {
     'RedHat': {

@@ -1,12 +1,12 @@
 # == Class rundeck::config
 #
-# This class is called from rundeck to manage the configuration
+# This private class is called from rundeck to manage the configuration
 #
 class rundeck::config(
   $auth_type             = $rundeck::params::auth_type,
   $auth_users            = $rundeck::params::auth_users,
   $properties_dir        = $rundeck::params::properties_dir,
-  $owner                 = $rundeck::params::owner,
+  $user                  = $rundeck::params::user,
   $group                 = $rundeck::params::group,
   $ssl_enabled           = $rundeck::ssl_enabled,
   $server_name           = $rundeck::params::server_name,
@@ -42,48 +42,56 @@ class rundeck::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  ensure_resource('file', $properties_dir, {'ensure' => 'directory'} )
+
   if $auth_type == 'file' {
     file { "${properties_dir}/jaas-loginmodule.conf":
-      owner   => $owner,
+      owner   => $user,
       group   => $group,
       mode    => '0640',
-      content => template('rundeck/jaas-loginmodule.conf.erb')
+      content => template('rundeck/jaas-loginmodule.conf.erb'),
+      require => File[$properties_dir]
     }
 
     file { "${properties_dir}/realm.properties":
-      owner   => $owner,
+      owner   => $user,
       group   => $group,
       mode    => '0640',
-      content => template('rundeck/realm.properties.erb')
+      content => template('rundeck/realm.properties.erb'),
+      require => File[$properties_dir]
     }
   }
 
   file { "${properties_dir}/log4j.properties":
-    owner   => $owner,
+    owner   => $user,
     group   => $group,
     mode    => '0640',
-    content => template('rundeck/log4j.properties.erb')
+    content => template('rundeck/log4j.properties.erb'),
+    require => File[$properties_dir]
   }
 
   file { "${properties_dir}/admin.aclpolicy":
-    owner   => $owner,
+    owner   => $user,
     group   => $group,
     mode    => '0640',
-    content => template('rundeck/admin.aclpolicy.erb')
+    content => template('rundeck/admin.aclpolicy.erb'),
+    require => File[$properties_dir]
   }
 
   file { "${properties_dir}/apitoken.aclpolicy":
-    owner   => $owner,
+    owner   => $user,
     group   => $group,
     mode    => '0640',
-    content => template('rundeck/apitoken.aclpolicy.erb')
+    content => template('rundeck/apitoken.aclpolicy.erb'),
+    require => File[$properties_dir]
   }
 
   file { "${properties_dir}/profile":
-    owner   => $owner,
+    owner   => $user,
     group   => $group,
     mode    => '0640',
-    content => template('rundeck/profile.erb')
+    content => template('rundeck/profile.erb'),
+    require => File[$properties_dir]
   }
 
   class { 'rundeck::config::global::framework':

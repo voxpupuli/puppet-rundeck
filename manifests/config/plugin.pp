@@ -1,3 +1,29 @@
+# == Define rundeck::config::plugin
+#
+# This definition is used to install jars for rundeck's plugins
+#
+# === Parameters
+#
+# [*source*]
+#   The http source or local path from which to get the jar plugin.
+#
+# [*plugin_dir*]
+#   The rundeck directory where the plugins are installed to.
+#
+# [*user*]
+#   The user that rundeck is installed as.
+#
+# [*group*]
+#   The group permission that rundeck is installed as.
+#
+# === Examples
+#
+# Install a custom plugin:
+#
+# rundeck::config::plugin { 'hipchat-plugin':
+#  name   => 'rundeck-hipchat-plugin-1.0.0.jar',
+#  source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
+# }
 #
 define rundeck::config::plugin(
   $source,
@@ -21,7 +47,7 @@ define rundeck::config::plugin(
   }
 
   if "x${group}x" == 'xx' {
-    $g = $rundeck::params::user
+    $g = $rundeck::params::group
   } else {
     $g = $group
   }
@@ -33,6 +59,7 @@ define rundeck::config::plugin(
 
   ensure_resource(file, $pd, {'ensure' => 'directory'})
 
+  #TODO: add only-if
   exec { "download plugin ${name}":
     command => "/usr/bin/wget ${source} -O ${pd}/${name}"
   }

@@ -13,6 +13,8 @@ describe 'rundeck::config' do
         it { should contain_class('rundeck::config::global::rundeck_config') }
         it { should contain_class('rundeck::config::global::ssl') }
 
+        it { should contain_file('/etc/rundeck').with({'ensure' => 'directory'})}
+
         it { should contain_file('/etc/rundeck/jaas-loginmodule.conf') }
         it 'should generate valid content for jaas-loginmodule.conf' do
           content = catalogue.resource('file', '/etc/rundeck/jaas-loginmodule.conf')[:content]

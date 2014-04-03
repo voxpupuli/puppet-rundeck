@@ -17,6 +17,8 @@ describe 'rundeck::config::global::project' do
           'project.organization' => ''
         }
 
+        it { should contain_file('/etc/rundeck/project.properties') }
+
         project_details.each do |key,value|
           it { should contain_ini_setting(key).with(
             'path'    => '/etc/rundeck/project.properties',

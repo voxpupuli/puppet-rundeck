@@ -17,6 +17,8 @@ describe 'rundeck::config::global::rundeck_config' do
           'dataSource.url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
         }
 
+        it { should contain_file('/etc/rundeck/rundeck-config.properties') }
+
         config_details.each do |key,value|
           it { should contain_ini_setting(key).with(
             'path'    => '/etc/rundeck/rundeck-config.properties',

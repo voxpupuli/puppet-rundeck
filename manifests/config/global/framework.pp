@@ -1,3 +1,6 @@
+# == Class rundeck::config::global::framework
+#
+# This private class is called from rundeck::config used to manage the framework properties of rundeck
 #
 class rundeck::config::global::framework(
   $server_name     = $rundeck::params::server_name,
@@ -15,7 +18,9 @@ class rundeck::config::global::framework(
   $plugin_dir      = $rundeck::params::plugin_dir,
   $ssh_keypath     = $rundeck::params::ssh_keypath,
   $ssh_user        = $rundeck::params::ssh_user,
-  $ssh_timeout     = $rundeck::params::ssh_timeout
+  $ssh_timeout     = $rundeck::params::ssh_timeout,
+  $user            = $rundeck::params::user,
+  $group           = $rundeck::params::group
 
 ) inherits rundeck::params {
 
@@ -25,12 +30,23 @@ class rundeck::config::global::framework(
 
   $properties_file = "${properties_dir}/framework.properties"
 
+  ensure_resource('file', $properties_dir, {'ensure' => 'directory'} )
+
+  file { $properties_file:
+    ensure  => present,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    require => File[$properties_dir]
+  }
+
   ini_setting { 'framework.server.name':
     ensure  => present,
     path    => $properties_file,
     section => '',
     setting => 'framework.server.name',
-    value   => $server_name
+    value   => $server_name,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.server.hostname':
@@ -38,7 +54,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.server.hostname',
-    value   => $server_hostname
+    value   => $server_hostname,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.server.port':
@@ -46,7 +63,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.server.port',
-    value   => $server_port
+    value   => $server_port,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.server.url':
@@ -54,7 +72,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.server.url',
-    value   => $server_url
+    value   => $server_url,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.server.username':
@@ -62,7 +81,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.server.username',
-    value   => $cli_username
+    value   => $cli_username,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.server.password':
@@ -70,7 +90,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.server.password',
-    value   => $cli_password
+    value   => $cli_password,
+    require => File[$properties_file]
   }
 
   ini_setting { 'global rdeck.base':
@@ -78,7 +99,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'rdeck.base',
-    value   => $rdeck_base
+    value   => $rdeck_base,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.projects.dir':
@@ -86,7 +108,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.projects.dir',
-    value   => $projects_dir
+    value   => $projects_dir,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.etc.dir':
@@ -94,7 +117,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.etc.dir',
-    value   => $properties_dir
+    value   => $properties_dir,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.var.dir':
@@ -102,7 +126,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.var.dir',
-    value   => $var_dir
+    value   => $var_dir,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.tmp.dir':
@@ -110,7 +135,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.tmp.dir',
-    value   => $tmp_dir
+    value   => $tmp_dir,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.logs.dir':
@@ -118,7 +144,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.logs.dir',
-    value   => $logs_dir
+    value   => $logs_dir,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.libext.dir':
@@ -126,7 +153,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.libext.dir',
-    value   => $plugin_dir
+    value   => $plugin_dir,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.ssh.keypath':
@@ -134,7 +162,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.ssh.keypath',
-    value   => $ssh_keypath
+    value   => $ssh_keypath,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.ssh.user':
@@ -142,7 +171,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.ssh.user',
-    value   => $ssh_user
+    value   => $ssh_user,
+    require => File[$properties_file]
   }
 
   ini_setting { 'framework.ssh.timeout':
@@ -150,7 +180,8 @@ class rundeck::config::global::framework(
     path    => $properties_file,
     section => '',
     setting => 'framework.ssh.timeout',
-    value   => $ssh_timeout
+    value   => $ssh_timeout,
+    require => File[$properties_file]
   }
 
 }

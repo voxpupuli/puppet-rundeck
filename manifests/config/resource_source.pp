@@ -1,20 +1,92 @@
+# == Define rundeck::config::resource_source
+#
+# This definition is called from rundeck::config::project and is used to
+# create a resource sources that gather node information.
+#
+# === Parameters
+#
+# [*project_name*]
+#   The name of the project for which this resource in intended to be a part.
+#
+# [*number*]
+#   The sequential number of the resource within the project.
+#
+# [*source_type*]
+#   The source type where resources will come from: file, directory, url or script.
+#
+# [*file*]
+#   When a file source_type is specified this is the path to that file.
+#
+# [*include_server_node*]
+#   Boolean value to decide whether or not to include the server node in your list of avaliable nodes.
+#
+# [*resource_format*]
+#   The format of the resource that will procesed, either resourcexml or resourceyaml.
+#
+# [*url*]
+#   When the url source_type is specified this is the path to that url.
+#
+# [*url_timeout*]
+#   An integer value in seconds that rundeck will wait for resources from the url before timing out.
+#
+# [*url_cache*]
+#   Boolean value. Keep a local cache of the resources pulled from the url.
+#
+# [*directory*]
+#   When the directory source_type is specified this is the path to that directory.
+#
+# [*script_file*]
+#   When the script source_type is specified this is the path that that script.
+#
+# [*script_args*]
+#   A string of the full arguments to pass the the specified script.
+#
+# [*script_args_quoted*]
+#   Boolean value. Quote the arguments of the script.
+#
+# [*script_interpreter*]
+#   The interpreter to use in executing the script. Defaults to: '/bin/bash'
+#
+# [*projects_dir*]
+#   The directory where rundeck is configured to store project information.
+#
+# [*user*]
+#   The user that rundeck is installed as.
+#
+# [*group*]
+#   The group permission that rundeck is installed as.
+#
+# === Examples
+#
+# Manage a file resource:
+#
+# rundeck::config::resource_source { 'nodes from file':
+#   project_name        => 'test project',
+#   number              => '1',
+#   source_type         => 'file',
+#   file                => '/var/lib/rundeck/etc/resources.yaml',
+#   include_server_node => false,
+#   resource_format     => 'resourceyaml',
+# }
 #
 define rundeck::config::resource_source(
   $project_name,
   $number              = '',
   $source_type         = '',
+  $file                = '',
   $include_server_node = '',
   $resource_format     = '',
   $url                 = '',
   $url_timeout         = '',
   $url_cache           = '',
   $directory           = '',
-  $projects_dir        = '',
+  $script_file         = '',
+  $script_args         = '',
   $script_args_quoted  = '',
   $script_interpreter  = '',
-  $script_file         = '',
-  $script_args         = ''
-
+  $projects_dir        = '',
+  $user                = '',
+  $group               = ''
 ) {
 
   include rundeck::params
@@ -79,20 +151,53 @@ define rundeck::config::resource_source(
     $sci = $script_interpreter
   }
 
+  if "x${file}x" == 'xx' {
+    $f = "${pd}/${project_name}/etc/resources.xml"
+  } else {
+    $f = $file
+  }
+
+  if "x${user}x" == 'xx' {
+    $u = $rundeck::params::user
+  } else {
+    $u = $user
+  }
+
+  if "x${group}x" == 'xx' {
+    $g = $rundeck::params::group
+  } else {
+    $g = $group
+  }
+
   validate_string($project_name)
   validate_re($num, '[1-9]*')
   validate_re($type, ['^file$', '^directory$', '^url$', '^script$'])
   validate_bool($inc_server)
   validate_absolute_path($pd)
+  validate_re($u, '[a-zA-Z0-9]{3,}')
+  validate_re($g, '[a-zA-Z0-9]{3,}')
 
-  $properties_file = "${pd}/${project_name}/etc/project.properties"
+  ensure_resource('file', "${pd}/${project_name}", {'ensure' => 'directory'} )
+  ensure_resource('file', "${pd}/${project_name}/etc", {'ensure' => 'directory', 'require' => File["${pd}/${project_name}"]} )
+
+  $properties_dir  = "${pd}/${project_name}/etc"
+  $properties_file = "${properties_dir}/project.properties"
+
+  file { $properties_file:
+    ensure  => present,
+    owner   => $u,
+    group   => $g,
+    mode    => '0640',
+    require => File[$properties_dir]
+  }
 
   ini_setting { "resources.source.${num}.type":
     ensure  => present,
     path    => $properties_file,
     section => '',
     setting => "resources.source.${num}.type",
-    value   => $type
+    value   => $type,
+    require => File[$properties_file]
   }
 
   case downcase($type) {
@@ -104,7 +209,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.requireFileExists",
-        value   => true
+        value   => true,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.includeServerNode":
@@ -112,7 +218,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.includeServerNode",
-        value   => $inc_server
+        value   => $inc_server,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.generateFileAutomatically":
@@ -120,7 +227,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.generateFileAutomatically",
-        value   => true
+        value   => true,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.format":
@@ -128,7 +236,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.format",
-        value   => $format
+        value   => $format,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.file":
@@ -136,7 +245,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.file",
-        value   => '/var/rundeck/projects/test/etc/resources.xml'
+        value   => $f,
+        require => File[$properties_file]
       }
     }
     'url': {
@@ -150,7 +260,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.url",
-        value   => $url
+        value   => $url,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.timeout":
@@ -158,7 +269,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.timeout",
-        value   => $timeout
+        value   => $timeout,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.cache":
@@ -166,7 +278,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.cache",
-        value   => $cache
+        value   => $cache,
+        require => File[$properties_file]
       }
     }
     'directory': {
@@ -177,7 +290,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.directory",
-        value   => $directory
+        value   => $directory,
+        require => File[$properties_file]
       }
     }
     'script': {
@@ -192,7 +306,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.file",
-        value   => $script_file
+        value   => $script_file,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.args":
@@ -200,7 +315,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.args",
-        value   => $script_args
+        value   => $script_args,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.format":
@@ -208,7 +324,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.format",
-        value   => $format
+        value   => $format,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.interpreter":
@@ -216,7 +333,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.interpreter",
-        value   => $sci
+        value   => $sci,
+        require => File[$properties_file]
       }
 
       ini_setting { "resources.source.${num}.config.argsQuoted":
@@ -224,7 +342,8 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${num}.config.argsQuoted",
-        value   => $saq
+        value   => $saq,
+        require => File[$properties_file]
       }
     }
     default: {

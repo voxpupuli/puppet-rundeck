@@ -17,6 +17,9 @@ describe 'rundeck::config::global::ssl' do
           'truststore.password' => 'adminadmin'
         }
 
+        it { should contain_file('/etc/rundeck/ssl').with({ 'ensure' => 'directory'}) }
+        it { should contain_file('/etc/rundeck/ssl/ssl.properties') }
+
         ssl_details.each do |key,value|
           it { should contain_ini_setting(key).with(
             'path'    => '/etc/rundeck/ssl/ssl.properties',

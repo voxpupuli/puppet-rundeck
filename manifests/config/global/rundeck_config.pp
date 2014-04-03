@@ -1,3 +1,6 @@
+# == Class rundeck::config::global::rundeck_config
+#
+# This private class is called from rundeck::config used to manage the rundeck-config properties
 #
 class rundeck::config::global::rundeck_config(
   $rd_loglevel         = $rundeck::params::loglevel,
@@ -6,7 +9,9 @@ class rundeck::config::global::rundeck_config(
   $grails_server_url   = $rundeck::params::grails_server_url,
   $dataSource_dbCreate = $rundeck::params::dataSource_dbCreate,
   $dataSource_url      = $rundeck::params::dataSource_url,
-  $properties_dir      = $rundeck::params::properties_dir
+  $properties_dir      = $rundeck::params::properties_dir,
+  $user                = $rundeck::params::user,
+  $group               = $rundeck::params::group
 ) inherits rundeck::params {
 
   if $caller_module_name != $module_name {
@@ -15,12 +20,23 @@ class rundeck::config::global::rundeck_config(
 
   $properties_file = "${properties_dir}/rundeck-config.properties"
 
+  ensure_resource('file', $properties_dir, {'ensure' => 'directory'} )
+
+  file { $properties_file:
+    ensure  => present,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    require => File[$properties_dir]
+  }
+
   ini_setting { 'loglevel.default':
     ensure  => present,
     path    => $properties_file,
     section => '',
     setting => 'loglevel.default',
-    value   => $rd_loglevel
+    value   => $rd_loglevel,
+    require => File[$properties_file]
   }
 
   ini_setting { 'config rdeck.base':
@@ -28,7 +44,8 @@ class rundeck::config::global::rundeck_config(
     path    => $properties_file,
     section => '',
     setting => 'rdeck.base',
-    value   => $rdeck_base
+    value   => $rdeck_base,
+    require => File[$properties_file]
   }
 
   ini_setting { 'rss.enabled':
@@ -36,7 +53,8 @@ class rundeck::config::global::rundeck_config(
     path    => $properties_file,
     section => '',
     setting => 'rss.enabled',
-    value   => $rss_enabled
+    value   => $rss_enabled,
+    require => File[$properties_file]
   }
 
   ini_setting { 'grails.serverURL':
@@ -44,7 +62,8 @@ class rundeck::config::global::rundeck_config(
     path    => $properties_file,
     section => '',
     setting => 'grails.serverURL',
-    value   => $grails_server_url
+    value   => $grails_server_url,
+    require => File[$properties_file]
   }
 
   ini_setting { 'dataSource.dbCreate':
@@ -52,7 +71,8 @@ class rundeck::config::global::rundeck_config(
     path    => $properties_file,
     section => '',
     setting => 'dataSource.dbCreate',
-    value   => $dataSource_dbCreate
+    value   => $dataSource_dbCreate,
+    require => File[$properties_file]
   }
 
   ini_setting { 'dataSource.url':
@@ -60,6 +80,7 @@ class rundeck::config::global::rundeck_config(
     path    => $properties_file,
     section => '',
     setting => 'dataSource.url',
-    value   => $dataSource_url
+    value   => $dataSource_url,
+    require => File[$properties_file]
   }
 }

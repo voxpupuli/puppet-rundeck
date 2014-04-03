@@ -10,13 +10,112 @@
 # === Parameters
 #
 # [*package_version*]
-# The version of rundeck to be installed
+#   The version of rundeck to be installed
 #
 # [*jre_name*]
-# The name of the jre to be installed if using a custom jre.
+#   The name of the jre to be installed if using a custom jre.
 #
 # [*jre_version*]
-# The version of the jre to be installed if using a custom jre.
+#   The version of the jre to be installed if using a custom jre.
+#
+# [*auth_type*]
+#   The method used to authenticate to rundeck. Default is file.
+#
+# [*properties_dir*]
+#   The path to the configuration directory where the properties file are stored.
+#
+# [*log_dir*]
+#   The path to the directory to store logs.
+#
+# [*user*]
+#   The user that rundeck is installed as.
+#
+# [*group*]
+#   The group that the rundeck user is a member of.
+#
+# [*rdeck_base*]
+#   The installation directory for rundeck.
+#
+# [*ssl_enabled*]
+#   Enable ssl for the rundeck web application.
+#
+# [*server_name*]
+#   Hostname of the Rundeck server node.
+#
+# [*server_hostname*]
+#  Name (identity) of the Rundeck server node
+#
+# [*server_port*]
+#  Port of the Rundeck server
+#
+# [*server_url*]
+#   URL of the Rundeck server node.
+#
+# [*cli_username*]
+#   The user to use for authenticating the rundeck CLI.
+#
+# [*cli_password*]
+#   The password used for authenticating the rundeck CLI.
+#
+# [*projects_dir*]
+#   Path to the directory containing Rundeck Project directories. Default is $RDECK_BASE/projects
+#
+# [*var_dir*]
+#  Path to the directory containing Rundeck libraries and plugins
+#
+# [*tmp_dir*]
+#  Path the the tmp directory used by Rundeck
+#
+# [*plugin_dir*]
+#  Path to the directory containing Rundecks plugins
+#
+# [*ssh_keypath*]
+#  The full path to the key default ssh key used by Rundeck.
+#
+# [*ssh_user*]
+#  The default ssh user used by Rundeck for communication with nodes.
+#
+# [*ssh_timeout*]
+#  The value in seconds that Rundeck will wait when comminicating with nodes before timing out.
+#
+# [*projects_organization*]
+#  The organization value that will be set by default for any projects.
+#
+# [*projects_description*]
+#  The description that will be set by default for any projects.
+#
+# [*rd_loglevel*]
+#  The log4j logging level to be set for the Rundeck application.
+#
+# [*rss_enabled*]
+#  Boolean value if set to true enables RSS feeds that are public (non-authenticated)
+#
+# [*grails_server_url*]
+#  The url used in sending email notifications.
+#
+# [*dataSource_dbCreate*]
+#  Configuration setting for how the database schema is updated. Defaults to update.
+#
+# [*dataSource_url*]
+#  The jdbc url for the database.
+#
+# [*keystore*]
+#  Full path to the java keystore to be used by Rundeck.
+#
+# [*keystore_password*]
+#  The password for the given keystore.
+#
+# [*key_password*]
+#  The default key password.
+#
+# [*truststore*]
+#  The full path to the java truststore to be used by Rundeck.
+#
+# [*truststore_password*]
+#  The password for the given truststore.
+#
+# [*service_name*]
+#  The name of the rundeck service.
 #
 # === Examples
 #
@@ -35,7 +134,7 @@ class rundeck (
   $auth_users            = $rundeck::params::auth_users,
   $properties_dir        = $rundeck::params::properties_dir,
   $log_dir               = $rundeck::params::log_dir,
-  $owner                 = $rundeck::params::owner,
+  $user                  = $rundeck::params::user,
   $group                 = $rundeck::params::group,
   $rdeck_base            = $rundeck::params::rdeck_base,
   $ssl_enabled           = $rundeck::params::ssl_enabled,
@@ -52,8 +151,8 @@ class rundeck (
   $ssh_keypath           = $rundeck::params::keypath,
   $ssh_user              = $rundeck::params::ssh_user,
   $ssh_timeout           = $rundeck::params::ssh_timeout,
-  $projects_default_org  = $rundeck::params::projects_default_org,
-  $projects_default_desc = $rundeck::params::projects_default_desc,
+  $projects_organization = $rundeck::params::projects_default_org,
+  $projects_description  = $rundeck::params::projects_default_desc,
   $logs_dir              = $rundeck::params::logs_dir,
   $ssh_keypath           = $rundeck::params::ssh_keypath,
   $ssh_user              = $rundeck::params::ssh_user,
@@ -81,7 +180,7 @@ class rundeck (
   validate_hash($auth_users)
   validate_absolute_path($properties_dir)
   validate_absolute_path($log_dir)
-  validate_string($owner)
+  validate_string($user)
   validate_string($group)
   validate_absolute_path($rdeck_base)
   validate_bool($ssl_enabled)
@@ -121,7 +220,7 @@ class rundeck (
     auth_type             => $auth_type,
     auth_users            => $auth_users,
     properties_dir        => $properties_dir,
-    owner                 => $owner,
+    user                  => $user,
     group                 => $group,
     ssl_enabled           => $ssl_enabled,
     server_name           => $server_name,

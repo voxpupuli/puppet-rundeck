@@ -25,8 +25,6 @@ describe 'rundeck' do
     end
   end
 
-  #TODO: write test for class parameters
-
   context 'unsupported operating system' do
     describe 'rundeck class without any parameters on Solaris/Nexenta' do
       let(:facts) {{
