@@ -5,7 +5,9 @@
 class rundeck::install(
   $jre_name        = $rundeck::jre_name,
   $jre_version     = $rundeck::jre_version,
-  $package_version = $rundeck::package_version
+  $package_version = $rundeck::package_version,
+  $package_ensure  = $rundeck::package_ensure,
+  $manage_repo     = $rundeck::manage_repo
 ) {
 
   if $caller_module_name != $module_name {
@@ -14,27 +16,22 @@ class rundeck::install(
 
   ensure_resource('package', $jre_name, {'ensure' => $jre_version} )
 
-  # why isn't this in a package repo?
-
-  #TODO: configure bintray as a package repo
-  #TODO: add only-if for exec's
-
   case $::osfamily {
     'RedHat': {
-      exec { 'download rundeck-config package':
-        command => "/usr/bin/wget http://dl.bintray.com/rundeck/rundeck-rpm/rundeck-config-${package_version}.noarch.rpm -O /tmp/rundeck-config-${package_version}.noarch.rpm",
-        require => Package[$jre_name]
+      if $manage_repo {
+        yumrepo { 'bintray-rundeck':
+          baseurl  => "http://dl.bintray.com/rundeck/rundeck-rpm/",
+          descr    => 'bintray rundeck repo',
+          enabled  => '1',
+          gpgcheck => '0',
+          priority => '1',
+          before   => [ Package["rundeck-config-${package_version}"],Package["rundeck-${package_version}"] ],
+        }
       }
 
-      exec { 'download rundeck package':
-        command => "/usr/bin/wget http://dl.bintray.com/rundeck/rundeck-rpm/rundeck-${package_version}.noarch.rpm -O /tmp/rundeck-${package_version}.noarch.rpm",
-        require => Package[$jre_name]
-      }
+      ensure_resource('package', "rundeck-config-${package_version}", {'ensure' => $package_ensure} )
+      ensure_resource('package', "rundeck-${package_version}", {'ensure' => $package_ensure} )
 
-      exec { 'install rundeck package':
-        command => "/usr/bin/yum -y install /tmp/rundeck-config-${package_version}*.rpm /tmp/rundeck-${package_version}*.rpm",
-        require => [ Package[$jre_name], Exec['download rundeck-config package'], Exec['download rundeck package'] ]
-      }
     }
     'Debian': {
       exec { 'download rundeck package':

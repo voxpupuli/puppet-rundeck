@@ -128,6 +128,8 @@
 #
 class rundeck (
   $package_version       = $rundeck::params::package_version,
+  $package_ensure        = $rundeck::params::package_ensure,
+  $manage_repo           = $rundeck::params::manage_repo,
   $jre_name              = $rundeck::params::jre_name,
   $jre_version           = $rundeck::params::jre_version,
   $auth_type             = $rundeck::params::auth_type,
@@ -210,11 +212,15 @@ class rundeck (
   validate_absolute_path($truststore)
   validate_string($truststore_password)
   validate_string($service_name)
+  validate_string($package_ensure)
+  validate_bool($manage_repo)
 
   class { 'rundeck::install':
     jre_name        => $jre_name,
     jre_version     => $jre_version,
-    package_version => $package_version
+    package_version => $package_version,
+    package_ensure  => $package_ensure,
+    manage_repo     => $manage_repo
   } ->
   class { 'rundeck::config':
     auth_type             => $auth_type,
