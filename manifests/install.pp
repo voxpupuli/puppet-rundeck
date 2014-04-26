@@ -20,7 +20,7 @@ class rundeck::install(
     'RedHat': {
       if $manage_repo {
         yumrepo { 'bintray-rundeck':
-          baseurl  => "http://dl.bintray.com/rundeck/rundeck-rpm/",
+          baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
           descr    => 'bintray rundeck repo',
           enabled  => '1',
           gpgcheck => '0',
