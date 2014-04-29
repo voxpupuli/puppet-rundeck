@@ -1,27 +1,47 @@
-description: Admin, all access.
 context:
 project: '.*' # all projects
 for:
 resource:
-- allow: '*' # allow read/create all kinds
+- equals:
+kind: job
+allow: [create] # allow create jobs
+- equals:
+kind: node
+allow: [read,create,update,refresh] # allow refresh node sources
+- equals:
+kind: event
+allow: [read,create] # allow read/create events
 adhoc:
-- allow: '*' # allow read/running/killing adhoc jobs
+- allow: [read,run,runAs,kill,killAs] # allow running/killing adhoc jobs
 job:
-- allow: '*' # allow read/write/delete/run/kill of all jobs
+- allow: [create,read,update,delete,run,runAs,kill,killAs] # allow create/read/write/delete/run/kill of all jobs
 node:
-- allow: '*' # allow read/run for all nodes
+- allow: [read,run] # allow read/run for nodes
 by:
 group: admin
 
 ---
 
-description: Admin, all access.
+description: Admin Application level access control, applies to creating/deleting projects, admin of user profiles, viewing projects and reading system information.
 context:
 application: 'rundeck'
 for:
 resource:
-- allow: '*' # allow create of projects
+- equals:
+kind: project
+allow: [create] # allow create of projects
+- equals:
+kind: system
+allow: [read] # allow read of system info
+- equals:
+kind: user
+allow: [admin] # allow modify user profiles
 project:
-- allow: '*' # allow view/admin of all projects
+- match:
+name: '.*'
+allow: [read,import,export,configure,delete] # allow full access of all projects or use 'admin'
+storage:
+- allow: [read,create,update,delete] # allow access for /ssh-key/* storage content
+
 by:
 group: admin
