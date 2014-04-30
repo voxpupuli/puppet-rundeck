@@ -42,10 +42,10 @@ class rundeck::params {
   $auth_type = 'file'
   $auth_users = {}
 
-  $server_name = 'localhost'
-  $server_hostname = 'localhost'
+  $server_name = $::hostname
+  $server_hostname = $::hostname
   $server_port = '4440'
-  $server_url = 'http://localhost:4440'
+  $server_url = "http://${::hostname}:4440"
   $cli_username = 'admin'
   $cli_password = 'admin'
 
@@ -75,7 +75,7 @@ class rundeck::params {
   $loglevel = 'INFO'
   $rss_enabled = false
 
-  $grails_server_url = 'http://localhost:4440'
+  $grails_server_url = "http://${::hostname}:4440"
   $dataSource_dbCreate = 'update'
   $dataSource_url = "jdbc:h2:file:${rdeck_base}/data/rundeckdb;MVCC=true"
 
