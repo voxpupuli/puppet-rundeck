@@ -91,4 +91,7 @@ class rundeck::params {
 
   $ssl_enabled = false
   $ssl_port = '4443'
+
+  $package_sourcetype = 'custom'
+  $package_sourcerepo = 'http://dl.bintray.com/rundeck/rundeck-deb'
 }

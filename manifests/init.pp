@@ -128,6 +128,8 @@
 #
 class rundeck (
   $package_version       = $rundeck::params::package_version,
+  $package_sourcetype    = $rundeck::params::package_sourcetype,
+  $package_sourcerepo    = $rundeck::params::package_sourcerepo,
   $jre_name              = $rundeck::params::jre_name,
   $jre_version           = $rundeck::params::jre_version,
   $auth_type             = $rundeck::params::auth_type,
@@ -169,7 +171,7 @@ class rundeck (
   $key_password          = $rundeck::params::key_password,
   $truststore            = $rundeck::params::truststore,
   $truststore_password   = $rundeck::params::truststore_password,
-  $service_name          = $rundeck::params::service_name
+  $service_name          = $rundeck::params::service_name,
 
 ) inherits rundeck::params {
 
