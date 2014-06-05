@@ -7,13 +7,14 @@ describe 'rundeck::config::global::framework' do
         let(:params) {{ }}
         let(:facts) {{
             :osfamily => osfamily,
+            :hostname => 'test.domain.com'
         }}
 
         framework_details = {
-          'framework.server.name' => 'localhost',
-          'framework.server.hostname' => 'localhost',
+          'framework.server.name' => 'test.domain.com',
+          'framework.server.hostname' => 'test.domain.com',
           'framework.server.port' => '4440',
-          'framework.server.url' => 'http://localhost:4440',
+          'framework.server.url' => 'http://test.domain.com:4440',
           'framework.server.username' => 'admin',
           'framework.server.password' => 'admin',
           'framework.projects.dir' => '/var/rundeck/projects',

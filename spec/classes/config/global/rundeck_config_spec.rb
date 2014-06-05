@@ -7,12 +7,13 @@ describe 'rundeck::config::global::rundeck_config' do
         let(:params) {{ }}
         let(:facts) {{
             :osfamily => osfamily,
+            :hostname => 'test.domain.com'
         }}
 
         config_details = {
           'loglevel.default' => 'INFO',
           'rss.enabled' => 'false',
-          'grails.serverURL' => 'http://localhost:4440',
+          'grails.serverURL' => 'http://test.domain.com:4440',
           'dataSource.dbCreate' => 'update',
           'dataSource.url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
         }
