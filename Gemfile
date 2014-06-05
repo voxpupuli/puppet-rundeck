@@ -9,6 +9,7 @@ group :test do
   gem "puppetlabs_spec_helper"
   gem "beaker"
   gem "beaker-rspec"
+	gem "rspec", "2.99.0"
 end
 
 group :development do
