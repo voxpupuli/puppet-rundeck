@@ -17,26 +17,26 @@ describe 'rundeck::config' do
 
         it { should contain_file('/etc/rundeck/jaas-loginmodule.conf') }
         it 'should generate valid content for jaas-loginmodule.conf' do
-          content = catalogue(:class).resource('file', '/etc/rundeck/jaas-loginmodule.conf')[:content]
+          content = catalogue.resource('file', '/etc/rundeck/jaas-loginmodule.conf')[:content]
           content.should include('PropertyFileLoginModule')
           content.should include('/etc/rundeck/realm.properties')
         end
 
         it { should contain_file('/etc/rundeck/realm.properties') }
         it 'should generate valid content for realm.properties' do
-          content = catalogue(:class).resource('file', '/etc/rundeck/realm.properties')[:content]
+          content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
           content.should include('admin:admin,user,admin,architect,deploy,build')
         end
 
         it { should contain_file('/etc/rundeck/log4j.properties') }
         it 'should generate valid content for log4j.propertiess' do
-          content = catalogue(:class).resource('file', '/etc/rundeck/log4j.properties')[:content]
+          content = catalogue.resource('file', '/etc/rundeck/log4j.properties')[:content]
           content.should include('log4j.appender.server-logger.file=/var/log/rundeck/rundeck.log')
         end
 
         it { should contain_file('/etc/rundeck/profile') }
         it 'should generate valid content for profile' do
-          content = catalogue(:class).resource('file', '/etc/rundeck/profile')[:content]
+          content = catalogue.resource('file', '/etc/rundeck/profile')[:content]
           content.should include('-Drdeck.base=/var/lib/rundeck')
           content.should include('-Drundeck.server.configDir=/etc/rundeck')
           content.should include('-Dserver.datastore.path=/var/lib/rundeck/data')
