@@ -9,6 +9,7 @@ class rundeck::params {
     'Debian': {
       $package_name = 'rundeck'
       $package_version = '2.0.3-1-GA'
+      $package_ensure = 'present'
       $service_name = 'rundeckd'
       $jre_name = 'openjdk-6-jre'
       $jre_version = '6b30-1.13.1-1ubuntu2~0.12.04.1'
@@ -16,6 +17,7 @@ class rundeck::params {
     'RedHat', 'Amazon': {
       $package_name = 'rundeck'
       $package_version = '2.0.3-1.14.GA'
+      $package_ensure = 'installed'
       $service_name = 'rundeckd'
       $jre_name = 'java-1.6.0-openjdk'
       $jre_version = '1.6.0.0-1.66.1.13.0.el6'
@@ -24,7 +26,6 @@ class rundeck::params {
       fail("${::operatingsystem} not supported")
     }
   }
-
 
   $rdeck_base = '/var/lib/rundeck'
   $projects_dir = '/var/rundeck/projects'
@@ -92,6 +93,5 @@ class rundeck::params {
   $ssl_enabled = false
   $ssl_port = '4443'
 
-  $package_sourcetype = 'custom'
-  $package_sourcerepo = 'http://dl.bintray.com/rundeck/rundeck-deb'
+  $package_source = 'http://dl.bintray.com/rundeck/rundeck-deb'
 }
