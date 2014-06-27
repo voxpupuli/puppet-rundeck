@@ -6,8 +6,8 @@ class rundeck::install(
   $jre_name           = $rundeck::jre_name,
   $jre_version        = $rundeck::jre_version,
   $package_version    = $rundeck::package_version,
-  $package_sourcetype = $rundeck::package_sourcetype,
-  $package_sourcerepo = $rundeck::package_sourcerepo
+  $package_source     = $rundeck::package_source,
+  $package_ensure     = $rundeck::package_ensure,
 ) {
 
   if $caller_module_name != $module_name {
@@ -16,48 +16,33 @@ class rundeck::install(
 
   ensure_resource('package', $jre_name, {'ensure' => $jre_version} )
 
-  case $package_sourcetype {
-    'repo': {
-      #TODO: configure bintray as a package repo
+  case $::osfamily {
+    'RedHat': {
+      yumrepo { 'bintray-rundeck':
+        baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
+        descr    => 'bintray rundeck repo',
+        enabled  => '1',
+        gpgcheck => '0',
+        priority => '1',
+        before   => [ Package["rundeck-config-${package_version}"],Package["rundeck-${package_version}"] ],
+      }
+
+      ensure_resource('package', "rundeck-config-${package_version}", {'ensure' => $package_ensure} )
+      ensure_resource('package', "rundeck-${package_version}", {'ensure' => $package_ensure} )
     }
-    'custom': {
-      #TODO: add only-if for exec's
-
-      case $::osfamily {
-        'RedHat': {
-          exec { 'download rundeck-config package':
-            command => "/usr/bin/wget ${package_sourcerepo}/rundeck-config-${package_version}.noarch.rpm -O /tmp/rundeck-config-${package_version}.noarch.rpm",
-            require => Package[$jre_name]
-          }
-
-          exec { 'download rundeck package':
-            command => "/usr/bin/wget ${package_sourcerepo}/rundeck-${package_version}.noarch.rpm -O /tmp/rundeck-${package_version}.noarch.rpm",
-            require => Package[$jre_name]
-          }
-
-          exec { 'install rundeck package':
-            command => "/usr/bin/yum -y install /tmp/rundeck-config-${package_version}*.rpm /tmp/rundeck-${package_version}*.rpm",
-            require => [ Package[$jre_name], Exec['download rundeck-config package'], Exec['download rundeck package'] ]
-          }
-        }
-        'Debian': {
-          exec { 'download rundeck package':
-            command => "/usr/bin/wget ${package_sourcerepo}/rundeck-${package_version}.deb -O /tmp/rundeck-${package_version}.deb",
-            unless  => "/usr/bin/test -f /tmp/rundeck-${package_version}.deb"
-          }
-
-          exec { 'install rundeck package':
-            command => "/usr/bin/dpkg -i /tmp/rundeck-${package_version}.deb",
-            onlyif  => "/usr/bin/test `dpkg-query --list | grep rundeck | awk '{print $3}'` = `echo \"${package_version}\" | cut -d '-' -f 1`",
-            require => [ Exec['download rundeck package'], Package[$jre_name] ]
-          }
-        }
-        default: {
-          err("The osfamily: ${::osfamily} is not supported")
-        }
+    'Debian': {
+      exec { 'download rundeck package':
+        command => "/usr/bin/wget ${package_source}/rundeck-${package_version}.deb -O /tmp/rundeck-${package_version}.deb",
+        unless  => "/usr/bin/test -f /tmp/rundeck-${package_version}.deb"
+      }
+      exec { 'install rundeck package':
+        command => "/usr/bin/dpkg -i /tmp/rundeck-${package_version}.deb",
+        onlyif  => "/usr/bin/test `dpkg-query --list | grep rundeck | awk '{print \$3}'` = `echo \"${package_version}\" | cut -d '-' -f 1`",
+        require => [ Exec['download rundeck package'], Package[$jre_name] ]
       }
     }
-    default: { }
+    default: {
+      err("The osfamily: ${::osfamily} is not supported")
+    }
   }
-
 }
