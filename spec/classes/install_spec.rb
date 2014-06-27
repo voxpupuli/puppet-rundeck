@@ -9,13 +9,12 @@ describe 'rundeck' do
           :osfamily => osfamily,
         }}
 
-        it { should contain_exec('download rundeck package') }
-        it { should contain_exec('install rundeck package') }
-
         if osfamily.eql?('RedHat')
-          it { should contain_exec('download rundeck-config package') }
+          it { should contain_yumrepo('bintray-rundeck') }
         else
-          it { should_not contain_exec('download rundeck-config package') }
+          it { should contain_exec('download rundeck package') }
+          it { should contain_exec('install rundeck package') }
+          it { should_not contain_yumrepo('bintray-rundeck') }
         end
 
       end
