@@ -38,6 +38,7 @@ class rundeck::install(
 
       exec { 'install rundeck package':
         command => "/usr/bin/dpkg -i /tmp/rundeck-${package_version}.deb",
+        onlyif  => "/usr/bin/dpkg -l | grep rundeck | grep ${package_version}",
         require => [ Exec['download rundeck package'], Package[$jre_name] ]
       }
     }
