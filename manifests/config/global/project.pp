@@ -3,13 +3,13 @@
 # This private class is called from rundeck::config used to manage the default project properties
 #
 class rundeck::config::global::project(
-  $projects_dir          = $rundeck::params::projects_dir,
-  $projects_organization = $rundeck::params::projects_default_org,
-  $projects_description  = $rundeck::params::projects_default_desc,
-  $properties_dir        = $rundeck::params::properties_dir,
-  $user                  = $rundeck::params::user,
-  $group                 = $rundeck::params::group
-) inherits rundeck::params {
+  $projects_dir          = $rundeck::config::projects_dir,
+  $projects_organization = $rundeck::config::projects_default_org,
+  $projects_description  = $rundeck::config::projects_default_desc,
+  $properties_dir        = $rundeck::config::properties_dir,
+  $user                  = $rundeck::config::user,
+  $group                 = $rundeck::config::group
+) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")

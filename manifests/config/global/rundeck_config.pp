@@ -3,16 +3,16 @@
 # This private class is called from rundeck::config used to manage the rundeck-config properties
 #
 class rundeck::config::global::rundeck_config(
-  $rd_loglevel         = $rundeck::params::loglevel,
-  $rdeck_base          = $rundeck::params::rdeck_base,
-  $rss_enabled         = $rundeck::params::rss_enabled,
-  $grails_server_url   = $rundeck::params::grails_server_url,
-  $dataSource_dbCreate = $rundeck::params::dataSource_dbCreate,
-  $dataSource_url      = $rundeck::params::dataSource_url,
-  $properties_dir      = $rundeck::params::properties_dir,
-  $user                = $rundeck::params::user,
-  $group               = $rundeck::params::group
-) inherits rundeck::params {
+  $rd_loglevel         = $rundeck::config::loglevel,
+  $rdeck_base          = $rundeck::config::rdeck_base,
+  $rss_enabled         = $rundeck::config::rss_enabled,
+  $grails_server_url   = $rundeck::config::grails_server_url,
+  $dataSource_dbCreate = $rundeck::config::dataSource_dbCreate,
+  $dataSource_url      = $rundeck::config::dataSource_url,
+  $properties_dir      = $rundeck::config::properties_dir,
+  $user                = $rundeck::config::user,
+  $group               = $rundeck::config::group
+) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")

@@ -94,48 +94,8 @@ class rundeck::config(
     require => File[$properties_dir]
   }
 
-  class { 'rundeck::config::global::framework':
-    server_name     => $server_name,
-    server_hostname => $server_hostname,
-    server_port     => $server_port,
-    server_url      => $server_url,
-    cli_username    => $cli_username,
-    cli_password    => $cli_password,
-    rdeck_base      => $rdeck_base,
-    projects_dir    => $projects_dir,
-    properties_dir  => $properties_dir,
-    var_dir         => $var_dir,
-    tmp_dir         => $tmp_dir,
-    logs_dir        => $logs_dir,
-    plugin_dir      => $plugin_dir,
-    ssh_keypath     => $ssh_keypath,
-    ssh_user        => $ssh_user,
-    ssh_timeout     => $ssh_timeout
-  }
-
-  class { 'rundeck::config::global::project':
-    projects_dir          => $projects_dir,
-    projects_organization => $projects_organization,
-    projects_description  => $projects_description,
-    properties_dir        => $rundeck::properties_dir
-  }
-
-  class { 'rundeck::config::global::rundeck_config':
-    rd_loglevel         => $rd_loglevel,
-    rdeck_base          => $rdeck_base,
-    rss_enabled         => $rss_enabled,
-    grails_server_url   => $grails_server_url,
-    dataSource_dbCreate => $dataSource_dbCreate,
-    dataSource_url      => $dataSource_url,
-    properties_dir      => $properties_dir
-  }
-
-  class { 'rundeck::config::global::ssl':
-    keystore            => $keystore,
-    keystore_password   => $keystore_password,
-    key_password        => $key_password,
-    truststore          => $truststore,
-    truststore_password => $truststore_password,
-    properties_dir      => $properties_dir
-  }
+  class { 'rundeck::config::global::framework': } ->
+  class { 'rundeck::config::global::project': } ->
+  class { 'rundeck::config::global::rundeck_config': } ->
+  class { 'rundeck::config::global::ssl': }
 }

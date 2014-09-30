@@ -3,15 +3,15 @@
 # This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled
 #
 class rundeck::config::global::ssl(
-  $keystore            = $rundeck::params::keystore,
-  $keystore_password   = $rundeck::params::keystore_password,
-  $key_password        = $rundeck::params::key_password,
-  $truststore          = $rundeck::params::truststore,
-  $truststore_password = $rundeck::params::truststore_password,
-  $properties_dir      = $rundeck::params::properties_dir,
-  $user                = $rundeck::params::user,
-  $group               = $rundeck::params::group
-) inherits rundeck::params {
+  $keystore            = $rundeck::config::keystore,
+  $keystore_password   = $rundeck::config::keystore_password,
+  $key_password        = $rundeck::config::key_password,
+  $truststore          = $rundeck::config::truststore,
+  $truststore_password = $rundeck::config::truststore_password,
+  $properties_dir      = $rundeck::config::properties_dir,
+  $user                = $rundeck::config::user,
+  $group               = $rundeck::config::group
+) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
