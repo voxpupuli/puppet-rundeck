@@ -214,50 +214,8 @@ class rundeck (
   validate_string($service_name)
   validate_string($package_ensure)
 
-  class { 'rundeck::install':
-    jre_name        => $jre_name,
-    jre_version     => $jre_version,
-    package_version => $package_version,
-    package_source  => $package_source,
-    package_ensure  => $package_ensure,
-  } ->
-  class { 'rundeck::config':
-    auth_type             => $auth_type,
-    auth_users            => $auth_users,
-    properties_dir        => $properties_dir,
-    user                  => $user,
-    group                 => $group,
-    ssl_enabled           => $ssl_enabled,
-    server_name           => $server_name,
-    server_hostname       => $server_hostname,
-    server_port           => $server_port,
-    server_url            => $server_url,
-    cli_username          => $cli_username,
-    cli_password          => $cli_password,
-    rdeck_base            => $rdeck_base,
-    projects_dir          => $projects_dir,
-    var_dir               => $var_dir,
-    tmp_dir               => $tmp_dir,
-    logs_dir              => $logs_dir,
-    plugin_dir            => $plugin_dir,
-    ssh_keypath           => $ssh_keypath,
-    ssh_user              => $ssh_user,
-    ssh_timeout           => $ssh_timeout,
-    projects_organization => $projects_organization,
-    projects_description  => $projects_description,
-    rd_loglevel           => $rd_loglevel,
-    rss_enabled           => $rss_enabled,
-    grails_server_url     => $grails_server_url,
-    dataSource_dbCreate   => $dataSource_dbCreate,
-    dataSource_url        => $dataSource_url,
-    keystore              => $keystore,
-    keystore_password     => $keystore_password,
-    key_password          => $key_password,
-    truststore            => $truststore,
-    truststore_password   => $truststore_password
-  } ->
-  class { 'rundeck::service':
-    service_name => $service_name
-  } ->
+  class { 'rundeck::install': } ->
+  class { 'rundeck::config': } ->
+  class { 'rundeck::service': } ->
   Class['rundeck']
 }

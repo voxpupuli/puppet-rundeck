@@ -4,7 +4,7 @@
 # It ensure the service is running
 #
 class rundeck::service(
-  $service_name = $rundeck::params::service_name
+  $service_name = $rundeck::service_name
 ) inherits rundeck::params {
 
   if $caller_module_name != $module_name {
