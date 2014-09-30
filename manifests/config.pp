@@ -35,7 +35,9 @@ class rundeck::config(
   $keystore_password     = $rundeck::params::keystore_password,
   $key_password          = $rundeck::params::key_password,
   $truststore            = $rundeck::params::truststore,
-  $truststore_password   = $rundeck::params::truststore_password
+  $truststore_password   = $rundeck::params::truststore_password,
+  $admin_user            = $rundeck::params::admin_user,
+  $admin_password        = $rundeck::params::admin_password,
 ) inherits rundeck::params {
 
   if $caller_module_name != $module_name {

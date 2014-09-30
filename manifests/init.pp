@@ -117,6 +117,12 @@
 # [*service_name*]
 #  The name of the rundeck service.
 #
+# [*admin_user*]
+#  The admin user.
+#
+# [*admin_password*]
+#  The admin password.
+#
 # === Examples
 #
 # Installing rundeck with a custom jre:
@@ -156,11 +162,6 @@ class rundeck (
   $projects_organization = $rundeck::params::projects_default_org,
   $projects_description  = $rundeck::params::projects_default_desc,
   $logs_dir              = $rundeck::params::logs_dir,
-  $ssh_keypath           = $rundeck::params::ssh_keypath,
-  $ssh_user              = $rundeck::params::ssh_user,
-  $ssh_timeout           = $rundeck::params::ssh_timeout,
-  $projects_organization = $rundeck::params::projects_default_org,
-  $projects_description  = $rundeck::params::projects_default_desc,
   $rd_loglevel           = $rundeck::params::loglevel,
   $rss_enabled           = $rundeck::params::rss_enabled,
   $grails_server_url     = $rundeck::params::grails_server_url,
@@ -172,7 +173,8 @@ class rundeck (
   $truststore            = $rundeck::params::truststore,
   $truststore_password   = $rundeck::params::truststore_password,
   $service_name          = $rundeck::params::service_name,
-
+  $admin_user            = $rundeck::params::admin_user,
+  $admin_password        = $rundeck::params::admin_password,
 ) inherits rundeck::params {
 
   validate_re($package_version, '\d+\.\d+\.\d+')
@@ -213,6 +215,8 @@ class rundeck (
   validate_string($truststore_password)
   validate_string($service_name)
   validate_string($package_ensure)
+  validate_string($admin_user)
+  validate_string($admin_password)
 
   class { 'rundeck::install':
     jre_name        => $jre_name,
@@ -254,10 +258,12 @@ class rundeck (
     keystore_password     => $keystore_password,
     key_password          => $key_password,
     truststore            => $truststore,
-    truststore_password   => $truststore_password
+    truststore_password   => $truststore_password,
+    admin_user            => $admin_user,
+    admin_password        => $admin_password,
   } ->
   class { 'rundeck::service':
-    service_name => $service_name
+    service_name => $service_name,
   } ->
   Class['rundeck']
 }
