@@ -1,10 +1,10 @@
 loglevel.default = "<%= @rd_loglevel %>"
 rdeck.base = "<%= @rdeck_base %>"
 rss.enabled = "<%= @rss_enabled %>"
-
+rundeck.security.useHMacRequestTokens = false
 
 dataSource {
-  dbCreate = "<% @dataSource_dbCreate %>"
+  dbCreate = "<%= @dataSource_dbCreate %>"
   url = "<%= @dataSource_url %>"
 }
 
@@ -17,6 +17,7 @@ grails {
     props = [<% @mail_config['props'].each do |k,v| -%>"<%= k %>":"<%= v %>",<% end %>]
   }
 }
+
 grails.mail.default.from = "<%= @mail_config['defaults.from'] %>"
 
 grails.serverURL = "<%= @grails_server_url %>"

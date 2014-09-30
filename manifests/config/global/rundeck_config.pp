@@ -29,7 +29,7 @@ class rundeck::config::global::rundeck_config(
 
   file { $properties_file:
     ensure  => present,
-    content => template('rundeck/rundeck-config.erb')
+    content => template('rundeck/rundeck-config.erb'),
     owner   => $user,
     group   => $group,
     mode    => '0640',

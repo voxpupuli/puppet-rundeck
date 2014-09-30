@@ -118,7 +118,6 @@ class rundeck (
   $truststore_password   = $rundeck::params::truststore_password,
   $service_name          = $rundeck::params::service_name,
   $mail_config           = $rundeck::params::mail_config
-
 ) inherits rundeck::params {
 
   validate_re($package_version, '\d+\.\d+\.\d+')
