@@ -5,10 +5,16 @@
 #
 class rundeck::service(
   $service_name = $rundeck::service_name
-) inherits rundeck::params {
+) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
+  }
+
+  file { '/etc/init.d/rundeckd':
+    ensure  => present,
+    mode    => '0755',
+    content => template('rundeck/init.erb')
   }
 
   service { $service_name:
@@ -16,5 +22,6 @@ class rundeck::service(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
+    require    => File['/etc/init.d/rundeckd']
   }
 }
