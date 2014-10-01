@@ -43,10 +43,10 @@ class rundeck::params {
   $auth_type = 'file'
   $auth_users = {}
 
-  $server_name = $::hostname
-  $server_hostname = $::hostname
+  $server_name = $::fqdn
+  $server_hostname = $::fqdn
   $server_port = '4440'
-  $server_url = "http://${::hostname}:4440"
+  $server_url = "http://${::fqdn}:4440"
   $cli_username = 'admin'
   $cli_password = 'admin'
 
