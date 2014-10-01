@@ -16,6 +16,8 @@ class rundeck::install(
 
   ensure_resource('package', $jre_name, {'ensure' => $jre_version} )
 
+  $version = inline_template("<% package_version = '${package_version}' %><%= package_version.split('-')[0] %>")
+
   case $::osfamily {
     'RedHat': {
       yumrepo { 'bintray-rundeck':
@@ -36,8 +38,8 @@ class rundeck::install(
         unless  => "/usr/bin/test -f /tmp/rundeck-${package_version}.deb"
       }
       exec { 'install rundeck package':
-        command => "/usr/bin/dpkg -i /tmp/rundeck-${package_version}.deb",
-        unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${package_version}",
+        command => "/usr/bin/dpkg --force-confold -i /tmp/rundeck-${package_version}.deb",
+        unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
         require => [ Exec['download rundeck package'], Package[$jre_name] ]
       }
     }
