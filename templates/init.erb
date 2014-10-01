@@ -6,7 +6,7 @@ NAME=rundeck
 PID_FILE=/var/run/$NAME.pid
 
 DAEMON="${JAVA_HOME:-/usr}/bin/java"
-DAEMON_ARGS="${RDECK_JVM} -cp ${BOOTSTRAP_CP} com.dtolabs.rundeck.RunServer /var/lib/rundeck 4440"
+DAEMON_OPTS="${RDECK_JVM} -cp ${BOOTSTRAP_CP} com.dtolabs.rundeck.RunServer /var/lib/rundeck 4440"
 
 start() {
   if [ -f $PID_FILE ]
