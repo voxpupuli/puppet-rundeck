@@ -76,7 +76,7 @@ class rundeck::params {
   $loglevel = 'INFO'
   $rss_enabled = false
 
-  $grails_server_url = "http://${::hostname}:4440"
+  $grails_server_url = "http://${::fqdn}:4440"
   $dataSource_dbCreate = 'update'
   $dataSource_url = "jdbc:h2:file:${rdeck_base}/data/rundeckdb;MVCC=true"
 
