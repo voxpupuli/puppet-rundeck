@@ -140,19 +140,7 @@ class rundeck (
   $group                 = $rundeck::params::group,
   $rdeck_base            = $rundeck::params::rdeck_base,
   $ssl_enabled           = $rundeck::params::ssl_enabled,
-  $server_name           = $rundeck::params::server_name,
-  $server_hostname       = $rundeck::params::server_hostname,
-  $server_port           = $rundeck::params::server_port,
-  $server_url            = $rundeck::params::server_url,
-  $cli_username          = $rundeck::params::cli_username,
-  $cli_password          = $rundeck::params::cli_password,
-  $projects_dir          = $rundeck::params::projects_dir,
-  $var_dir               = $rundeck::params::var_dir,
-  $tmp_dir               = $rundeck::params::tmp_dir,
-  $plugin_dir            = $rundeck::params::plugin_dir,
-  $ssh_keypath           = $rundeck::params::keypath,
-  $ssh_user              = $rundeck::params::ssh_user,
-  $ssh_timeout           = $rundeck::params::ssh_timeout,
+  $framrwork_config      = $rundeck::params::framework_config,
   $projects_organization = $rundeck::params::projects_default_org,
   $projects_description  = $rundeck::params::projects_default_desc,
   $logs_dir              = $rundeck::params::logs_dir,
@@ -186,19 +174,7 @@ class rundeck (
   validate_string($group)
   validate_absolute_path($rdeck_base)
   validate_bool($ssl_enabled)
-  validate_string($server_name)
-  validate_string($server_hostname)
-  validate_re($server_port, '\d{0,5}')
-  validate_string($server_url)
-  validate_re($cli_username, '[a-zA-Z0-9]{3,}')
-  validate_string($cli_password)
-  validate_absolute_path($projects_dir)
-  validate_absolute_path($var_dir)
-  validate_absolute_path($tmp_dir)
-  validate_absolute_path($plugin_dir)
-  validate_absolute_path($ssh_keypath)
-  validate_re($ssh_user, '[a-zA-Z0-9]{3,}')
-  validate_re($ssh_timeout, '[0-9]+')
+  validate_hash($framework_config)
   validate_string($projects_organization)
   validate_string($projects_description)
   validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$'])

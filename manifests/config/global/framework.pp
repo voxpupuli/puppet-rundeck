@@ -3,24 +3,9 @@
 # This private class is called from rundeck::config used to manage the framework properties of rundeck
 #
 class rundeck::config::global::framework(
-  $server_name     = $rundeck::config::server_name,
-  $server_hostname = $rundeck::config::server_hostname,
-  $server_port     = $rundeck::config::server_port,
-  $server_url      = $rundeck::config::server_url,
-  $cli_username    = $rundeck::config::cli_username,
-  $cli_password    = $rundeck::config::cli_password,
-  $rdeck_base      = $rundeck::config::rdeck_base,
-  $projects_dir    = $rundeck::config::projects_dir,
-  $properties_dir  = $rundeck::config::properties_dir,
-  $var_dir         = $rundeck::config::var_dir,
-  $tmp_dir         = $rundeck::config::tmp_dir,
-  $logs_dir        = $rundeck::config::logs_dir,
-  $plugin_dir      = $rundeck::config::plugin_dir,
-  $ssh_keypath     = $rundeck::config::ssh_keypath,
-  $ssh_user        = $rundeck::config::ssh_user,
-  $ssh_timeout     = $rundeck::config::ssh_timeout,
-  $user            = $rundeck::config::user,
-  $group           = $rundeck::config::group
+  $framework_config = $rundeck::config::framework_config,
+  $user             = $rundeck::config::user,
+  $group            = $rundeck::config::group
 
 ) {
 
@@ -32,156 +17,15 @@ class rundeck::config::global::framework(
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group } )
 
+  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+
   file { $properties_file:
     ensure  => present,
+    content => template('rundeck/framework.properties.erb'),
     owner   => $user,
     group   => $group,
     mode    => '0640',
     require => File[$properties_dir]
-  }
-
-  ini_setting { 'framework.server.name':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.server.name',
-    value   => $server_name,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.server.hostname':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.server.hostname',
-    value   => $server_hostname,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.server.port':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.server.port',
-    value   => $server_port,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.server.url':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.server.url',
-    value   => $server_url,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.server.username':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.server.username',
-    value   => $cli_username,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.server.password':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.server.password',
-    value   => $cli_password,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'global rdeck.base':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'rdeck.base',
-    value   => $rdeck_base,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.projects.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.projects.dir',
-    value   => $projects_dir,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.etc.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.etc.dir',
-    value   => $properties_dir,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.var.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.var.dir',
-    value   => $var_dir,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.tmp.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.tmp.dir',
-    value   => $tmp_dir,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.logs.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.logs.dir',
-    value   => $logs_dir,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.libext.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.libext.dir',
-    value   => $plugin_dir,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.ssh.keypath':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.ssh.keypath',
-    value   => $ssh_keypath,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.ssh.user':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.ssh.user',
-    value   => $ssh_user,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'framework.ssh.timeout':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'framework.ssh.timeout',
-    value   => $ssh_timeout,
-    require => File[$properties_file]
   }
 
 }

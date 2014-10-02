@@ -28,30 +28,31 @@ class rundeck::params {
   }
 
   $rdeck_base = '/var/lib/rundeck'
-  $projects_dir = '/var/rundeck/projects'
   $properties_dir = '/etc/rundeck'
-  $plugin_dir = "${rdeck_base}/libext"
-  $logs_dir = "${rdeck_base}/logs"
-  $tmp_dir = "${rdeck_base}/var/tmp"
-  $var_dir = "${rdeck_base}/var"
-  $log_dir = '/var/log/rundeck'
-
-  $ssh_keypath = "${rdeck_base}/.ssh/id_rsa"
-  $ssh_timeout = 0
-  $ssh_user = 'rundeck'
 
   $auth_type = 'file'
   $auth_users = {}
 
-  $server_name = $::fqdn
-  $server_hostname = $::fqdn
-  $server_port = '4440'
-  $server_url = "http://${::fqdn}:4440"
-  $cli_username = 'admin'
-  $cli_password = 'admin'
+  $framework_config = {}
 
-  $admin_user = 'admin'
-  $admin_password = 'admin'
+  $framework_defaults = {
+    'framework.server.name'     => $::fqdn,
+    'framework.server.hostname' => $::fqdn,
+    'framework.server.port'     => '4440',
+    'framework.server.url'      => "http://${::fqdn}:4440",
+    'framework.server.username' => 'admin',
+    'framework.server.password' => 'admin',
+    'rdeck.base'                => '/var/lib/rundeck',
+    'framework.projects.dir'    => '/var/rundeck/projects',
+    'framework.etc.dir'         => '/etc/rundeck',
+    'framrwork.var.dir'         => '/var/lib/rundeck/var',
+    'framework.tmp.dir'         => '/var/lib/rundeck/var/tmp',
+    'framework.logs.dir'        => '/var/lib/rundeck/logs',
+    'framework.libext.dir'      => '/var/lib/rundeck/libext'
+    'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
+    'framework.ssh.user'        => 'rundeck'
+    'framework.ssh.timeout'     => '0'
+  }
 
   $projects_default_org = ''
   $projects_default_desc = ''
