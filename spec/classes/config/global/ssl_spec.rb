@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rundeck::config::global::ssl' do
+describe 'rundeck' do
   context 'supported operating systems' do
     SUPPORTED_FAMILIES.each do |osfamily|
       describe "rundeck::config::global::ssl class without any parameters on #{osfamily}" do

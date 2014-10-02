@@ -38,6 +38,7 @@
 # }
 #
 define rundeck::config::project(
+  $framework_config       = {},
   $file_copier_provider   = '',
   $node_executor_provider = '',
   $resource_sources       = '',
@@ -49,8 +50,10 @@ define rundeck::config::project(
 
   include rundeck::params
 
+  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+
   if "x${ssh_keypath}x" == 'xx' {
-    $skp = $rundeck::params::ssh_keypath
+    $skp = $framework_properties['framework.ssh.keypath']
   } else {
     $skp = $ssh_keypath
   }
@@ -74,7 +77,7 @@ define rundeck::config::project(
   }
 
   if "x${projects_dir}x" == 'xx' {
-    $pr = $rundeck::params::projects_dir
+    $pr = $framework_properties['framework.projects.dir']
   } else {
     $pr = $projects_dir
   }

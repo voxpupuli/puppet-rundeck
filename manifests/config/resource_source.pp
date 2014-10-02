@@ -71,6 +71,7 @@
 #
 define rundeck::config::resource_source(
   $project_name,
+  $framework_config    = {},
   $number              = '',
   $source_type         = '',
   $file                = '',
@@ -90,6 +91,8 @@ define rundeck::config::resource_source(
 ) {
 
   include rundeck::params
+
+  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
 
   if "x${number}x" == 'xx' {
     $num = '1'
@@ -134,7 +137,7 @@ define rundeck::config::resource_source(
   }
 
   if "x${projects_dir}x" == 'xx' {
-    $pd = $rundeck::params::projects_dir
+    $pd = $framework_properties['framework.projects.dir']
   } else {
     $pd = $projects_dir
   }

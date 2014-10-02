@@ -60,45 +60,6 @@ The installation directory for Rundeck.
 #####`ssl_enabled`
 Enable ssl for the Rundeck web application.
 
-#####`server_name`
-Hostname of the Rundeck server node.
-
-#####`server_hostname`
-Name (identity) of the Rundeck server node
-
-#####`server_port`
-Port of the Rundeck server
-
-#####`server_url`
-URL of the Rundeck server node.
-
-#####`cli_username`
-The user to use for authenticating the Rundeck CLI.
-
-#####`cli_password`
-The password used for authenticating the Rundeck CLI.
-
-#####`projects_dir`
-Path to the directory containing Rundeck Project directories. Default is $RDECK_BASE/projects
-
-#####`var_dir`
-Path to the directory containing Rundeck libraries and plugins
-
-#####`tmp_dir`
-Path the the tmp directory used by Rundeck
-
-#####`plugin_dir`
-Path to the directory containing Rundecks plugins
-
-#####`ssh_keypath`
-The full path to the key default ssh key used by Rundeck.
-
-#####`ssh_user`
-The default ssh user used by Rundeck for communication with nodes.
-
-#####`ssh_timeout`
-The value in seconds that Rundeck will wait when communicating with nodes before timing out.
-
 #####`projects_organization`
 The organization value that will be set by default for any projects.
 

@@ -28,7 +28,7 @@ class rundeck::params {
   }
 
   $rdeck_base = '/var/lib/rundeck'
-  $properties_dir = '/etc/rundeck'
+  $service_logs_dir = '/var/log/rundeck'
 
   $auth_type = 'file'
   $auth_users = {}
@@ -45,12 +45,12 @@ class rundeck::params {
     'rdeck.base'                => '/var/lib/rundeck',
     'framework.projects.dir'    => '/var/rundeck/projects',
     'framework.etc.dir'         => '/etc/rundeck',
-    'framrwork.var.dir'         => '/var/lib/rundeck/var',
+    'framework.var.dir'         => '/var/lib/rundeck/var',
     'framework.tmp.dir'         => '/var/lib/rundeck/var/tmp',
     'framework.logs.dir'        => '/var/lib/rundeck/logs',
-    'framework.libext.dir'      => '/var/lib/rundeck/libext'
+    'framework.libext.dir'      => '/var/lib/rundeck/libext',
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
-    'framework.ssh.user'        => 'rundeck'
+    'framework.ssh.user'        => 'rundeck',
     'framework.ssh.timeout'     => '0'
   }
 
@@ -79,12 +79,12 @@ class rundeck::params {
 
   $grails_server_url = "http://${::fqdn}:4440"
   $dataSource_dbCreate = 'update'
-  $dataSource_url = "jdbc:h2:file:${rdeck_base}/data/rundeckdb;MVCC=true"
+  $dataSource_url = 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
 
-  $keystore = "${properties_dir}/ssl/keystore"
+  $keystore = '/etc/rundeck/ssl/keystore'
   $keystore_password = 'adminadmin'
   $key_password = 'adminadmin'
-  $truststore = "${properties_dir}/ssl/truststore"
+  $truststore = '/etc/rundeck/ssl/truststore'
   $truststore_password = 'adminadmin'
 
   $resource_sources = {}

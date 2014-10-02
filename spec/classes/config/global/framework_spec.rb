@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'rundeck::config::global::framework' do
+describe 'rundeck' do
   context 'supported operating systems' do
     SUPPORTED_FAMILIES.each do |osfamily|
       describe "rundeck::config::global::framework class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
             :osfamily => osfamily,
-            :hostname => 'test.domain.com'
+            :fqdn => 'test.domain.com'
         }}
 
         framework_details = {
@@ -31,19 +31,31 @@ describe 'rundeck::config::global::framework' do
         it { should contain_file('/etc/rundeck/framework.properties') }
 
         framework_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
-            'path'    => '/etc/rundeck/framework.properties',
-            'setting' => key,
-            'value'   => value
-          ) }
+          it 'should generate valid content for framework.properties' do
+            content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+            content.should include("#{key} = #{value}")
+          end
         end
+      end
+    end
+  end
 
-        it { should contain_ini_setting('global rdeck.base').with(
-          'path'    => '/etc/rundeck/framework.properties',
-          'setting' => 'rdeck.base',
-          'value'   => '/var/lib/rundeck'
-        ) }
+  context 'add plugin configuration' do
+    describe 'add plugin configuration for the logstash plugin' do
+      let(:params) {{
+        :framework_config => {
+          'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
+        }
+      }}
+      let(:facts) {{
+        :osfamily => 'Debian',
+        :fqdn => 'test.domain.com'
+      }}
 
+      it 'should generate valid content for framework.properties' do
+        content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+        content.should include('framework.server.name = test.domain.com')
+        content.should include('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
       end
     end
   end

@@ -5,12 +5,10 @@
 class rundeck::config(
   $auth_type             = $rundeck::auth_type,
   $auth_users            = $rundeck::auth_users,
-  $properties_dir        = $rundeck::properties_dir,
   $user                  = $rundeck::user,
   $group                 = $rundeck::group,
   $ssl_enabled           = $rundeck::ssl_enabled,
   $framework_config      = $rundeck::framework_config,
-  $projects_dir          = $rundeck::projects_dir,
   $projects_organization = $rundeck::projects_default_org,
   $projects_description  = $rundeck::projects_default_desc,
   $rd_loglevel           = $rundeck::rd_loglevel,
@@ -22,14 +20,22 @@ class rundeck::config(
   $keystore_password     = $rundeck::keystore_password,
   $key_password          = $rundeck::key_password,
   $truststore            = $rundeck::truststore,
-  $truststore_password   = $rundeck::truststore_password
+  $truststore_password   = $rundeck::truststore_password,
+  $service_logs_dir      = $rundeck::service_logs_dir,
 ) inherits rundeck::params {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+  
+  $logs_dir = $framework_properties['framework.logs.dir']
+  $rdeck_base = $framework_properties['rdeck.base']
+  $projects_dir = $framework_properties['framework.projects.dir']
+  $admin_user = $framework_properties['framework.server.username']
+  $admin_password = $framework_properties['framework.server.password']
+  $properties_dir = $framework_properties['framework.etc.dir']
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
+
+
 
   if $auth_type == 'file' {
     file { "${properties_dir}/jaas-loginmodule.conf":

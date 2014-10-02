@@ -14,10 +14,6 @@ class rundeck::config::global::rundeck_config(
   $group               = $rundeck::config::group
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
-
   $properties_file = "${properties_dir}/rundeck-config.properties"
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )

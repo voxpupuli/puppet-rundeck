@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'rundeck::config::global::rundeck_config' do
+describe 'rundeck' do
   context 'supported operating systems' do
     SUPPORTED_FAMILIES.each do |osfamily|
       describe "rundeck::config::global::rundeck_config class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
             :osfamily => osfamily,
-            :hostname => 'test.domain.com'
+            :fqdn => 'test.domain.com'
         }}
 
         config_details = {

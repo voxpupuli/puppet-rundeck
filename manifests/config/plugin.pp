@@ -35,7 +35,7 @@ define rundeck::config::plugin(
   include rundeck::params
 
   if "x${plugin_dir}x" == 'xx' {
-    $pd = $rundeck::params::plugin_dir
+    $pd = $rundeck::params::framework_defaults['framework.libext.dir']
   } else {
     $pd = $plugin_dir
   }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rundeck::config' do
+describe 'rundeck' do
   context 'supported operating systems' do
     SUPPORTED_FAMILIES.each do |osfamily|
       describe "rundeck::config class without any parameters on #{osfamily}" do

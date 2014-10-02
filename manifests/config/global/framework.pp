@@ -3,15 +3,12 @@
 # This private class is called from rundeck::config used to manage the framework properties of rundeck
 #
 class rundeck::config::global::framework(
+  $properties_dir   = $rundeck::config::properties_dir,
   $framework_config = $rundeck::config::framework_config,
   $user             = $rundeck::config::user,
   $group            = $rundeck::config::group
 
 ) {
-
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
 
   $properties_file = "${properties_dir}/framework.properties"
 
