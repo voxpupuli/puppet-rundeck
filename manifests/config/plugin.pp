@@ -61,12 +61,13 @@ define rundeck::config::plugin(
 
   #TODO: add only-if
   exec { "download plugin ${name}":
-    command => "/usr/bin/wget ${source} -O ${pd}/${name}"
+    command => "/usr/bin/wget ${source} -O ${pd}/${name}",
+    unless  => "/bin/ls -l /var/lib/rundeck/libext/ | grep ${name}"
   }
 
   file { "${pd}/${name}":
     ensure  => present,
-    mode    => '0600',
+    mode    => '0644',
     owner   => $u,
     group   => $g,
     require => Exec["download plugin ${name}"]
