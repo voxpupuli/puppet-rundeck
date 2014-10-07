@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck::config::project', :type => :define do
   context 'supported operating systems' do
-    SUPPORTED_FAMILIES.each do |osfamily|
+    ['Debian','RedHat'].each do |osfamily|
       describe "rundeck::config::project definition without any parameters on #{osfamily}" do
         projects_dir = '/var/rundeck/projects'
 

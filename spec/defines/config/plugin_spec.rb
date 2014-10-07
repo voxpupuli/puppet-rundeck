@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck::config::plugin', :type => :define do
   context 'supported operating systems' do
-    SUPPORTED_FAMILIES.each do |osfamily|
+    ['Debian','RedHat'].each do |osfamily|
       describe "rundeck::config::plugin definition without any parameters on #{osfamily}" do
         name = 'rundeck-hipchat-plugin-1.0.0.jar'
         source = 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'

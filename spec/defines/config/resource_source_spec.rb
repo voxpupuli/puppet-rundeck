@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck::config::resource_source', :type => :define do
   context 'supported operating systems' do
-    SUPPORTED_FAMILIES.each do |osfamily|
+    ['Debian','RedHat'].each do |osfamily|
       describe "rundeck::config::resource_source definition with default parameters on #{osfamily}" do
         let(:title) { 'source one' }
         let(:params) {{
