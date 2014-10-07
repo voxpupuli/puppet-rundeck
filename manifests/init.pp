@@ -24,7 +24,7 @@
 # [*properties_dir*]
 #   The path to the configuration directory where the properties file are stored.
 #
-# [*service_log_dir*]
+# [*service_logs_dir*]
 #   The path to the directory to store logs.
 #
 # [*user*]
@@ -95,7 +95,7 @@ class rundeck (
   $jre_version           = $rundeck::params::jre_version,
   $auth_type             = $rundeck::params::auth_type,
   $auth_users            = $rundeck::params::auth_users,
-  $service_log_dir       = $rundeck::params::service_log_dir,
+  $service_logs_dir      = $rundeck::params::service_logs_dir,
   $ssl_enabled           = $rundeck::params::ssl_enabled,
   $framework_config      = $rundeck::params::framework_config,
   $projects_organization = $rundeck::params::projects_default_org,

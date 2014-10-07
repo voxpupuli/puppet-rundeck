@@ -27,7 +27,7 @@ describe 'rundeck::config::plugin', :type => :define do
 
         it { should contain_file("#{plugin_dir}/#{name}").with(
           'ensure' => 'present',
-          'mode'   => '0600',
+          'mode'   => '0644',
           'owner'  => 'rundeck',
           'group'  => 'rundeck'
         )}
