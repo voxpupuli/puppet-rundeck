@@ -8,7 +8,7 @@ class rundeck::params {
   case $::osfamily {
     'Debian': {
       $package_name = 'rundeck'
-      $package_version = '2.0.3-1-GA'
+      $package_version = '2.2.3-1-GA'
       $package_ensure = 'present'
       $service_name = 'rundeckd'
       $jre_name = 'openjdk-6-jre'
