@@ -1,6 +1,6 @@
 {
   "name":         "opentable-rundeck",
-  "version":      "0.2.0",
+  "version":      "1.0.0",
   "author":       "opentable",
   "license":      "MIT",
   "summary":      "Module for managing the installatation and configuration of the rundeck orchestration tool",
