@@ -1,36 +1,36 @@
 {
-    "operatingsystem_support": [
-        { "operatingsystem": "RedHat" },
-        { "operatingsystem": "CentOS" },
-        { "operatingsystem": "Debian" },
-        { "operatingsystem": "Ubuntu" }
-    ],
-    "requirements": [
-        {
-            "name": "pe",
-            "version_requirement": "3.2.x"
-        },
-        {
-            "name": "puppet",
-            "version_requirement": "3.x"
-        }
-    ],
-    "name":         "opentable-rundeck",
-    "version":      "0.2.0",
-    "source":       "git://github.com/opentable/puppet-rundeck.git",
-    "author":       "opentable",
-    "summary":      "Module for managing rundeck",
-    "description":  "Install and manage the configuration of the rundeck orchestration tool",
-    "project_page": "https://github.com/opentable/puppet-rundeck",
-    "license":      "MIT",
-    "dependencies": [
-        {
-            "name": "puppetlabs/stdlib",
-            "version_requirement": ">= 3.0.0"
-        },
-        {
-            "name": "puppetlabs/inifile",
-            "version_requirement": ">= 1.0.3"
-        }
-    ]
+  "name":         "opentable-rundeck",
+  "version":      "0.2.0",
+  "author":       "opentable",
+  "license":      "MIT",
+  "summary":      "Module for managing the installatation and configuration of the rundeck orchestration tool",
+  "source":       "https://github.com/opentable/puppet-rundeck",
+  "project_page": "https://github.com/opentable/puppet-rundeck",
+  "issues_url":   "https://github.com/opentable/puppet-rundeck/issues",
+  "tags": ["orchestration", "rundeck"],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": ["5.0","6.0"]
+    },
+    { "operatingsystem": "CentOS",
+      "operatingsystemrelease": ["5.0","6.0"]
+    },
+    { "operatingsystem": "Debian",
+      "operatingsystemrelease": ["6.0","7.0"]
+    },
+    { "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": ["12.04","14.04"]
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 3.0.0 <5.0.0"
+    },
+    {
+      "name": "puppetlabs/inifile",
+      "version_requirement": ">= 1.0.3 <2.0.0"
+    }
+  ]
 }
