@@ -1,3 +1,7 @@
+# Author::    Liam Bennett (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Define rundeck::config::resource_source
 #
 # This definition is called from rundeck::config::project and is used to

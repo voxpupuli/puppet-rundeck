@@ -1,3 +1,7 @@
+# Author::    Liam Bennett (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class: rundeck
 #
 # This will install rundeck (http://rundeck.org/) and manage it's configration and plugins

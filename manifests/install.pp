@@ -1,3 +1,7 @@
+# Author::    Liam Bennett (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class rundeck::install
 #
 # This private class installs the rundeck package and it's dependencies

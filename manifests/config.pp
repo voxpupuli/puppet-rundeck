@@ -1,6 +1,10 @@
+# Author::    Liam Bennett (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class rundeck::config
 #
-# This private class is called from rundeck to manage the configuration
+# This private class is called from `rundeck` to manage the configuration
 #
 class rundeck::config(
   $auth_type             = $rundeck::auth_type,
@@ -25,7 +29,7 @@ class rundeck::config(
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
-  
+
   $logs_dir = $framework_properties['framework.logs.dir']
   $rdeck_base = $framework_properties['rdeck.base']
   $projects_dir = $framework_properties['framework.projects.dir']

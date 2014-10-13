@@ -1,6 +1,10 @@
+# Author::    Liam Bennett (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class rundeck::service
 #
-# This class is meant to be called from rundeck
+# This class is meant to be called from `rundeck`
 # It ensure the service is running
 #
 class rundeck::service(

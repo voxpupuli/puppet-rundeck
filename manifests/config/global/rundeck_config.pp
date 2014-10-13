@@ -1,3 +1,7 @@
+# Author::    Liam Bennett (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class rundeck::config::global::rundeck_config
 #
 # This private class is called from rundeck::config used to manage the rundeck-config properties
