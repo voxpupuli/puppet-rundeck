@@ -15,72 +15,24 @@ class rundeck::config::global::rundeck_config(
   $dataSource_url      = $rundeck::config::dataSource_url,
   $properties_dir      = $rundeck::config::properties_dir,
   $user                = $rundeck::config::user,
-  $group               = $rundeck::config::group
+  $group               = $rundeck::config::group,
+  $mail_config         = $rundeck::config::mail_config
 ) {
 
-  $properties_file = "${properties_dir}/rundeck-config.properties"
+  $properties_file = "${properties_dir}/rundeck-config.groovy"
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 
+  file { "${properties_dir}/rundeck-config.properties":
+    ensure => absent
+  }
+
   file { $properties_file:
     ensure  => present,
+    content => template('rundeck/rundeck-config.erb')
     owner   => $user,
     group   => $group,
     mode    => '0640',
     require => File[$properties_dir]
-  }
-
-  ini_setting { 'loglevel.default':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'loglevel.default',
-    value   => $rd_loglevel,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'config rdeck.base':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'rdeck.base',
-    value   => $rdeck_base,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'rss.enabled':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'rss.enabled',
-    value   => $rss_enabled,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'grails.serverURL':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'grails.serverURL',
-    value   => $grails_server_url,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'dataSource.dbCreate':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'dataSource.dbCreate',
-    value   => $dataSource_dbCreate,
-    require => File[$properties_file]
-  }
-
-  ini_setting { 'dataSource.url':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
-    setting => 'dataSource.url',
-    value   => $dataSource_url,
-    require => File[$properties_file]
   }
 }

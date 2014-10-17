@@ -1,0 +1,22 @@
+loglevel.default = "<%= @rd_loglevel %>"
+rdeck.base = "<%= @rdeck_base %>"
+rss.enabled = "<%= @rss_enabled %>"
+
+
+dataSource {
+  dbCreate = "<% @dataSource_dbCreate %>"
+  url = "<%= @dataSource_url %>"
+}
+
+grails {
+  mail {
+    host = "<%= @mail_config['host'] %>"
+    username = "<%= @mail_config['username'] %>"
+    port = <%= @mail_config['port'] %>
+    password = "<%= @mail_config['password'] %>"
+    props = [<% @mail_config['props'].each do |k,v| -%>"<%= k %>":"<%= v %>",<% end %>]
+  }
+}
+grails.mail.default.from = "<%= @mail_config['defaults.from'] %>"
+
+grails.serverURL = "<%= @grails_server_url %>"

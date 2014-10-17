@@ -58,6 +58,8 @@ class rundeck::params {
     'framework.ssh.timeout'     => '0'
   }
 
+  $mail_config = {}
+
   $projects_default_org = ''
   $projects_default_desc = ''
 

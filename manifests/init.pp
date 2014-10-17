@@ -117,6 +117,7 @@ class rundeck (
   $truststore            = $rundeck::params::truststore,
   $truststore_password   = $rundeck::params::truststore_password,
   $service_name          = $rundeck::params::service_name,
+  $mail_config           = $rundeck::params::mail_config
 
 ) inherits rundeck::params {
 
@@ -141,6 +142,7 @@ class rundeck (
   validate_string($truststore_password)
   validate_string($service_name)
   validate_string($package_ensure)
+  validate_hash($mail_config)
 
   class { 'rundeck::install': } ->
   class { 'rundeck::config': } ->
