@@ -25,6 +25,7 @@ class rundeck::params {
       $service_name = 'rundeckd'
       $jre_name = 'java-1.6.0-openjdk'
       $jre_version = '1.6.0.0-1.66.1.13.0.el6'
+      $manage_yum_repo = true
     }
     default: {
       fail("${::operatingsystem} not supported")
