@@ -100,6 +100,9 @@ The password for the given truststore.
 #####`service_name`
 The name of the rundeck service.
 
+#####`manage_yum_repo`
+Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
+
 ####Define: `rundeck::plugin`
 A definition for installing rundeck plugins
 
