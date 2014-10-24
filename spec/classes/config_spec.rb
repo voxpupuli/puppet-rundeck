@@ -43,7 +43,7 @@ describe 'rundeck' do
           content.should include('-Drundeck.server.serverDir=/var/lib/rundeck')
           content.should include('-Drdeck.projects=/var/rundeck/projects')
           content.should include('-Drdeck.runlogs=/var/lib/rundeck/logs')
-          content.should include('-Drundeck.config.location=/etc/rundeck/rundeck-config.properties')
+          content.should include('-Drundeck.config.location=/etc/rundeck/rundeck-config.groovy')
           content.should include('-Djava.security.auth.login.config=/etc/rundeck/jaas-loginmodule.conf')
           content.should include('-Dloginmodule.name=RDpropertyfilelogin')
           content.should include('RDECK_JVM="$RDECK_JVM -Xmx1024m -Xms256m -server"')

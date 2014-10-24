@@ -100,6 +100,12 @@ The password for the given truststore.
 #####`service_name`
 The name of the rundeck service.
 
+#####`mail_config`
+A hash of the notification email configuraton.
+
+#####`security_config`
+A hash of the rundeck security configuration.
+
 ####Define: `rundeck::plugin`
 A definition for installing rundeck plugins
 

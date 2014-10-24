@@ -82,6 +82,12 @@
 # [*service_name*]
 #  The name of the rundeck service.
 #
+# [*mail_config*]
+#  A hash of the notification email configuraton.
+#
+# [*security_config*]
+#  A hash of the rundeck security configuration.
+#
 # === Examples
 #
 # Installing rundeck with a custom jre:
@@ -104,8 +110,6 @@ class rundeck (
   $framework_config      = $rundeck::params::framework_config,
   $projects_organization = $rundeck::params::projects_default_org,
   $projects_description  = $rundeck::params::projects_default_desc,
-  $projects_organization = $rundeck::params::projects_default_org,
-  $projects_description  = $rundeck::params::projects_default_desc,
   $rd_loglevel           = $rundeck::params::loglevel,
   $rss_enabled           = $rundeck::params::rss_enabled,
   $grails_server_url     = $rundeck::params::grails_server_url,
@@ -117,7 +121,8 @@ class rundeck (
   $truststore            = $rundeck::params::truststore,
   $truststore_password   = $rundeck::params::truststore_password,
   $service_name          = $rundeck::params::service_name,
-  $mail_config           = $rundeck::params::mail_config
+  $mail_config           = $rundeck::params::mail_config,
+  $security_config       = $rundeck::params::security_config
 ) inherits rundeck::params {
 
   validate_re($package_version, '\d+\.\d+\.\d+')

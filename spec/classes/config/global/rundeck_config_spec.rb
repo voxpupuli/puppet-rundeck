@@ -6,33 +6,40 @@ describe 'rundeck' do
       describe "rundeck::config::global::rundeck_config class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
-            :osfamily => osfamily,
-            :fqdn => 'test.domain.com'
+          :osfamily => osfamily,
+          :fqdn => 'test.domain.com'
         }}
 
         config_details = {
-          'loglevel.default' => 'INFO',
-          'rss.enabled' => 'false',
-          'grails.serverURL' => 'http://test.domain.com:4440',
+          'loglevel.default'    => 'INFO',
+          'rss.enabled'         => 'false',
+          'grails.serverURL'    => 'http://test.domain.com:4440',
           'dataSource.dbCreate' => 'update',
-          'dataSource.url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
+          'dataSource.url'      => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
         }
 
-        it { should contain_file('/etc/rundeck/rundeck-config.properties') }
+        $default_config = <<-CONFIG.gsub /[^\S\n]{10}/, ""
+          loglevel.default = "INFO"
+          rdeck.base = "/var/lib/rundeck"
+          rss.enabled = "false"
 
-        config_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
-            'path'    => '/etc/rundeck/rundeck-config.properties',
-            'setting' => key,
-            'value'   => value
-          ) }
-        end
+          rundeck.security.useHMacRequestTokens = true
+          rundeck.security.apiCookieAccess.enabled = true
 
-        it { should contain_ini_setting('config rdeck.base').with(
-          'path'    => '/etc/rundeck/rundeck-config.properties',
-          'setting' => 'rdeck.base',
-          'value'   => '/var/lib/rundeck'
-        ) }
+          dataSource {
+            dbCreate = "update"
+            url = "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true"
+          }
+
+          grails {
+          }
+
+          grails.serverURL = "http://test.domain.com:4440"
+        CONFIG
+
+        it { should contain_file('/etc/rundeck/rundeck-config.groovy').with(
+          'content' => $default_config
+        )}
 
       end
     end

@@ -60,6 +60,11 @@ class rundeck::params {
 
   $mail_config = {}
 
+  $security_config = {
+    'useHMacRequestTokens' => true,
+    'apiCookieAccess'      => true
+  }
+
   $projects_default_org = ''
   $projects_default_desc = ''
 
