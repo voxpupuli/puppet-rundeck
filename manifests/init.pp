@@ -13,14 +13,14 @@
 #
 # === Parameters
 #
-# [*package_version*]
-#   The version of rundeck to be installed
+# [*package_ensure*]
+#   Ensure the state of the rundeck package, either present, absent or a specific version
 #
 # [*jre_name*]
 #   The name of the jre to be installed if using a custom jre.
 #
-# [*jre_version*]
-#   The version of the jre to be installed if using a custom jre.
+# [*jre_ensure*]
+#   Ensure the version of jre to be installed, either present, absent or a specific version
 #
 # [*auth_type*]
 #   The method used to authenticate to rundeck. Default is file.
@@ -98,11 +98,10 @@
 # }
 #
 class rundeck (
-  $package_version       = $rundeck::params::package_version,
-  $package_source        = $rundeck::params::package_source,
   $package_ensure        = $rundeck::params::package_ensure,
+  $package_source        = $rundeck::params::package_source,
   $jre_name              = $rundeck::params::jre_name,
-  $jre_version           = $rundeck::params::jre_version,
+  $jre_ensure            = $rundeck::params::jre_ensure,
   $auth_type             = $rundeck::params::auth_type,
   $auth_users            = $rundeck::params::auth_users,
   $service_logs_dir      = $rundeck::params::service_logs_dir,
@@ -125,9 +124,10 @@ class rundeck (
   $security_config       = $rundeck::params::security_config
 ) inherits rundeck::params {
 
-  validate_re($package_version, '\d+\.\d+\.\d+')
+  #validate_re($package_ensure, '\d+\.\d+\.\d+')
+
   validate_string($jre_name)
-  validate_string($jre_version)
+  validate_string($jre_ensure)
   validate_re($auth_type, ['^file$', '^ldap$'])
   validate_hash($auth_users)
   validate_bool($ssl_enabled)
