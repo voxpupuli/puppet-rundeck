@@ -20,7 +20,7 @@ class rundeck::config(
   $grails_server_url     = $rundeck::grails_server_url,
   $dataSource_dbCreate   = $rundeck::dataSource_dbCreate,
   $dataSource_url        = $rundeck::dataSource_url,
-  $dataSource_driverClassName = $rundeck::dataSource_driverClassName,
+  $dataSource_hash       = $rundeck::dataSource_hash,
   $dataSource_username   = $rundeck::dataSource_username,
   $dataSource_password   = $rundeck::dataSource_password,
   $dataSource_dialect    = $rundeck::dataSource_dialect,

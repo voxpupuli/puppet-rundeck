@@ -64,7 +64,7 @@
 # [*dataSource_url*]
 #  The jdbc url for the database.
 
-# [*dataSource_driverClassName*]
+# [*dataSource_hash*]
 #  Datasource Driver Class Name   
 #  
 # [*dataSource_username*]
@@ -123,7 +123,7 @@ class rundeck (
   $grails_server_url     = $rundeck::params::grails_server_url,
   $dataSource_dbCreate   = $rundeck::params::dataSource_dbCreate,
   $dataSource_url        = $rundeck::params::dataSource_url,
-  $dataSource_driverClassName = $rundeck::params::driverClassName,
+  $dataSource_hash       = $rundeck::params::hash,
   $dataSource_username   = $rundeck::params::dataSource_username,
   $dataSource_password   = $rundeck::params::dataSource_password,
   $dataSource_dialect    = $rundeck::params::dataSource_dialect,
@@ -151,7 +151,7 @@ class rundeck (
   validate_string($grails_server_url)
   validate_string($dataSource_dbCreate)
   validate_string($dataSource_url)
-  validate_string($dataSource_driverClassName)
+  validate_string($dataSource_hash)
   validate_string($dataSource_username)
   validate_string($dataSource_password)
   validate_string($dataSource_dialect)

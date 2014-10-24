@@ -84,7 +84,7 @@ class rundeck::params {
   $grails_server_url = "http://${::fqdn}:4440"
   $dataSource_dbCreate = 'update'
   $dataSource_url = 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
-  $dataSource_driverClassName = ''
+  $dataSource_hash = ''
   $dataSource_username = 'dbuser'
   $dataSource_password = 'dbpass'
   $dataSource_dialect = ''
