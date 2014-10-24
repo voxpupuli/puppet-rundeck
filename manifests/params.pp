@@ -12,19 +12,17 @@ class rundeck::params {
   case $::osfamily {
     'Debian': {
       $package_name = 'rundeck'
-      $package_version = '2.2.3-1-GA'
-      $package_ensure = 'present'
+      $package_ensure = '2.2.3-1-GA'
       $service_name = 'rundeckd'
       $jre_name = 'openjdk-6-jre'
-      $jre_version = '6b30-1.13.1-1ubuntu2~0.12.04.1'
+      $jre_ensure = 'installed'
     }
     'RedHat', 'Amazon': {
       $package_name = 'rundeck'
-      $package_version = '2.2.3-1.25.GA'
       $package_ensure = 'installed'
       $service_name = 'rundeckd'
       $jre_name = 'java-1.6.0-openjdk'
-      $jre_version = '1.6.0.0-1.66.1.13.0.el6'
+      $jre_ensure = 'installed'
     }
     default: {
       fail("${::operatingsystem} not supported")
