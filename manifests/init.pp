@@ -63,6 +63,18 @@
 #
 # [*dataSource_url*]
 #  The jdbc url for the database.
+
+# [*dataSource_driverClassName*]
+#  Datasource Driver Class Name   
+#  
+# [*dataSource_username*]
+#  Datasource Username
+#
+# [*dataSource_password*]
+#  Datasource Password
+#
+# [*dataSource_dialect*]
+#  Datasource dialect
 #
 # [*keystore*]
 #  Full path to the java keystore to be used by Rundeck.
@@ -111,6 +123,10 @@ class rundeck (
   $grails_server_url     = $rundeck::params::grails_server_url,
   $dataSource_dbCreate   = $rundeck::params::dataSource_dbCreate,
   $dataSource_url        = $rundeck::params::dataSource_url,
+  $dataSource_driverClassName = $rundeck::params::driverClassName,
+  $dataSource_username   = $rundeck::params::dataSource_username,
+  $dataSource_password   = $rundeck::params::dataSource_password,
+  $dataSource_dialect    = $rundeck::params::dataSource_dialect,
   $keystore              = $rundeck::params::keystore,
   $keystore_password     = $rundeck::params::keystore_password,
   $key_password          = $rundeck::params::key_password,
@@ -135,6 +151,11 @@ class rundeck (
   validate_string($grails_server_url)
   validate_string($dataSource_dbCreate)
   validate_string($dataSource_url)
+  validate_string($dataSource_driverClassName)
+  validate_string($dataSource_username)
+  validate_string($dataSource_password)
+  validate_string($dataSource_dialect)
+  validate_absolute_path($keystore)
   validate_absolute_path($keystore)
   validate_string($keystore_password)
   validate_string($key_password)

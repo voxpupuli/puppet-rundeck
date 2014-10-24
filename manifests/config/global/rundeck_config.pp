@@ -13,6 +13,10 @@ class rundeck::config::global::rundeck_config(
   $grails_server_url   = $rundeck::config::grails_server_url,
   $dataSource_dbCreate = $rundeck::config::dataSource_dbCreate,
   $dataSource_url      = $rundeck::config::dataSource_url,
+  $dataSource_driverClassName = $rundeck::config::dataSource_driverClassName,
+  $dataSource_username = $rundeck::config::dataSource_username,
+  $dataSource_password = $rundeck::config::dataSource_password,
+  $dataSource_dialect  = $rundeck::config::dataSource_dialect,
   $properties_dir      = $rundeck::config::properties_dir,
   $user                = $rundeck::config::user,
   $group               = $rundeck::config::group,
@@ -29,7 +33,7 @@ class rundeck::config::global::rundeck_config(
 
   file { $properties_file:
     ensure  => present,
-    content => template('rundeck/rundeck-config.erb')
+    content => template('rundeck/rundeck-config.erb'),
     owner   => $user,
     group   => $group,
     mode    => '0640',

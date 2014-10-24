@@ -20,7 +20,7 @@ class rundeck::params {
     }
     'RedHat', 'Amazon': {
       $package_name = 'rundeck'
-      $package_version = '2.0.3-1.14.GA'
+      $package_version = '2.2.3-1.25.GA'
       $package_ensure = 'installed'
       $service_name = 'rundeckd'
       $jre_name = 'java-1.6.0-openjdk'
@@ -86,6 +86,10 @@ class rundeck::params {
   $grails_server_url = "http://${::fqdn}:4440"
   $dataSource_dbCreate = 'update'
   $dataSource_url = 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
+  $dataSource_driverClassName = ''
+  $dataSource_username = 'dbuser'
+  $dataSource_password = 'dbpass'
+  $dataSource_dialect = ''
 
   $keystore = '/etc/rundeck/ssl/keystore'
   $keystore_password = 'adminadmin'
