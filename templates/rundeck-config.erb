@@ -3,12 +3,12 @@ rdeck.base = "<%= @rdeck_base %>"
 rss.enabled = "<%= @rss_enabled %>"
 
 dataSource {
-  dbCreate = "<% @dataSource_dbCreate %>"
-  url = "<%= @dataSource_url %>"
-  driverClassName = "<%= @dataSource_hash %>"
-  username = "<%= @dataSource_username %>"
-  password = "<%= @dataSource_password %>"
-  dialect = "<%= @dataSource_dialect %>"
+  dbCreate = "<% @dataSource_properties['dbCreate'] %>"
+  url = "<%= @dataSource_properties['url'] %>"
+  driverClassName = "<%= @dataSource_properties['driverClassName'] %>"
+  username = "<%= @dataSource_properties['username'] %>"
+  password = "<%= @dataSource_properties['password'] %>"
+  dialect = "<%= @dataSource_properties['dialect'] %>"
 }
 
 grails {
