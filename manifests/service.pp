@@ -14,11 +14,12 @@ class rundeck::service(
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
-
-  file { '/etc/init.d/rundeckd':
-    ensure  => present,
-    mode    => '0755',
-    content => template('rundeck/init.erb')
+  if $::osfamily == 'Debian' {
+      file { '/etc/init.d/rundeckd':
+        ensure  => present,
+        mode    => '0755',
+        content => template('rundeck/init.erb')
+      }
   }
 
   service { $service_name:
