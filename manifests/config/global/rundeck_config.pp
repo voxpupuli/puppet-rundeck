@@ -34,6 +34,7 @@ class rundeck::config::global::rundeck_config(
     owner   => $user,
     group   => $group,
     mode    => '0640',
-    require => File[$properties_dir]
+    require => File[$properties_dir],
+    notify  => Service[$::rundeck::params::service_name],
   }
 }
