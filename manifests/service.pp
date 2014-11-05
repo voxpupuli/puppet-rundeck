@@ -27,6 +27,6 @@ class rundeck::service(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => File['/etc/init.d/rundeckd']
+    require    => Package['rundeck']
   }
 }
