@@ -18,7 +18,8 @@ class rundeck::service(
       file { '/etc/init.d/rundeckd':
         ensure  => present,
         mode    => '0755',
-        content => template('rundeck/init.erb')
+        content => template('rundeck/init.erb'),
+        before  => Service["${service_name}"],
       }
   }
 
