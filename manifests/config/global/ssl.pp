@@ -24,7 +24,7 @@ class rundeck::config::global::ssl(
   ensure_resource('file', "${properties_dir}/ssl", {'ensure' => 'directory', 'owner' => $user, 'group' => $group, 'require' => File[$properties_dir]} )
 
   Ini_setting {
-    notify => Service[$servicce_name],
+    notify => Service[$service_name],
   }
 
   file { $properties_file:
