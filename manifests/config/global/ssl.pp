@@ -14,7 +14,8 @@ class rundeck::config::global::ssl(
   $truststore_password = $rundeck::config::truststore_password,
   $properties_dir      = $rundeck::config::properties_dir,
   $user                = $rundeck::config::user,
-  $group               = $rundeck::config::group
+  $group               = $rundeck::config::group,
+  $service_name        = $rundeck::service_name,
 ) {
 
   $properties_file = "${properties_dir}/ssl/ssl.properties"
@@ -31,6 +32,7 @@ class rundeck::config::global::ssl(
     owner   => $user,
     group   => $group,
     mode    => '0640',
+    notify  => Service[$service_name],
     require => File[$properties_dir]
   }
 
