@@ -16,7 +16,8 @@ Spec.configure do |c|
 
 	c.before :suite do
 		#The gets around a bug where windows can't validate the cert when using https
-		forge_repo = '--module_repository=http://forge.puppetlabs.com'
+		#forge_repo = '--module_repository=http://forge.puppetlabs.com'
+		forge_repo = ''
 
 		hosts.each do |host|
 			c.host = host
