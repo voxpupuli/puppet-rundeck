@@ -31,6 +31,7 @@ Spec.configure do |c|
 
       
 			on host, puppet('module','install', forge_repo, "puppetlabs-stdlib"), { :acceptable_exit_codes => [0,1] }
+			on host, puppet('module','install', forge_repo, "puppetlabs-inifile"), { :acceptable_exit_codes => [0,1] }
 	    
 	  end
   end
