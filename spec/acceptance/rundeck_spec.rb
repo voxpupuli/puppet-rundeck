@@ -53,7 +53,7 @@ describe 'rundeck class' do
   context 'older package version', :if => fact('osfamily').eql?('Debian') do
     it 'should work with no errors' do
 
-      shell('apt-get -y --purge remove rundeck')
+      puppet('resource', 'package', 'rundeck', 'ensure=absent')
 
       pp = <<-EOS
       class { 'rundeck':
@@ -74,7 +74,7 @@ describe 'rundeck class' do
   context 'older package version', :if => fact('osfamily').eql?('RedHat') do
     it 'should work with no errors' do
 
-      shell('yum -y remove rundeck')
+      puppet('resource', 'package', 'rundeck', 'ensure=absent')
 
       pp = <<-EOS
         class { 'rundeck':
