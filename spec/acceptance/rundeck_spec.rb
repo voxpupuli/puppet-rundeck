@@ -18,7 +18,7 @@ describe 'rundeck class' do
     end
 
     describe package('rundeck') do
-      it { should be_installed.with_version('2.0.3') }
+      it { should be_installed }
     end
 
     describe service('rundeckd') do
@@ -42,7 +42,7 @@ describe 'rundeck class' do
     end
 
     describe package('rundeck') do
-      it { should be_installed.with_version('2.0.3-1.14.GA') }
+      it { should be_installed }
     end
 
     describe service('rundeckd') do
