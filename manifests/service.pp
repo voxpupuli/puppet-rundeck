@@ -19,7 +19,7 @@ class rundeck::service(
         ensure  => present,
         mode    => '0755',
         content => template('rundeck/init.erb'),
-        before  => Service["${service_name}"],
+        before  => Service[$service_name],
       }
   }
 
