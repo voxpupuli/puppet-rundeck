@@ -20,7 +20,11 @@ export RDECK_JVM="-Drdeck.config=<%= @properties_dir %> \
 -Drdeck.runlogs=<%= @logs_dir %> \
 -Drundeck.config.location=<%= @properties_dir %>/rundeck-config.groovy<% if @auth_type.eql?('file') %> \
 -Djava.security.auth.login.config=<%= @properties_dir %>/jaas-loginmodule.conf \
--Dloginmodule.name=RDpropertyfilelogin<% end %>"
+-Dloginmodule.name=RDpropertyfilelogin
+<% elsif @auth_type.eql?('ldap') %> \
+-Djava.security.auth.login.config=<%= @properties_dir %>/jaas-ldaploginmodule.conf \
+-Dloginmodule.name=RDldaplogin
+<% end %>"
 
 
 RDECK_JVM="$RDECK_JVM <%= @jvm_args %>"

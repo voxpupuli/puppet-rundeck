@@ -1,0 +1,22 @@
+RDldaplogin {
+    com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule required
+        debug="true"
+        contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
+        providerUrl="ldap://<%= @ldap_server %>:<%= @ldap_port %>"
+        authenticationMethod="simple"
+        forceBindingLogin="<%= @ldap_force_binding %>"<% if @ldap_bind_dn %>
+        bindDn="CN=<%= @ldap_bind_dn%>,<%= @ldap_user_base_dn %>"<% end %><% if @ldap_bind_password %>
+        bindPassword="<%= @ldap_bind_password%>"<% end %>
+        userBaseDn="<%= @ldap_user_base_dn %>"
+        userRdnAttribute="<%= @ldap_user_rdn_attribute %>"
+        userIdAttribute="<%= @ldap_user_id_attribute %>"
+        userObjectClass="<%= @ldap_user_object_class %>"
+        roleBaseDn="<%= @ldap_role_base_dn %>"
+        roleNameAttribute="<%= @ldap_role_name_attribute %>"
+        roleMemberAttribute="<%= @ldap_role_member_attribute %>"
+        roleObjectClass="<%= @ldap_role_object_class %>"<% if @ldap_supplemental_roles %>
+        supplementalRoles="<%= @ldap_supplemental_roles %>"<% end %>
+        cacheDurationMillis="300000"
+        reportStatistics="true";
+
+};
