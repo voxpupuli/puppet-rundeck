@@ -43,6 +43,7 @@ class rundeck::config(
   $ldap_role_member_attribute = $rundeck::ldap_role_member_attribute,
   $ldap_template_name         = $rundeck::ldap_template_name,
   $ldap_supplemental_roles    = $rundeck::ldap_supplemental_roles,
+  $ldap_nested_groups         = $rundeck::ldap_nested_groups,
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)

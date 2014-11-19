@@ -137,6 +137,7 @@ class rundeck (
   $ldap_role_member_attribute = $rundeck::params::ldap_role_member_attribute,
   $ldap_template_name         = $rundeck::params::ldap_template_name,
   $ldap_supplemental_roles    = $rundeck::params::ldap_supplemental_roles,
+  $ldap_nested_groups         = $rundeck::params::ldap_nested_groups,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')

@@ -120,4 +120,5 @@ class rundeck::params {
   $ldap_role_member_attribute = 'member'
   $ldap_template_name = 'rundeck/jaas-ldaploginmodule.conf.erb'
   $ldap_supplemental_roles = 'user'
+  $ldap_nested_groups = true
 }

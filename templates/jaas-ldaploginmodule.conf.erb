@@ -17,6 +17,6 @@ RDldaplogin {
         roleObjectClass="<%= @ldap_role_object_class %>"<% if @ldap_supplemental_roles %>
         supplementalRoles="<%= @ldap_supplemental_roles %>"<% end %>
         cacheDurationMillis="300000"
-        reportStatistics="true";
-
+        reportStatistics="true"
+        nestedGroups="<%= @ldap_nested_groups %>";
 };

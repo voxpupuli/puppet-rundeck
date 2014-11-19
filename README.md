@@ -151,6 +151,9 @@ The template you want to use for the ldap config file. Deafult 'rundeck/jaas-lda
 #####`ldap_supplemental_roles`
 Comma-separated list of role names. These roles well be added to authenticated users. Deafult 'user'.
 
+#####`ldap_nested_groups`
+If true, will resolve all nested groups for authenticated users. Deafult true.
+
 ####Define: `rundeck::plugin`
 A definition for installing rundeck plugins
 
