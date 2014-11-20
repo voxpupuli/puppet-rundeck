@@ -120,6 +120,9 @@ class rundeck (
   $truststore            = $rundeck::params::truststore,
   $truststore_password   = $rundeck::params::truststore_password,
   $service_name          = $rundeck::params::service_name,
+  $service_manage        = $rundeck::params::service_manage,
+  $service_script        = $rundeck::params::service_script,
+  $service_config        = $rundeck::params::service_config,
   $mail_config           = $rundeck::params::mail_config,
   $security_config       = $rundeck::params::security_config
 ) inherits rundeck::params {

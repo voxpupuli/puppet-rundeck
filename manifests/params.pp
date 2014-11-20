@@ -29,6 +29,10 @@ class rundeck::params {
     }
   }
 
+  $service_manage = false
+  $service_config = ''
+  $service_script = ''
+
   $rdeck_base = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
