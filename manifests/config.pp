@@ -7,6 +7,7 @@
 # This private class is called from `rundeck` to manage the configuration
 #
 class rundeck::config(
+<<<<<<< HEAD
   $auth_type             = $rundeck::auth_type,
   $auth_users            = $rundeck::auth_users,
   $user                  = $rundeck::user,
@@ -27,7 +28,8 @@ class rundeck::config(
   $service_logs_dir      = $rundeck::service_logs_dir,
   $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
-  $security_config       = $rundeck::security_config
+  $security_config       = $rundeck::security_config,
+  $ldap_config           = $rundeck::ldap_config
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
@@ -40,7 +42,7 @@ class rundeck::config(
   $properties_dir = $framework_properties['framework.etc.dir']
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
-  
+
   if $auth_type == 'file' {
     file { "${properties_dir}/jaas-loginmodule.conf":
       owner   => $user,
@@ -58,6 +60,15 @@ class rundeck::config(
       content => template('rundeck/realm.properties.erb'),
       require => File[$properties_dir],
       notify  => Service[$service_name],
+    }
+  }
+  elsif $auth_type == 'ldap' {
+    file { "${properties_dir}/jaas-ldaploginmodule.conf":
+      owner   => $user,
+      group   => $group,
+      mode    => '0640',
+      content => template($ldap_template_name),
+      require => File[$properties_dir]
     }
   }
 

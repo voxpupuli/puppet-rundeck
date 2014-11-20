@@ -119,6 +119,7 @@ class rundeck (
   $mail_config           = $rundeck::params::mail_config,
   $security_config       = $rundeck::params::security_config,
   $manage_yum_repo       = $rundeck::params::manage_yum_repo,
+  $ldap_config           = $rundeck::params::ldap_config
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
