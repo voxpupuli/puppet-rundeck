@@ -6,8 +6,12 @@ rundeck.security.useHMacRequestTokens = <%= @security_config['useHMacRequestToke
 rundeck.security.apiCookieAccess.enabled = <%= @security_config['apiCookieAccess'] %>
 
 dataSource {
-  dbCreate = "<%= @dataSource_dbCreate %>"
-  url = "<%= @dataSource_url %>"
+  dbCreate = "<% @dataSource_properties['dbCreate'] %>"
+  url = "<%= @dataSource_properties['url'] %>"
+  driverClassName = "<%= @dataSource_properties['driverClassName'] %>"
+  username = "<%= @dataSource_properties['username'] %>"
+  password = "<%= @dataSource_properties['password'] %>"
+  dialect = "<%= @dataSource_properties['dialect'] %>"
 }
 
 grails {
