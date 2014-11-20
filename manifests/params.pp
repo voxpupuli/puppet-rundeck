@@ -118,4 +118,23 @@ class rundeck::params {
   $ssl_port = '4443'
 
   $package_source = 'http://dl.bintray.com/rundeck/rundeck-deb'
+
+  $ldap_config = {
+    'server'                => undef,
+    'port'                  => '389',
+    'force_binding'         => false,
+    'bind_dn'               => undef,
+    'bind_password'         => undef,
+    'user_object_class'     => 'user',
+    'user_base_dn'          => undef,
+    'user_rdn_attribute'    => 'sAMAccountName',
+    'user_id_attribute'     => 'sAMAccountName',
+    'role_object_clas'      => 'group',
+    'role_base_dn'          => undef,
+    'role_name_attribute'   => 'cn',
+    'role_member_attribute' => 'member',
+    'template_name'         => 'rundeck/jaas-ldaploginmodule.conf.erb',
+    'supplemental_roles'    => 'user',
+    'nested_groups'         => true
+  }
 }
