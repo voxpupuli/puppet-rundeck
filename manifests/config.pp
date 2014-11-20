@@ -39,6 +39,7 @@ class rundeck::config(
   $admin_user = $framework_properties['framework.server.username']
   $admin_password = $framework_properties['framework.server.password']
   $properties_dir = $framework_properties['framework.etc.dir']
+  $ldap_template_name = $ldap_config['template_name']
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 
