@@ -13,6 +13,7 @@ class rundeck::install(
   $package_ensure     = $rundeck::package_ensure,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
   $rdeck_home         = $rundeck::rdeck_home,
+  $projects_dir       = $rundeck::framework_defaults['framework.projects.dir'],
 ) {
 
   if $caller_module_name != $module_name {
@@ -33,7 +34,7 @@ class rundeck::install(
           enabled  => '1',
           gpgcheck => '0',
           priority => '1',
-          before   => Package["rundeck"],
+          before   => Package['rundeck'],
         }
       }
 
