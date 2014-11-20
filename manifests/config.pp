@@ -26,6 +26,7 @@ class rundeck::config(
   $truststore            = $rundeck::truststore,
   $truststore_password   = $rundeck::truststore_password,
   $service_logs_dir      = $rundeck::service_logs_dir,
+  $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config
 ) inherits rundeck::params {
@@ -49,7 +50,8 @@ class rundeck::config(
       group   => $group,
       mode    => '0640',
       content => template('rundeck/jaas-loginmodule.conf.erb'),
-      require => File[$properties_dir]
+      require => File[$properties_dir],
+      notify  => Service[$service_name],
     }
 
     file { "${properties_dir}/realm.properties":
@@ -57,7 +59,8 @@ class rundeck::config(
       group   => $group,
       mode    => '0640',
       content => template('rundeck/realm.properties.erb'),
-      require => File[$properties_dir]
+      require => File[$properties_dir],
+      notify  => Service[$service_name],
     }
   }
 
@@ -66,6 +69,7 @@ class rundeck::config(
     group   => $group,
     mode    => '0640',
     content => template('rundeck/log4j.properties.erb'),
+    notify  => Service[$service_name],
     require => File[$properties_dir]
   }
 
@@ -90,6 +94,7 @@ class rundeck::config(
     group   => $group,
     mode    => '0640',
     content => template('rundeck/profile.erb'),
+    notify  => Service[$service_name],
     require => File[$properties_dir]
   }
 
