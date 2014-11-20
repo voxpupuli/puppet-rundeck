@@ -39,11 +39,14 @@ define rundeck::config::project(
   $file_copier_provider   = $rundeck::params::file_copier_provider,
   $node_executor_provider = $rundeck::params::node_executor_provider,
   $resource_sources       = $rundeck::params::resource_sources,
-  $ssh_keypath            = $rundeck::framework_defaults['framework.ssh.keypath'],
-  $projects_dir           = $rundeck::framework_defaults['framework.projects.dir'],
+  $framework_config       = $rundeck::framework_config,
 ) {
 
-  include rundeck
+  include rundeck::params
+
+  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+  $ssh_keypath            = $rundeck::framework_properties['framework.ssh.keypath']
+  $projects_dir           = $rundeck::framework_properties['framework.projects.dir']
 
   $user                   = $rundeck::user
   $group                  = $rundeck::group

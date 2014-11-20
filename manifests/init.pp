@@ -88,10 +88,6 @@
 # [*group*]
 #   The group permission that rundeck is installed as.
 #
-# [*framework_defaults_overrides*]
-#   accepts a hash with override settings for rundeck::params::framework_defaults
-#   This is merged with the params version and stored in ::rundeck::framework_config
-#
 # [*rdeck_home*]
 #   directory under which the projects directories live.  
 # === Examples
@@ -112,6 +108,7 @@ class rundeck (
   $auth_users                   = $rundeck::params::auth_users,
   $service_logs_dir             = $rundeck::params::service_logs_dir,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
+  $framework_config             = $rundeck::params::framework_config,
   $projects_organization        = $rundeck::params::projects_default_org,
   $projects_description         = $rundeck::params::projects_default_desc,
   $rd_loglevel                  = $rundeck::params::loglevel,
@@ -133,13 +130,10 @@ class rundeck (
   $ldap_config                  = $rundeck::params::ldap_config,
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,
-  $framework_defaults_overrides = {},
   $rdeck_home                   = $rundeck::params::rdeck_home,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
-
-  $framework_config = merge($::rundeck::params::framework_defaults, $::rundeck::framework_defaults_overrides)
 
   validate_string($jre_name)
   validate_string($jre_ensure)
