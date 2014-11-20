@@ -106,6 +106,9 @@ A hash of the notification email configuraton.
 #####`security_config`
 A hash of the rundeck security configuration.
 
+#####`manage_yum_repo`
+Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
+
 ####Define: `rundeck::plugin`
 A definition for installing rundeck plugins
 

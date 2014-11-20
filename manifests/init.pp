@@ -124,7 +124,8 @@ class rundeck (
   $service_script        = $rundeck::params::service_script,
   $service_config        = $rundeck::params::service_config,
   $mail_config           = $rundeck::params::mail_config,
-  $security_config       = $rundeck::params::security_config
+  $security_config       = $rundeck::params::security_config,
+  $manage_yum_repo       = $rundeck::params::manage_yum_repo,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
