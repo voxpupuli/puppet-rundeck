@@ -11,6 +11,7 @@ class rundeck::install(
   $jre_ensure         = $rundeck::jre_ensure,
   $package_source     = $rundeck::package_source,
   $package_ensure     = $rundeck::package_ensure,
+  $manage_yum_repo    = $rundeck::manage_yum_repo,
 ) {
 
   if $caller_module_name != $module_name {
@@ -21,14 +22,15 @@ class rundeck::install(
 
   case $::osfamily {
     'RedHat': {
-
-      yumrepo { 'bintray-rundeck':
-        baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
-        descr    => 'bintray rundeck repo',
-        enabled  => '1',
-        gpgcheck => '0',
-        priority => '1',
-        before   => Package['rundeck'],
+      if $manage_yum_repo == true {
+        yumrepo { 'bintray-rundeck':
+          baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
+          descr    => 'bintray rundeck repo',
+          enabled  => '1',
+          gpgcheck => '0',
+          priority => '1',
+          before   => Package["rundeck"],
+        }
       }
 
       ensure_resource('package', 'rundeck', {'ensure' => $package_ensure} )
