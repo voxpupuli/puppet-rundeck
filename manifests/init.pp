@@ -140,7 +140,6 @@ class rundeck (
   validate_re($auth_type, ['^file$', '^ldap$'])
   validate_hash($auth_users)
   validate_bool($ssl_enabled)
-  validate_hash($framework_config)
   validate_string($projects_organization)
   validate_string($projects_description)
   validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$'])
