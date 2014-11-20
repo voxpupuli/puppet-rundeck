@@ -45,8 +45,8 @@ define rundeck::config::project(
   include rundeck::params
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
-  $ssh_keypath            = $rundeck::framework_properties['framework.ssh.keypath']
-  $projects_dir           = $rundeck::framework_properties['framework.projects.dir']
+  $ssh_keypath            = $framework_properties['framework.ssh.keypath']
+  $projects_dir           = $framework_properties['framework.projects.dir']
 
   $user                   = $rundeck::user
   $group                  = $rundeck::group
