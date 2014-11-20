@@ -129,7 +129,7 @@ class rundeck::params {
     'user_base_dn'          => undef,
     'user_rdn_attribute'    => 'sAMAccountName',
     'user_id_attribute'     => 'sAMAccountName',
-    'role_object_clas'      => 'group',
+    'role_object_class'     => 'group',
     'role_base_dn'          => undef,
     'role_name_attribute'   => 'cn',
     'role_member_attribute' => 'member',

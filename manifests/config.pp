@@ -7,7 +7,6 @@
 # This private class is called from `rundeck` to manage the configuration
 #
 class rundeck::config(
-<<<<<<< HEAD
   $auth_type             = $rundeck::auth_type,
   $auth_users            = $rundeck::auth_users,
   $user                  = $rundeck::user,
