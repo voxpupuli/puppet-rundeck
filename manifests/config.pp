@@ -28,10 +28,10 @@ class rundeck::config(
   $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
-  $ldap_config           = $rundeck::ldap_config
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+  $ldap_config          = merge($rundeck::params::ldap_config, $rundeck::ldap_config)
 
   $logs_dir = $framework_properties['framework.logs.dir']
   $rdeck_base = $framework_properties['rdeck.base']
