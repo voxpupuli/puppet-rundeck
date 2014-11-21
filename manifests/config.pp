@@ -28,10 +28,10 @@ class rundeck::config(
   $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
-  $ldap_config           = $rundeck::ldap_config
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+  $ldap_config          = merge($rundeck::params::ldap_config, $rundeck::ldap_config)
 
   $logs_dir = $framework_properties['framework.logs.dir']
   $rdeck_base = $framework_properties['rdeck.base']
@@ -39,6 +39,7 @@ class rundeck::config(
   $admin_user = $framework_properties['framework.server.username']
   $admin_password = $framework_properties['framework.server.password']
   $properties_dir = $framework_properties['framework.etc.dir']
+  $ldap_template_name = $ldap_config['template_name']
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 

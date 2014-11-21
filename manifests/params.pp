@@ -35,12 +35,11 @@ class rundeck::params {
   $service_script = ''
 
   $rdeck_base = '/var/lib/rundeck'
+  $rdeck_home = '/var/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
   $auth_type = 'file'
   $auth_users = {}
-
-  $framework_config = {}
 
   $framework_defaults = {
     'framework.server.name'     => $::fqdn,

@@ -12,6 +12,8 @@ class rundeck::install(
   $package_source     = $rundeck::package_source,
   $package_ensure     = $rundeck::package_ensure,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
+  $rdeck_home         = $rundeck::rdeck_home,
+  $projects_dir       = $rundeck::framework_defaults['framework.projects.dir'],
 ) {
 
   if $caller_module_name != $module_name {
@@ -19,6 +21,9 @@ class rundeck::install(
   }
 
   ensure_resource('package', $jre_name, {'ensure' => $jre_ensure} )
+
+  $user = $rundeck::user
+  $group = $rundeck::group
 
   case $::osfamily {
     'RedHat': {
@@ -29,7 +34,7 @@ class rundeck::install(
           enabled  => '1',
           gpgcheck => '0',
           priority => '1',
-          before   => Package["rundeck"],
+          before   => Package['rundeck'],
         }
       }
 
@@ -62,4 +67,12 @@ class rundeck::install(
       err("The osfamily: ${::osfamily} is not supported")
     }
   }
+  file { $rdeck_home:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
+  }
+
+  ensure_resource(file, $projects_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group})
 }

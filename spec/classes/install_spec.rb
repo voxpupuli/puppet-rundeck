@@ -17,7 +17,11 @@ describe 'rundeck' do
           it { should_not contain_yumrepo('bintray-rundeck') }
         end
 
-      end
+          it { should contain_file('/var/rundeck').with(
+            'ensure' => 'directory'
+          ) }
+
+     end
     end
   end
 end

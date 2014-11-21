@@ -82,6 +82,14 @@
 # [*security_config*]
 #  A hash of the rundeck security configuration.
 #
+# [*user*]
+#   The user that rundeck is installed as.
+#
+# [*group*]
+#   The group permission that rundeck is installed as.
+#
+# [*rdeck_home*]
+#   directory under which the projects directories live.  
 # === Examples
 #
 # Installing rundeck with a custom jre:
@@ -92,34 +100,37 @@
 # }
 #
 class rundeck (
-  $package_ensure        = $rundeck::params::package_ensure,
-  $package_source        = $rundeck::params::package_source,
-  $jre_name              = $rundeck::params::jre_name,
-  $jre_ensure            = $rundeck::params::jre_ensure,
-  $auth_type             = $rundeck::params::auth_type,
-  $auth_users            = $rundeck::params::auth_users,
-  $service_logs_dir      = $rundeck::params::service_logs_dir,
-  $ssl_enabled           = $rundeck::params::ssl_enabled,
-  $framework_config      = $rundeck::params::framework_config,
-  $projects_organization = $rundeck::params::projects_default_org,
-  $projects_description  = $rundeck::params::projects_default_desc,
-  $rd_loglevel           = $rundeck::params::loglevel,
-  $rss_enabled           = $rundeck::params::rss_enabled,
-  $grails_server_url     = $rundeck::params::grails_server_url,
-  $dataSource_config     = $rundeck::params::dataSource_config,
-  $keystore              = $rundeck::params::keystore,
-  $keystore_password     = $rundeck::params::keystore_password,
-  $key_password          = $rundeck::params::key_password,
-  $truststore            = $rundeck::params::truststore,
-  $truststore_password   = $rundeck::params::truststore_password,
-  $service_name          = $rundeck::params::service_name,
-  $service_manage        = $rundeck::params::service_manage,
-  $service_script        = $rundeck::params::service_script,
-  $service_config        = $rundeck::params::service_config,
-  $mail_config           = $rundeck::params::mail_config,
-  $security_config       = $rundeck::params::security_config,
-  $manage_yum_repo       = $rundeck::params::manage_yum_repo,
-  $ldap_config           = $rundeck::params::ldap_config
+  $package_ensure               = $rundeck::params::package_ensure,
+  $package_source               = $rundeck::params::package_source,
+  $jre_name                     = $rundeck::params::jre_name,
+  $jre_ensure                   = $rundeck::params::jre_ensure,
+  $auth_type                    = $rundeck::params::auth_type,
+  $auth_users                   = $rundeck::params::auth_users,
+  $service_logs_dir             = $rundeck::params::service_logs_dir,
+  $ssl_enabled                  = $rundeck::params::ssl_enabled,
+  $framework_config             = $rundeck::params::framework_config,
+  $projects_organization        = $rundeck::params::projects_default_org,
+  $projects_description         = $rundeck::params::projects_default_desc,
+  $rd_loglevel                  = $rundeck::params::loglevel,
+  $rss_enabled                  = $rundeck::params::rss_enabled,
+  $grails_server_url            = $rundeck::params::grails_server_url,
+  $dataSource_config            = $rundeck::params::dataSource_config,
+  $keystore                     = $rundeck::params::keystore,
+  $keystore_password            = $rundeck::params::keystore_password,
+  $key_password                 = $rundeck::params::key_password,
+  $truststore                   = $rundeck::params::truststore,
+  $truststore_password          = $rundeck::params::truststore_password,
+  $service_name                 = $rundeck::params::service_name,
+  $service_manage               = $rundeck::params::service_manage,
+  $service_script               = $rundeck::params::service_script,
+  $service_config               = $rundeck::params::service_config,
+  $mail_config                  = $rundeck::params::mail_config,
+  $security_config              = $rundeck::params::security_config,
+  $manage_yum_repo              = $rundeck::params::manage_yum_repo,
+  $ldap_config                  = $rundeck::params::ldap_config,
+  $user                         = $rundeck::params::user,
+  $group                        = $rundeck::params::group,
+  $rdeck_home                   = $rundeck::params::rdeck_home,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
@@ -129,7 +140,6 @@ class rundeck (
   validate_re($auth_type, ['^file$', '^ldap$'])
   validate_hash($auth_users)
   validate_bool($ssl_enabled)
-  validate_hash($framework_config)
   validate_string($projects_organization)
   validate_string($projects_description)
   validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$'])
@@ -145,6 +155,9 @@ class rundeck (
   validate_string($service_name)
   validate_string($package_ensure)
   validate_hash($mail_config)
+  validate_string($user)
+  validate_string($group)
+  validate_absolute_path($rdeck_home)
 
   class { 'rundeck::install': } ->
   class { 'rundeck::config': } ->
