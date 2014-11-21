@@ -17,6 +17,7 @@ class rundeck::config(
   $projects_description  = $rundeck::projects_default_desc,
   $rd_loglevel           = $rundeck::rd_loglevel,
   $rss_enabled           = $rundeck::rss_enabled,
+  $clustermode_enabled   = $rundeck::clustermode_enabled,
   $grails_server_url     = $rundeck::grails_server_url,
   $dataSource_config     = $rundeck::dataSource_config,
   $keystore              = $rundeck::keystore,

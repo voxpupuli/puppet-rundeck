@@ -41,6 +41,7 @@ class rundeck::params {
   $auth_type = 'file'
   $auth_users = {}
 
+  $framework_config = {}
   $framework_defaults = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
@@ -57,7 +58,8 @@ class rundeck::params {
     'framework.libext.dir'      => '/var/lib/rundeck/libext',
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
     'framework.ssh.user'        => 'rundeck',
-    'framework.ssh.timeout'     => '0'
+    'framework.ssh.timeout'     => '0',
+    'rundeck.server.uuid'	=> $::serialnumber,
   }
 
   $mail_config = {}
@@ -89,6 +91,8 @@ class rundeck::params {
 
   $loglevel = 'INFO'
   $rss_enabled = false
+
+  $clustermode_enabled = false
 
   $grails_server_url = "http://${::fqdn}:4440"
 

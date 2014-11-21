@@ -7,16 +7,17 @@
 # This private class is called from rundeck::config used to manage the rundeck-config properties
 #
 class rundeck::config::global::rundeck_config(
-  $rd_loglevel       = $rundeck::config::loglevel,
-  $rdeck_base        = $rundeck::config::rdeck_base,
-  $rss_enabled       = $rundeck::config::rss_enabled,
-  $grails_server_url = $rundeck::config::grails_server_url,
-  $dataSource_config = $rundeck::config::dataSource_config,
-  $properties_dir    = $rundeck::config::properties_dir,
-  $user              = $rundeck::config::user,
-  $group             = $rundeck::config::group,
-  $mail_config       = $rundeck::config::mail_config,
-  $security_config   = $rundeck::config::security_config
+  $rd_loglevel         = $rundeck::config::loglevel,
+  $rdeck_base          = $rundeck::config::rdeck_base,
+  $rss_enabled         = $rundeck::config::rss_enabled,
+  $clustermode_enabled = $rundeck::config::clustermode_enabled,
+  $grails_server_url   = $rundeck::config::grails_server_url,
+  $dataSource_config   = $rundeck::config::dataSource_config,
+  $properties_dir      = $rundeck::config::properties_dir,
+  $user                = $rundeck::config::user,
+  $group               = $rundeck::config::group,
+  $mail_config         = $rundeck::config::mail_config,
+  $security_config     = $rundeck::config::security_config
 ) {
 
   $properties_file = "${properties_dir}/rundeck-config.groovy"

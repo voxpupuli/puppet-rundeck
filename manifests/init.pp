@@ -55,6 +55,9 @@
 # [*rss_enabled*]
 #  Boolean value if set to true enables RSS feeds that are public (non-authenticated)
 #
+# [*clustermode_enabled*]
+#  Boolean value if set to true enables cluster mode
+#
 # [*grails_server_url*]
 #  The url used in sending email notifications.
 #
@@ -113,6 +116,7 @@ class rundeck (
   $projects_description         = $rundeck::params::projects_default_desc,
   $rd_loglevel                  = $rundeck::params::loglevel,
   $rss_enabled                  = $rundeck::params::rss_enabled,
+  $clustermode_enabled          = $rundeck::params::clustermode_enabled,
   $grails_server_url            = $rundeck::params::grails_server_url,
   $dataSource_config            = $rundeck::params::dataSource_config,
   $keystore                     = $rundeck::params::keystore,
@@ -144,6 +148,7 @@ class rundeck (
   validate_string($projects_description)
   validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$'])
   validate_bool($rss_enabled)
+  validate_bool($clustermode_enabled)
   validate_string($grails_server_url)
   validate_hash($dataSource_config)
   validate_absolute_path($keystore)
