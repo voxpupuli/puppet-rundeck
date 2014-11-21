@@ -59,7 +59,7 @@ class rundeck::params {
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
     'framework.ssh.user'        => 'rundeck',
     'framework.ssh.timeout'     => '0',
-    'rundeck.server.uuid'	=> $::serialnumber,
+    'rundeck.server.uuid'       => $::serialnumber,
   }
 
   $mail_config = {}
