@@ -34,7 +34,7 @@ class rundeck::config(
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
-  $auth_config          = merge($rundeck::params::auth_config, $rundeck::auth_config)
+  $auth_config          = deep_merge($rundeck::params::auth_config, $rundeck::auth_config)
 
   $logs_dir = $framework_properties['framework.logs.dir']
   $rdeck_base = $framework_properties['rdeck.base']
