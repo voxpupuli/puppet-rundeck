@@ -89,7 +89,7 @@
 #   The group permission that rundeck is installed as.
 #
 # [*rdeck_home*]
-#   directory under which the projects directories live.  
+#   directory under which the projects directories live.
 # === Examples
 #
 # Installing rundeck with a custom jre:
@@ -104,7 +104,9 @@ class rundeck (
   $package_source               = $rundeck::params::package_source,
   $jre_name                     = $rundeck::params::jre_name,
   $jre_ensure                   = $rundeck::params::jre_ensure,
-  $auth_type                    = $rundeck::params::auth_type,
+  $auth_types                   = $rundeck::params::auth_types,
+  $auth_template                = $rundeck::params::auth_template,
+  $auth_config                  = $rundeck::params::auth_config,
   $auth_users                   = $rundeck::params::auth_users,
   $service_logs_dir             = $rundeck::params::service_logs_dir,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
@@ -127,7 +129,6 @@ class rundeck (
   $mail_config                  = $rundeck::params::mail_config,
   $security_config              = $rundeck::params::security_config,
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
-  $ldap_config                  = $rundeck::params::ldap_config,
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,
   $rdeck_home                   = $rundeck::params::rdeck_home,
@@ -137,7 +138,8 @@ class rundeck (
 
   validate_string($jre_name)
   validate_string($jre_ensure)
-  validate_re($auth_type, ['^file$', '^ldap$'])
+  validate_array($auth_types)
+  validate_hash($auth_config)
   validate_hash($auth_users)
   validate_bool($ssl_enabled)
   validate_string($projects_organization)

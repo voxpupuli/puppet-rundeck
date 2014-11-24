@@ -1,0 +1,20 @@
+com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule required
+  debug="true"
+  contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
+  providerUrl="ldap://<%= @auth_config['ldap']['server'] %>:<%= @auth_config['ldap']['port'] %>"
+  authenticationMethod="simple"
+  forceBindingLogin="<%= @auth_config['ldap']['force_binding'] %>"<% if @auth_config['ldap']['bind_dn'] %>
+  bindDn="CN=<%= @auth_config['ldap']['bind_dn']%>,<%= @auth_config['ldap']['user_base_dn'] %>"<% end %><% if @auth_config['ldap']['bind_password'] %>
+  bindPassword="<%= @auth_config['ldap']['bind_password']%>"<% end %>
+  userBaseDn="<%= @auth_config['ldap']['user_base_dn'] %>"
+  userRdnAttribute="<%= @auth_config['ldap']['user_rdn_attribute'] %>"
+  userIdAttribute="<%= @auth_config['ldap']['user_id_attribute'] %>"
+  userObjectClass="<%= @auth_config['ldap']['user_object_class'] %>"
+  roleBaseDn="<%= @auth_config['ldap']['role_base_dn'] %>"
+  roleNameAttribute="<%= @auth_config['ldap']['role_name_attribute'] %>"
+  roleMemberAttribute="<%= @auth_config['ldap']['role_member_attribute'] %>"
+  roleObjectClass="<%= @auth_config['ldap']['role_object_class'] %>"<% if @auth_config['ldap']['supplemental_roles'] %>
+  supplementalRoles="<%= @auth_config['ldap']['supplemental_roles'] %>"<% end %>
+  cacheDurationMillis="300000"
+  reportStatistics="true"
+  nestedGroups="<%= @auth_config['ldap']['nested_groups'] %>";

@@ -22,8 +22,8 @@ export RDECK_JVM="-Drdeck.config=<%= @properties_dir %> \
 -Djava.security.auth.login.config=<%= @properties_dir %>/jaas-loginmodule.conf \
 -Dloginmodule.name=RDpropertyfilelogin"
 <% elsif @auth_type.eql?('ldap') %> \
--Djava.security.auth.login.config=<%= @properties_dir %>/jaas-ldaploginmodule.conf \
--Dloginmodule.name=RDldaplogin"
+-Djava.security.auth.login.config=<%= @properties_dir %>/jaas-auth.conf \
+-Dloginmodule.name=authentication"
 <% end %>
 
 

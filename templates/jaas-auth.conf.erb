@@ -1,0 +1,15 @@
+authentication {
+
+  <%- @auth_types.each do |type|
+        case type
+        when 'ldap' -%>
+  <%=     scope.function_template(['rundeck/_auth_ldap.erb']) %>
+  <%-   when 'active_directory' -%>
+  <%=     scope.function_template(['rundeck/_auth_ad.erb']) %>
+  <%-   when 'file' -%>
+  <%=     scope.function_template(['rundeck/_auth_file.erb']) %>
+  <%-   else
+        end
+      end
+  -%>
+};

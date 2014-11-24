@@ -38,8 +38,53 @@ class rundeck::params {
   $rdeck_home = '/var/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
-  $auth_type = 'file'
+  $auth_types = ['file']
   $auth_users = {}
+  $auth_template = 'rundeck/jaas-auth.conf.erb'
+
+
+  $auth_config = {
+    'file' => {
+      'file' => '/etc/rundeck/realm.properties'
+    },
+    'ldap' => {
+      'server'                  => undef,
+      'port'                    => '389',
+      'force_binding'           => false,
+      'force_binding_use_root'  => false,
+      'bind_dn'                 => undef,
+      'bind_password'           => undef,
+      'user_base_dn'            => undef,
+      'user_rdn_attribute'      => 'uid',
+      'user_id_attribute'       => 'uid',
+      'user_password_attribute' => 'userPassword',
+      'user_object_class'       => 'user',
+      'role_base_dn'            => undef,
+      'role_name_attribute'     => 'cn',
+      'role_member_attribute'   => 'memberUid',
+      'role_object_class'       => 'group',
+      'nested_groups'           => true
+    },
+    'active_directory' => {
+      'server'                  => undef,
+      'port'                    => '389',
+      'force_binding'           => true,
+      'force_binding_use_root'  => true,
+      'bind_dn'                 => undef,
+      'bind_password'           => undef,
+      'user_base_dn'            => undef,
+      'user_rdn_attribute'      => 'sAMAccountName',
+      'user_id_attribute'       => 'sAMAccountName',
+      'user_password_attribute' => 'unicodePwd',
+      'user_object_class'       => 'user',
+      'role_base_dn'            => undef,
+      'role_name_attribute'     => 'cn',
+      'role_member_attribute'   => 'member',
+      'role_object_class'       => 'group',
+      'supplemental_roles'      => 'user',
+      'nested_groups'           => true
+    }
+  }
 
   $framework_defaults = {
     'framework.server.name'     => $::fqdn,
@@ -117,23 +162,4 @@ class rundeck::params {
   $ssl_port = '4443'
 
   $package_source = 'http://dl.bintray.com/rundeck/rundeck-deb'
-
-  $ldap_config = {
-    'server'                => undef,
-    'port'                  => '389',
-    'force_binding'         => false,
-    'bind_dn'               => undef,
-    'bind_password'         => undef,
-    'user_object_class'     => 'user',
-    'user_base_dn'          => undef,
-    'user_rdn_attribute'    => 'sAMAccountName',
-    'user_id_attribute'     => 'sAMAccountName',
-    'role_object_class'     => 'group',
-    'role_base_dn'          => undef,
-    'role_name_attribute'   => 'cn',
-    'role_member_attribute' => 'member',
-    'template_name'         => 'rundeck/jaas-ldaploginmodule.conf.erb',
-    'supplemental_roles'    => 'user',
-    'nested_groups'         => true
-  }
 }
