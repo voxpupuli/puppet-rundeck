@@ -49,13 +49,13 @@ class rundeck::params {
       'description' => 'Admin, all access',
       'context' => {
         'type' => 'project',
-        'rule' => '.*'
+        'rule' => '*'
       },
       'resource_types' => [
-        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
-        { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
-        { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
-        { 'type'  => 'node', 'rules' => [{'name' => 'allow','rule' => '.*'}] }
+        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] },
+        { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => '*'}] },
+        { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => '*'}] },
+        { 'type'  => 'node', 'rules' => [{'name' => 'allow','rule' => '*'}] }
       ],
       'by' => {
         'groups'    => ['admin'],
@@ -69,8 +69,8 @@ class rundeck::params {
         'rule' => 'rundeck'
       },
       'resource_types' => [
-        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
-        { 'type'  => 'project', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
+        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] },
+        { 'type'  => 'project', 'rules' => [{'name' => 'allow','rule' => '*'}] },
       ],
       'by' => {
         'groups'    => ['admin'],
