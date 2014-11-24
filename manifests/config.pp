@@ -59,11 +59,11 @@ class rundeck::config(
     $ldap_auth_flag = 'sufficient'
   }
   elsif 'ldap' in $auth_types {
-    $active_directory_auth_flag = 'sufficient'
-    $ldap_auth_flag = 'required'
+    $active_directory_auth_flag = 'required'
+    $ldap_auth_flag = 'sufficient'
   }
   else {
-    $active_directory_auth_flag = 'sufficient'
+    $ldap_directory_auth_flag = 'sufficient'
   }
 
   file { "${properties_dir}/jaas-auth.conf":
