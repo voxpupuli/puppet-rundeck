@@ -49,7 +49,7 @@ class rundeck::params {
       'description' => 'Admin, all access',
       'context' => {
         'type' => 'project',
-        'rule' => '*'
+        'rule' => '.*'
       },
       'resource_types' => [
         { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] },
