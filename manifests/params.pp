@@ -86,6 +86,7 @@ class rundeck::params {
     }
   }
 
+  #TODO:
   $framework_config = {}
   $framework_defaults = {
     'framework.server.name'     => $::fqdn,
@@ -141,9 +142,8 @@ class rundeck::params {
 
   $grails_server_url = "http://${::fqdn}:4440"
 
-  $dataSource_config = {}
-
-  $dataSource_defaults = {
+  $database_config = {
+    'type'            => 'h2',
     'dbCreate'        => 'update',
     'url'             => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true',
     'driverClassName' => '',

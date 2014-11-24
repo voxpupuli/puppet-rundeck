@@ -8,11 +8,15 @@ describe 'rundeck::config::project', :type => :define do
 
         let(:title) { 'test' }
         let(:params) {{
-          :projects_dir => projects_dir,
+          :framework_config => {
+            'framework.projects.dir' => projects_dir,
+            'framework.ssh.keypath'  => '/var/lib/rundeck/.ssh/id_rsa'
+          },
           :file_copier_provider => 'jsch-scp',
           :resource_sources => {},
-          :ssh_keypath => '/var/lib/rundeck/.ssh/id_rsa',
           :node_executor_provider => 'jsch-ssh',
+          :user  => 'rundedck',
+          :group => 'rundeck'
         }}
 
         let(:facts) {{

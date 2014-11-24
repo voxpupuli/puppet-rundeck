@@ -40,16 +40,16 @@ define rundeck::config::project(
   $node_executor_provider = $rundeck::params::node_executor_provider,
   $resource_sources       = $rundeck::params::resource_sources,
   $framework_config       = $rundeck::framework_config,
+  $user                   = $rundeck::user,
+  $group                  = $rundeck::group
 ) {
 
   include rundeck::params
 
+  #TODO:
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
   $ssh_keypath            = $framework_properties['framework.ssh.keypath']
   $projects_dir           = $framework_properties['framework.projects.dir']
-
-  $user                   = $rundeck::user
-  $group                  = $rundeck::group
 
   validate_absolute_path($ssh_keypath)
   validate_re($file_copier_provider, ['jsch-scp','script-copy','stub'])

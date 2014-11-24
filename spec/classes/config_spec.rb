@@ -15,9 +15,9 @@ describe 'rundeck' do
 
         it { should contain_file('/etc/rundeck').with({'ensure' => 'directory'})}
 
-        it { should contain_file('/etc/rundeck/jaas-loginmodule.conf') }
-        it 'should generate valid content for jaas-loginmodule.conf' do
-          content = catalogue.resource('file', '/etc/rundeck/jaas-loginmodule.conf')[:content]
+        it { should contain_file('/etc/rundeck/jaas-auth.conf') }
+        it 'should generate valid content for jaas-auth.conf' do
+          content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
           content.should include('PropertyFileLoginModule')
           content.should include('/etc/rundeck/realm.properties')
         end
@@ -44,8 +44,8 @@ describe 'rundeck' do
           content.should include('-Drdeck.projects=/var/rundeck/projects')
           content.should include('-Drdeck.runlogs=/var/lib/rundeck/logs')
           content.should include('-Drundeck.config.location=/etc/rundeck/rundeck-config.groovy')
-          content.should include('-Djava.security.auth.login.config=/etc/rundeck/jaas-loginmodule.conf')
-          content.should include('-Dloginmodule.name=RDpropertyfilelogin')
+          content.should include('-Djava.security.auth.login.config=/etc/rundeck/jaas-auth.conf')
+          content.should include('-Dloginmodule.name=authentication')
           content.should include('RDECK_JVM="$RDECK_JVM -Xmx1024m -Xms256m -server"')
         end
 

@@ -20,7 +20,7 @@ class rundeck::config(
   $rss_enabled           = $rundeck::rss_enabled,
   $clustermode_enabled   = $rundeck::clustermode_enabled,
   $grails_server_url     = $rundeck::grails_server_url,
-  $dataSource_config     = $rundeck::dataSource_config,
+  $database_config       = $rundeck::database_config,
   $keystore              = $rundeck::keystore,
   $keystore_password     = $rundeck::keystore_password,
   $key_password          = $rundeck::key_password,

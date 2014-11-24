@@ -10,14 +10,6 @@ describe 'rundeck' do
           :fqdn => 'test.domain.com'
         }}
 
-        config_details = {
-          'loglevel.default'    => 'INFO',
-          'rss.enabled'         => 'false',
-          'grails.serverURL'    => 'http://test.domain.com:4440',
-          'dataSource.dbCreate' => 'update',
-          'dataSource.url'      => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true'
-        }
-
         $default_config = <<-CONFIG.gsub /[^\S\n]{10}/, ""
           loglevel.default = "INFO"
           rdeck.base = "/var/lib/rundeck"
@@ -35,6 +27,7 @@ describe 'rundeck' do
           }
 
           grails.serverURL = "http://test.domain.com:4440"
+          rundeck.clusterMode.enabled = "false"
         CONFIG
 
         it { should contain_file('/etc/rundeck/rundeck-config.groovy').with(
