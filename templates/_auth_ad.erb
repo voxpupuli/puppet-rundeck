@@ -1,4 +1,4 @@
-com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule required
+com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule <%= @active_directory_auth_flag %>
   debug="true"
   contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
   providerUrl="ldap://<%= @auth_config['active_directory']['server'] %>:<%= @auth_config['active_directory']['port'] %>"
