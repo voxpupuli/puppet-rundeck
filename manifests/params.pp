@@ -42,6 +42,42 @@ class rundeck::params {
   $auth_users = {}
   $auth_template = 'rundeck/jaas-auth.conf.erb'
 
+  $acl_template = 'rundeck/admin.aclpolicy.erb'
+
+  $acl_policies = [
+    {
+      'description' => 'Admin, all access',
+      'context' => {
+        'type' => 'project',
+        'rule' => '.*'
+      },
+      'resource_types' => [
+        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
+        { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
+        { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
+        { 'type'  => 'node', 'rules' => [{'name' => 'allow','rule' => '.*'}] }
+      ],
+      'by' => {
+        'groups'    => ['admin'],
+        'usernames' => undef
+      }
+    },
+    {
+      'description' => 'Admin, all access',
+      'context' => {
+        'type' => 'application',
+        'rule' => 'rundeck'
+      },
+      'resource_types' => [
+        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
+        { 'type'  => 'project', 'rules' => [{'name' => 'allow','rule' => '.*'}] },
+      ],
+      'by' => {
+        'groups'    => ['admin'],
+        'usernames' => undef
+      }
+    }
+  ]
 
   $auth_config = {
     'file' => {

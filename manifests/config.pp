@@ -30,6 +30,7 @@ class rundeck::config(
   $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
+  $acl_policies          = $rundeck::acl_policies
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
@@ -76,7 +77,7 @@ class rundeck::config(
     owner   => $user,
     group   => $group,
     mode    => '0640',
-    content => template('rundeck/admin.aclpolicy.erb'),
+    content => template($rundeck::acl_template),
     require => File[$properties_dir]
   }
 

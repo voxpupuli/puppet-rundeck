@@ -111,6 +111,8 @@ class rundeck (
   $auth_template                = $rundeck::params::auth_template,
   $auth_config                  = $rundeck::params::auth_config,
   $auth_users                   = $rundeck::params::auth_users,
+  $acl_policies                 = $rundeck::params::acl_policies,
+  $acl_template                 = $rundeck::params::acl_template,
   $service_logs_dir             = $rundeck::params::service_logs_dir,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
   $framework_config             = $rundeck::params::framework_config,
