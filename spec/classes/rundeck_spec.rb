@@ -6,7 +6,9 @@ describe 'rundeck' do
       describe "rundeck class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
-          :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         it { should contain_class('rundeck::params') }
@@ -28,8 +30,10 @@ describe 'rundeck' do
   context 'unsupported operating system' do
     describe 'rundeck class without any parameters on Solaris/Nexenta' do
       let(:facts) {{
-          :osfamily        => 'Solaris',
-          :operatingsystem => 'Nexenta',
+        :osfamily        => 'Solaris',
+        :operatingsystem => 'Nexenta',
+        :serialnumber    => 0,
+        :rundeck_version => ''
       }}
 
       it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, /Nexenta not supported/) }

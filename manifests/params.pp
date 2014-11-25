@@ -16,6 +16,7 @@ class rundeck::params {
       $service_name = 'rundeckd'
       $jre_name = 'openjdk-6-jre'
       $jre_ensure = 'installed'
+      $manage_yum_repo = false
     }
     'RedHat', 'Amazon': {
       $package_name = 'rundeck'
@@ -122,9 +123,7 @@ class rundeck::params {
     }
   }
 
-  #TODO:
-  $framework_config = {}
-  $framework_defaults = {
+  $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
     'framework.server.port'     => '4440',

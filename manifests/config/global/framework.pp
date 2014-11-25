@@ -8,7 +8,6 @@
 #
 class rundeck::config::global::framework(
   $properties_dir   = $rundeck::config::properties_dir,
-  $framework_config = $rundeck::config::framework_config,
   $user             = $rundeck::config::user,
   $group            = $rundeck::config::group
 
@@ -18,7 +17,7 @@ class rundeck::config::global::framework(
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group } )
 
-  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+  $framework_config = merge($rundeck::params::framework_config, $rundeck::framework_config)
 
   file { $properties_file:
     ensure  => present,

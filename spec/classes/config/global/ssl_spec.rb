@@ -6,7 +6,9 @@ describe 'rundeck' do
       describe "rundeck::config::global::ssl class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
-            :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         ssl_details = {

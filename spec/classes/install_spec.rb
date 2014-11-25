@@ -6,7 +6,9 @@ describe 'rundeck' do
       describe "rundeck class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
-          :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         if osfamily.eql?('RedHat')

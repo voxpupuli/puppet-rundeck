@@ -9,7 +9,9 @@ describe 'rundeck::config::resource_source', :type => :define do
           'project_name' => 'test'
         }}
         let(:facts) {{
-            :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         file_details = {
@@ -38,7 +40,8 @@ describe 'rundeck::config::resource_source', :type => :define do
             'url' => 'http\://localhost\:9999'
         }}
         let(:facts) {{
-            :osfamily => osfamily,
+          :osfamily     => osfamily,
+          :serialnumber => 0
         }}
 
         url_details = {
@@ -65,7 +68,9 @@ describe 'rundeck::config::resource_source', :type => :define do
             'directory' => '/fubar/resources'
         }}
         let(:facts) {{
-            :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         directory_details = {
@@ -91,7 +96,9 @@ describe 'rundeck::config::resource_source', :type => :define do
             'script_args' => 'fubar'
         }}
         let(:facts) {{
-            :osfamily => osfamily,
+          :osfamily        => osfamily,
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
 

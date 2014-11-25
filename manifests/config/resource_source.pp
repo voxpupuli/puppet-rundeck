@@ -96,7 +96,7 @@ define rundeck::config::resource_source(
 
   include rundeck::params
 
-  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
+  $framework_properties = deep_merge($rundeck::params::framework_config, $framework_config)
 
   if "x${number}x" == 'xx' {
     $num = '1'

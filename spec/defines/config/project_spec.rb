@@ -20,7 +20,9 @@ describe 'rundeck::config::project', :type => :define do
         }}
 
         let(:facts) {{
-          :osfamily => osfamily
+          :osfamily        => osfamily,
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         it { should contain_file("#{projects_dir}/test/var").with(

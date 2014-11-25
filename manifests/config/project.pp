@@ -46,10 +46,10 @@ define rundeck::config::project(
 
   include rundeck::params
 
-  #TODO:
-  $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
-  $ssh_keypath            = $framework_properties['framework.ssh.keypath']
-  $projects_dir           = $framework_properties['framework.projects.dir']
+  $framework_properties = deep_merge($rundeck::params::framework_config, $framework_config)
+
+  $ssh_keypath      = $framework_properties['framework.ssh.keypath']
+  $projects_dir     = $framework_properties['framework.projects.dir']
 
   validate_absolute_path($ssh_keypath)
   validate_re($file_copier_provider, ['jsch-scp','script-copy','stub'])

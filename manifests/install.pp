@@ -12,13 +12,15 @@ class rundeck::install(
   $package_source     = $rundeck::package_source,
   $package_ensure     = $rundeck::package_ensure,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
-  $rdeck_home         = $rundeck::rdeck_home,
-  $projects_dir       = $rundeck::framework_defaults['framework.projects.dir'],
+  $rdeck_home         = $rundeck::rdeck_home
 ) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
+
+  $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
+  $projects_dir = $framework_config['framework.projects.dir']
 
   ensure_resource('package', $jre_name, {'ensure' => $jre_ensure} )
 

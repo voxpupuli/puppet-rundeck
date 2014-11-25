@@ -39,7 +39,7 @@ define rundeck::config::plugin(
   include rundeck::params
 
   if "x${plugin_dir}x" == 'xx' {
-    $pd = $rundeck::params::framework_defaults['framework.libext.dir']
+    $pd = $rundeck::params::framework_config['framework.libext.dir']
   } else {
     $pd = $plugin_dir
   }
@@ -63,7 +63,6 @@ define rundeck::config::plugin(
 
   ensure_resource(file, $pd, {'ensure' => 'directory', 'owner' => $u, 'group' => $g})
 
-  #TODO: add only-if
   exec { "download plugin ${name}":
     command => "/usr/bin/wget ${source} -O ${pd}/${name}",
     unless  => "/bin/ls -l /var/lib/rundeck/libext/ | grep ${name}"

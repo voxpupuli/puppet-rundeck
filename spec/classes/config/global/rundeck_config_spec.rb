@@ -6,8 +6,10 @@ describe 'rundeck' do
       describe "rundeck::config::global::rundeck_config class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
-          :osfamily => osfamily,
-          :fqdn => 'test.domain.com'
+          :osfamily        => osfamily,
+          :fqdn            => 'test.domain.com',
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         $default_config = <<-CONFIG.gsub /[^\S\n]{10}/, ""

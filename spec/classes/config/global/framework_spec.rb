@@ -6,8 +6,10 @@ describe 'rundeck' do
       describe "rundeck::config::global::framework class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
-            :osfamily => osfamily,
-            :fqdn => 'test.domain.com'
+          :osfamily        => osfamily,
+          :fqdn            => 'test.domain.com',
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         framework_details = {
@@ -48,8 +50,10 @@ describe 'rundeck' do
         }
       }}
       let(:facts) {{
-        :osfamily => 'Debian',
-        :fqdn => 'test.domain.com'
+        :osfamily        => 'Debian',
+        :fqdn            => 'test.domain.com',
+        :serialnumber    => 0,
+        :rundeck_version => ''
       }}
 
       it 'should generate valid content for framework.properties' do

@@ -14,7 +14,9 @@ describe 'rundeck::config::plugin', :type => :define do
         }}
 
         let(:facts) {{
-          :osfamily => 'Debian'
+          :osfamily        => 'Debian',
+          :serialnumber    => 0,
+          :rundeck_version => ''
         }}
 
         it { should contain_file(plugin_dir).with(
