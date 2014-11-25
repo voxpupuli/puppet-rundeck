@@ -8,7 +8,6 @@
 #
 class rundeck::config(
   $auth_types            = $rundeck::auth_types,
-  $auth_users            = $rundeck::auth_users,
   $auth_template         = $rundeck::auth_template,
   $user                  = $rundeck::user,
   $group                 = $rundeck::group,
@@ -38,8 +37,6 @@ class rundeck::config(
   $logs_dir       = $framework_config['framework.logs.dir']
   $rdeck_base     = $framework_config['rdeck.base']
   $projects_dir   = $framework_config['framework.projects.dir']
-  $admin_user     = $framework_config['framework.server.username']
-  $admin_password = $framework_config['framework.server.password']
   $properties_dir = $framework_config['framework.etc.dir']
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
