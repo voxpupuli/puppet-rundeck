@@ -34,7 +34,7 @@ class rundeck::config(
 ) inherits rundeck::params {
 
   $framework_properties = merge($rundeck::params::framework_defaults, $framework_config)
-  $auth_config          = merge($rundeck::params::auth_config, $rundeck::auth_config)
+  $auth_config          = deep_merge($rundeck::params::auth_config, $rundeck::auth_config)
 
   $logs_dir = $framework_properties['framework.logs.dir']
   $rdeck_base = $framework_properties['rdeck.base']
@@ -54,6 +54,16 @@ class rundeck::config(
       require => File[$properties_dir],
       notify  => Service[$service_name],
     }
+
+    $active_directory_auth_flag = 'sufficient'
+    $ldap_auth_flag = 'sufficient'
+  }
+  elsif 'active_directory' in $auth_types {
+    $active_directory_auth_flag = 'required'
+    $ldap_auth_flag = 'sufficient'
+  }
+  else {
+    $ldap_auth_flag = 'required'
   }
 
   file { "${properties_dir}/jaas-auth.conf":
