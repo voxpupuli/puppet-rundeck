@@ -6,7 +6,7 @@ com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule <%= @active_directory
   forceBindingLogin="<%= @auth_config['active_directory']['force_binding'] %>"
   <%- if @auth_config['active_directory']['bind_dn'] -%>
   forceBindingLoginUseRootContextForRoles="<%= @auth_config['active_directory']['force_binding_use_root'] %>"
-  bindDn="CN=<%= @auth_config['active_directory']['bind_dn']%>,<%= @auth_config['active_directory']['user_base_dn'] %>"
+  bindDn="<%= @auth_config['active_directory']['bind_dn']%>"
   <%- end -%>
   <%- if @auth_config['active_directory']['bind_password'] -%>
   bindPassword="<%= @auth_config['active_directory']['bind_password']%>"
