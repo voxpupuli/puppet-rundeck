@@ -23,13 +23,9 @@ Puppet::Type.newtype(:rundeck_job) do
     desc ''
   end
 
-  newparam(:commands, :array_matching => :all) do
+  newproperty(:commands, :array_matching => :all) do
     desc ''
     defaultto []
-  end
-
-  newparam(:uuid) do
-    desc ''
   end
 
   newproperty(:group) do
