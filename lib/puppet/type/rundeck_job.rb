@@ -43,8 +43,33 @@ Puppet::Type.newtype(:rundeck_job) do
     defaultto 'INFO'
   end
 
-  newproperty(:nodefilters) do
+  newproperty(:node_filter) do
     desc ''
     defaultto {}
+  end
+
+  newproperty(:threads) do
+    desc ''
+    defaultto '1'
+  end
+
+  newproperty(:rank_attribute) do
+    desc ''
+    defaultto ''
+  end
+
+  newproperty(:rank_order) do
+    desc ''
+    defaultto ''
+  end
+
+  newproperty(:keep_going) do
+    desc ''
+    defaultto 'false'
+  end
+
+  newproperty(:node_precedence) do
+    desc ''
+    defaultto 'include'
   end
 end

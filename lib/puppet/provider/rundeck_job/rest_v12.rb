@@ -46,6 +46,10 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
 
         if v.instance_of?(Hash)
           xml_fragment(arg_node, v)
+        elsif v.instance_of?(Array)
+          v.each do |entry|
+            xml_fragment(arg_node, entry)
+          end
         else
           arg_node << v
         end
@@ -103,16 +107,55 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
     context << proj
     job << context
 
+    if resource[:threads]
+      dispatch = XML::Node.new('dispatch')
+
+      tc = XML::Node.new('threadcount')
+      tc << resource[:threads]
+      dispatch << tc
+
+      kg = XML::Node.new('keepgoing')
+      kg << resource[:keep_going]
+      dispatch << kg
+
+      ep = XML::Node.new('excludePrecedence')
+      if resource[:node_precedence].eql?('exclude')
+        ep << 'true'
+      else
+        ep << 'false'
+      end
+      dispatch << ep
+
+      ra = XML::Node.new('rankAttribute')
+      ra << resource[:rank_attribute]
+      dispatch << ra
+
+      ro = XML::Node.new('rankOrder')
+      ro << resource[:rank_order]
+      dispatch << ro
+
+      job << dispatch
+    end
+
     if id
       uuid = XML::Node.new('uuid')
       uuid << id
       job << uuid
     end
 
+    if resource[:node_filter]
+      filters = XML::Node.new('nodefilters')
+      filter = XML::Node.new('filter')
+      filter << resource[:node_filter]
+      filters << filter
+      job << filters
+    end
+
     group = XML::Node.new('group')
     group << resource[:group]
     job << group
 
+    Puppet.debug("LB: #{xml.to_s}")
     xml.to_s(:indent => true)
   end
 
@@ -171,12 +214,52 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
     rundeck_jobs.update(xml_data)
   end
 
-  def nodefilters
+  def node_filter
+    filter = rundeck_job.find('//job/nodefilters/filter').to_a[0].content
+  end
+
+  def node_filter=(value)
+    rundeck_jobs.update(xml_data)
+  end
+
+  def threads
 
   end
 
-  def nodefilter=(value)
+  def threads=(value)
+    rundeck_jobs.update(xml_data)
+  end
 
+  def rank_attribute
+
+  end
+
+  def rank_attribute=(value)
+    rundeck_jobs.update(xml_data)
+  end
+
+  def rank_order
+
+  end
+
+  def rank_order=(value)
+    rundeck_jobs.update(xml_data)
+  end
+
+  def keep_going
+
+  end
+
+  def keep_going=(value)
+    rundeck_jobs.update(xml_data)
+  end
+
+  def node_precedence
+
+  end
+
+  def node_precedence=(value)
+    rundeck_jobs.update(xml_data)
   end
 
 end
