@@ -1,5 +1,5 @@
 require 'rest_client'
-require 'nokogiri'
+require 'xml'
 
 module PuppetX
 module Rundeck
@@ -26,10 +26,10 @@ module Rundeck
       begin
         if id
           job = RestClient.get "#{resource[:base_url]}/api/12/job/#{id}", @headers
-          xml_doc = Nokogiri::XML(job)
+          xml_doc = XML::Parser.string(job, :encoding => XML::Encoding::ISO_8859_1).parse
         else
           job = RestClient.get "#{resource[:base_url]}/api/12/project/#{project}/jobs", @headers
-          xml_doc = Nokogiri::XML(job)
+          xml_doc = XML::Parser.string(job, :encoding => XML::Encoding::ISO_8859_1).parse
         end
       rescue => e
         #p e.response
