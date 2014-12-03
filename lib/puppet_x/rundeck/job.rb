@@ -9,7 +9,7 @@ module Rundeck
 
     def initialize(resource)
       @resource = resource
-      @headers = {:content_type => 'x-www-form-urlencoded', 'X-Rundeck-Auth-Token' => 'hpGq8wZZaDCn51WtTIgCGUosjb8IsD4q'}
+      @headers = {:content_type => 'x-www-form-urlencoded', 'X-Rundeck-Auth-Token' => 'kRXoKzhmT3YDTDTzQeTXJttNOTOO7wjl'}
     end
 
     def create(job_data)

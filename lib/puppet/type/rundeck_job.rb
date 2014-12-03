@@ -72,4 +72,34 @@ Puppet::Type.newtype(:rundeck_job) do
     desc ''
     defaultto 'include'
   end
+
+  newproperty(:notifications) do
+    desc ''
+    defaultto {}
+  end
+
+  newproperty(:job_schedule) do
+    desc ''
+    defaultto {}
+  end
+
+  newproperty(:multiple_exec) do
+    desc ''
+    defaultto 'false'
+  end
+
+  newproperty(:timeout) do
+    desc ''
+    defaultto ''
+  end
+
+  newproperty(:retry) do
+    desc ''
+    defaultto ''
+  end
+
+  newproperty(:options, :array_matching => :all) do
+    desc ''
+    defaultto []
+  end
 end
