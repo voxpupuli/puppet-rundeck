@@ -78,6 +78,12 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
       job << ident
     end
 
+    if resource[:multiple_exec]
+      multi = XML::Node.new('multipleExecutions')
+      multi << resource[:multiple_exec]
+      job << multi
+    end
+
     loglevel = XML::Node.new('loglevel')
     loglevel << resource[:log_level]
     job << loglevel
@@ -270,7 +276,6 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
       job << job_retry
     end
 
-    Puppet.debug("LB: #{xml.to_s}")
     xml.to_s(:indent => true)
   end
 
@@ -338,7 +343,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def threads
-
+    rundeck_job.find('//job/dispatch/threadcount').to_a[0].content
   end
 
   def threads=(value)
@@ -346,7 +351,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def rank_attribute
-
+    rundeck_job.find('//job/dispatch/rankAttribute').to_a[0].content
   end
 
   def rank_attribute=(value)
@@ -354,7 +359,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def rank_order
-
+    rundeck_job.find('//job/dispatch/rankOrder').to_a[0].content
   end
 
   def rank_order=(value)
@@ -362,7 +367,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def keep_going
-
+    rundeck_job.find('//job/dispatch/keepgoing').to_a[0].content
   end
 
   def keep_going=(value)
@@ -370,7 +375,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def node_precedence
-
+    exclude = rundeck_job.find('//job/dispatch/excludePrecedence').to_a[0].content
+    exclude.eql?('true') ? 'exclude' : 'include'
   end
 
   def node_precedence=(value)
@@ -378,7 +384,58 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def notifications
+    notifications = {}
+    ['onsuccess','onfailure','onstart'].each do |status|
 
+      email = rundeck_job.find("//job/notification/#{status}/email").to_a[0]
+      if email
+        email_hash = { "email" => { "_recipients" => email['recipients'], "_attachLog" => email['attachLog'] } }
+        if notifications[status].nil? or notifications[status].empty?
+          notifications[status] = email_hash
+        else
+          notifications[status].merge!(email_hash)
+        end
+      end
+
+      webhook = rundeck_job.find("//job/notification/#{status}/webhook").to_a[0]
+      if webhook
+        webhook_hash = { "webhook" => { "_urls" => webhook['urls'] } }
+        if notifications[status].nil? or notifications[status].empty?
+          notifications[status] = webhook_hash
+        else
+          notifications[status].merge!(webhook_hash)
+        end
+      end
+
+      plugin = rundeck_job.find("//job/notification/#{status}/plugin").to_a
+      plugin.each do |p|
+        if p['type'].eql?('PagerDutyNotification')
+          pd_hash = { "pager_duty" => { "_subject" => p.find('configuration/entry').to_a[0]['value'] } }
+          if notifications[status].nil? or notifications[status].empty?
+            notifications[status] = pd_hash
+          else
+            notifications[status].merge!(pd_hash)
+          end
+        elsif p['type'].eql?('JIRA')
+           jira_hash = { "jira" => { "_issuekey" => p.find('configuration/entry').to_a[0]['value'] } }
+           if notifications[status].nil? or notifications[status].empty?
+             notifications[status] = jira_hash
+           else
+             notifications[status].merge!(jira_hash)
+           end
+        elsif p['type'].eql?('HipChatNotification')
+           hc_hash = { "hipchat" => { "_room" => p.find('configuration/entry').to_a[0]['value'] } }
+           if notifications[status].nil? or notifications[status].empty?
+             notifications[status] = hc_hash
+           else
+             notifications[status].merge!(hc_hash)
+           end
+        else
+        end
+      end
+
+    end
+    notifications
   end
 
   def notifications=(value)
@@ -386,7 +443,25 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def job_schedule
+    time = rundeck_job.find('//job/schedule/time')
+    sec = time.to_a[0]['seconds']
+    min = time.to_a[0]['minute']
+    hr = time.to_a[0]['hour']
 
+    day = rundeck_job.find('//job/schedule/weekday').to_a[0]['day']
+    month = rundeck_job.find('//job/schedule/month').to_a[0]['month']
+    year = rundeck_job.find('//job/schedule/year').to_a[0]['year']
+
+    hash = {
+      "weekday" => day,
+      "year" => year,
+      "month" => month,
+      "time" => {
+        "_hour" => hr,
+        "_seconds" => sec,
+        "_minute" => min
+      }
+    }
   end
 
   def job_schedule=(value)
@@ -394,7 +469,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def timeout
-
+    rundeck_job.find('//job/timeout').to_a[0].content
   end
 
   def timeout=(value)
@@ -402,7 +477,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def retry
-
+    rundeck_job.find('//job/retry').to_a[0].content
   end
 
   def retry=(value)
@@ -410,7 +485,20 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def options
+    option_list = []
+    options = rundeck_job.find("//job/context/options/option").to_a
 
+    options.each do |option|
+      option_hash = {
+        "_values" => option['values'],
+        "_delimiter" => option['delimiter'], "_multivalued" => option['multivalued'],
+        "_name" => option['name'], "_required" => option['required'],
+        "_value" => option['value'],
+        "description" => option.find('description').to_a[0].content
+      }
+      option_list.push(option_hash)
+    end
+    option_list
   end
 
   def options=(value)
@@ -418,11 +506,12 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def multiple_exec
-
+    multi = rundeck_job.find('//job/multipleExecutions').to_a[0]
+    multi ? multi.content : nil
   end
 
   def multiple_exec=(value)
-
+    rundeck_jobs.update(xml_data)
   end
 
 end

@@ -101,5 +101,10 @@ Puppet::Type.newtype(:rundeck_job) do
   newproperty(:options, :array_matching => :all) do
     desc ''
     defaultto []
+
+    munge do |value|
+      value = Hash[value.sort_by{|k,v| k}]
+      value
+    end
   end
 end
