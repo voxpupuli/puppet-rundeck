@@ -80,7 +80,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
 
     if resource[:multiple_exec]
       multi = XML::Node.new('multipleExecutions')
-      multi << resource[:multiple_exec]
+      multi << resource[:multiple_exec].to_s
+      Puppet.debug("LB: setting multiple_exec to #{resource[:multiple_exec]}")
       job << multi
     end
 
@@ -276,6 +277,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
       job << job_retry
     end
 
+    Puppet.debug("LB: #{xml.to_s}")
     xml.to_s(:indent => true)
   end
 
@@ -288,7 +290,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def group
-    rundeck_job.find('//job/group').to_a[0].content
+    g = rundeck_job.find('//job/group').to_a[0]
+    g ? g.content : ''
   end
 
   def group=(value)
@@ -316,15 +319,19 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
     commands = rundeck_job.find('//job/sequence/command')
 
     commands.each do |element|
+      element_hash = {}
       element.children.to_a.each do |command|
         type = command.name
         cmd = command.content
+
         cmd.strip!
 
         if !cmd.empty?
-          command_array.push({type => cmd})
+          element_hash.merge!({type => cmd})
+          element_hash = Hash[element_hash.sort_by{|k,v| k}]
         end
       end
+      command_array.push(element_hash)
     end
 
     command_array
@@ -351,7 +358,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def rank_attribute
-    rundeck_job.find('//job/dispatch/rankAttribute').to_a[0].content
+    ra = rundeck_job.find('//job/dispatch/rankAttribute').to_a[0]
+    ra ? ra.content : ''
   end
 
   def rank_attribute=(value)
@@ -359,7 +367,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def rank_order
-    rundeck_job.find('//job/dispatch/rankOrder').to_a[0].content
+    ro = rundeck_job.find('//job/dispatch/rankOrder').to_a[0]
+    ro ? ro.content : ''
   end
 
   def rank_order=(value)
@@ -367,7 +376,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def keep_going
-    rundeck_job.find('//job/dispatch/keepgoing').to_a[0].content
+    kg = rundeck_job.find('//job/dispatch/keepgoing').to_a[0]
+    kg ? kg.content : ''
   end
 
   def keep_going=(value)
@@ -469,7 +479,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def timeout
-    rundeck_job.find('//job/timeout').to_a[0].content
+    to = rundeck_job.find('//job/timeout').to_a[0]
+    to ? to.content : ''
   end
 
   def timeout=(value)
@@ -477,7 +488,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def retry
-    rundeck_job.find('//job/retry').to_a[0].content
+    ret = rundeck_job.find('//job/retry').to_a[0]
+    ret ? ret.content : ''
   end
 
   def retry=(value)
@@ -507,7 +519,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
 
   def multiple_exec
     multi = rundeck_job.find('//job/multipleExecutions').to_a[0]
-    multi ? multi.content : nil
+    multi ? multi.content : ''
   end
 
   def multiple_exec=(value)

@@ -15,6 +15,11 @@ Puppet::Type.newtype(:rundeck_job) do
     end
   end
 
+  newparam(:api_token) do
+    desc ''
+    defaultto ''
+  end
+
   newparam(:name, :namevar => true) do
     desc ''
   end
@@ -26,6 +31,11 @@ Puppet::Type.newtype(:rundeck_job) do
   newproperty(:commands, :array_matching => :all) do
     desc ''
     defaultto []
+
+    munge do |value|
+      value = Hash[value.sort_by{|k,v| k}]
+      value
+    end
   end
 
   newproperty(:group) do
@@ -45,7 +55,7 @@ Puppet::Type.newtype(:rundeck_job) do
 
   newproperty(:node_filter) do
     desc ''
-    defaultto {}
+    defaultto ''
   end
 
   newproperty(:threads) do
@@ -76,6 +86,11 @@ Puppet::Type.newtype(:rundeck_job) do
   newproperty(:notifications) do
     desc ''
     defaultto {}
+
+    munge do |value|
+      value = Hash[value.sort_by{|k,v| k}]
+      value
+    end
   end
 
   newproperty(:job_schedule) do
@@ -85,7 +100,18 @@ Puppet::Type.newtype(:rundeck_job) do
 
   newproperty(:multiple_exec) do
     desc ''
-    defaultto 'false'
+    defaultto false
+
+    munge do |value|
+      case
+      when value == true || value =~ /^(true)$/i
+        true
+      when value == false || value =~ /^(false)$/i
+        false
+      else
+        raise ArgumentError.new "invalid value for Boolean: '#{value}'"
+      end
+    end
   end
 
   newproperty(:timeout) do

@@ -44,6 +44,8 @@ class rundeck::install(
     }
     'Debian': {
 
+      ensure_resource('package', ['libxml-ruby','rest-client'], {'ensure' => 'installed', 'provider' => 'gem'})
+
       $version = inline_template("<% package_version = '${package_ensure}' %><%= package_version.split('-')[0] %>")
 
       if $::rundeck_version != $version {

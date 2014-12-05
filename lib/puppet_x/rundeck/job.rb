@@ -8,8 +8,25 @@ module Rundeck
     attr_reader :resource
 
     def initialize(resource)
+
       @resource = resource
-      @headers = {:content_type => 'x-www-form-urlencoded', 'X-Rundeck-Auth-Token' => 'kRXoKzhmT3YDTDTzQeTXJttNOTOO7wjl'}
+
+      default_token = ''
+      File.open('/etc/rundeck/tokens.properties') do |file|
+        file.each_line do |line|
+          if line.start_with?('puppet')
+            default_token = line.split('=')[1]
+          end
+        end
+      end
+
+      if @resource[:api_token].eql?('')
+        api_token = default_token
+      else
+        apt_token = @resource[:api_token]
+      end
+
+      @headers = {:content_type => 'x-www-form-urlencoded', 'X-Rundeck-Auth-Token' => api_token }
     end
 
     def create(job_data)
