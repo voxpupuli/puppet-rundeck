@@ -80,7 +80,7 @@ Puppet::Type.newtype(:rundeck_job) do
 
   newproperty(:node_precedence) do
     desc ''
-    defaultto 'include'
+    defaultto ''
   end
 
   newproperty(:notifications) do

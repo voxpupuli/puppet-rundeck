@@ -342,7 +342,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def node_filter
-    filter = rundeck_job.find('//job/nodefilters/filter').to_a[0].content
+    filter = rundeck_job.find('//job/nodefilters/filter').to_a[0]
+    filter ? filter.content : ''
   end
 
   def node_filter=(value)
@@ -350,7 +351,8 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def threads
-    rundeck_job.find('//job/dispatch/threadcount').to_a[0].content
+    count = rundeck_job.find('//job/dispatch/threadcount').to_a[0]
+    count ? count.content : '1'
   end
 
   def threads=(value)
@@ -377,7 +379,7 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
 
   def keep_going
     kg = rundeck_job.find('//job/dispatch/keepgoing').to_a[0]
-    kg ? kg.content : ''
+    kg ? kg.content : 'false'
   end
 
   def keep_going=(value)
@@ -385,8 +387,12 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
   end
 
   def node_precedence
-    exclude = rundeck_job.find('//job/dispatch/excludePrecedence').to_a[0].content
-    exclude.eql?('true') ? 'exclude' : 'include'
+    exclude = rundeck_job.find('//job/dispatch/excludePrecedence').to_a[0]
+    if exclude
+      exclude.content.eql?('true') ? 'exclude' : 'include'
+    else
+      ''
+    end
   end
 
   def node_precedence=(value)
