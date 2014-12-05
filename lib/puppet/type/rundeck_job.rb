@@ -20,7 +20,7 @@ Puppet::Type.newtype(:rundeck_job) do
     defaultto ''
   end
 
-  newparam(:name) do
+  newparam(:name, :namevar => true) do
     desc ''
   end
 
