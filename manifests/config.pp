@@ -28,7 +28,8 @@ class rundeck::config(
   $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
-  $acl_policies          = $rundeck::acl_policies
+  $acl_policies          = $rundeck::acl_policies,
+  $tokens                = $rundeck::tokens
 ) inherits rundeck::params {
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
@@ -93,6 +94,14 @@ class rundeck::config(
     group   => $group,
     mode    => '0640',
     content => template('rundeck/apitoken.aclpolicy.erb'),
+    require => File[$properties_dir]
+  }
+
+  file { "${properties_dir}/tokens.properties":
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    content => template('rundeck/tokens.properties.erb'),
     require => File[$properties_dir]
   }
 

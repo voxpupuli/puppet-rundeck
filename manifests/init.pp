@@ -137,6 +137,7 @@ class rundeck (
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,
   $rdeck_home                   = $rundeck::params::rdeck_home,
+  $tokens                       = $rundeck::params::tokens
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')

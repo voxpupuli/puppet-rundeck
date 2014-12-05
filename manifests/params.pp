@@ -57,7 +57,10 @@ class rundeck::params {
     'framework.ssh.user'        => 'rundeck',
     'framework.ssh.timeout'     => '0',
     'rundeck.server.uuid'       => $::serialnumber,
+    'rundeck.tokens.file'       => '/etc/rundeck/tokens.properties'
   }
+
+  $tokens = {}
 
   $auth_types = ['file']
   $auth_users = {}
