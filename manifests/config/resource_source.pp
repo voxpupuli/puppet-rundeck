@@ -227,7 +227,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${num}.config.format":
+      ini_setting { "resources.source.${num}.config.format for ${project_name}":
         ensure  => present,
         path    => $properties_file,
         section => '',

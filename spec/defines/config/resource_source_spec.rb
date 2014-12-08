@@ -24,7 +24,7 @@ describe 'rundeck::config::resource_source', :type => :define do
         }
 
         file_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("#{key} for test").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
@@ -52,7 +52,7 @@ describe 'rundeck::config::resource_source', :type => :define do
         }
 
         url_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("#{key} for test").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
@@ -79,7 +79,7 @@ describe 'rundeck::config::resource_source', :type => :define do
         }
 
         directory_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("#{key} for test").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
@@ -112,7 +112,7 @@ describe 'rundeck::config::resource_source', :type => :define do
         }
 
         script_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("#{key} for test").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value

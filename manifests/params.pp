@@ -62,6 +62,8 @@ class rundeck::params {
 
   $tokens = {}
 
+  $logging_config = {}
+
   $auth_types = ['file']
   $auth_users = {}
   $auth_template = 'rundeck/jaas-auth.conf.erb'

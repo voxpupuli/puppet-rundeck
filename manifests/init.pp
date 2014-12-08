@@ -137,7 +137,8 @@ class rundeck (
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,
   $rdeck_home                   = $rundeck::params::rdeck_home,
-  $tokens                       = $rundeck::params::tokens
+  $tokens                       = $rundeck::params::tokens,
+  $logging_config               = $rundeck::params::logging_config
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
@@ -146,7 +147,6 @@ class rundeck (
   validate_string($jre_ensure)
   validate_array($auth_types)
   validate_hash($auth_config)
-  validate_hash($auth_users)
   validate_bool($ssl_enabled)
   validate_string($projects_organization)
   validate_string($projects_description)

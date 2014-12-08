@@ -29,7 +29,8 @@ class rundeck::config(
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
   $acl_policies          = $rundeck::acl_policies,
-  $tokens                = $rundeck::tokens
+  $tokens                = $rundeck::tokens,
+  $logging_config        = $rundeck::logging_config
 ) inherits rundeck::params {
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)

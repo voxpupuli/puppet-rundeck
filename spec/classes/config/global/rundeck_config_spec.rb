@@ -28,6 +28,7 @@ describe 'rundeck' do
           grails {
           }
 
+
           grails.serverURL = "http://test.domain.com:4440"
           rundeck.clusterMode.enabled = "false"
         CONFIG

@@ -31,5 +31,9 @@ grails {
   <%- end -%>
 }
 
+<%- @logging_config.each do |k,v| -%>
+  rundeck.execution.logs.<%= k %>=<%= v %>
+<%- end -%>
+
 grails.serverURL = "<%= @grails_server_url %>"
 rundeck.clusterMode.enabled = "<%= @clustermode_enabled %>"

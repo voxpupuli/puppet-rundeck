@@ -16,7 +16,8 @@ class rundeck::config::global::rundeck_config(
   $user                = $rundeck::config::user,
   $group               = $rundeck::config::group,
   $mail_config         = $rundeck::config::mail_config,
-  $security_config     = $rundeck::config::security_config
+  $security_config     = $rundeck::config::security_config,
+  $logging_config      = $rundeck::config::logging_config
 ) {
 
   $properties_file = "${properties_dir}/rundeck-config.groovy"
