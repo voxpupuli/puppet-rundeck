@@ -32,7 +32,7 @@ grails {
 }
 
 <%- @logging_config.each do |k,v| -%>
-  rundeck.execution.logs.<%= k %>=<%= v %>
+rundeck.execution.logs.<%= k %>=<%= v %>
 <%- end -%>
 
 grails.serverURL = "<%= @grails_server_url %>"
