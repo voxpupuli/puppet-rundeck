@@ -30,7 +30,8 @@ class rundeck::config(
   $security_config       = $rundeck::security_config,
   $acl_policies          = $rundeck::acl_policies,
   $tokens                = $rundeck::tokens,
-  $logging_config        = $rundeck::logging_config
+  $logging_config        = $rundeck::logging_config,
+  $krb5                  = $rundeck::krb5
 ) inherits rundeck::params {
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)

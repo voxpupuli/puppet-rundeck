@@ -138,7 +138,8 @@ class rundeck (
   $group                        = $rundeck::params::group,
   $rdeck_home                   = $rundeck::params::rdeck_home,
   $tokens                       = $rundeck::params::tokens,
-  $logging_config               = $rundeck::params::logging_config
+  $logging_config               = $rundeck::params::logging_config,
+  $krb5                         = $rundeck::params::krb5
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')

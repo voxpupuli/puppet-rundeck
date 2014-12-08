@@ -22,12 +22,15 @@ export RDECK_JVM="-Drdeck.config=<%= @properties_dir %> \
 -Djava.security.auth.login.config=<%= @properties_dir %>/jaas-auth.conf \
 -Dloginmodule.name=authentication"
 
+<%- if !@krb5.empty? -%>
+export RDECK_JVM="$RDECK_JVM -Djava.security.krb5.realm=<%= @krb5['realm'] %> -Djava.security.krb5.kdc=<%= @krb5['dc'] %>"
+<%- end -%>
 
 RDECK_JVM="$RDECK_JVM <%= @jvm_args %>"
 
-<% if @ssl_enabled %>
+<%- if @ssl_enabled -%>
 export RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=<%= @properties_dir %>/ssl/ssl.properties -Dserver.https.port=<%= @ssl_port %>"
-<% end %>
+<%- end -%>
 
 export RDECK_SSL_OPTS="-Djavax.net.ssl.trustStore=$RDECK_BASE/ssl/truststore -Djavax.net.ssl.trustStoreType=jks -Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol"
 

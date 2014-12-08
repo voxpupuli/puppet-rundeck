@@ -17,7 +17,7 @@ class rundeck::config::global::framework(
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group } )
 
-  $framework_config = merge($rundeck::params::framework_config, $rundeck::framework_config)
+  $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
 
   file { $properties_file:
     ensure  => present,
