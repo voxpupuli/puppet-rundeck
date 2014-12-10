@@ -42,19 +42,30 @@ define rundeck::config::plugin(
   validate_re($group, '[a-zA-Z0-9]{3,}')
   validate_re($ensure, ['^present$', '^absent$'])
 
-  wget::fetch { "download plugin ${name}":
-    source      => $source,
-    destination => "${plugin_dir}/${name}",
-    timeout     => 20,
-    verbose     => false,
-  }
+  if $ensure == 'present' {
 
-  file { "${plugin_dir}/${name}":
-    mode    => '0644',
-    owner   => $user,
-    group   => $group,
-    notify  => Wget::Fetch["download plugin ${name}"],
-    require => File[$plugin_dir],
+    wget::fetch { "download plugin ${name}":
+      source      => $source,
+      destination => "${plugin_dir}/${name}",
+      timeout     => 20,
+      verbose     => false,
+      require     => File[$plugin_dir],
+      before      => File["${plugin_dir}/${name}"]
+    }
+
+    file { "${plugin_dir}/${name}":
+      mode  => '0644',
+      owner => $user,
+      group => $group,
+    }
+
+  }
+  elsif $ensure == 'absent' {
+
+    file { "${plugin_dir}/${name}":
+      ensure => 'absent',
+    }
+
   }
 
 }
