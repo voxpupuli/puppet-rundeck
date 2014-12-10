@@ -28,7 +28,7 @@ define rundeck::config::plugin(
 ) {
 
   include '::rundeck'
-  include wget
+  contain wget
 
   $framework_config = deep_merge($::rundeck::params::framework_config, $::rundeck::framework_config)
 

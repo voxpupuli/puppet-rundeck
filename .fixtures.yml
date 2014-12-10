@@ -2,5 +2,6 @@ fixtures:
   repositories:
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
     inifile: "https://github.com/puppetlabs/puppetlabs-inifile.git"
+    wget: "https://github.com/maestrodev/puppet-wget.git"
   symlinks:
     rundeck: "#{source_dir}"

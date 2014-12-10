@@ -10,6 +10,7 @@ describe 'rundeck' do
           :serialnumber    => 0,
           :rundeck_version => ''
         }}
+        plugin_dir = '/var/lib/rundeck/libext'
 
         if osfamily.eql?('RedHat')
           it { should contain_yumrepo('bintray-rundeck') }
@@ -22,6 +23,10 @@ describe 'rundeck' do
           it { should contain_file('/var/rundeck').with(
             'ensure' => 'directory'
           ) }
+          
+          it { should contain_file(plugin_dir).with(
+          'ensure' => 'directory'
+          ) } 
 
      end
     end

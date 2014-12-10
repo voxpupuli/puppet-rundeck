@@ -19,16 +19,11 @@ describe 'rundeck::config::plugin', :type => :define do
           :rundeck_version => ''
         }}
 
-        it { should contain_file(plugin_dir).with(
-          'ensure' => 'directory'
-        ) }
-
-        it { should contain_exec("download plugin #{name}").with(
-          'command' => "/usr/bin/wget #{source} -O #{plugin_dir}/#{name}"
+        it { should contain_wget__fetch("download plugin #{name}").with(
+          'source' => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
         ) }
 
         it { should contain_file("#{plugin_dir}/#{name}").with(
-          'ensure' => 'present',
           'mode'   => '0644',
           'owner'  => 'rundeck',
           'group'  => 'rundeck'
