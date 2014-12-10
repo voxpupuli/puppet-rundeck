@@ -11,15 +11,8 @@
 # [*source*]
 #   The http source or local path from which to get the jar plugin.
 #
-# [*plugin_dir*]
-#   The rundeck directory where the plugins are installed to.
-#
-# [*user*]
-#   The user that rundeck is installed as.
-#
-# [*group*]
-#   The group permission that rundeck is installed as.
-#
+# [*ensure*]
+#   Set present or absent to add or remove the plugin
 # === Examples
 #
 # Install a custom plugin:
@@ -31,49 +24,36 @@
 #
 define rundeck::config::plugin(
   $source,
-  $plugin_dir = '',
-  $user       = '',
-  $group      = ''
+  $ensure = 'present',
 ) {
 
-  include rundeck::params
+  include '::rundeck'
+  $framework_config = deep_merge($::rundeck::params::framework_config, $::rundeck::framework_config)
 
-  if "x${plugin_dir}x" == 'xx' {
-    $pd = $rundeck::params::framework_config['framework.libext.dir']
-  } else {
-    $pd = $plugin_dir
-  }
-
-  if "x${user}x" == 'xx' {
-    $u = $rundeck::params::user
-  } else {
-    $u = $user
-  }
-
-  if "x${group}x" == 'xx' {
-    $g = $rundeck::params::group
-  } else {
-    $g = $group
-  }
+  $user = $rundeck::user
+  $group = $rundeck::group
+  $plugin_dir = $framework_config['framework.libext.dir']
 
   validate_string($source)
-  validate_absolute_path($pd)
-  validate_re($u, '[a-zA-Z0-9]{3,}')
-  validate_re($g, '[a-zA-Z0-9]{3,}')
-
-  ensure_resource(file, $pd, {'ensure' => 'directory', 'owner' => $u, 'group' => $g})
+  validate_absolute_path($plugin_dir)
+  validate_re($user, '[a-zA-Z0-9]{3,}')
+  validate_re($group, '[a-zA-Z0-9]{3,}')
+  validate_re($ensure, ['^present$', '^absent$'])
 
   exec { "download plugin ${name}":
-    command => "/usr/bin/wget ${source} -O ${pd}/${name}",
-    unless  => "/bin/ls -l /var/lib/rundeck/libext/ | grep ${name}"
+    command     => "/usr/bin/wget ${source} -O ${plugin_dir}/${name}",
+    refreshonly => true,
+    creates     => "${plugin_dir}/${name}",
+    onlyif      => '/usr/bin/stat /usr/bin/wget',
   }
 
-  file { "${pd}/${name}":
-    ensure  => present,
+  file { "${plugin_dir}/${name}":
+    ensure  => $ensure,
     mode    => '0644',
-    owner   => $u,
-    group   => $g,
-    require => Exec["download plugin ${name}"]
+    owner   => $user,
+    group   => $group,
+    notify  => Exec["download plugin ${name}"],
+    require => File[$plugin_dir],
   }
 
 }
