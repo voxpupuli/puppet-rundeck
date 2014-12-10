@@ -28,6 +28,8 @@ define rundeck::config::plugin(
 ) {
 
   include '::rundeck'
+  include wget
+
   $framework_config = deep_merge($::rundeck::params::framework_config, $::rundeck::framework_config)
 
   $user = $rundeck::user
@@ -40,19 +42,18 @@ define rundeck::config::plugin(
   validate_re($group, '[a-zA-Z0-9]{3,}')
   validate_re($ensure, ['^present$', '^absent$'])
 
-  exec { "download plugin ${name}":
-    command     => "/usr/bin/wget ${source} -O ${plugin_dir}/${name}",
-    refreshonly => true,
-    creates     => "${plugin_dir}/${name}",
-    onlyif      => '/usr/bin/stat /usr/bin/wget',
+  wget::fetch { "download plugin ${name}":
+    source      => $source,
+    destination => "${plugin_dir}/${name}",
+    timeout     => 20,
+    verbose     => false,
   }
 
   file { "${plugin_dir}/${name}":
-    ensure  => $ensure,
     mode    => '0644',
     owner   => $user,
     group   => $group,
-    notify  => Exec["download plugin ${name}"],
+    notify  => Wget::Fetch["download plugin ${name}"],
     require => File[$plugin_dir],
   }
 
