@@ -117,14 +117,8 @@ A definition for installing rundeck plugins
 #####`source`
 The http source or local path from which to get the jar plugin.
 
-#####`plugin_dir`
-The rundeck directory where the plugins are installed to.
-
-#####`user`
-The user that rundeck is installed as.
-
-#####`group`
-The group permission that rundeck is installed as.
+#####`ensure`
+Default set to 'present' and can be set to 'absent' to remove the plugin for the system
 
 ####Define: `rundeck::project`
 A definition for managing rundeck projects
