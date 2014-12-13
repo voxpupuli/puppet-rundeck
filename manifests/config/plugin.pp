@@ -24,7 +24,8 @@
 #
 define rundeck::config::plugin(
   $source,
-  $ensure = 'present',
+  $ensure   = 'present',
+  $timeout  = '300',
 ) {
 
   include '::rundeck'
@@ -47,7 +48,7 @@ define rundeck::config::plugin(
     wget::fetch { "download plugin ${name}":
       source      => $source,
       destination => "${plugin_dir}/${name}",
-      timeout     => 20,
+      timeout     => $timeout,
       verbose     => false,
       require     => File[$plugin_dir],
       before      => File["${plugin_dir}/${name}"]

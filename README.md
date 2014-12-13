@@ -120,6 +120,9 @@ The http source or local path from which to get the jar plugin.
 #####`ensure`
 Default set to 'present' and can be set to 'absent' to remove the plugin for the system
 
+#####`timeout`
+Timeout in seconds.  Default is set to 300 seconds which is the default for the Exec type.
+
 ####Define: `rundeck::project`
 A definition for managing rundeck projects
 
