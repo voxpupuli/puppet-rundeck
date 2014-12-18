@@ -69,10 +69,8 @@
 #
 define rundeck::config::resource_source(
   $project_name        = $name,
-  $framework_config    = {},
   $number              = '1',
   $source_type         = $rundeck::params::default_source_type,
-  $file                = '',
   $include_server_node = $rundeck::params::include_server_node,
   $resource_format     = $rundeck::params::resource_format,
   $url                 = '',
@@ -83,26 +81,15 @@ define rundeck::config::resource_source(
   $script_args         = '',
   $script_args_quoted  = $rundeck::params::script_args_quoted,
   $script_interpreter  = $rundeck::params::script_interpreter,
-  $projects_dir        = '',
 ) {
 
   include rundeck::params
   include rundeck
 
-  $framework_properties = deep_merge($rundeck::params::framework_config, $framework_config)
+  $framework_properties = deep_merge($rundeck::params::framework_config, $::rundeck::framework_config)
 
-  if "x${projects_dir}x" == 'xx' {
-    $pd = $framework_properties['framework.projects.dir']
-  } else {
-    $pd = $projects_dir
-  }
-
-  if "x${file}x" == 'xx' {
-    $f = "${pd}/${project_name}/etc/resources.xml"
-  } else {
-    $f = $file
-  }
-
+  $projects_dir = $framework_properties['framework.projects.dir']
+  $file = "${projects_dir}/${project_name}/etc/resources.xml"
   $user = $::rundeck::user
   $group = $::rundeck::group
 
@@ -110,14 +97,14 @@ define rundeck::config::resource_source(
   validate_re($number, '[1-9]*')
   validate_re($source_type, ['^file$', '^directory$', '^url$', '^script$'])
   validate_bool($include_server_node)
-  validate_absolute_path($pd)
+  validate_absolute_path($projects_dir)
   validate_re($user, '[a-zA-Z0-9]{3,}')
   validate_re($group, '[a-zA-Z0-9]{3,}')
 
-  ensure_resource('file', "${pd}/${project_name}", {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
-  ensure_resource('file', "${pd}/${project_name}/etc", {'ensure' => 'directory', 'owner' => $user, 'group' => $group, 'require' => File["${pd}/${project_name}"]} )
+  ensure_resource('file', "${projects_dir}/${project_name}", {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
+  ensure_resource('file', "${projects_dir}/${project_name}/etc", {'ensure' => 'directory', 'owner' => $user, 'group' => $group, 'require' => File["${projects_dir}/${project_name}"]} )
 
-  $properties_dir  = "${pd}/${project_name}/etc"
+  $properties_dir  = "${projects_dir}/${project_name}/etc"
   $properties_file = "${properties_dir}/project.properties"
 
   file { $properties_file:
@@ -182,7 +169,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.file",
-        value   => $f,
+        value   => $file,
         require => File[$properties_file]
       }
     }
