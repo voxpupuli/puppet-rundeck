@@ -22,6 +22,11 @@
 # [*jre_ensure*]
 #   Ensure the version of jre to be installed, either present, absent or a specific version
 #
+# [*jre_manage*]
+#   Boolean value to set whether an installation of a JRE should be attempted.
+#   If you set this to true, you are responsible for ensuring the package defined by
+#   jre_name is available.
+#
 # [*auth_type*]
 #   The method used to authenticate to rundeck. Default is file.
 #
@@ -107,6 +112,7 @@ class rundeck (
   $package_source               = $rundeck::params::package_source,
   $jre_name                     = $rundeck::params::jre_name,
   $jre_ensure                   = $rundeck::params::jre_ensure,
+  $jre_manage                   = $rundeck::params::jre_manage,
   $auth_types                   = $rundeck::params::auth_types,
   $auth_template                = $rundeck::params::auth_template,
   $auth_config                  = $rundeck::params::auth_config,
