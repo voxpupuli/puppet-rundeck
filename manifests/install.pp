@@ -9,6 +9,7 @@
 class rundeck::install(
   $jre_name           = $rundeck::jre_name,
   $jre_ensure         = $rundeck::jre_ensure,
+  $jre_manage         = $rundeck::jre_manage,
   $package_source     = $rundeck::package_source,
   $package_ensure     = $rundeck::package_ensure,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
@@ -22,7 +23,9 @@ class rundeck::install(
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
   $projects_dir = $framework_config['framework.projects.dir']
 
-  ensure_resource('package', $jre_name, {'ensure' => $jre_ensure} )
+  if $jre_manage {
+    ensure_resource('package', $jre_name, {'ensure' => $jre_ensure} )
+  }
 
   $user = $rundeck::user
   $group = $rundeck::group

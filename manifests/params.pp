@@ -31,6 +31,8 @@ class rundeck::params {
     }
   }
 
+  $jre_manage = true
+
   $service_manage = false
   $service_config = ''
   $service_script = ''
