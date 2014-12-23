@@ -83,7 +83,6 @@ define rundeck::config::resource_source(
   $script_interpreter  = $rundeck::params::script_interpreter,
 ) {
 
-  include rundeck::params
   include rundeck
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $::rundeck::framework_config)
