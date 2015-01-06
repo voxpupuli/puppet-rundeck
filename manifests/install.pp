@@ -44,7 +44,7 @@ class rundeck::install(
     }
     'Debian': {
       ensure_resource('package', ['libxml2'], {'ensure' => 'installed', 'require' => ['File[/usr/bin/ruby]','File[/usr/bin/gem]']})
-      ensure_resource('package', ['libxml-ruby','rest-client'], {'ensure' => 'installed', 'provider' => 'gem', 'require' => 'Package[libxml2]'})
+      ensure_resource('package', ['libxml-ruby'], {'ensure' => 'installed', 'provider' => 'gem', 'require' => 'Package[libxml2]'})
 
       $version = inline_template("<% package_version = '${package_ensure}' %><%= package_version.split('-')[0] %>")
 

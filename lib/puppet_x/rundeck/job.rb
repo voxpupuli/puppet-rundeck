@@ -1,4 +1,3 @@
-require 'rest_client'
 require 'xml'
 require 'net/http'
 
@@ -34,8 +33,6 @@ module Rundeck
       params = { 'xmlBatch' => job_data, 'format' => 'xml', 'dupeOption' => 'update' }
 
       begin
-        #RestClient.post "#{resource[:base_url]}/api/12/jobs/import", params, @headers
-
         url = "#{resource[:base_url]}/api/12/jobs/import"
         uri = URI.parse(url)
         http = Net::HTTP.new(uri.host,uri.port)
@@ -68,7 +65,7 @@ module Rundeck
         job = resp.body
         xml_doc = XML::Parser.string(job, :encoding => XML::Encoding::ISO_8859_1).parse
       rescue Exception => e
-        raise Puppet::Error, "Could not read rundeck job (#{id}): #{e} - #{resource[:base_url]} - #{@headers}", e.backtrace
+        raise Puppet::Error, "Could not read rundeck job (#{id}) for project #{project}: #{e} - #{resource[:base_url]} - #{@headers}", e.backtrace
       end
 
     end
@@ -78,7 +75,18 @@ module Rundeck
     end
 
     def delete(id)
-      RestClient.delete "#{resource[:base_url]}/api/12/job/#{id}"
+      begin
+        url = "#{resource[:base_url]}/api/12/job/#{id}"
+        uri = URI.parse(url)
+        http = Net::HTTP.new(uri.host,uri.port)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        http.ssl_version = :TLSv1
+        http.ciphers = ['RC4-SHA']
+        resp = http.get(uri.request_uri, @headers)
+      rescue Exception => e
+        raise Puppet::Error, "Could not delete rundeck job: #{e}", e.backtrace
+      end
     end
 
   end

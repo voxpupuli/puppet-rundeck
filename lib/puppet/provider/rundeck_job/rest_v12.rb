@@ -2,7 +2,6 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
 
   confine :true => begin
     begin
-      require 'rest_client'
       require 'xml'
       require 'puppet_x/rundeck/job'
       true
@@ -509,13 +508,15 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
     options = rundeck_job.find("//job/context/options/option").to_a
 
     options.each do |option|
-      option_hash = {
-        "_values" => option['values'],
-        "_delimiter" => option['delimiter'], "_multivalued" => option['multivalued'],
-        "_name" => option['name'], "_required" => option['required'],
-        "_value" => option['value'],
-        "description" => option.find('description').to_a[0].content
-      }
+      option_hash = Hash.new
+      option_hash['_values'] = option['values'] if option['values']
+      option_hash['_delimiter'] = option['delimiter'] if option['delimiter']
+      option_hash['_multivalued'] = option['multivalued'] if option['multivalued']
+      option_hash['_name'] = option['name'] if option['name']
+      option_hash['_required'] = option['required'] if option['required']
+      option_hash['_value'] = option['value'] if option['value']
+      option_hash['description'] = option.find('description').to_a[0].content if option.find('description')
+
       option_list.push(option_hash)
     end
     option_list
