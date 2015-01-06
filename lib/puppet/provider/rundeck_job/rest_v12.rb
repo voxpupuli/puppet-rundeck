@@ -26,9 +26,11 @@ Puppet::Type.type(:rundeck_job).provide(:rest) do
       if !jobs.empty?
         jobs.first.find('@id').first.value
       else
+        Puppet.debug("id: no jobs with name #{resource[:name]} could be found")
         nil
       end
     else
+      Puppet.debug("id: no jobs found for project #{resource[:project]}")
       nil
     end
   end
