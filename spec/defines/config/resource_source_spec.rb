@@ -22,7 +22,7 @@ describe 'rundeck::config::resource_source', :type => :define do
           'resources.source.1.config.includeServerNode' => 'false',
           'resources.source.1.config.generateFileAutomatically' => 'true',
           'resources.source.1.config.format' => 'resourcexml',
-          'resources.source.1.config.file' => '/var/rundeck/projects/test/etc/resources.xml',
+          'resources.source.1.config.file' => '/var/rundeck/projects/test/etc/source one.xml',
           'resources.source.1.type' => 'file'
         }
 
