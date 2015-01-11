@@ -106,14 +106,6 @@ define rundeck::config::resource_source(
   $properties_dir  = "${projects_dir}/${project_name}/etc"
   $properties_file = "${properties_dir}/project.properties"
 
-  file { $properties_file:
-    ensure  => present,
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-    require => File[$properties_dir]
-  }
-
   ini_setting { "resources.source.${number}.type":
     ensure  => present,
     path    => $properties_file,
