@@ -68,7 +68,7 @@
 # }
 #
 define rundeck::config::resource_source(
-  $project_name        = $name,
+  $project_name        = undef,
   $number              = '1',
   $source_type         = $rundeck::params::default_source_type,
   $include_server_node = $rundeck::params::include_server_node,
@@ -90,6 +90,10 @@ define rundeck::config::resource_source(
   $projects_dir = $framework_properties['framework.projects.dir']
   $user = $::rundeck::user
   $group = $::rundeck::group
+
+  if $project_name == undef {
+    fail('project_name must be specified')
+  }
 
   validate_string($project_name)
   validate_re($number, '[1-9]*')
