@@ -210,6 +210,13 @@ define rundeck::config::resource_source(
     'directory': {
       validate_absolute_path($directory)
 
+      file { $directory:
+        ensure => directory,
+        owner  => $user,
+        group  => $group,
+        mode   => 0740,
+      }
+
       ini_setting { "resources.source.${number}.config.directory":
         ensure  => present,
         path    => $properties_file,
