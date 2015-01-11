@@ -88,7 +88,6 @@ define rundeck::config::resource_source(
   $framework_properties = deep_merge($rundeck::params::framework_config, $::rundeck::framework_config)
 
   $projects_dir = $framework_properties['framework.projects.dir']
-  $file = "${projects_dir}/${project_name}/etc/resources.xml"
   $user = $::rundeck::user
   $group = $::rundeck::group
 
@@ -118,6 +117,17 @@ define rundeck::config::resource_source(
   case downcase($source_type) {
     'file': {
       validate_re($resource_format, ['^resourcexml$','^resourceyaml$'])
+
+      case $resource_format {
+        'resourcexml': {
+          $file_extension = 'xml'
+        }
+        'resourceyaml': {
+          $file_extension = 'yaml'
+        }
+      }
+
+      $file = "${properties_dir}/${name}.${file_extension}"
 
       ini_setting { "resources.source.${number}.config.requireFileExists":
         ensure  => present,
