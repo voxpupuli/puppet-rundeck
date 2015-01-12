@@ -109,7 +109,7 @@ define rundeck::config::resource_source(
   $properties_dir  = "${projects_dir}/${project_name}/etc"
   $properties_file = "${properties_dir}/project.properties"
 
-  ini_setting { "resources.source.${number}.type":
+  ini_setting { "${name}::resources.source.${number}.type":
     ensure  => present,
     path    => $properties_file,
     section => '',
@@ -133,7 +133,7 @@ define rundeck::config::resource_source(
 
       $file = "${properties_dir}/${name}.${file_extension}"
 
-      ini_setting { "resources.source.${number}.config.requireFileExists":
+      ini_setting { "${name}::resources.source.${number}.config.requireFileExists":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -142,7 +142,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.includeServerNode":
+      ini_setting { "${name}::resources.source.${number}.config.includeServerNode":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -151,7 +151,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.generateFileAutomatically":
+      ini_setting { "${name}::resources.source.${number}.config.generateFileAutomatically":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -160,7 +160,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.format":
+      ini_setting { "${name}::resources.source.${number}.config.format":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -169,7 +169,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.file":
+      ini_setting { "${name}::resources.source.${number}.config.file":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -184,7 +184,7 @@ define rundeck::config::resource_source(
       validate_re($url_timeout, '[0-9]*')
       validate_bool($url_cache)
 
-      ini_setting { "resources.source.${number}.config.url":
+      ini_setting { "${name}::resources.source.${number}.config.url":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -193,7 +193,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.timeout":
+      ini_setting { "${name}::resources.source.${number}.config.timeout":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -202,7 +202,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.cache":
+      ini_setting { "${name}::resources.source.${number}.config.cache":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -221,7 +221,7 @@ define rundeck::config::resource_source(
         mode   => 0740,
       }
 
-      ini_setting { "resources.source.${number}.config.directory":
+      ini_setting { "${name}::resources.source.${number}.config.directory":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -237,7 +237,7 @@ define rundeck::config::resource_source(
       validate_absolute_path($script_file)
       validate_string($script_args)
 
-      ini_setting { "resources.source.${number}.config.file":
+      ini_setting { "${name}::resources.source.${number}.config.file":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -246,7 +246,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.args":
+      ini_setting { "${name}::resources.source.${number}.config.args":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -255,7 +255,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.format":
+      ini_setting { "${name}::resources.source.${number}.config.format":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -264,7 +264,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.interpreter":
+      ini_setting { "${name}::resources.source.${number}.config.interpreter":
         ensure  => present,
         path    => $properties_file,
         section => '',
@@ -273,7 +273,7 @@ define rundeck::config::resource_source(
         require => File[$properties_file]
       }
 
-      ini_setting { "resources.source.${number}.config.argsQuoted":
+      ini_setting { "${name}::resources.source.${number}.config.argsQuoted":
         ensure  => present,
         path    => $properties_file,
         section => '',
