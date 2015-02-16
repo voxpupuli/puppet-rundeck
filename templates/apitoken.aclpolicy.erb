@@ -8,7 +8,11 @@ for:
   <%- resource['rules'].each do |rule| -%>
   <%-   if rule['match']               -%>
     - match:
+        <%- if rule['match']['path'] -%>
+        path: '<%= rule['match']['path'] -%>'
+        <%- else -%>
         name: '<%= rule['match']['name'] -%>'
+        <%- end -%>
       allow: [<%= rule['allow'] -%>]
   <%-   elsif rule['equals']           -%>
     - equals:
