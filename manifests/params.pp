@@ -177,10 +177,12 @@ class rundeck::params {
         {
           'type' => 'storage',
           'rules' => [
-            'match' => {
-              'path' => '(keys|keys/.*)'
-            },
-            'allow' => '*'
+            {
+              'match' => {
+                'path' => '(keys|keys/.*)'
+              },
+              'allow' => '*'
+            }
           ]
         }
       ],

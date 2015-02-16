@@ -13,11 +13,11 @@ for:
         <%- else -%>
         name: '<%= rule['match']['name'] -%>'
         <%- end -%>
-      allow: [<%= rule['allow'] -%>]
+      allow: <%- if rule['allow'].eql?('*') -%>'<%= rule['allow'] -%>'<%- else -%>[<%= rule['allow'] -%>]<%- end %>
   <%-   elsif rule['equals']           -%>
     - equals:
         kind: '<%= rule['equals']['kind'] -%>'
-      allow: [<%= rule['allow'] -%>]
+      allow: <%- if rule['allow'].eql?('*') -%>'<%= rule['allow'] -%>'<%- else -%>[<%= rule['allow'] -%>]<%- end %>
   <%-   else                             -%>
     - <%= rule['name'] %>: '<%= rule['rule'] %>'
   <%-   end                              -%>
