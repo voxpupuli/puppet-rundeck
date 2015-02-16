@@ -19,7 +19,7 @@ for:
         kind: <%= rule['equals']['kind'] %>
       allow: <%- if rule['allow'].eql?('*') -%>'<%= rule['allow'] -%>'<%- else -%>[<%= rule['allow'] -%>]<%- end %>
   <%-   else                             -%>
-    - <%= rule['name'] %>: <%- if rule['name'].eql?('*') -%>'<%= rule['rule'] -%>'<%- else -%>[<%= rule['rule'] -%>]<%- end -%>
+    - <%= rule['name'] %>: <%- if rule['name'].eql?('*') -%>'<%= rule['rule'] -%>'<%- else -%>[<%= rule['rule'] -%>]<%- end %>
   <%-   end                              -%>
   <%- end -%>
 <%- end -%>
