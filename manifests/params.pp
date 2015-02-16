@@ -105,6 +105,113 @@ class rundeck::params {
     }
   ]
 
+  $api_policies = [
+    {
+      'description' => 'API project level access control',
+      'context' => {
+        'type' => 'project',
+        'rule' => '*'
+      },
+      'resource_types' => [
+        {
+           'type' => 'resource',
+           'rules' => [
+            {
+              'equals' => {
+                'kind' => 'job'
+              },
+              'allow' => 'create,delete'
+            },
+            {
+              'equals' => {
+                'kind' => 'node'
+              },
+              'allow' => 'read,create,update,refresh'
+            },
+            {
+              'equals' => {
+                'kind' => 'event'
+              },
+              'allow' => 'read,create'
+            },
+           ]
+        },
+        {
+          'type' => 'adhoc',
+          'rules' => [
+            {
+              'allow' => 'read,run,kill'
+            }
+          ]
+        },
+        {
+          'type' => 'job',
+          'rules' => [
+            {
+              'allow' => 'create,read,update,delete,run,kill'
+            }
+          ]
+        },
+        {
+          'type' => 'node',
+          'rules' => [
+            {
+              'allow' => 'read,run'
+            }
+          ]
+        },
+      ],
+      'by' => {
+        'groups'    => ['api_token_group'],
+        'usernames' => undef
+      }
+    },
+    {
+      'description' => 'API Application level access control',
+      'context' => {
+        'type' => 'application',
+        'rule' => 'rundeck'
+      },
+      'resource_types' => [
+        {
+          'type' => 'resource',
+          'rules' => [
+            {
+              'equals' => {
+                'kind' => 'system'
+              },
+              'allow' => 'read'
+            }
+          ]
+        },
+        {
+          'type' => 'project',
+          'rules' => [
+            {
+              'match' => {
+                'name' => '*'
+              },
+              'allow' => 'read'
+            }
+          ]
+        },
+        {
+          'type' => 'storage',
+          'rules' => [
+            'match' => {
+              'path' => '(keys|keys/.*)'
+            },
+            'allow' => '*'
+          ]
+        }
+      ],
+      'by' => {
+        'groups'    => ['api_token_group'],
+        'usernames' => undef
+      }
+    }
+  ]
+
   $auth_config = {
     'file' => {
       'admin_user'     => $framework_config['framework.server.username'],

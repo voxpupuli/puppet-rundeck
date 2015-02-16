@@ -29,6 +29,7 @@ class rundeck::config(
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
   $acl_policies          = $rundeck::acl_policies,
+  $api_policies          = $rundeck::api_policies,
   $tokens                = $rundeck::tokens,
   $logging_config        = $rundeck::logging_config,
   $krb5                  = $rundeck::krb5
