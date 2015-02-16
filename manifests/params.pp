@@ -136,30 +136,9 @@ class rundeck::params {
             },
            ]
         },
-        {
-          'type' => 'adhoc',
-          'rules' => [
-            {
-              'allow' => 'read,run,kill'
-            }
-          ]
-        },
-        {
-          'type' => 'job',
-          'rules' => [
-            {
-              'allow' => 'create,read,update,delete,run,kill'
-            }
-          ]
-        },
-        {
-          'type' => 'node',
-          'rules' => [
-            {
-              'allow' => 'read,run'
-            }
-          ]
-        },
+        { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => '*'}] },
+        { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => '*'}] },
+        { 'type'  => 'node', 'rules' => [{'name' => 'allow','rule' => '*'}] }
       ],
       'by' => {
         'groups'    => ['api_token_group'],
