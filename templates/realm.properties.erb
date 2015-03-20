@@ -23,18 +23,9 @@
 # This sets the default user accounts for the Rundeck app
 #
 <%= @auth_config['file']['admin_user'] %>:<%= @auth_config['file']['admin_password'] %>,user,admin,architect,deploy,build
-<%- if @auth_config['file']['auth_users']
-      @auth_config['file']['auth_users'].each do |key,value|
-        if key.eql?('username')    -%>
-<%=       value                     %>:
-<%-     elsif key.eql?('password') -%>
-<%=       value                    -%>,
-<%      elsif key.eql?('roles')
-          value.each do |v|        -%>
-<%=         v                      -%>,
-<%-       end
-        else
-        end
-      end
-    end
--%>
+<%- if @auth_config['file']['auth_users'] -%>
+  <%- @auth_config['file']['auth_users'].each do |x| -%>
+<%= x['username'] -%>:<%= x['password'] -%>
+    <%- x['roles'].each do |v| -%>,<%= v -%><%- end %>
+  <%- end -%>
+<%- end %>
