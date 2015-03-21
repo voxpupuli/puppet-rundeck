@@ -24,10 +24,17 @@
 #
 <%= @auth_config['file']['admin_user'] %>:<%= @auth_config['file']['admin_password'] %>,user,admin,architect,deploy,build
 <%- if @auth_config['file']['auth_users'] -%>
-  <%- @auth_config['file']['auth_users'].each do |x| -%>
+  <%- if @auth_config['file']['auth_users'].kind_of?(Array) -%>
+    <%- @auth_config['file']['auth_users'].each do |x| -%>
 <%= x['username'] -%>:<%= x['password'] -%>
-    <%- if x['roles'] -%>
-      <%- x['roles'].each do |v| -%>,<%= v -%><%- end %>
+      <%- if x['roles'] -%>
+        <%- x['roles'].each do |v| -%>,<%= v -%><%- end %>
+      <%- end -%>
+    <%- end -%>
+  <%- else -%>
+<%= @auth_config['file']['auth_users']['username'] -%>:<%= @auth_config['file']['auth_users']['password'] -%>
+    <%- if @auth_config['file']['auth_users']['roles'] -%>
+      <%- @auth_config['file']['auth_users']['roles'].each do |v| -%>,<%= v -%><%- end %>
     <%- end -%>
   <%- end -%>
 <%- end %>
