@@ -1,50 +1,37 @@
-source ENV['GEM_SOURCE'] || "https://rubygems.org"
+#  Copyright 2014 Puppet Community
+#  
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#  
+#      http://www.apache.org/licenses/LICENSE-2.0
+#  
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 
-ENV['RUBY_VERSION'] = `ruby -v`
+source "https://rubygems.org"
 
-group :development, :test do
-
-  if ENV['RUBY_VERSION'] =~ /1.8/
-    gem 'rest-client', '1.6.8'
-    gem 'gssapi', '1.2.0'
-    gem 'celluloid', '0.11.1'
-  end
-
-  if ENV['PUPPET_GEM_VERSION'] =~ /3.4/ && ENV['RUBY_VERSION'] !~ /1.8/
-    gem 'puppet-doc-lint', :require => false
-  end
-
-  gem 'rake',                                                                    :require => false
-  gem 'puppet-lint',                                                             :require => false
-  gem 'rspec-puppet',
-    :git => 'https://github.com/rodjek/rspec-puppet.git',
-    :ref => '',
-    :require => false
-  gem 'puppet-syntax',                                                           :require => false
-  gem 'puppetlabs_spec_helper',                                                  :require => false
-  gem 'rspec',                                                                   :require => false
-  gem 'beaker',                                                                  :require => false
-  gem 'beaker-rspec',                                                            :require => false
-  gem 'serverspec',                                                              :require => false
-  gem 'specinfra',                                                               :require => false
-  gem 'winrm',                                                                   :require => false
-  gem 'travis',                                                                  :require => false
-  gem 'travis-lint',                                                             :require => false
-  gem 'vagrant-wrapper',                                                         :require => false
-  gem 'puppet-blacksmith',                                                       :require => false
-  gem 'guard-rake',                                                              :require => false
+group :test do
+  gem "rake"
+  gem "puppet", ENV['PUPPET_VERSION'] || '~> 3.7.0'
+  gem "rspec-puppet", :git => 'https://github.com/rodjek/rspec-puppet.git'
+  gem "puppetlabs_spec_helper"
+  gem "metadata-json-lint"
+  gem "rspec-puppet-facts"
+  gem "rspec", "< 3.2.0", { "platforms" => ["ruby_18"] }
 end
 
-if facterversion = ENV['FACTER_GEM_VERSION']
-  gem 'facter', facterversion, :require => false
-else
-  gem 'facter', :require => false
+group :development do
+  gem "travis"
+  gem "travis-lint"
+  gem "puppet-blacksmith"
+  gem "guard-rake"
 end
 
-if puppetversion = ENV['PUPPET_GEM_VERSION']
-  gem 'puppet', puppetversion, :require => false
-else
-  gem 'puppet', :require => false
+group :system_tests do
+  gem "beaker"
+  gem "beaker-rspec"
 end
-
-# vim:ft=ruby

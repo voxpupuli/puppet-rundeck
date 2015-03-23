@@ -1,12 +1,12 @@
 {
-  "name":         "opentable-rundeck",
-  "version":      "1.0.0",
-  "author":       "opentable",
-  "license":      "MIT",
+  "name":         "puppet-rundeck",
+  "version":      "1.1.0",
+  "author":       "puppetcommunity",
+  "license":      "Apache 2.0",
   "summary":      "Module for managing the installatation and configuration of the rundeck orchestration tool",
-  "source":       "https://github.com/opentable/puppet-rundeck",
-  "project_page": "https://github.com/opentable/puppet-rundeck",
-  "issues_url":   "https://github.com/opentable/puppet-rundeck/issues",
+  "source":       "https://github.com/puppet-community/puppet-rundeck",
+  "project_page": "https://github.com/puppet-community/puppet-rundeck",
+  "issues_url":   "https://github.com/puppet-community/puppet-rundeck/issues",
   "tags": ["orchestration", "rundeck"],
   "operatingsystem_support": [
     {
