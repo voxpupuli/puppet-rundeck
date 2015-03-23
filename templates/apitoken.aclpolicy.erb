@@ -1,43 +1,35 @@
-description: API project level access control
+<%- @api_policies.each_with_index do |policy, index| -%>
+description: <%= policy['description'] %>
 context:
-  project: '.*' # all projects
+  <%= policy['context']['type'] %>: '<%= policy['context']['rule'] %>'
 for:
-  resource:
-    - equals:
-        kind: job
-      allow: [create,delete] # allow create and delete jobs
-    - equals:
-        kind: node
-      allow: [read,create,update,refresh] # allow refresh node sources
-    - equals:
-        kind: event
-      allow: [read,create] # allow read/create events
-  adhoc:
-    - allow: [read,run,kill] # allow running/killing adhoc jobs and read output
-  job: 
-    - allow: [create,read,update,delete,run,kill] # allow create/read/write/delete/run/kill of all jobs
-  node:
-    - allow: [read,run] # allow read/run for all nodes
+<%- policy['resource_types'].each do |resource| -%>
+  <%= resource['type'] %>:
+  <%- resource['rules'].each do |rule| -%>
+    - <%- if rule.has_key? 'filter' -%><%= rule['filter']['filter_type'] -%>:
+        <%= rule['filter']['filter_property'] %>: '<%= rule['filter']['filter_value'] -%>'
+      <% end -%><%= rule['name'] %>:
+        <%- rule['rule'].each do |action| -%>
+        - '<%= action %>'
+        <%- end -%>
+  <%- end -%>
+<%- end -%>
 by:
-  group: api_token_group
+<%- if !policy['by']['groups'].nil? && policy['by']['groups'] != :undef -%>
+  group:
+  <%- policy['by']['groups'].each do |group| -%>
+   - '<%= group %>'
+  <%- end -%>
+<%- end -%>
+<%- if !policy['by']['usernames'].nil? && policy['by']['usernames'] != :undef -%>
+  username:
+  <%- policy['by']['usernames'].each do |username| -%>
+   - '<%= username %>'
+  <%- end -%>
+<%- end -%>
+<%- if index != (@api_policies.length-1) -%>
 
 ---
 
-description: API Application level access control
-context:
-  application: 'rundeck'
-for:
-  resource:
-    - equals:
-        kind: system
-      allow: [read] # allow read of system info
-  project:
-    - match:
-        name: '.*'
-      allow: [read] # allow view of all projects
-  storage:
-    - match:
-        path: '(keys|keys/.*)'
-      allow: '*' # allow all access to manage stored keys
-by:
-  group: api_token_group
+<%- end -%>
+<%- end -%>

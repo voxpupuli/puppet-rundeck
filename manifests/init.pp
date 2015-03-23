@@ -118,6 +118,8 @@ class rundeck (
   $auth_config                  = $rundeck::params::auth_config,
   $acl_policies                 = $rundeck::params::acl_policies,
   $acl_template                 = $rundeck::params::acl_template,
+  $api_policies                 = $rundeck::params::api_policies,
+  $api_template                 = $rundeck::params::api_template,
   $service_logs_dir             = $rundeck::params::service_logs_dir,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
   $framework_config             = $rundeck::params::framework_config,
