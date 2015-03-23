@@ -151,7 +151,6 @@ class rundeck (
   validate_string($jre_ensure)
   validate_array($auth_types)
   validate_hash($auth_config)
-  validate_hash($auth_users)
   validate_bool($ssl_enabled)
   validate_string($projects_organization)
   validate_string($projects_description)
