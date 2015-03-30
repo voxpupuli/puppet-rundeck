@@ -1,5 +1,3 @@
-
-if [ -x /usr/bin/dpkg ]; then
-  VERSION=`dpkg -l | grep rundeck | awk '{ print $3}'`
-  echo "rundeck_version=$VERSION"
-fi
+# Ask puppet what version of rundeck is installed.
+# Will return the version or if not available: "absent".
+puppet resource package rundeck | grep ensure | awk '{print $NF}' | sed "s/'//g;s/,//g"
