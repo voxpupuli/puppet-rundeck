@@ -37,7 +37,7 @@ describe 'rundeck class' do
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
-    describe package('java-1.6.0-openjdk') do
+    describe package('java-1.7.0-openjdk') do
       it { should be_installed }
     end
 
