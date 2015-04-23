@@ -17,13 +17,13 @@
 
 The rundeck puppet module for installing and managing rundeck (http://rundeck.org/)
 
-[![Build Status](https://secure.travis-ci.org/opentable/puppet-rundeck.png)](https://secure.travis-ci.org/opentable/puppet-rundeck.png)
+[![Build Status](https://travis-ci.org/puppet-community/puppet-rundeck.svg?branch=master)](https://travis-ci.org/puppet-community/puppet-rundeck)
 
 ##Module Description
 
 This module provides a way to manage the installation and configuration of rundeck, it's projects, jobs and plugins.
 
-##Setup`
+##Setup
 
 ###Classes and Defined Types
 
@@ -214,6 +214,7 @@ The group permission that rundeck is installed as.
 ###Classes
 ####Public Classes
 * [`rundeck`](#class-rundeck): Guides the basic installation of rundeck
+
 ####Private Classes
 * [`rundeck::install`](#class-install): Manages the installation of the rundeck packages
 * [`rundeck::service`](#class-service): Manages the rundeck service
