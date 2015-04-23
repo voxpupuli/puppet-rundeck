@@ -23,7 +23,7 @@ The rundeck puppet module for installing and managing rundeck (http://rundeck.or
 
 This module provides a way to manage the installation and configuration of rundeck, it's projects, jobs and plugins.
 
-##Setup`
+##Setup
 
 ###Classes and Defined Types
 
