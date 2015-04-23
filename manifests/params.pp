@@ -22,7 +22,7 @@ class rundeck::params {
       $package_name = 'rundeck'
       $package_ensure = 'installed'
       $service_name = 'rundeckd'
-      $jre_name = 'java-1.6.0-openjdk'
+      $jre_name = 'java-1.7.0-openjdk'
       $jre_ensure = 'installed'
       $manage_yum_repo = true
     }
