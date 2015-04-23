@@ -214,6 +214,7 @@ The group permission that rundeck is installed as.
 ###Classes
 ####Public Classes
 * [`rundeck`](#class-rundeck): Guides the basic installation of rundeck
+
 ####Private Classes
 * [`rundeck::install`](#class-install): Manages the installation of the rundeck packages
 * [`rundeck::service`](#class-service): Manages the rundeck service
