@@ -17,7 +17,7 @@
 
 The rundeck puppet module for installing and managing rundeck (http://rundeck.org/)
 
-[![Build Status](https://secure.travis-ci.org/opentable/puppet-rundeck.png)](https://secure.travis-ci.org/opentable/puppet-rundeck.png)
+[![Build Status](https://travis-ci.org/puppet-community/puppet-rundeck.svg?branch=master)](https://travis-ci.org/puppet-community/puppet-rundeck)
 
 ##Module Description
 
