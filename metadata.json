@@ -2,7 +2,7 @@
   "name":         "puppet-rundeck",
   "version":      "1.1.0",
   "author":       "puppetcommunity",
-  "license":      "Apache 2.0",
+  "license":      "Apache-2.0",
   "summary":      "Module for managing the installatation and configuration of the rundeck orchestration tool",
   "source":       "https://github.com/puppet-community/puppet-rundeck",
   "project_page": "https://github.com/puppet-community/puppet-rundeck",
