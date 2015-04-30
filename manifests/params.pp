@@ -111,16 +111,21 @@ class rundeck::params {
       'rule' => '.*'
     },
     'resource_types' => [
-      { 'type'  => 'resource', 'rules' => [
-        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'job' },
-         'name' => 'allow',
-         'rule' => ['create','delete'] },
-        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'node' },
-          'name' => 'allow',
-          'rule' => ['read','create','update','refresh'] },
-        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'event' },
-          'name' => 'allow',
-          'rule' => ['read','create'] }]
+      {
+        'type'  => 'resource', 'rules' => [
+          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'job' },
+            'name' => 'allow',
+            'rule' => ['create','delete']
+          },
+          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'node' },
+            'name' => 'allow',
+            'rule' => ['read','create','update','refresh']
+          },
+          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'event' },
+            'name' => 'allow',
+            'rule' => ['read','create']
+          }
+        ]
       },
       { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => ['read','run','kill']}] },
       { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => ['create','read','update','delete','run','kill']}] },
@@ -138,20 +143,28 @@ class rundeck::params {
       'rule' => 'rundeck'
     },
     'resource_types' => [
-      { 'type'  => 'resource', 'rules' => [
-        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'system' },
-         'name' => 'allow',
-         'rule' => ['read'] }]
+      {
+        'type'  => 'resource', 'rules' => [
+          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'system' },
+            'name' => 'allow',
+            'rule' => ['read']
+          }
+        ]
       },
-      { 'type'  => 'project', 'rules' => [
-        { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'name', 'filter_value' => '.*' },
-         'name' => 'allow',
-         'rule' => ['read']}]
+      {
+        'type'  => 'project', 'rules' => [
+          { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'name', 'filter_value' => '.*' },
+            'name' => 'allow',
+            'rule' => ['read']
+          }
+        ]
       },
       { 'type'  => 'storage', 'rules' => [
-        { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'path', 'filter_value' => '(keys|keys/.*)' },
-         'name' => 'allow',
-         'rule' => '*'}]
+          { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'path', 'filter_value' => '(keys|keys/.*)' },
+            'name' => 'allow',
+            'rule' => '*'
+          }
+        ]
       }
     ],
     'by' => {

@@ -9,8 +9,12 @@ for:
     - <%- if rule.has_key? 'filter' -%><%= rule['filter']['filter_type'] -%>:
         <%= rule['filter']['filter_property'] %>: '<%= rule['filter']['filter_value'] -%>'
       <% end -%><%= rule['name'] %>:
-        <%- rule['rule'].each do |action| -%>
+        <%- if rule['rule'].is_a?(Array) -%> 
+        <%-   rule['rule'].each do |action| -%>
         - '<%= action %>'
+        <%-   end -%>
+        <%- else -%>
+        - '<%= rule['rule'] %>'  
         <%- end -%>
   <%- end -%>
 <%- end -%>
