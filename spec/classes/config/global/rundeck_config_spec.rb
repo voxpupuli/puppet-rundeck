@@ -25,9 +25,6 @@ describe 'rundeck' do
             url = "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true"
           }
 
-          grails {
-          }
-
           grails.serverURL = "http://test.domain.com:4440"
           rundeck.clusterMode.enabled = "false"
         CONFIG
