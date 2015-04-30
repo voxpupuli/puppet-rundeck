@@ -66,6 +66,7 @@ class rundeck::params {
   $auth_template = 'rundeck/jaas-auth.conf.erb'
 
   $acl_template = 'rundeck/admin.aclpolicy.erb'
+  $api_template = 'rundeck/apitoken.aclpolicy.erb'
 
   $acl_policies = [
     {
@@ -100,6 +101,64 @@ class rundeck::params {
         'usernames' => undef
       }
     }
+  ]
+
+  $api_policies = [
+  {
+    'description' => 'API project level access control',
+    'context' => {
+      'type' => 'project',
+      'rule' => '.*'
+    },
+    'resource_types' => [
+      { 'type'  => 'resource', 'rules' => [
+        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'job' },
+         'name' => 'allow',
+         'rule' => ['create','delete'] },
+        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'node' },
+          'name' => 'allow',
+          'rule' => ['read','create','update','refresh'] },
+        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'event' },
+          'name' => 'allow',
+          'rule' => ['read','create'] }]
+      },
+      { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => ['read','run','kill']}] },
+      { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => ['create','read','update','delete','run','kill']}] },
+      { 'type'  => 'node', 'rules' => [{'name' => 'allow','rule' => ['read','run']}] }
+    ],
+    'by' => {
+      'groups'    => ['api_token_group'],
+      'usernames' => undef
+    }
+  },
+  {
+    'description' => 'API Application level access control',
+    'context' => {
+      'type' => 'application',
+      'rule' => 'rundeck'
+    },
+    'resource_types' => [
+      { 'type'  => 'resource', 'rules' => [
+        { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'system' },
+         'name' => 'allow',
+         'rule' => ['read'] }]
+      },
+      { 'type'  => 'project', 'rules' => [
+        { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'name', 'filter_value' => '.*' },
+         'name' => 'allow',
+         'rule' => ['read']}]
+      },
+      { 'type'  => 'storage', 'rules' => [
+        { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'path', 'filter_value' => '(keys|keys/.*)' },
+         'name' => 'allow',
+         'rule' => '*'}]
+      }
+    ],
+    'by' => {
+      'groups'    => ['api_token_group'],
+      'usernames' => undef
+    }
+  }
   ]
 
   $auth_config = {
