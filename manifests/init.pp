@@ -27,7 +27,7 @@
 #   If you set this to true, you are responsible for ensuring the package defined by
 #   jre_name is available.
 #
-# [*auth_type*]
+# [*auth_types*]
 #   The method used to authenticate to rundeck. Default is file.
 #
 # [*properties_dir*]
