@@ -47,6 +47,25 @@ describe 'rundeck' do
       :rundeck_version => ''
     }}
 
+    # auth_config cannot be passed as a parameter to rundeck::config :-(
+    # so we have to test it here
+    describe 'setting auth_config ldap roleUsernameMemberAttribute' do
+      let(:params) {{
+        :auth_types => [ 'ldap' ],
+        :auth_config => {
+          'ldap' => {
+            'role_username_member_attribute' => 'memberUid'
+          }
+        }
+      }}
+      it { should contain_file('/etc/rundeck/jaas-auth.conf') }
+      it 'should generate valid content for jaas-auth.conf' do
+        content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
+        content.should include('roleUsernameMemberAttribute="memberUid"')
+        content.should_not include('roleMemberAttribute')
+      end
+    end
+
 
   end
 end
