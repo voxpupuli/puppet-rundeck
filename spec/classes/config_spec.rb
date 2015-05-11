@@ -57,5 +57,20 @@ describe 'rundeck' do
 
       end
     end
+
+    describe 'rundeck::config with jvm_args set' do
+      jvm_args = '-Dserver.http.port=8008 -Xms2048m -Xmx2048m -server'
+      let(:facts) {{
+        :osfamily        => 'RedHat',
+        :serialnumber    => 0,
+        :rundeck_version => ''
+      }}
+      let(:params) {{ :jvm_args => jvm_args }}
+      it { should contain_file('/etc/rundeck/profile') }
+      it 'should generate valid content for profile' do
+        content = catalogue.resource('file', '/etc/rundeck/profile')[:content]
+        content.should include("RDECK_JVM=\"$RDECK_JVM #{jvm_args}\"")
+      end
+    end
   end
 end
