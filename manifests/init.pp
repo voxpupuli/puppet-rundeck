@@ -42,6 +42,9 @@
 # [*group*]
 #   The group that the rundeck user is a member of.
 #
+# [*jvm_args*]
+#   Extra arguments for the JVM.
+#
 # [*rdeck_base*]
 #   The installation directory for rundeck.
 #
@@ -144,6 +147,7 @@ class rundeck (
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,
+  $jvm_args                     = $rundeck::params::jvm_args,
   $rdeck_home                   = $rundeck::params::rdeck_home,
 ) inherits rundeck::params {
 
