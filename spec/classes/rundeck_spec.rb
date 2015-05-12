@@ -39,4 +39,14 @@ describe 'rundeck' do
       it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
     end
   end
+
+  context 'non-platform-specific config parameters' do
+    let(:facts) {{
+      :osfamily        => 'RedHat',
+      :serialnumber    => 0,
+      :rundeck_version => ''
+    }}
+
+
+  end
 end
