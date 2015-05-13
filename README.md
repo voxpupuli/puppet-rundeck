@@ -107,6 +107,9 @@ A hash of the notification email configuraton.
 #####`security_config`
 A hash of the rundeck security configuration.
 
+#####`security_role`
+The name of the role that is required for all users to be allowed access.
+
 #####`manage_yum_repo`
 Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
 
