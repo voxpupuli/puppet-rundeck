@@ -44,6 +44,7 @@ class rundeck::install(
       }
 
       ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
+      ensure_resource('package', 'rundeck-config', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
     }
     'Debian': {
 
