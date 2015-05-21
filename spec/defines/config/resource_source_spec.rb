@@ -30,6 +30,13 @@ describe 'rundeck::config::resource_source', :type => :define do
             'value'   => value
           ) }
         end
+
+        it do
+          should contain_file('/var/rundeck/projects/test').with(
+            'owner' => 'rundeck',
+            'group' => 'rundeck'
+            )
+        end
       end
 
       describe "rundeck::config::resource_source definition with url parameters on #{osfamily}" do
