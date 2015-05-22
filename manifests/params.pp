@@ -95,6 +95,7 @@ class rundeck::params {
       'resource_types' => [
         { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] },
         { 'type'  => 'project', 'rules' => [{'name' => 'allow','rule' => '*'}] },
+        { 'type'  => 'storage', 'rules' => [{'name' => 'allow','rule' => '*'}] },
       ],
       'by' => {
         'groups'    => ['admin'],
