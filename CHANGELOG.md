@@ -1,4 +1,4 @@
-##2015-05-01 - Relese 1.2.0
+##2015-05-22 - Relese 1.2.0
 ###Summary
 
   Support for API ACLS and some bug fixes for RedHat/CentOS
@@ -10,6 +10,10 @@
 ####Bugfixes
 - Fix bug with grails.mail.default.from
 - Fix rundeck_version fact on RHEL-based systems
+- Require java 7 for RHEL based systems
+- Fix user and group for project directory
+- Ensure service is restarted after upgrade on RHEL based systems
+- Adding missing storage rule to acl policy defaults
 
 ##2015-03-24 - Release 1.1.0
 ###Summary
