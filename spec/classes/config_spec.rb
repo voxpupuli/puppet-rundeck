@@ -52,8 +52,8 @@ describe 'rundeck' do
         end
 
 
-        it { should contain_file('/etc/rundeck/admin.aclpolicy') }
-        it { should contain_file('/etc/rundeck/apitoken.aclpolicy') }
+        it { should contain_rundeck__config__aclpolicyfile('admin') }
+        it { should contain_rundeck__config__aclpolicyfile('apitoken') }
 
       end
     end

@@ -82,20 +82,12 @@ class rundeck::config(
     require => File[$properties_dir]
   }
 
-  file { "${properties_dir}/admin.aclpolicy":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-    content => template($rundeck::acl_template),
-    require => File[$properties_dir]
+  rundeck::config::aclpolicyfile { 'admin':
+    acl_policies => $acl_policies,
   }
 
-  file { "${properties_dir}/apitoken.aclpolicy":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-    content => template('rundeck/apitoken.aclpolicy.erb'),
-    require => File[$properties_dir]
+  rundeck::config::aclpolicyfile { 'apitoken':
+    acl_policies => $api_policies,
   }
 
   file { "${properties_dir}/profile":

@@ -109,6 +109,21 @@ A hash of the rundeck security configuration.
 #####`manage_yum_repo`
 Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
 
+####Define: `aclpolicyfile`
+A definition for creating custom acl policy files
+
+#####`acl_policies`
+An array containing acl policies. See rundeck::params::acl_policies / rundeck::params::api_policies as an example.
+
+#####`owner`
+The user that rundeck is installed as.
+
+#####`group`
+The group permission that rundeck is installed as.
+
+#####`properties_dir`
+The rundeck configuration directory.
+
 ####Define: `rundeck::plugin`
 A definition for installing rundeck plugins
 
@@ -226,6 +241,7 @@ The group permission that rundeck is installed as.
 
 ###Defines
 ####Public Defines
+* [`rundeck::config::aclpolicyfile`](#define-aclpolicyfile): Manages a acl policy file
 * [`rundeck::config::plugin`](#define-rundeckplugin): Manages the installation of rundeck plugins
 * [`rundeck::config::project`](#define-rundeckproject): Manages the configuration of rundeck projects
 * [`rundeck::config::resource_source`](#define-resourcesource): Manages resource sources for each project
