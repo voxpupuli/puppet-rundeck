@@ -66,6 +66,23 @@ describe 'rundeck' do
       end
     end
 
-
+    describe 'setting auth_config ldap url' do
+      let(:params) {{
+        :auth_types  => ['ldap'],
+        :auth_config => {
+          'ldap'     => {
+            'url'    => 'ldaps://myrealldap.example.com',
+            'server' => 'fakeldap',
+            'port'   => '983',
+          }
+        }
+      }}
+      it { should contain_file('/etc/rundeck/jaas-auth.conf') }
+      it 'should generate valid content for jaas-auth.conf' do
+        content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
+        content.should include('providerUrl="ldaps://myrealldap.example.com"')
+        content.should_not include('providerUrl="ldap://fakeldap:983"')
+      end
+    end
   end
 end
