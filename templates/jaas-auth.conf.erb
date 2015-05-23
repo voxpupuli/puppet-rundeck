@@ -2,9 +2,9 @@ authentication {
 
   <%- @auth_types.each do |type|
         case type
-        when 'ldap' -%>
+        when 'ldap', 'ldap_shared' -%>
   <%=     scope.function_template(['rundeck/_auth_ldap.erb']) %>
-  <%-   when 'active_directory' -%>
+  <%-   when 'active_directory', 'active_directory_shared' -%>
   <%=     scope.function_template(['rundeck/_auth_ad.erb']) %>
   <%-   when 'pam' -%>
   <%=     scope.function_template(['rundeck/_auth_pam.erb']) %>

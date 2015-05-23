@@ -205,6 +205,7 @@ class rundeck::params {
     }
   }
 
+
   $mail_config = {}
 
   $security_config = {

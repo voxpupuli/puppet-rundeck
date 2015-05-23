@@ -44,8 +44,20 @@ class rundeck::config(
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 
+  #
+  # Checking if we need to deploy realm file
+  #  ugly, I know. Fix it if you know better way to do that
+  #
   if 'file' in $auth_types {
-
+    $_deploy_realm = true
+  }
+  if 'ldap_shared' in $auth_types {
+    $_deploy_realm = true
+  }
+  if 'active_directory_shared' in $auth_types {
+    $_deploy_realm = true
+  }
+  if $_deploy_realm {
     file { "${properties_dir}/realm.properties":
       owner   => $user,
       group   => $group,
@@ -54,16 +66,29 @@ class rundeck::config(
       require => File[$properties_dir],
       notify  => Service[$service_name],
     }
+  }
 
+  if 'file' in $auth_types {
     $active_directory_auth_flag = 'sufficient'
     $ldap_auth_flag = 'sufficient'
   }
   elsif 'active_directory' in $auth_types {
     $active_directory_auth_flag = 'required'
     $ldap_auth_flag = 'sufficient'
+    $ldap_login_module = 'JettyCachingLdapLoginModule'
+  }
+  elsif 'active_directory_shared' in $auth_types {
+    $active_directory_auth_flag = 'requisite'
+    $ldap_auth_flag = 'sufficient'
+    $ldap_login_module = 'JettyCombinedLdapLoginModule'
+  }
+  elsif 'ldap_shared' in $auth_types {
+    $ldap_auth_flag = 'requisite'
+    $ldap_login_module = 'JettyCombinedLdapLoginModule'
   }
   else {
     $ldap_auth_flag = 'required'
+    $ldap_login_module = 'JettyCachingLdapLoginModule'
   }
 
   file { "${properties_dir}/jaas-auth.conf":
