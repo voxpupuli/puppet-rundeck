@@ -179,7 +179,7 @@ class rundeck (
   validate_absolute_path($rdeck_home)
 
   class { 'rundeck::install': } ->
-  class { 'rundeck::config': } ->
+  class { 'rundeck::config': } ~>
   class { 'rundeck::service': } ->
   Class['rundeck']
 }
