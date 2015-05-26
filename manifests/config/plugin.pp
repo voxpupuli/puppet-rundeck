@@ -65,7 +65,7 @@ define rundeck::config::plugin(
 
   exec { "download plugin ${name}":
     command => "/usr/bin/wget ${source} -O ${pd}/${name}",
-    unless  => "/bin/ls -l /var/lib/rundeck/libext/ | grep ${name}"
+    unless  => "/bin/ls ${pd}/${name} 2>/dev/null"
   }
 
   file { "${pd}/${name}":
