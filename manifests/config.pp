@@ -99,16 +99,6 @@ class rundeck::config(
     require => File[$properties_dir]
   }
 
-  ensure_resource('file', ['/etc/facter', '/etc/facter/facts.d'], {'ensure' => 'directory'})
-
-  file { '/etc/facter/facts.d/rundeck_version':
-    ensure => present,
-    source => 'puppet:///modules/rundeck/rundeck_version',
-    owner  => root,
-    group  => root,
-    mode   => '0755'
-  }
-
   class { 'rundeck::config::global::framework': } ->
   class { 'rundeck::config::global::project': } ->
   class { 'rundeck::config::global::rundeck_config': } ->

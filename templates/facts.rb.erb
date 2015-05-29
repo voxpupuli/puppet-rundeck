@@ -1,0 +1,13 @@
+#!<%= @ruby_bin %>
+# Fact: rundeck_version
+#
+# Purpose: Return facts for the running version of rundeck.
+#
+
+if File.exists?('/etc/debian_version')
+  version = %["dpkg-query -W -f 'rundeck_version=${Version}\n' rundeck"]
+  puts version
+elsif File.exists?('/etc/redhat-release') or File.exists?('/etc/centos-release')
+  version = %["rpm -q --qf 'rundeck_version=%{VERSION}\n' rundeck"]
+  puts version
+end

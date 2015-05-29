@@ -178,6 +178,7 @@ class rundeck (
   validate_string($group)
   validate_absolute_path($rdeck_home)
 
+  class { 'rundeck::facts': } ->
   class { 'rundeck::install': } ->
   class { 'rundeck::config': } ~>
   class { 'rundeck::service': } ->
