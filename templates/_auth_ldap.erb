@@ -14,7 +14,7 @@ provider_url =  if @auth_config['ldap']['url']
   authenticationMethod="simple"
   forceBindingLogin="<%= @auth_config['ldap']['force_binding'] %>"
 <%- if @auth_config['ldap']['bind_dn'] != :undef -%>
-  bindDn="CN=<%= @auth_config['ldap']['bind_dn']%>,<%= @auth_config['ldap']['user_base_dn'] %>"
+  bindDn="<%= @auth_config['ldap']['bind_dn']%>,<%= @auth_config['ldap']['user_base_dn'] %>"
 <%- end -%>
 <%- if @auth_config['ldap']['bind_password'] != :undef -%>
   bindPassword="<%= @auth_config['ldap']['bind_password']%>"
