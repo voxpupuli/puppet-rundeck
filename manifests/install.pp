@@ -7,9 +7,6 @@
 # This private class installs the rundeck package and it's dependencies
 #
 class rundeck::install(
-  $jre_name           = $rundeck::jre_name,
-  $jre_ensure         = $rundeck::jre_ensure,
-  $jre_manage         = $rundeck::jre_manage,
   $package_source     = $rundeck::package_source,
   $package_ensure     = $rundeck::package_ensure,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
@@ -22,10 +19,6 @@ class rundeck::install(
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
   $projects_dir = $framework_config['framework.projects.dir']
-
-  if $jre_manage {
-    ensure_resource('package', $jre_name, {'ensure' => $jre_ensure} )
-  }
 
   $user = $rundeck::user
   $group = $rundeck::group
@@ -64,7 +57,7 @@ class rundeck::install(
         exec { 'install rundeck package':
           command => "/usr/bin/dpkg --force-confold -i /tmp/rundeck-${package_ensure}.deb",
           unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
-          require => [ Exec['download rundeck package'], Exec['stop rundeck service'], Package[$jre_name] ]
+          require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ]
         }
       }
 

@@ -9,15 +9,12 @@ hosts.each do |host|
 	install_puppet(:version => version)
 end
 
-Spec.configure do |c|
+RSpec.configure do |c|
   proj_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
 	c.formatter = :documentation
 
 	c.before :suite do
-		#The gets around a bug where windows can't validate the cert when using https
-		#forge_repo = '--module_repository=http://forge.puppetlabs.com'
-		forge_repo = ''
 
 		hosts.each do |host|
 			c.host = host
@@ -27,9 +24,9 @@ Spec.configure do |c|
 
 			copy_module_to(host, :source => proj_root, :module_name => name)
 
-			on host, puppet('module','install', forge_repo, "puppetlabs-stdlib"), { :acceptable_exit_codes => [0,1] }
-
-			on host, puppet('module','install', forge_repo, "puppetlabs-inifile"), { :acceptable_exit_codes => [0,1] }
+			on host, puppet('module','install', 'puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
+			on host, puppet('module','install', 'puppetlabs-java'), { :acceptable_exit_codes => [0,1] }
+			on host, puppet('module','install', 'puppetlabs-inifile'), { :acceptable_exit_codes => [0,1] }
 	  end
   end
 end
