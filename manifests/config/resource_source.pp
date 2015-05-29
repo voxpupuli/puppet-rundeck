@@ -129,6 +129,9 @@ define rundeck::config::resource_source(
         'resourceyaml': {
           $file_extension = 'yaml'
         }
+        default: {
+          err("The rundeck resource model resource_format ${resource_format} is not supported")
+        }
       }
 
       $file = "${properties_dir}/${name}.${file_extension}"
@@ -218,7 +221,7 @@ define rundeck::config::resource_source(
         ensure => directory,
         owner  => $user,
         group  => $group,
-        mode   => 0740,
+        mode   => '0740',
       }
 
       ini_setting { "${name}::resources.source.${number}.config.directory":
