@@ -22,6 +22,7 @@ class rundeck::install(
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
   $projects_dir = $framework_config['framework.projects.dir']
+  $plugin_dir = $framework_config['framework.libext.dir']
 
   if $jre_manage {
     ensure_resource('package', $jre_name, {'ensure' => $jre_ensure} )
@@ -102,4 +103,5 @@ class rundeck::install(
   }
 
   ensure_resource(file, $projects_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group})
+  ensure_resource(file, $plugin_dir, {'ensure'   => 'directory', 'owner' => $user, 'group' => $group})
 }

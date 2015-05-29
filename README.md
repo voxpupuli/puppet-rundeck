@@ -132,14 +132,11 @@ A definition for installing rundeck plugins
 #####`source`
 The http source or local path from which to get the jar plugin.
 
-#####`plugin_dir`
-The rundeck directory where the plugins are installed to.
+#####`ensure`
+Default set to 'present' and can be set to 'absent' to remove the plugin for the system
 
-#####`user`
-The user that rundeck is installed as.
-
-#####`group`
-The group permission that rundeck is installed as.
+#####`timeout`
+Timeout in seconds.  Default is set to 300 seconds which is the default for the Exec type.
 
 ####Define: `rundeck::project`
 A definition for managing rundeck projects
