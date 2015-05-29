@@ -118,7 +118,12 @@ define rundeck::config::project(
     require => File[$properties_file]
   }
 
-  create_resources(rundeck::config::resource_source, $resource_sources)
+  $resource_source_defaults = {
+    project_name => $name,
+  }
+
+
+  create_resources(rundeck::config::resource_source, $resource_sources, $resource_source_defaults)
 
   #TODO: there are more settings to be added here for both filecopier and nodeexecutor
   ini_setting { "${name}::service.FileCopier.default.provider":
