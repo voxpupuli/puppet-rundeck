@@ -11,15 +11,8 @@
 # [*source*]
 #   The http source or local path from which to get the jar plugin.
 #
-# [*plugin_dir*]
-#   The rundeck directory where the plugins are installed to.
-#
-# [*user*]
-#   The user that rundeck is installed as.
-#
-# [*group*]
-#   The group permission that rundeck is installed as.
-#
+# [*ensure*]
+#   Set present or absent to add or remove the plugin
 # === Examples
 #
 # Install a custom plugin:
@@ -31,49 +24,47 @@
 #
 define rundeck::config::plugin(
   $source,
-  $plugin_dir = '',
-  $user       = '',
-  $group      = ''
+  $ensure   = 'present',
 ) {
 
-  include rundeck::params
+  include '::rundeck'
+  include 'archive'
 
-  if "x${plugin_dir}x" == 'xx' {
-    $pd = $rundeck::params::framework_config['framework.libext.dir']
-  } else {
-    $pd = $plugin_dir
-  }
+  $framework_config = deep_merge($::rundeck::params::framework_config, $::rundeck::framework_config)
 
-  if "x${user}x" == 'xx' {
-    $u = $rundeck::params::user
-  } else {
-    $u = $user
-  }
-
-  if "x${group}x" == 'xx' {
-    $g = $rundeck::params::group
-  } else {
-    $g = $group
-  }
+  $user = $rundeck::user
+  $group = $rundeck::group
+  $plugin_dir = $framework_config['framework.libext.dir']
 
   validate_string($source)
-  validate_absolute_path($pd)
-  validate_re($u, '[a-zA-Z0-9]{3,}')
-  validate_re($g, '[a-zA-Z0-9]{3,}')
+  validate_absolute_path($plugin_dir)
+  validate_re($user, '[a-zA-Z0-9]{3,}')
+  validate_re($group, '[a-zA-Z0-9]{3,}')
+  validate_re($ensure, ['^present$', '^absent$'])
 
-  ensure_resource(file, $pd, {'ensure' => 'directory', 'owner' => $u, 'group' => $g})
+  if $ensure == 'present' {
 
-  exec { "download plugin ${name}":
-    command => "/usr/bin/wget ${source} -O ${pd}/${name}",
-    unless  => "/bin/ls -l /var/lib/rundeck/libext/ | grep ${name}"
+    archive { "download plugin ${name}":
+      ensure  => present,
+      source  => $source,
+      path    => "${plugin_dir}/${name}",
+      require => File[$plugin_dir],
+      before  => File["${plugin_dir}/${name}"],
+    }
+
+    file { "${plugin_dir}/${name}":
+      mode  => '0644',
+      owner => $user,
+      group => $group,
+    }
+
   }
+  elsif $ensure == 'absent' {
 
-  file { "${pd}/${name}":
-    ensure  => present,
-    mode    => '0644',
-    owner   => $u,
-    group   => $g,
-    require => Exec["download plugin ${name}"]
+    file { "${plugin_dir}/${name}":
+      ensure => 'absent',
+    }
+
   }
 
 }
