@@ -12,9 +12,9 @@ class rundeck::params {
   case $::osfamily {
     'Debian': {
       $package_name = 'rundeck'
-      $package_ensure = '2.2.3-1-GA'
+      $package_ensure = '2.5.0-1-GA'
       $service_name = 'rundeckd'
-      $jre_name = 'openjdk-6-jre'
+      $jre_name = ''
       $jre_ensure = 'installed'
       $manage_yum_repo = false
     }
@@ -22,7 +22,7 @@ class rundeck::params {
       $package_name = 'rundeck'
       $package_ensure = 'installed'
       $service_name = 'rundeckd'
-      $jre_name = 'java-1.7.0-openjdk'
+      $jre_name = ''
       $jre_ensure = 'installed'
       $manage_yum_repo = true
     }

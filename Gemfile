@@ -34,4 +34,5 @@ end
 group :system_tests do
   gem "beaker"
   gem "beaker-rspec"
+  gem "vagrant-wrapper"
 end

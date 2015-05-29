@@ -24,7 +24,33 @@ class rundeck::install(
   $projects_dir = $framework_config['framework.projects.dir']
 
   if $jre_manage {
-    ensure_resource('package', $jre_name, {'ensure' => $jre_ensure} )
+
+    if "x${jre_name}x" == 'xx' {
+      case $::osfamily {
+        'Debian': {
+          if versioncmp($package_ensure, '2.4') < 0 {
+            $jre_package_name = 'openjdk-6-jre'
+          } else {
+            $jre_package_name = 'openjdk-7-jre'
+          }
+        }
+        'RedHat', 'Amazon': {
+          if versioncmp($package_ensure, '2.4') < 0 {
+            $jre_package_name = 'java-1.6.0-openjdk'
+          } else {
+            $jre_package_name = 'java-1.7.0-openjdk'
+          }
+        }
+        default: {
+          err("The osfamily: ${::osfamily} is not supported")
+        }
+      }
+    } else {
+      $jre_package_name = $jre_name
+    }
+
+    notify { "jre_name: ${jre_package_name}": }
+    ensure_resource('package', $jre_package_name, {'ensure' => $jre_ensure} )
   }
 
   $user = $rundeck::user
@@ -63,7 +89,7 @@ class rundeck::install(
         exec { 'install rundeck package':
           command => "/usr/bin/dpkg --force-confold -i /tmp/rundeck-${package_ensure}.deb",
           unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
-          require => [ Exec['download rundeck package'], Exec['stop rundeck service'], Package[$jre_name] ]
+          require => [ Exec['download rundeck package'], Exec['stop rundeck service'], Package[$jre_package_name] ]
         }
       }
 
