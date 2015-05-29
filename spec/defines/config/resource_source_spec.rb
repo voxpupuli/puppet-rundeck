@@ -6,7 +6,10 @@ describe 'rundeck::config::resource_source', :type => :define do
       describe "rundeck::config::resource_source definition with default parameters on #{osfamily}" do
         let(:title) { 'source one' }
         let(:params) {{
-          'project_name' => 'test'
+          'project_name' => 'test',
+          'source_type' => 'file',
+          'include_server_node' => false,
+          'resource_format' => 'resourcexml',
         }}
         let(:facts) {{
           :osfamily        => osfamily,
@@ -19,12 +22,12 @@ describe 'rundeck::config::resource_source', :type => :define do
           'resources.source.1.config.includeServerNode' => 'false',
           'resources.source.1.config.generateFileAutomatically' => 'true',
           'resources.source.1.config.format' => 'resourcexml',
-          'resources.source.1.config.file' => '/var/rundeck/projects/test/etc/resources.xml',
+          'resources.source.1.config.file' => '/var/rundeck/projects/test/etc/source one.xml',
           'resources.source.1.type' => 'file'
         }
 
         file_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("source one::#{key}").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
@@ -44,7 +47,10 @@ describe 'rundeck::config::resource_source', :type => :define do
         let(:params) {{
             'project_name' => 'test',
             'source_type' => 'url',
-            'url' => 'http\://localhost\:9999'
+            'url' => 'http\://localhost\:9999',
+            'include_server_node' => true,
+            'url_cache' => true,
+            'url_timeout' => '30',
         }}
         let(:facts) {{
           :osfamily     => osfamily,
@@ -59,7 +65,7 @@ describe 'rundeck::config::resource_source', :type => :define do
         }
 
         url_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("source one::#{key}").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
@@ -72,7 +78,8 @@ describe 'rundeck::config::resource_source', :type => :define do
         let(:params) {{
             'project_name' => 'test',
             'source_type' => 'directory',
-            'directory' => '/fubar/resources'
+            'directory' => '/fubar/resources',
+            'include_server_node' => true,
         }}
         let(:facts) {{
           :osfamily        => osfamily,
@@ -86,7 +93,7 @@ describe 'rundeck::config::resource_source', :type => :define do
         }
 
         directory_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("source one::#{key}").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
@@ -100,7 +107,11 @@ describe 'rundeck::config::resource_source', :type => :define do
             'project_name' => 'test',
             'source_type' => 'script',
             'script_file' => '/fubar/test.sh',
-            'script_args' => 'fubar'
+            'script_args' => 'fubar',
+            'include_server_node' => true,
+            'resource_format' => 'resourcexml',
+            'script_args_quoted' => true,
+            'script_interpreter' => '/bin/bash',
         }}
         let(:facts) {{
           :osfamily        => osfamily,
@@ -114,12 +125,12 @@ describe 'rundeck::config::resource_source', :type => :define do
           'resources.source.1.config.interpreter' => '/bin/bash',
           'resources.source.1.config.format' => 'resourcexml',
           'resources.source.1.config.args' => 'fubar',
-          'resources.source.1.config.argsQuoted' => 'true',
+          'resources.source.1.config.argsQuoted' => true,
           'resources.source.1.type' => 'script'
         }
 
         script_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
+          it { should contain_ini_setting("source one::#{key}").with(
             'path'    => '/var/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
