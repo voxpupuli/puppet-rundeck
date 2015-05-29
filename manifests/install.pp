@@ -73,6 +73,27 @@ class rundeck::install(
       err("The osfamily: ${::osfamily} is not supported")
     }
   }
+
+  if $group == 'rundeck' {
+    ensure_resource('group', 'rundeck', { 'ensure' => 'present' } )
+  } else {
+    ensure_resource('group', $group, { 'ensure' => 'present' } )
+    
+    group { 'rundeck':
+      ensure => absent,
+    }
+  }
+
+  if $user == 'rundeck' {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+  } else {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+    
+    user { 'rundeck':
+      ensure => absent,
+    }
+  }
+
   file { $rdeck_home:
     ensure => directory,
     owner  => $user,
