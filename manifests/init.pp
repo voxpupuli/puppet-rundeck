@@ -147,6 +147,7 @@ class rundeck (
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,
+  $server_web_context           = $rundeck::params::server_web_context,
   $jvm_args                     = $rundeck::params::jvm_args,
   $rdeck_home                   = $rundeck::params::rdeck_home,
 ) inherits rundeck::params {
