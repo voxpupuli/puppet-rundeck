@@ -11,6 +11,7 @@ class rundeck::config(
   $auth_template         = $rundeck::auth_template,
   $user                  = $rundeck::user,
   $group                 = $rundeck::group,
+  $server_web_context    = $rundeck::server_web_context,
   $jvm_args              = $rundeck::jvm_args,
   $ssl_enabled           = $rundeck::ssl_enabled,
   $projects_organization = $rundeck::projects_default_org,

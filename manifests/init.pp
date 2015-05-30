@@ -99,6 +99,9 @@
 # [*group*]
 #   The group permission that rundeck is installed as.
 #
+# [*server_web_context*]
+#   Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
+#
 # [*rdeck_home*]
 #   directory under which the projects directories live.
 # === Examples
@@ -177,6 +180,7 @@ class rundeck (
   validate_hash($mail_config)
   validate_string($user)
   validate_string($group)
+  validate_string($server_web_context)
   validate_absolute_path($rdeck_home)
 
   class { 'rundeck::facts': } ->
