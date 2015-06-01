@@ -83,11 +83,13 @@ class rundeck::config(
   }
 
   rundeck::config::aclpolicyfile { 'admin':
-    acl_policies => $acl_policies,
+    properties_dir => $properties_dir,
+    acl_policies   => $acl_policies,
   }
 
   rundeck::config::aclpolicyfile { 'apitoken':
-    acl_policies => $api_policies,
+    properties_dir => $properties_dir,
+    acl_policies   => $api_policies,
   }
 
   file { "${properties_dir}/profile":
