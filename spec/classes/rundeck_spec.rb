@@ -20,7 +20,7 @@ describe 'rundeck' do
         if osfamily.eql?('RedHat')
           it { should contain_package('java-1.7.0-openjdk') }
         else
-          it { should contain_package('openjdk-6-jre') }
+          it { should contain_package('openjdk-7-jre') }
         end
 
       end
