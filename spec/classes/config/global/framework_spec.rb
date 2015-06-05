@@ -19,7 +19,7 @@ describe 'rundeck' do
           'framework.server.url' => 'http://test.domain.com:4440',
           'framework.server.username' => 'admin',
           'framework.server.password' => 'admin',
-          'framework.projects.dir' => '/var/rundeck/projects',
+          'framework.projects.dir' => '/var/lib/rundeck/projects',
           'framework.etc.dir' => '/etc/rundeck',
           'framework.var.dir' => '/var/lib/rundeck/var',
           'framework.tmp.dir' => '/var/lib/rundeck/var/tmp',

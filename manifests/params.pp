@@ -43,7 +43,7 @@ class rundeck::params {
     'framework.server.username' => 'admin',
     'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
-    'framework.projects.dir'    => '/var/rundeck/projects',
+    'framework.projects.dir'    => '/var/lib/rundeck/projects',
     'framework.etc.dir'         => '/etc/rundeck',
     'framework.var.dir'         => '/var/lib/rundeck/var',
     'framework.tmp.dir'         => '/var/lib/rundeck/var/tmp',
