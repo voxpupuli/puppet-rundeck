@@ -161,6 +161,7 @@ class rundeck (
   validate_string($user)
   validate_string($group)
   validate_absolute_path($rdeck_home)
+  validate_rd_policy($acl_policies)
 
   class { 'rundeck::facts': } ->
   class { 'rundeck::install': } ->

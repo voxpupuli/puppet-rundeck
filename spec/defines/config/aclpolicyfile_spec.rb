@@ -6,28 +6,30 @@ describe 'rundeck::config::aclpolicyfile', :type => :define do
     {
       'description' => 'Admin, all access',
       'context' => {
-        'type' => 'project',
-        'rule' => '.*'
+        'project' => '.*',
       },
-      'resource_types' => [
-        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] }
-      ],
-      'by' => {
-        'groups'    => ['admin'],
-      }
+      'for' => {
+        'resource' => [
+          { 'equals' => {'kind' => 'job'}, 'allow' => ['create'] }
+        ]
+      },    
+      'by' => [
+        {'group' => ['admin']},
+      ]
     },
     {
       'description' => 'Admin, all access',
       'context' => {
-        'type' => 'application',
-        'rule' => 'rundeck'
+        'application' => 'rundeck'
       },
-      'resource_types' => [
-        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] }
-      ],
-      'by' => {
-        'groups'    => ['admin'],
-      }
+      'for' => {
+        'resource' => [
+          { 'equals' => {'kind' => 'project'}, 'allow' => ['create'] }
+        ]
+      },
+      'by' => [
+        {'groups' => ['admin']},
+      ]
     }
   ]
 

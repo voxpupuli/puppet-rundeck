@@ -66,107 +66,88 @@ class rundeck::params {
     {
       'description' => 'Admin, all access',
       'context' => {
-        'type' => 'project',
-        'rule' => '.*'
+        'project' => '.*'
       },
-      'resource_types' => [
-        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] },
-        { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => '*'}] },
-        { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => '*'}] },
-        { 'type'  => 'node', 'rules' => [{'name' => 'allow','rule' => '*'}] }
-      ],
-      'by' => {
-        'groups'    => ['admin'],
-        'usernames' => undef
-      }
+      'for' => {
+        'resource' => [
+          {'allow' => '*'}
+        ],
+        'adhoc' => [
+          {'allow' => '*'}
+        ],
+        'job' => [
+          {'allow' => '*'}
+        ],
+        'node' => [
+          {'allow' => '*'}
+        ]
+      },
+      'by' => [{
+        'group' => ['admin']
+      }]
     },
     {
       'description' => 'Admin, all access',
       'context' => {
-        'type' => 'application',
-        'rule' => 'rundeck'
+        'application' => 'rundeck'
       },
-      'resource_types' => [
-        { 'type'  => 'resource', 'rules' => [{'name' => 'allow','rule' => '*'}] },
-        { 'type'  => 'project', 'rules' => [{'name' => 'allow','rule' => '*'}] },
-        { 'type'  => 'storage', 'rules' => [{'name' => 'allow','rule' => '*'}] },
-      ],
-      'by' => {
-        'groups'    => ['admin'],
-        'usernames' => undef
-      }
+      'for' => {
+        'resource' => [
+          {'allow' => '*'}
+        ],
+        'project' => [
+          {'allow' => '*'}
+        ]
+      },
+      'by' => [{
+        'group' => ['admin']
+      }]
     }
   ]
 
   $api_policies = [
-  {
-    'description' => 'API project level access control',
-    'context' => {
-      'type' => 'project',
-      'rule' => '.*'
+    {
+      'description' => 'API project level access control',
+      'context' => {
+        'project' => '.*'
+      },
+      'for' => {
+        'resource' => [
+          { 'equals' => {'kind' => 'job'}, 'allow' => ['create','delete'] },
+          { 'equals' => {'kind' => 'node'}, 'allow' => ['read','create','update','refresh'] },
+          { 'equals' => {'kind' => 'event'}, 'allow' => ['read','create'] }
+        ],
+        'adhoc' => [
+          {'allow' => ['read','run','kill']}
+        ],
+        'node' => [
+          {'allow' => ['read','run']}
+        ]
+      },
+      'by' => [{
+        'group' => ['api_token_group']
+      }]
     },
-    'resource_types' => [
-      {
-        'type'  => 'resource', 'rules' => [
-          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'job' },
-            'name' => 'allow',
-            'rule' => ['create','delete']
-          },
-          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'node' },
-            'name' => 'allow',
-            'rule' => ['read','create','update','refresh']
-          },
-          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'event' },
-            'name' => 'allow',
-            'rule' => ['read','create']
-          }
+    {
+      'description' => 'API Application level access control',
+      'context' => {
+        'application' => 'rundeck'
+      },
+      'for' => {
+        'resource' => [
+          { 'equals' => {'kind' => 'system'}, 'allow' => ['read'] }
+        ],
+        'project' => [
+          { 'match' => {'name' => '.*'}, 'allow' => ['read'] }
+        ],
+        'storage' => [
+          { 'match' => {'path' => '(keys|keys/.*)'}, 'allow' => '*' }
         ]
       },
-      { 'type'  => 'adhoc', 'rules' => [{'name' => 'allow','rule' => ['read','run','kill']}] },
-      { 'type'  => 'job', 'rules' => [{'name' => 'allow','rule' => ['create','read','update','delete','run','kill']}] },
-      { 'type'  => 'node', 'rules' => [{'name' => 'allow','rule' => ['read','run']}] }
-    ],
-    'by' => {
-      'groups'    => ['api_token_group'],
-      'usernames' => undef
+      'by' => [{
+        'group' => ['api_token_group']
+      }]
     }
-  },
-  {
-    'description' => 'API Application level access control',
-    'context' => {
-      'type' => 'application',
-      'rule' => 'rundeck'
-    },
-    'resource_types' => [
-      {
-        'type'  => 'resource', 'rules' => [
-          { 'filter' => { 'filter_type' => 'equals', 'filter_property' => 'kind', 'filter_value' => 'system' },
-            'name' => 'allow',
-            'rule' => ['read']
-          }
-        ]
-      },
-      {
-        'type'  => 'project', 'rules' => [
-          { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'name', 'filter_value' => '.*' },
-            'name' => 'allow',
-            'rule' => ['read']
-          }
-        ]
-      },
-      { 'type'  => 'storage', 'rules' => [
-          { 'filter' => { 'filter_type' => 'match', 'filter_property' => 'path', 'filter_value' => '(keys|keys/.*)' },
-            'name' => 'allow',
-            'rule' => '*'
-          }
-        ]
-      }
-    ],
-    'by' => {
-      'groups'    => ['api_token_group'],
-      'usernames' => undef
-    }
-  }
   ]
 
   $auth_config = {
