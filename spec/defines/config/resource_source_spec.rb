@@ -22,20 +22,20 @@ describe 'rundeck::config::resource_source', :type => :define do
           'resources.source.1.config.includeServerNode' => 'false',
           'resources.source.1.config.generateFileAutomatically' => 'true',
           'resources.source.1.config.format' => 'resourcexml',
-          'resources.source.1.config.file' => '/var/rundeck/projects/test/etc/source one.xml',
+          'resources.source.1.config.file' => '/var/lib/rundeck/projects/test/etc/source one.xml',
           'resources.source.1.type' => 'file'
         }
 
         file_details.each do |key,value|
           it { should contain_ini_setting("source one::#{key}").with(
-            'path'    => '/var/rundeck/projects/test/etc/project.properties',
+            'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
           ) }
         end
 
         it do
-          should contain_file('/var/rundeck/projects/test').with(
+          should contain_file('/var/lib/rundeck/projects/test').with(
             'owner' => 'rundeck',
             'group' => 'rundeck'
             )
@@ -66,7 +66,7 @@ describe 'rundeck::config::resource_source', :type => :define do
 
         url_details.each do |key,value|
           it { should contain_ini_setting("source one::#{key}").with(
-            'path'    => '/var/rundeck/projects/test/etc/project.properties',
+            'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
           ) }
@@ -94,7 +94,7 @@ describe 'rundeck::config::resource_source', :type => :define do
 
         directory_details.each do |key,value|
           it { should contain_ini_setting("source one::#{key}").with(
-            'path'    => '/var/rundeck/projects/test/etc/project.properties',
+            'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
           ) }
@@ -131,7 +131,7 @@ describe 'rundeck::config::resource_source', :type => :define do
 
         script_details.each do |key,value|
           it { should contain_ini_setting("source one::#{key}").with(
-            'path'    => '/var/rundeck/projects/test/etc/project.properties',
+            'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
             'setting' => key,
             'value'   => value
           ) }

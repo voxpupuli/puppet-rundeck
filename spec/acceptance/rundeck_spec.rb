@@ -14,7 +14,7 @@ describe 'rundeck class' do
       EOS
 
       # Run it twice and test for idempotency
-      expect(apply_manifest(pp).exit_code).to_not eq(1)
+      expect(apply_manifest(pp, :expect_changes => true).exit_code).to eq(2)
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
 

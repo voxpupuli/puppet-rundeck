@@ -12,9 +12,9 @@ describe 'rundeck' do
         }}
 
         project_details = {
-          'project.dir' => '/var/rundeck/projects/${project.name}',
-          'project.etc.dir' => '/var/rundeck/projects/${project.name}/etc',
-          'project.resources.file' => '/var/rundeck/projects/${project.name}/etc/resources.xml',
+          'project.dir' => '/var/lib/rundeck/projects/${project.name}',
+          'project.etc.dir' => '/var/lib/rundeck/projects/${project.name}/etc',
+          'project.resources.file' => '/var/lib/rundeck/projects/${project.name}/etc/resources.xml',
           'project.description' => '',
           'project.organization' => ''
         }

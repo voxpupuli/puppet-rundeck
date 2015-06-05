@@ -43,7 +43,7 @@ describe 'rundeck' do
           content.should include('-Drundeck.server.configDir=/etc/rundeck')
           content.should include('-Dserver.datastore.path=/var/lib/rundeck/data')
           content.should include('-Drundeck.server.serverDir=/var/lib/rundeck')
-          content.should include('-Drdeck.projects=/var/rundeck/projects')
+          content.should include('-Drdeck.projects=/var/lib/rundeck/projects')
           content.should include('-Drdeck.runlogs=/var/lib/rundeck/logs')
           content.should include('-Drundeck.config.location=/etc/rundeck/rundeck-config.groovy')
           content.should include('-Djava.security.auth.login.config=/etc/rundeck/jaas-auth.conf')
