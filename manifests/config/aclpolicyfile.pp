@@ -64,9 +64,9 @@
 #
 define rundeck::config::aclpolicyfile(
   $acl_policies,
-  $owner          = $rundeck::user,
-  $group          = $rundeck::group,
-  $properties_dir = $rundeck::framework_config['framework.etc.dir'],
+  $owner          = 'rundeck',
+  $group          = 'rundeck',
+  $properties_dir = '/etc/rundeck',
 ) {
 
   validate_array($acl_policies)
