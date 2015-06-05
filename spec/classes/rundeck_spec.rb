@@ -17,12 +17,6 @@ describe 'rundeck' do
         it { should contain_class('rundeck::service').that_comes_before('rundeck') }
         it { should contain_class('rundeck').that_requires('rundeck::service') }
 
-        if osfamily.eql?('RedHat')
-          it { should contain_package('java-1.7.0-openjdk') }
-        else
-          it { should contain_package('openjdk-6-jre') }
-        end
-
       end
     end
   end

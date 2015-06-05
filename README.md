@@ -34,12 +34,6 @@ The rundeck module primary class, guides the basic installation and management o
 #####`package_ensure`
 Ensure the state of the rundeck package, either present, absent or a specific version
 
-#####`jre_name`
-The name of the jre to be installed if using a custom jre.
-
-#####`jre_ensure`
-Ensure the version of jre to be installed, either present, absent or a specific version
-
 #####`auth_type`
 The method used to authenticate to Rundeck. Default is file.
 
