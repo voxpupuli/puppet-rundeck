@@ -272,5 +272,5 @@ class rundeck::params {
   $ssl_enabled = false
   $ssl_port = '4443'
 
-  $package_source = 'http://dl.bintray.com/rundeck/rundeck-deb'
+  $package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
 }
