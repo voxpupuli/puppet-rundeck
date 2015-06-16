@@ -117,6 +117,7 @@ class rundeck (
   $auth_types                   = $rundeck::params::auth_types,
   $auth_template                = $rundeck::params::auth_template,
   $auth_config                  = $rundeck::params::auth_config,
+  $realm_template               = $rundeck::params::realm_template,
   $acl_policies                 = $rundeck::params::acl_policies,
   $acl_template                 = $rundeck::params::acl_template,
   $api_policies                 = $rundeck::params::api_policies,
