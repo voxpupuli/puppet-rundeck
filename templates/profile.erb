@@ -1,6 +1,10 @@
 RDECK_BASE=<%= @rdeck_base %>
 export RDECK_BASE
 
+<% if @java_home %>
+export JAVA_HOME=<%= @java_home %>
+<% end %>
+
 JAVA_CMD=java
 
 if [ ! -z $JAVA_HOME ]; then
