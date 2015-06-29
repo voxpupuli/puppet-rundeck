@@ -52,6 +52,9 @@ The group that the Rundeck user is a member of.
 #####`rdeck_base`
 The installation directory for Rundeck.
 
+#####`server_web_context`
+Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
+
 #####`ssl_enabled`
 Enable ssl for the Rundeck web application.
 

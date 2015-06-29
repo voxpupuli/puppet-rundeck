@@ -267,6 +267,7 @@ class rundeck::params {
 
   $resource_sources = {}
 
+  $server_web_context = undef
   $jvm_args = '-Xmx1024m -Xms256m -server'
 
   $ssl_enabled = false

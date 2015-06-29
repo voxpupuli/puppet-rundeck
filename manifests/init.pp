@@ -88,6 +88,9 @@
 # [*group*]
 #   The group permission that rundeck is installed as.
 #
+# [*server_web_context*]
+#   Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
+#
 # [*rdeck_home*]
 #   directory under which the projects directories live.
 # === Examples
@@ -133,6 +136,7 @@ class rundeck (
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,
+  $server_web_context           = $rundeck::params::server_web_context,
   $jvm_args                     = $rundeck::params::jvm_args,
   $rdeck_home                   = $rundeck::params::rdeck_home,
 ) inherits rundeck::params {
@@ -160,6 +164,7 @@ class rundeck (
   validate_hash($mail_config)
   validate_string($user)
   validate_string($group)
+  validate_string($server_web_context)
   validate_absolute_path($rdeck_home)
 
   class { 'rundeck::facts': } ->
