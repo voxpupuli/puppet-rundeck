@@ -18,9 +18,6 @@
 # [*source_type*]
 #   The source type where resources will come from: file, directory, url or script.
 #
-# [*file*]
-#   When a file source_type is specified this is the path to that file.
-#
 # [*include_server_node*]
 #   Boolean value to decide whether or not to include the server node in your list of avaliable nodes.
 #
@@ -58,11 +55,10 @@
 #
 # Manage a file resource:
 #
-# rundeck::config::resource_source { 'nodes from file':
-#   project_name        => 'test project',
+# rundeck::config::resource_source { 'resource':
+#   project_name        => 'myproject',
 #   number              => '1',
 #   source_type         => 'file',
-#   file                => '/var/lib/rundeck/etc/resources.yaml',
 #   include_server_node => false,
 #   resource_format     => 'resourceyaml',
 # }

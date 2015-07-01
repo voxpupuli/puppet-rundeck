@@ -176,9 +176,6 @@ The sequential number of the resource within the project.
 #####`source_type`
 The source type where resources will come from: file, directory, url or script.
 
-#####`file`
-When a file source_type is specified this is the path to that file.
-
 #####`include_server_node`
 Boolean value to decide whether or not to include the server node in your list of avaliable nodes.
 
@@ -238,7 +235,7 @@ The group permission that rundeck is installed as.
 * [`rundeck::config::aclpolicyfile`](#define-aclpolicyfile): Manages a acl policy file
 * [`rundeck::config::plugin`](#define-rundeckplugin): Manages the installation of rundeck plugins
 * [`rundeck::config::project`](#define-rundeckproject): Manages the configuration of rundeck projects
-* [`rundeck::config::resource_source`](#define-resourcesource): Manages resource sources for each project
+* [`rundeck::config::resource_source`](#define-rundeckresource_source): Manages resource sources for each project
 
 
 ##Limitations
