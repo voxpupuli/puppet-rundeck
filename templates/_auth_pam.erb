@@ -1,0 +1,17 @@
+org.rundeck.jaas.jetty.JettyPamLoginModule requisite
+  debug="true"
+  service="<%= @auth_config['pam']['service'] %>"
+  supplementalRoles="<%= @auth_config['pam']['supplemental_roles'] %>"
+<%- if @auth_config['pam']['clear_pass'] != :undef -%>
+  clearPass="<%= @auth_config['pam']['clear_pass'] %>"
+<%- end -%>
+<%- if @auth_config['pam']['try_first_pass'] != :undef -%>
+  tryFirstPass="<%= @auth_config['pam']['try_first_pass'] %>"
+<%- end -%>
+<%- if @auth_config['pam']['use_first_pass'] != :undef -%>
+  useFirstPass="<%= @auth_config['pam']['use_first_pass'] %>"
+<%- end -%>
+<%- if @auth_config['pam']['use_unix_groups'] != :undef -%>
+  useUnixGroups="<%= @auth_config['pam']['use_unix_groups'] %>"
+<%- end -%>
+  storePass="<%= @auth_config['pam']['store_pass'] %>";

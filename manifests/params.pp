@@ -157,6 +157,15 @@ class rundeck::params {
       'auth_users'     => {},
       'file'           => '/etc/rundeck/realm.properties'
     },
+    'pam' => {
+      'service'            => 'sshd',
+      'supplemental_roles' => 'user',
+      'store_pass'         => true,
+      'clear_pass'         => undef,
+      'try_first_pass'     => undef,
+      'use_first_pass'     => undef,
+      'use_unix_groups'    => undef,
+    },
     'ldap' => {
       'server'                  => undef,
       'port'                    => '389',
