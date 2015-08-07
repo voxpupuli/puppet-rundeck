@@ -6,6 +6,8 @@ authentication {
   <%=     scope.function_template(['rundeck/_auth_ldap.erb']) %>
   <%-   when 'active_directory' -%>
   <%=     scope.function_template(['rundeck/_auth_ad.erb']) %>
+  <%-   when 'pam' -%>
+  <%=     scope.function_template(['rundeck/_auth_pam.erb']) %>
   <%-   when 'file' -%>
   <%=     scope.function_template(['rundeck/_auth_file.erb']) %>
   <%-   else
