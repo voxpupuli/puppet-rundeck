@@ -1,35 +1,42 @@
 <%- @acl_policies.each_with_index do |policy, index| -%>
 description: <%= policy['description'] %>
 context:
-  <%= policy['context']['type'] %>: '<%= policy['context']['rule'] %>'
+  <%= policy['context'].keys[0] %>: '<%= policy['context'].values[0] %>'
 for:
-<%- policy['resource_types'].each do |resource| -%>
-  <%= resource['type'] %>:
-  <%- resource['rules'].each do |rule| -%>
-    - <%- if rule.has_key? 'filter' -%><%= rule['filter']['filter_type'] -%>:
-        <%= rule['filter']['filter_property'] %>: '<%= rule['filter']['filter_value'] -%>'
-      <% end -%><%= rule['name'] %>:
-        <%- if rule['rule'].is_a?(Array) -%> 
-        <%-   rule['rule'].each do |action| -%>
-        - '<%= action %>'
-        <%-   end -%>
-        <%- else -%>
-        - '<%= rule['rule'] %>'  
-        <%- end -%>
+<%- policy['for'].each do |resource,kind| -%>
+  <%= resource %>:
+  <%- kind.each do |type| -%>
+  <%- type.each do |rule,action| -%>
+  <%- if ['allow','deny'].include?(rule) -%>
+    <%- if type.keys.include?('equals') -%>
+      <%= rule %>: <%= action %>
+    <%- else -%>
+      <%= rule %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
+    <%- end -%>
+  <%- elsif ['match','equals','contains'].include?(rule) -%>
+    <%- action.each do |k,v| -%>
+    - <%= rule %>:
+      <%- if ['kind','path','name','group'].include?(k) -%><%='  '%><%- else -%><%-end-%>
+      <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
+    <%- end -%>
+  <%- end -%>
+  <%- end -%>
   <%- end -%>
 <%- end -%>
 by:
-<%- if !policy['by']['groups'].nil? && policy['by']['groups'] != :undef -%>
+<%- policy['by'].each do |by| -%>
+<%-   if !by['group'].nil? && by['group'] != :undef -%>
   group:
-  <%- policy['by']['groups'].each do |group| -%>
-   - '<%= group %>'
+  <%- by['group'].each do |group| -%>
+    - '<%= group %>'
   <%- end -%>
-<%- end -%>
-<%- if !policy['by']['usernames'].nil? && policy['by']['usernames'] != :undef -%>
+<%-   end -%>
+<%-   if !by['username'].nil? && by['username'] != :undef -%>
   username:
-  <%- policy['by']['usernames'].each do |username| -%>
-   - '<%= username %>'
+  <%- by['username'].each do |username| -%>
+    - '<%= username %>'
   <%- end -%>
+<%-   end -%>
 <%- end -%>
 <%- if index != (@acl_policies.length-1) -%>
 

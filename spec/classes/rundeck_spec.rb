@@ -11,6 +11,7 @@ describe 'rundeck' do
           :rundeck_version => ''
         }}
 
+        it { should compile }
         it { should contain_class('rundeck::params') }
         it { should contain_class('rundeck::install').that_comes_before('rundeck::config') }
         it { should contain_class('rundeck::config') }
