@@ -1,7 +1,7 @@
 org.rundeck.jaas.jetty.JettyPamLoginModule requisite
   debug="true"
   service="<%= @auth_config['pam']['service'] %>"
-  supplementalRoles="<%= @auth_config['pam']['supplemental_roles'] %>"
+  supplementalRoles="<%= @auth_config['pam']['supplemental_roles'].join(',') %>"
 <%- if @auth_config['pam']['clear_pass'] != :undef -%>
   clearPass="<%= @auth_config['pam']['clear_pass'] %>"
 <%- end -%>

@@ -159,7 +159,7 @@ class rundeck::params {
     },
     'pam' => {
       'service'            => 'sshd',
-      'supplemental_roles' => 'user',
+      'supplemental_roles' => ['user'],
       'store_pass'         => true,
       'clear_pass'         => undef,
       'try_first_pass'     => undef,
