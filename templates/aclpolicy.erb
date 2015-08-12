@@ -1,5 +1,5 @@
 <%- @acl_policies.each_with_index do |policy, index| -%>
-description: <%= policy['description'] %>
+description: '<%= policy['description'] %>'
 context:
   <%= policy['context'].keys[0] %>: '<%= policy['context'].values[0] %>'
 for:
@@ -9,9 +9,9 @@ for:
   <%- type.each do |rule,action| -%>
   <%- if ['allow','deny'].include?(rule) -%>
     <%- if type.keys.include?('equals') -%>
-      <%= rule %>: <%= action %>
+    - <%= rule %>: <%= action %>
     <%- else -%>
-      <%= rule %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
+    - <%= rule %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
     <%- end -%>
   <%- elsif ['match','equals','contains'].include?(rule) -%>
     <%- action.each do |k,v| -%>
