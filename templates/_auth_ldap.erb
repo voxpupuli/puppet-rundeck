@@ -1,4 +1,4 @@
-com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule <%= @ldap_auth_flag %>
+com.dtolabs.rundeck.jetty.jaas.<%= @ldap_login_module %> <%= @ldap_auth_flag %>
   debug="true"
   contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
 <%-
@@ -36,4 +36,18 @@ provider_url =  if @auth_config['ldap']['url']
 <%- end -%>
   cacheDurationMillis="300000"
   reportStatistics="true"
+<%- if @ldap_login_module == 'JettyCombinedLdapLoginModule' -%>
+  ignoreRoles="true"
+  storePass="true"
+  clearPass="true"
+  useFirstPass="false"
+  tryFirstPass="false"
+<%- end -%>
   nestedGroups="<%= @auth_config['ldap']['nested_groups'] %>";
+
+<%- if @ldap_login_module == 'JettyCombinedLdapLoginModule' -%>
+org.rundeck.jaas.jetty.JettyRolePropertyFileLoginModule required
+  debug="true"
+  useFirstPass="true"
+  file="<%= @auth_config['file']['file'] %>";
+<%- end -%>
