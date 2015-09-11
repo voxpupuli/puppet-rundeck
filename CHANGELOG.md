@@ -1,4 +1,30 @@
-##2015-05-22 - Relese 1.2.0
+##2015-09-11 - Release 2.0.0
+###Summary
+
+####Features
+New defined type `rundeck::config::aclpolicyfile`
+Refactored plugin installation to use puppet/archive
+Refactored `rundeck::config::resource_source`
+New class `rundeck::facts` to install rundeck facts and external facts
+Added param `server_web_context` to pass into the JVM args
+Add support for a different JAVA_HOME directory
+Added new function to validate acl policies
+Added support for PAM authentication
+
+#### Bugfixes
+Ensure service is restarted on all config changes
+Support installing rundeck with non-default user and groups
+Fixing bind CN for ldap configuration
+Fix the projects directory default in framework.properties
+Download packages over https
+
+#### Breaking changes
+Removed params `plugin_dir`, `user` and `group` from `rundeck::config::plugin`
+Removed params `user` and `group` from `rundeck::config::resource_source`
+Removed the management of the JRE
+Changes the format of the acl polices hash - see params.pp for example.
+
+##2015-05-22 - Release 1.2.0
 ###Summary
 
   Support for API ACLS and some bug fixes for RedHat/CentOS
