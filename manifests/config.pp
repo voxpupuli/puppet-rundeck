@@ -13,6 +13,7 @@ class rundeck::config(
   $group                 = $rundeck::group,
   $server_web_context    = $rundeck::server_web_context,
   $jvm_args              = $rundeck::jvm_args,
+  $java_home             = $rundeck::java_home,
   $ssl_enabled           = $rundeck::ssl_enabled,
   $projects_organization = $rundeck::projects_default_org,
   $projects_description  = $rundeck::projects_default_desc,

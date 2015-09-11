@@ -34,6 +34,9 @@
 # [*jvm_args*]
 #   Extra arguments for the JVM.
 #
+# [*java_home*]
+#   Set the home directory of java.
+#
 # [*rdeck_base*]
 #   The installation directory for rundeck.
 #
@@ -138,6 +141,7 @@ class rundeck (
   $group                        = $rundeck::params::group,
   $server_web_context           = $rundeck::params::server_web_context,
   $jvm_args                     = $rundeck::params::jvm_args,
+  $java_home                    = $rundeck::params::java_home,
   $rdeck_home                   = $rundeck::params::rdeck_home,
 ) inherits rundeck::params {
 

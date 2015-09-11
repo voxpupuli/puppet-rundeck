@@ -260,6 +260,8 @@ class rundeck::params {
   $server_web_context = undef
   $jvm_args = '-Xmx1024m -Xms256m -server'
 
+  $java_home = undef
+
   $ssl_enabled = false
   $ssl_port = '4443'
 
