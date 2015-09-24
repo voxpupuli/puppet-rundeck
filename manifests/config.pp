@@ -15,6 +15,7 @@ class rundeck::config(
   $jvm_args              = $rundeck::jvm_args,
   $java_home             = $rundeck::java_home,
   $ssl_enabled           = $rundeck::ssl_enabled,
+  $projects              = $rundeck::projects,
   $projects_organization = $rundeck::projects_default_org,
   $projects_description  = $rundeck::projects_default_desc,
   $rd_loglevel           = $rundeck::rd_loglevel,
@@ -136,4 +137,6 @@ class rundeck::config(
   class { 'rundeck::config::global::project': } ->
   class { 'rundeck::config::global::rundeck_config': } ->
   class { 'rundeck::config::global::ssl': }
+
+  create_resources(rundeck::config::project, $projects)
 }

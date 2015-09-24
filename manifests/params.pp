@@ -213,6 +213,7 @@ class rundeck::params {
     'apiCookieAccess'      => true
   }
 
+  $projects = {}
   $projects_default_org = ''
   $projects_default_desc = ''
 

@@ -58,6 +58,9 @@ Web context path to use, such as "/rundeck". http://host.domain:port/server_web_
 #####`ssl_enabled`
 Enable ssl for the Rundeck web application.
 
+#####`projects`
+The hash of projects in your instance.
+
 #####`projects_organization`
 The organization value that will be set by default for any projects.
 
