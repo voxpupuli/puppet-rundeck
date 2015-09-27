@@ -43,6 +43,9 @@
 # [*ssl_enabled*]
 #   Enable ssl for the rundeck web application.
 #
+# [*projects*]
+#  The hash of projects in your instance.
+#
 # [*projects_organization*]
 #  The organization value that will be set by default for any projects.
 #
@@ -118,6 +121,7 @@ class rundeck (
   $service_logs_dir             = $rundeck::params::service_logs_dir,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
   $framework_config             = $rundeck::params::framework_config,
+  $projects                     = $rundeck::params::projects,
   $projects_organization        = $rundeck::params::projects_default_org,
   $projects_description         = $rundeck::params::projects_default_desc,
   $rd_loglevel                  = $rundeck::params::loglevel,
@@ -150,6 +154,7 @@ class rundeck (
   validate_array($auth_types)
   validate_hash($auth_config)
   validate_bool($ssl_enabled)
+  validate_hash($projects)
   validate_string($projects_organization)
   validate_string($projects_description)
   validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$'])
