@@ -34,8 +34,9 @@ The rundeck module primary class, guides the basic installation and management o
 #####`package_ensure`
 Ensure the state of the rundeck package, either present, absent or a specific version
 
-#####`auth_type`
-The method used to authenticate to Rundeck. Default is file.
+#####`auth_types`
+The method used to authenticate to Rundeck. Options: file, ldap, active_directory, ldap_shared,
+active_directory_shared. Default is file.
 
 #####`properties_dir`
 The path to the configuration directory where the properties file are stored.
