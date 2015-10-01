@@ -14,7 +14,6 @@ describe 'rundeck' do
         it { should contain_class('rundeck::config::global::framework') }
         it { should contain_class('rundeck::config::global::project') }
         it { should contain_class('rundeck::config::global::rundeck_config') }
-        it { should contain_class('rundeck::config::global::ssl') }
 
         it { should contain_file('/etc/rundeck').with({'ensure' => 'directory'})}
 

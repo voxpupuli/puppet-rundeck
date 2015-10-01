@@ -4,7 +4,9 @@ describe 'rundeck' do
   context 'supported operating systems' do
     ['Debian','RedHat'].each do |osfamily|
       describe "rundeck::config::global::ssl class without any parameters on #{osfamily}" do
-        let(:params) {{ }}
+        let(:params) {{
+          :ssl_enabled => true,
+        }}
         let(:facts) {{
           :osfamily        => osfamily,
           :serialnumber    => 0,
@@ -29,7 +31,6 @@ describe 'rundeck' do
             'value'   => value
           ) }
         end
-
       end
     end
   end

@@ -133,10 +133,19 @@ class rundeck::config(
     require => File[$properties_dir]
   }
 
-  class { 'rundeck::config::global::framework': } ->
-  class { 'rundeck::config::global::project': } ->
-  class { 'rundeck::config::global::rundeck_config': } ->
-  class { 'rundeck::config::global::ssl': }
+  include 'rundeck::config::global::framework'
+  include 'rundeck::config::global::project'
+  include 'rundeck::config::global::rundeck_config'
+
+  Class[rundeck::config::global::framework] ->
+  Class[rundeck::config::global::project] ->
+  Class[rundeck::config::global::rundeck_config]
+
+  if $ssl_enabled {
+    include 'rundeck::config::global::ssl'
+    Class[rundeck::config::global::rundeck_config] ->
+    Class[rundeck::config::global::ssl]
+  }
 
   create_resources(rundeck::config::project, $projects)
 }
