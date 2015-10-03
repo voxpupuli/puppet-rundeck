@@ -219,6 +219,11 @@ The user that rundeck is installed as.
 #####`group`
 The group permission that rundeck is installed as.
 
+##Usage
+
+###Configuring shared authentication credentials
+To perform LDAP authentication and file authorization see example examples/ldap\_shared.pp
+
 ##Reference
 
 ###Classes
