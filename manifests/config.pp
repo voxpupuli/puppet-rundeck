@@ -99,7 +99,7 @@ class rundeck::config(
     group   => $group,
     mode    => '0640',
     content => template($auth_template),
-    require => File[$properties_dir]
+    require => File[$properties_dir],
   }
 
   file { "${properties_dir}/log4j.properties":
@@ -108,7 +108,7 @@ class rundeck::config(
     mode    => '0640',
     content => template('rundeck/log4j.properties.erb'),
     notify  => Service[$service_name],
-    require => File[$properties_dir]
+    require => File[$properties_dir],
   }
 
   rundeck::config::aclpolicyfile { 'admin':
@@ -131,26 +131,26 @@ class rundeck::config(
     mode    => '0640',
     content => template('rundeck/profile.erb'),
     notify  => Service[$service_name],
-    require => File[$properties_dir]
+    require => File[$properties_dir],
   }
 
-  include 'rundeck::config::global::framework'
-  include 'rundeck::config::global::project'
-  include 'rundeck::config::global::rundeck_config'
+  include '::rundeck::config::global::framework'
+  include '::rundeck::config::global::project'
+  include '::rundeck::config::global::rundeck_config'
 
   Class[rundeck::config::global::framework] ->
   Class[rundeck::config::global::project] ->
   Class[rundeck::config::global::rundeck_config]
 
   if $ssl_enabled {
-    include 'rundeck::config::global::ssl'
+    include '::rundeck::config::global::ssl'
     Class[rundeck::config::global::rundeck_config] ->
     Class[rundeck::config::global::ssl]
   }
 
   create_resources(rundeck::config::project, $projects)
 
-  class { 'rundeck::config::global::web':
+  class { '::rundeck::config::global::web':
     security_role => $security_role,
     notify        => Service[$service_name],
   }

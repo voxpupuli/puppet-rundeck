@@ -24,7 +24,7 @@ class rundeck::config::global::project(
     owner   => $user,
     group   => $group,
     mode    => '0640',
-    require => File[$properties_dir]
+    require => File[$properties_dir],
   }
 
   ini_setting { 'project.dir':
@@ -33,7 +33,7 @@ class rundeck::config::global::project(
     section => '',
     setting => 'project.dir',
     value   => "${projects_dir}/\${project.name}",
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'project.etc.dir':
@@ -42,7 +42,7 @@ class rundeck::config::global::project(
     section => '',
     setting => 'project.etc.dir',
     value   => "${projects_dir}/\${project.name}/etc",
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'project.resources.file':
@@ -51,7 +51,7 @@ class rundeck::config::global::project(
     section => '',
     setting => 'project.resources.file',
     value   => "${projects_dir}/\${project.name}/etc/resources.xml",
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'project.description':
@@ -60,7 +60,7 @@ class rundeck::config::global::project(
     section => '',
     setting => 'project.description',
     value   => $projects_organization,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'project.organization':
@@ -69,6 +69,6 @@ class rundeck::config::global::project(
     section => '',
     setting => 'project.organization',
     value   => $projects_description,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 }

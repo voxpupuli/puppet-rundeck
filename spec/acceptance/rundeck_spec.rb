@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
 describe 'rundeck class' do
-
   context 'default parameters on ubuntu', :if => fact('osfamily').eql?('Debian') do
     it 'should work with no errors' do
       pp = <<-EOS
@@ -26,7 +25,7 @@ describe 'rundeck class' do
       it { should be_running }
     end
   end
-  
+
   context 'default parameters on centos', :if => fact('osfamily').eql?('RedHat') do
     it 'should work with no errors' do
       pp = <<-EOS

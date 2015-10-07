@@ -25,7 +25,7 @@ class rundeck::config::global::framework(
     owner   => $user,
     group   => $group,
     mode    => '0640',
-    require => File[$properties_dir]
+    require => File[$properties_dir],
   }
 
 }

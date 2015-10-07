@@ -47,18 +47,18 @@ class rundeck::install(
       if $::rundeck_version != $version {
         exec { 'download rundeck package':
           command => "/usr/bin/wget ${package_source}/rundeck-${package_ensure}.deb -O /tmp/rundeck-${package_ensure}.deb",
-          unless  => "/usr/bin/test -f /tmp/rundeck-${package_ensure}.deb"
+          unless  => "/usr/bin/test -f /tmp/rundeck-${package_ensure}.deb",
         }
 
         exec { 'stop rundeck service':
           command => '/usr/sbin/service rundeckd stop',
-          unless  => "/bin/bash -c 'if ps ax | grep -v grep | grep RunServer > /dev/null; then echo 1; else echo 0; fi'"
+          unless  => "/bin/bash -c 'if pgrep -f RunServer > /dev/null; then echo 1; else echo 0; fi'",
         }
 
         exec { 'install rundeck package':
           command => "/usr/bin/dpkg --force-confold --ignore-depends 'java7-runtime' -i /tmp/rundeck-${package_ensure}.deb",
           unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
-          require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ]
+          require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ],
         }
       }
 

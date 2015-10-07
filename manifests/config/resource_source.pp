@@ -82,7 +82,7 @@ define rundeck::config::resource_source(
   $running_only        = true,
 ) {
 
-  include rundeck
+  include ::rundeck
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $::rundeck::framework_config)
 
@@ -114,7 +114,7 @@ define rundeck::config::resource_source(
     section => '',
     setting => "resources.source.${number}.type",
     value   => $source_type,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   case downcase($source_type) {
@@ -141,7 +141,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.requireFileExists",
         value   => true,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.includeServerNode":
@@ -150,7 +150,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.includeServerNode",
         value   => $include_server_node,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.generateFileAutomatically":
@@ -159,7 +159,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.generateFileAutomatically",
         value   => true,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.format":
@@ -168,7 +168,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.format",
         value   => $resource_format,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.file":
@@ -177,7 +177,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.file",
         value   => $file,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
     }
     'url': {
@@ -192,7 +192,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.url",
         value   => $url,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.timeout":
@@ -201,7 +201,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.timeout",
         value   => $url_timeout,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.cache":
@@ -210,7 +210,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.cache",
         value   => $url_cache,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
     }
     'directory': {
@@ -229,7 +229,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.directory",
         value   => $directory,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
     }
     'script': {
@@ -245,7 +245,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.file",
         value   => $script_file,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.args":
@@ -254,7 +254,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.args",
         value   => $script_args,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.format":
@@ -263,7 +263,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.format",
         value   => $resource_format,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.interpreter":
@@ -272,7 +272,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.interpreter",
         value   => $script_interpreter,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.argsQuoted":
@@ -281,7 +281,7 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.argsQuoted",
         value   => $script_args_quoted,
-        require => File[$properties_file]
+        require => File[$properties_file],
       }
     }
     'aws-ec2': {
