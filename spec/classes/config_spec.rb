@@ -7,7 +7,8 @@ describe 'rundeck' do
         let(:facts) {{
           :osfamily        => osfamily,
           :serialnumber    => 0,
-          :rundeck_version => ''
+          :rundeck_version => '',
+          :puppetversion   => '3.8.1'
         }}
 
         it { should contain_class('rundeck::config::global::framework') }
@@ -63,7 +64,8 @@ describe 'rundeck' do
       let(:facts) {{
         :osfamily        => 'RedHat',
         :serialnumber    => 0,
-        :rundeck_version => ''
+        :rundeck_version => '',
+        :puppetversion   => '3.8.1'
       }}
       let(:params) {{ :jvm_args => jvm_args }}
       it { should contain_file('/etc/rundeck/profile') }

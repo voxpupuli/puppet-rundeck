@@ -8,7 +8,8 @@ describe 'rundeck' do
         let(:facts) {{
           :osfamily        => osfamily,
           :serialnumber    => 0,
-          :rundeck_version => ''
+          :rundeck_version => '',
+          :puppetversion   => '3.8.1'
         }}
 
         it { should compile }
@@ -28,7 +29,8 @@ describe 'rundeck' do
         :osfamily        => 'Solaris',
         :operatingsystem => 'Nexenta',
         :serialnumber    => 0,
-        :rundeck_version => ''
+        :rundeck_version => '',
+        :puppetversion   => '3.8.1'
       }}
 
       it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
@@ -39,7 +41,8 @@ describe 'rundeck' do
     let(:facts) {{
       :osfamily        => 'RedHat',
       :serialnumber    => 0,
-      :rundeck_version => ''
+      :rundeck_version => '',
+      :puppetversion   => '3.8.1'
     }}
 
     # auth_config cannot be passed as a parameter to rundeck::config :-(

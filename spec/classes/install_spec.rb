@@ -8,7 +8,8 @@ describe 'rundeck' do
         let(:facts) {{
           :osfamily        => osfamily,
           :serialnumber    => 0,
-          :rundeck_version => ''
+          :rundeck_version => '',
+          :puppetversion   => '3.8.1'
         }}
         plugin_dir = '/var/lib/rundeck/libext'
 
@@ -23,10 +24,10 @@ describe 'rundeck' do
         it { should contain_file('/var/lib/rundeck').with(
           'ensure' => 'directory'
         )}
-          
+
         it { should contain_file(plugin_dir).with(
           'ensure' => 'directory'
-        ) } 
+        ) }
 
         it { should contain_user('rundeck').with(
           'ensure' => 'present'
@@ -35,7 +36,7 @@ describe 'rundeck' do
     end
   end
 
-  describe 'different user and group' do 
+  describe 'different user and group' do
     let(:params) {{
       :user  => 'A1234',
       :group => 'A1234'
@@ -43,7 +44,8 @@ describe 'rundeck' do
     let(:facts) {{
       :osfamily        => 'Debian',
       :serialnumber    => 0,
-      :rundeck_version => ''
+      :rundeck_version => '',
+      :puppetversion   => '3.8.1'
     }}
 
     it { should contain_group('A1234').with(
@@ -60,6 +62,6 @@ describe 'rundeck' do
 
     it { should contain_user('rundeck').with(
       'ensure' => 'absent'
-    )} 
+    )}
   end
 end

@@ -8,7 +8,8 @@ describe 'rundeck' do
         let(:facts) {{
           :osfamily        => osfamily,
           :serialnumber    => 0,
-          :rundeck_version => ''
+          :rundeck_version => '',
+          :puppetversion   => '3.8.1'
         }}
         it { should contain_service('rundeckd') }
       end
