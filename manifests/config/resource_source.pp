@@ -77,6 +77,9 @@ define rundeck::config::resource_source(
   $script_args         = '',
   $script_args_quoted  = $rundeck::params::script_args_quoted,
   $script_interpreter  = $rundeck::params::script_interpreter,
+  $mapping_params      = '',
+  $use_default_mapping = true,
+  $running_only        = true,
 ) {
 
   include rundeck
@@ -93,7 +96,7 @@ define rundeck::config::resource_source(
 
   validate_string($project_name)
   validate_re($number, '[1-9]*')
-  validate_re($source_type, ['^file$', '^directory$', '^url$', '^script$'])
+  validate_re($source_type, ['^file$', '^directory$', '^url$', '^script$', '^aws-ec2$'])
   validate_bool($include_server_node)
   validate_absolute_path($projects_dir)
   validate_re($user, '[a-zA-Z0-9]{3,}')
@@ -279,6 +282,32 @@ define rundeck::config::resource_source(
         setting => "resources.source.${number}.config.argsQuoted",
         value   => $script_args_quoted,
         require => File[$properties_file]
+      }
+    }
+    'aws-ec2': {
+      ini_setting { "resources.source.${number}.config.mappingParams":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.mappingParams",
+        value   => $mapping_params,
+        require => File[$properties_file],
+      }
+      ini_setting { "resources.source.${number}.config.useDefaultMapping":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.useDefaultMapping",
+        value   => $use_default_mapping,
+        require => File[$properties_file],
+      }
+      ini_setting { "resources.source.${number}.config.runningOnly":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.runningOnly",
+        value   => $running_only,
+        require => File[$properties_file],
       }
     }
     default: {
