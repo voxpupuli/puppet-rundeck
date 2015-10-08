@@ -34,9 +34,8 @@ RDECK_JVM="$RDECK_JVM <%= @jvm_args %>"
 
 <%- if @ssl_enabled -%>
 export RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=<%= @properties_dir %>/ssl/ssl.properties -Dserver.https.port=<%= @ssl_port %>"
-<%- end -%>
-
 export RDECK_SSL_OPTS="-Djavax.net.ssl.trustStore=$RDECK_BASE/ssl/truststore -Djavax.net.ssl.trustStoreType=jks -Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol"
+<%- end -%>
 
 if test -t 0 -a -z "$RUNDECK_CLI_TERSE"
 then
