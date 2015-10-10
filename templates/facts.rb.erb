@@ -5,9 +5,9 @@
 #
 
 if File.exists?('/etc/debian_version')
-  version = %["dpkg-query -W -f 'rundeck_version=${Version}\n' rundeck"]
+  version = `dpkg-query -W -f 'rundeck_version=${Version}\n' rundeck`
   puts version
 elsif File.exists?('/etc/redhat-release') or File.exists?('/etc/centos-release')
-  version = %["rpm -q --qf 'rundeck_version=%{VERSION}\n' rundeck"]
+  version = `rpm -q --qf 'rundeck_version=%{VERSION}\n' rundeck`
   puts version
 end
