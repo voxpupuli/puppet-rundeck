@@ -88,6 +88,9 @@
 # [*security_config*]
 #  A hash of the rundeck security configuration.
 #
+# [*security_role*]
+#  Name of the role that is required for all users to be allowed access.
+#
 # [*user*]
 #   The user that rundeck is installed as.
 #
@@ -140,6 +143,7 @@ class rundeck (
   $service_config               = $rundeck::params::service_config,
   $mail_config                  = $rundeck::params::mail_config,
   $security_config              = $rundeck::params::security_config,
+  $security_role                = $rundeck::params::security_role,
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,

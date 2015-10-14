@@ -268,4 +268,7 @@ class rundeck::params {
   $ssl_port = '4443'
 
   $package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
+
+  $web_xml = "${rdeck_base}/exp/webapp/WEB-INF/web.xml"
+  $security_role = 'user'
 }
