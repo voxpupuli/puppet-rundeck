@@ -56,7 +56,7 @@ class rundeck::install(
         }
 
         exec { 'install rundeck package':
-          command => "/usr/bin/dpkg --force-confold -i /tmp/rundeck-${package_ensure}.deb",
+          command => "/usr/bin/dpkg --force-confold --ignore-depends 'java7-runtime' -i /tmp/rundeck-${package_ensure}.deb",
           unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
           require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ]
         }
