@@ -14,9 +14,9 @@ for:
     - <%= rule %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
     <%- end -%>
   <%- elsif ['match','equals','contains'].include?(rule) -%>
-    <%- action.each do |k,v| -%>
     - <%= rule %>:
-      <%- if ['kind','path','name','group'].include?(k) -%><%='  '%><%- else -%><%-end-%>
+    <%- action.each do |k,v| -%>
+      <%- if ['kind','path','name','group', 'rundeck_server'].include?(k) -%><%='  '%><%- else -%><%-end-%>
       <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
     <%- end -%>
   <%- end -%>
