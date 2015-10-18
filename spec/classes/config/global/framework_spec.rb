@@ -2,15 +2,18 @@ require 'spec_helper'
 
 describe 'rundeck' do
   context 'supported operating systems' do
-    ['Debian','RedHat'].each do |osfamily|
+    %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::global::framework class without any parameters on #{osfamily}" do
-        let(:params) {{ }}
-        let(:facts) {{
-          :osfamily        => osfamily,
-          :fqdn            => 'test.domain.com',
-          :serialnumber    => 0,
-          :rundeck_version => ''
-        }}
+        let(:params) { {} }
+        let(:facts) do
+          {
+            :osfamily        => osfamily,
+            :fqdn            => 'test.domain.com',
+            :serialnumber    => 0,
+            :rundeck_version => '',
+            :puppetversion   => Puppet.version,
+          }
+        end
 
         framework_details = {
           'framework.server.name' => 'test.domain.com',
@@ -27,15 +30,15 @@ describe 'rundeck' do
           'framework.libext.dir' => '/var/lib/rundeck/libext',
           'framework.ssh.keypath' => '/var/lib/rundeck/.ssh/id_rsa',
           'framework.ssh.user' => 'rundeck',
-          'framework.ssh.timeout' => '0'
+          'framework.ssh.timeout' => '0',
         }
 
         it { should contain_file('/etc/rundeck/framework.properties') }
 
-        framework_details.each do |key,value|
+        framework_details.each do |key, value|
           it 'should generate valid content for framework.properties' do
             content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
-            content.should include("#{key} = #{value}")
+            expect(content).to include("#{key} = #{value}")
           end
         end
       end
@@ -44,22 +47,27 @@ describe 'rundeck' do
 
   context 'add plugin configuration' do
     describe 'add plugin configuration for the logstash plugin' do
-      let(:params) {{
-        :framework_config => {
-          'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
+      let(:params) do
+        {
+          :framework_config => {
+            'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700',
+          },
         }
-      }}
-      let(:facts) {{
-        :osfamily        => 'Debian',
-        :fqdn            => 'test.domain.com',
-        :serialnumber    => 0,
-        :rundeck_version => ''
-      }}
+      end
+      let(:facts) do
+        {
+          :osfamily        => 'Debian',
+          :fqdn            => 'test.domain.com',
+          :serialnumber    => 0,
+          :rundeck_version => '',
+          :puppetversion   => Puppet.version,
+        }
+      end
 
       it 'should generate valid content for framework.properties' do
         content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
-        content.should include('framework.server.name = test.domain.com')
-        content.should include('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
+        expect(content).to include('framework.server.name = test.domain.com')
+        expect(content).to include('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
       end
     end
   end

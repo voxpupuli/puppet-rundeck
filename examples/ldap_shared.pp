@@ -2,7 +2,7 @@
 # Configuring shared authentication credentials
 # Performs LDAP authentication and file authorization
 #
-class { 'rundeck':
+class { '::rundeck':
   auth_types  => ['ldap_shared'],
   auth_config => {
     'file' =>  {
@@ -15,7 +15,7 @@ class { 'rundeck':
           'username' => 'stan',
           'roles'    => ['sre'],
         }
-      ]
+      ],
     },
     'ldap' => {
       'url'                            =>  'ldap://ldap:389',
@@ -33,6 +33,6 @@ class { 'rundeck':
       'role_object_class'              =>  'posixGroup',
       'supplemental_roles'             =>  'user',
       'nested_groups'                  =>  false,
-    }
+    },
   },
 }

@@ -2,17 +2,20 @@ require 'spec_helper'
 
 describe 'rundeck' do
   context 'supported operating systems' do
-    ['Debian','RedHat'].each do |osfamily|
+    %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::global::rundeck_config class without any parameters on #{osfamily}" do
-        let(:params) {{ }}
-        let(:facts) {{
-          :osfamily        => osfamily,
-          :fqdn            => 'test.domain.com',
-          :serialnumber    => 0,
-          :rundeck_version => ''
-        }}
+        let(:params) { {} }
+        let(:facts) do
+          {
+            :osfamily        => osfamily,
+            :fqdn            => 'test.domain.com',
+            :serialnumber    => 0,
+            :rundeck_version => '',
+            :puppetversion   => Puppet.version,
+          }
+        end
 
-        $default_config = <<-CONFIG.gsub /[^\S\n]{10}/, ""
+        default_config = <<-CONFIG.gsub(/[^\S\n]{10}/, '')
           loglevel.default = "INFO"
           rdeck.base = "/var/lib/rundeck"
           rss.enabled = "false"
@@ -29,10 +32,11 @@ describe 'rundeck' do
           rundeck.clusterMode.enabled = "false"
         CONFIG
 
-        it { should contain_file('/etc/rundeck/rundeck-config.groovy').with(
-          'content' => $default_config
-        )}
-
+        it do
+          should contain_file('/etc/rundeck/rundeck-config.groovy').with(
+            'content' => default_config
+          )
+        end
       end
     end
   end

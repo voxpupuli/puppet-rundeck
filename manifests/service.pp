@@ -22,13 +22,13 @@ class rundeck::service(
     file { '/etc/init/rundeckd.conf':
       ensure  => present,
       mode    => '0644',
-      content => template($service_config)
+      content => template($service_config),
     }
 
     file { '/etc/init.d/rundeckd':
       ensure  => present,
       mode    => '0755',
-      content => template($service_script)
+      content => template($service_script),
     }
   }
 
@@ -36,6 +36,6 @@ class rundeck::service(
     ensure     => running,
     enable     => true,
     hasstatus  => true,
-    hasrestart => true
+    hasrestart => true,
   }
 }

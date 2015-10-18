@@ -66,21 +66,21 @@ class rundeck::params {
     {
       'description' => 'Admin, all access',
       'context' => {
-        'project' => '.*'
+        'project' => '.*',
       },
       'for' => {
         'resource' => [
-          {'allow' => '*'}
+          {'allow' => '*'},
         ],
         'adhoc' => [
-          {'allow' => '*'}
+          {'allow' => '*'},
         ],
         'job' => [
-          {'allow' => '*'}
+          {'allow' => '*'},
         ],
         'node' => [
-          {'allow' => '*'}
-        ]
+          {'allow' => '*'},
+        ],
       },
       'by' => [{
         'group' => ['admin']
@@ -89,15 +89,15 @@ class rundeck::params {
     {
       'description' => 'Admin, all access',
       'context' => {
-        'application' => 'rundeck'
+        'application' => 'rundeck',
       },
       'for' => {
         'resource' => [
-          {'allow' => '*'}
+          {'allow' => '*'},
         ],
         'project' => [
-          {'allow' => '*'}
-        ]
+          {'allow' => '*'},
+        ],
       },
       'by' => [{
         'group' => ['admin']
@@ -109,7 +109,7 @@ class rundeck::params {
     {
       'description' => 'API project level access control',
       'context' => {
-        'project' => '.*'
+        'project' => '.*',
       },
       'for' => {
         'resource' => [
@@ -122,7 +122,7 @@ class rundeck::params {
         ],
         'node' => [
           {'allow' => ['read','run']}
-        ]
+        ],
       },
       'by' => [{
         'group' => ['api_token_group']
@@ -131,7 +131,7 @@ class rundeck::params {
     {
       'description' => 'API Application level access control',
       'context' => {
-        'application' => 'rundeck'
+        'application' => 'rundeck',
       },
       'for' => {
         'resource' => [
@@ -141,8 +141,8 @@ class rundeck::params {
           { 'match' => {'name' => '.*'}, 'allow' => ['read'] }
         ],
         'storage' => [
-          { 'match' => {'path' => '(keys|keys/.*)'}, 'allow' => '*' }
-        ]
+          { 'match' => {'path' => '(keys|keys/.*)'}, 'allow' => '*' },
+        ],
       },
       'by' => [{
         'group' => ['api_token_group']
@@ -155,7 +155,7 @@ class rundeck::params {
       'admin_user'     => $framework_config['framework.server.username'],
       'admin_password' => $framework_config['framework.server.password'],
       'auth_users'     => {},
-      'file'           => '/etc/rundeck/realm.properties'
+      'file'           => '/etc/rundeck/realm.properties',
     },
     'pam' => {
       'service'            => 'sshd',
@@ -182,7 +182,7 @@ class rundeck::params {
       'role_name_attribute'     => 'cn',
       'role_member_attribute'   => 'memberUid',
       'role_object_class'       => 'group',
-      'nested_groups'           => true
+      'nested_groups'           => true,
     },
     'active_directory' => {
       'server'                  => undef,
@@ -201,8 +201,8 @@ class rundeck::params {
       'role_member_attribute'   => 'member',
       'role_object_class'       => 'group',
       'supplemental_roles'      => 'user',
-      'nested_groups'           => true
-    }
+      'nested_groups'           => true,
+    },
   }
 
 
@@ -210,7 +210,7 @@ class rundeck::params {
 
   $security_config = {
     'useHMacRequestTokens' => true,
-    'apiCookieAccess'      => true
+    'apiCookieAccess'      => true,
   }
 
   $projects = {}
@@ -248,7 +248,7 @@ class rundeck::params {
     'driverClassName' => '',
     'username'        => '',
     'password'        => '',
-    'dialect'         => ''
+    'dialect'         => '',
   }
 
   $keystore = '/etc/rundeck/ssl/keystore'

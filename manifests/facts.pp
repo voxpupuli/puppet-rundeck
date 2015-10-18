@@ -15,7 +15,13 @@ class rundeck::facts(
   $ensure = 'present',
 ) {
 
-  if $::puppetversion =~ /Puppet Enterprise/ {
+  if !defined('$::puppetversion') {
+    $versionfact = $::clientversion
+  } else {
+    $versionfact = $::puppetversion
+  }
+
+  if $versionfact =~ /Puppet Enterprise/ {
     $ruby_bin = '/opt/puppet/bin/ruby'
     $dir      = 'puppetlabs/'
   } else {

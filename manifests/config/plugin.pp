@@ -28,7 +28,7 @@ define rundeck::config::plugin(
 ) {
 
   include '::rundeck'
-  include 'archive'
+  include '::archive'
 
   $framework_config = deep_merge($::rundeck::params::framework_config, $::rundeck::framework_config)
 

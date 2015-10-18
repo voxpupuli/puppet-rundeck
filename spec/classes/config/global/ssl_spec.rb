@@ -2,34 +2,39 @@ require 'spec_helper'
 
 describe 'rundeck' do
   context 'supported operating systems' do
-    ['Debian','RedHat'].each do |osfamily|
-      describe "rundeck::config::global::ssl class without any parameters on #{osfamily}" do
-        let(:params) {{
+    %w(Debian RedHat).each do |osfamily|
+      let(:params) do
+        {
           :ssl_enabled => true,
-        }}
-        let(:facts) {{
-          :osfamily        => osfamily,
-          :serialnumber    => 0,
-          :rundeck_version => ''
-        }}
-
-        ssl_details = {
-          'keystore' => '/etc/rundeck/ssl/keystore',
-          'keystore.password' => 'adminadmin',
-          'key.password' => 'adminadmin',
-          'truststore' => '/etc/rundeck/ssl/truststore',
-          'truststore.password' => 'adminadmin'
         }
+      end
+      let(:facts) do
+        {
+          :osfamily => osfamily,
+          :serialnumber => 0,
+          :rundeck_version => '',
+          :puppetversion   => Puppet.version,
+        }
+      end
 
-        it { should contain_file('/etc/rundeck/ssl').with({ 'ensure' => 'directory'}) }
-        it { should contain_file('/etc/rundeck/ssl/ssl.properties') }
+      ssl_details = {
+        'keystore' => '/etc/rundeck/ssl/keystore',
+        'keystore.password' => 'adminadmin',
+        'key.password' => 'adminadmin',
+        'truststore' => '/etc/rundeck/ssl/truststore',
+        'truststore.password' => 'adminadmin',
+      }
 
-        ssl_details.each do |key,value|
-          it { should contain_ini_setting(key).with(
-            'path'    => '/etc/rundeck/ssl/ssl.properties',
+      it { should contain_file('/etc/rundeck/ssl').with('ensure' => 'directory') }
+      it { should contain_file('/etc/rundeck/ssl/ssl.properties') }
+
+      ssl_details.each do |key, value|
+        it do
+          should contain_ini_setting(key).with(
+            'path' => '/etc/rundeck/ssl/ssl.properties',
             'setting' => key,
-            'value'   => value
-          ) }
+            'value'   => value,
+          )
         end
       end
     end

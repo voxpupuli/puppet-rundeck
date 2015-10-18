@@ -44,7 +44,7 @@ define rundeck::config::project(
   $group                  = $rundeck::group
 ) {
 
-  include rundeck::params
+  include ::rundeck::params
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $framework_config)
 
@@ -74,21 +74,21 @@ define rundeck::config::project(
     ensure  => present,
     owner   => $user,
     group   => $group,
-    require => File["${project_dir}/etc"]
+    require => File["${project_dir}/etc"],
   }
 
   file { "${project_dir}/var":
     ensure  => directory,
     owner   => $user,
     group   => $group,
-    require => File[$project_dir]
+    require => File[$project_dir],
   }
 
   file { "${project_dir}/etc":
     ensure  => directory,
     owner   => $user,
     group   => $group,
-    require => File[$project_dir]
+    require => File[$project_dir],
   }
 
   ini_setting { "${name}::project.name":
@@ -97,7 +97,7 @@ define rundeck::config::project(
     section => '',
     setting => 'project.name',
     value   => $name,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { "${name}::project.ssh-authentication":
@@ -106,7 +106,7 @@ define rundeck::config::project(
     section => '',
     setting => 'project.ssh-authentication',
     value   => 'privateKey',
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { "${name}::project.ssh-keypath":
@@ -115,7 +115,7 @@ define rundeck::config::project(
     section => '',
     setting => 'project.ssh-keypath',
     value   => $ssh_keypath,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   $resource_source_defaults = {
@@ -132,7 +132,7 @@ define rundeck::config::project(
     section => '',
     setting => 'service.FileCopier.default.provider',
     value   => $file_copier_provider,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { "${name}::service.NodeExecutor.default.provider":
@@ -141,6 +141,6 @@ define rundeck::config::project(
     section => '',
     setting => 'service.NodeExecutor.default.provider',
     value   => $node_executor_provider,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 }

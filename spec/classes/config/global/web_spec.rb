@@ -1,12 +1,14 @@
 require 'spec_helper'
 
 describe 'rundeck' do
-  let(:facts) {{
-    :osfamily        => 'RedHat',
-    :fqdn            => 'test.example.com',
-    :serialnumber    => 0,
-    :rundeck_version => ''
-  }}
+  let(:facts) do
+    {
+      :osfamily        => 'RedHat',
+      :fqdn            => 'test.example.com',
+      :serialnumber    => 0,
+      :rundeck_version => ''
+    }
+  end
 
   context 'with empty params' do
     it 'should generate augeas resource with default security_role' do
@@ -16,7 +18,7 @@ describe 'rundeck' do
   end
 
   context 'with security_role param' do
-    let(:params) {{ :security_role => 'superduper' }}
+    let(:params) { { :security_role => 'superduper' } }
 
     it 'should generate augeas resource with specified security_role' do
       should contain_augeas('rundeck/web.xml/security-role/role-name') \

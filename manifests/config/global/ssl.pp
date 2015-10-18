@@ -33,7 +33,7 @@ class rundeck::config::global::ssl(
     group   => $group,
     mode    => '0640',
     notify  => Service[$service_name],
-    require => File[$properties_dir]
+    require => File[$properties_dir],
   }
 
   ini_setting { 'keystore':
@@ -42,7 +42,7 @@ class rundeck::config::global::ssl(
     section => '',
     setting => 'keystore',
     value   => $keystore,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'keystore.password':
@@ -51,7 +51,7 @@ class rundeck::config::global::ssl(
     section => '',
     setting => 'keystore.password',
     value   => $keystore_password,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'key.password':
@@ -60,7 +60,7 @@ class rundeck::config::global::ssl(
     section => '',
     setting => 'key.password',
     value   => $key_password,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'truststore':
@@ -69,7 +69,7 @@ class rundeck::config::global::ssl(
     section => '',
     setting => 'truststore',
     value   => $truststore,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 
   ini_setting { 'truststore.password':
@@ -78,6 +78,6 @@ class rundeck::config::global::ssl(
     section => '',
     setting => 'truststore.password',
     value   => $truststore_password,
-    require => File[$properties_file]
+    require => File[$properties_file],
   }
 }
