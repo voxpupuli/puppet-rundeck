@@ -5,21 +5,19 @@ context:
 for:
 <%- policy['for'].each do |resource,kind| -%>
   <%= resource %>:
-  <%- kind.each do |type| -%>
-  <%- type.each do |rule,action| -%>
-  <%- if ['allow','deny'].include?(rule) -%>
-    <%- if type.keys.include?('equals') -%>
-    - <%= rule %>: <%= action %>
-    <%- else -%>
-    - <%= rule %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
-    <%- end -%>
-  <%- elsif ['match','equals','contains'].include?(rule) -%>
+  <%- kind.each do |rules| -%>
+  <%- first_key = true -%>
+  <%- rules.each do |type, action| -%>
+  <%- if ['allow','deny'].include?(type) -%>
+    <% if first_key -%>-<%- else %> <% end -%> <%= type %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
+  <%- elsif ['match','equals','contains'].include?(type) -%>
     <%- action.each do |k,v| -%>
-    - <%= rule %>:
+    <% if first_key -%>-<%- else %> <% end -%> <%= type %>:
       <%- if ['kind','path','name','group'].include?(k) -%><%='  '%><%- else -%><%-end-%>
       <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
     <%- end -%>
   <%- end -%>
+  <%- first_key = false -%>
   <%- end -%>
   <%- end -%>
 <%- end -%>
