@@ -205,6 +205,7 @@ class rundeck::params {
     },
   }
 
+  $realm_template = 'rundeck/realm.properties.erb'
 
   $mail_config = {}
 

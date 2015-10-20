@@ -9,6 +9,7 @@
 class rundeck::config(
   $auth_types            = $rundeck::auth_types,
   $auth_template         = $rundeck::auth_template,
+  $realm_template        = $rundeck::realm_template,
   $user                  = $rundeck::user,
   $group                 = $rundeck::group,
   $server_web_context    = $rundeck::server_web_context,
@@ -65,7 +66,7 @@ class rundeck::config(
       owner   => $user,
       group   => $group,
       mode    => '0640',
-      content => template('rundeck/realm.properties.erb'),
+      content => template($realm_template),
       require => File[$properties_dir],
       notify  => Service[$service_name],
     }
