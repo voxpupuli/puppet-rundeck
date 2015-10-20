@@ -152,6 +152,7 @@ class rundeck (
   $jvm_args                     = $rundeck::params::jvm_args,
   $java_home                    = $rundeck::params::java_home,
   $rdeck_home                   = $rundeck::params::rdeck_home,
+  $rdeck_config_template        = $rundeck::params::rdeck_config_template,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')

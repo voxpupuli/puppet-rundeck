@@ -272,4 +272,6 @@ class rundeck::params {
 
   $web_xml = "${rdeck_base}/exp/webapp/WEB-INF/web.xml"
   $security_role = 'user'
+
+  $rdeck_config_template = 'rundeck/rundeck-config.erb'
 }
