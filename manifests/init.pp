@@ -91,6 +91,9 @@
 # [*security_role*]
 #  Name of the role that is required for all users to be allowed access.
 #
+# [*session_timeout*]
+#  Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
+#
 # [*user*]
 #   The user that rundeck is installed as.
 #
@@ -145,6 +148,7 @@ class rundeck (
   $mail_config                  = $rundeck::params::mail_config,
   $security_config              = $rundeck::params::security_config,
   $security_role                = $rundeck::params::security_role,
+  $session_timeout              = $rundeck::params::session_timeout,
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
   $user                         = $rundeck::params::user,
   $group                        = $rundeck::params::group,

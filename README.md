@@ -59,6 +59,9 @@ Web context path to use, such as "/rundeck". http://host.domain:port/server_web_
 #####`ssl_enabled`
 Enable ssl for the Rundeck web application.
 
+#####`session_timeout`
+Time limit (in minutes) for a logged in Rundeck web application user which as been inactive for a period of time.
+
 #####`projects`
 The hash of projects in your instance.
 

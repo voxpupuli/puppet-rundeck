@@ -34,6 +34,7 @@ class rundeck::config(
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
   $security_role         = $rundeck::security_role,
+  $session_timeout       = $rundeck::session_timeout,
   $acl_policies          = $rundeck::acl_policies,
   $api_policies          = $rundeck::api_policies,
   $rdeck_config_template = $rundeck::rdeck_config_template,
@@ -153,7 +154,8 @@ class rundeck::config(
   create_resources(rundeck::config::project, $projects)
 
   class { '::rundeck::config::global::web':
-    security_role => $security_role,
-    notify        => Service[$service_name],
+    security_role   => $security_role,
+    session_timeout => $session_timeout,
+    notify          => Service[$service_name],
   }
 }
