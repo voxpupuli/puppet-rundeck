@@ -102,14 +102,6 @@
 #
 # [*rdeck_home*]
 #   directory under which the projects directories live.
-# === Examples
-#
-# Installing rundeck with a custom jre:
-#
-# class { 'rundeck':
-#   jre_name    => 'openjdk-7-jre',
-#   jre_version => '7u51-2.4.4-0ubuntu0.12.04.2'
-# }
 #
 class rundeck (
   $package_ensure               = $rundeck::params::package_ensure,
