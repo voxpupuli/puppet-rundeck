@@ -25,4 +25,13 @@ describe 'rundeck' do
         .with_changes(["set web-app/security-role/role-name/#text 'superduper'"])
     end
   end
+
+  context 'with session_timeout param' do
+    let(:params) { { :session_timeout => '60' } }
+
+    it 'should generate augeas resource with specified session_timeout' do
+      should contain_augeas('rundeck/web.xml/session-config/session-timeout') \
+        .with_changes(["set web-app/session-config/session-timeout/#text '60'"])
+    end
+  end
 end
