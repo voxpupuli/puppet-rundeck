@@ -32,3 +32,8 @@ grails.mail.default.from = "<%= @mail_config['defaults.from'] %>"
 <%- end -%>
 grails.serverURL = "<%= @grails_server_url %>"
 rundeck.clusterMode.enabled = "<%= @clustermode_enabled %>"
+<%- if @file_keystorage_dir %>
+rundeck.storage.provider."1".config.baseDir = "<%= @file_keystorage_dir %>"
+rundeck.storage.provider."1".path = "/"
+rundeck.storage.provider."1".type = "file"
+<%- end -%>

@@ -13,6 +13,7 @@ class rundeck::config::global::rundeck_config(
   $clustermode_enabled   = $rundeck::config::clustermode_enabled,
   $grails_server_url     = $rundeck::config::grails_server_url,
   $properties_dir        = $rundeck::config::properties_dir,
+  $file_keystorage_dir   = $rundeck::config::file_keystorage_dir,
   $user                  = $rundeck::config::user,
   $group                 = $rundeck::config::group,
   $mail_config           = $rundeck::config::mail_config,

@@ -30,6 +30,7 @@ class rundeck::config(
   $truststore            = $rundeck::truststore,
   $truststore_password   = $rundeck::truststore_password,
   $service_logs_dir      = $rundeck::service_logs_dir,
+  $file_keystorage_dir   = $rundeck::file_keystorage_dir,
   $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,

@@ -116,6 +116,9 @@ The name of the role that is required for all users to be allowed access.
 #####`manage_yum_repo`
 Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
 
+#####`file_keystorage_dir`
+The location of stored data like public keys, private keys.
+
 ####Define: `aclpolicyfile`
 A definition for creating custom acl policy files
 
