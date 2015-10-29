@@ -118,6 +118,7 @@ class rundeck (
   $api_policies                 = $rundeck::params::api_policies,
   $api_template                 = $rundeck::params::api_template,
   $service_logs_dir             = $rundeck::params::service_logs_dir,
+  $file_keystorage_dir          = $rundeck::params::file_keystorage_dir,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
   $framework_config             = $rundeck::params::framework_config,
   $projects                     = $rundeck::params::projects,

@@ -275,4 +275,6 @@ class rundeck::params {
   $session_timeout = 30
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
+
+  $file_keystorage_dir = undef
 }
