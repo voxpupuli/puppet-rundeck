@@ -1,4 +1,4 @@
-require 'puppet/util/rundeck_acl'
+require 'puppetx/rundeck/acl'
 
 # Validates the rundeck ACL policies
 # Usage:
@@ -12,7 +12,7 @@ Puppet::Parser::Functions.newfunction(:validate_rd_policy, :doc => <<-'ENDHEREDO
   args.each do |arg|
     next if arg.is_a?(Array)
     if arg.is_a?(Hash)
-      Puppet::Util::RundeckACL.validate_acl(arg)
+      PuppetX::Rundeck::ACL.validate_acl(arg)
     else
       fail Puppet::ParseError, ("#{arg.inspect} is not a Hash or Array of hashes.  It looks to be a #{arg.class}")
     end
