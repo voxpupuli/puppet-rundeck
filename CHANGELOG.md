@@ -1,28 +1,51 @@
+##2015-11-20 - Release 2.1.0
+# Summary
+Fixing the autoload bug in the new acl validation function.
+Lots of new parameters to customize settings.
+
+#### Features
+- Added support for shared authentication credentials
+- Added RHEL7/CentOS7 to supported OS list
+- Added new class `rundeck::config::global::web` to manage security-role in web.xml
+- Added examples
+- New parameter `projects` to allow you to prove a hash of `rundeck::config::project` instances
+- New parameter `realm_template` allowing you to override the realm.properties template
+- New parameter `rdeck_config_template` allowing you to override the rundeck-config template
+- New parameter `session_timeout` to allow modification of the gui session timeout in web.xml
+- New parameter `file_keystorage_dir` to allow non-default path to key storage
+
+#### Bugfixes
+- Fixing the autoload of the rundeck_acl function
+- Ensure ssl configuration is only included when `ssl_enabled` is set.
+- Fixed syntax in facts
+- Removed the java dependency from the package install.
+- Fixing bugs in the aclpolicy template
+
 ##2015-09-11 - Release 2.0.0
 ###Summary
 
 ####Features
-New defined type `rundeck::config::aclpolicyfile`
-Refactored plugin installation to use puppet/archive
-Refactored `rundeck::config::resource_source`
-New class `rundeck::facts` to install rundeck facts and external facts
-Added param `server_web_context` to pass into the JVM args
-Add support for a different JAVA_HOME directory
-Added new function to validate acl policies
-Added support for PAM authentication
+- New defined type `rundeck::config::aclpolicyfile`
+- Refactored plugin installation to use puppet/archive
+- Refactored `rundeck::config::resource_source`
+- New class `rundeck::facts` to install rundeck facts and external facts
+- Added param `server_web_context` to pass into the JVM args
+- Add support for a different JAVA_HOME directory
+- Added new function to validate acl policies
+- Added support for PAM authentication
 
 #### Bugfixes
-Ensure service is restarted on all config changes
-Support installing rundeck with non-default user and groups
-Fixing bind CN for ldap configuration
-Fix the projects directory default in framework.properties
-Download packages over https
+- Ensure service is restarted on all config changes
+- Support installing rundeck with non-default user and groups
+- Fixing bind CN for ldap configuration
+- Fix the projects directory default in framework.properties
+- Download packages over https
 
 #### Breaking changes
-Removed params `plugin_dir`, `user` and `group` from `rundeck::config::plugin`
-Removed params `user` and `group` from `rundeck::config::resource_source`
-Removed the management of the JRE
-Changes the format of the acl polices hash - see params.pp for example.
+- Removed params `plugin_dir`, `user` and `group` from `rundeck::config::plugin`
+- Removed params `user` and `group` from `rundeck::config::resource_source`
+- Removed the management of the JRE
+- Changes the format of the acl polices hash - see params.pp for example.
 
 ##2015-05-22 - Release 1.2.0
 ###Summary
