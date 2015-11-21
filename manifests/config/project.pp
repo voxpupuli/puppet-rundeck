@@ -41,25 +41,34 @@ define rundeck::config::project(
   $resource_sources       = $rundeck::params::resource_sources,
   $framework_config       = $rundeck::framework_config,
   $user                   = $rundeck::user,
-  $group                  = $rundeck::group
+  $group                  = $rundeck::group,
+  $ssh_keypath            = undef,
+  $projects_dir           = undef,
 ) {
 
   include ::rundeck::params
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $framework_config)
 
-  $ssh_keypath      = $framework_properties['framework.ssh.keypath']
-  $projects_dir     = $framework_properties['framework.projects.dir']
+  $ssh_keypath_real = $ssh_keypath ? {
+    undef   => $framework_properties['framework.ssh.keypath'],
+    default => $ssh_keypath,
+  }
 
-  validate_absolute_path($ssh_keypath)
+  $projects_dir_real = $projects_dir ? {
+    undef   => $framework_properties['framework.projects.dir'],
+    default => $projects_dir,
+  }
+
+  validate_absolute_path($ssh_keypath_real)
   validate_re($file_copier_provider, ['jsch-scp','script-copy','stub'])
   validate_re($node_executor_provider, ['jsch-ssh', 'script-exec', 'stub'])
   validate_hash($resource_sources)
-  validate_absolute_path($projects_dir)
+  validate_absolute_path($projects_dir_real)
   validate_re($user, '[a-zA-Z0-9]{3,}')
   validate_re($group, '[a-zA-Z0-9]{3,}')
 
-  $project_dir = "${projects_dir}/${name}"
+  $project_dir = "${projects_dir_real}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"
 
   file {  $project_dir :
@@ -67,7 +76,7 @@ define rundeck::config::project(
     owner   => $user,
     group   => $group,
     mode    => '0775',
-    require => File[$projects_dir],
+    require => File[$projects_dir_real],
   }
 
   file { $properties_file:
@@ -114,7 +123,7 @@ define rundeck::config::project(
     path    => $properties_file,
     section => '',
     setting => 'project.ssh-keypath',
-    value   => $ssh_keypath,
+    value   => $ssh_keypath_real,
     require => File[$properties_file],
   }
 
