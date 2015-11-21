@@ -252,6 +252,103 @@ class rundeck::params {
     'dialect'         => '',
   }
 
+  $log4j_config = {
+    '/etc/rundeck/log4j.properties' => {
+      loggers                       => {
+        'log4j.rootlogger'            => {
+          level                     => 'warn',
+        },
+        'log4j.com.dtolabs.rundeck.core' => {
+          level                          => 'INFO',
+        },
+        'com.dtolabs.rundeck.core.authorization' => {
+          level                                               => 'INFO',
+          additivity                                          => false,
+        },
+        'com.dtolabs.rundeck.remoteservice.http.options' => {
+          level                                                       => 'INFO',
+          additivity                                                  => false,
+        },
+        'com.dtolabs.rundeck.data.jobs.changes' => {
+          level                                              => 'INFO',
+          additivity                                         => false,
+        },
+        'org.rundeck.api.requests' => {
+          level                                 => 'INFO',
+          additivity                            => false,
+        },
+        'org.rundeck.web.requests' => {
+          level                                 => 'INFO',
+          additivity                            => false,
+        },
+        'org.codehaus.groovy.grails' => {
+          level                                   => 'warn',
+          additivity                              => false,
+        },
+        'org.codehaus.groovy.grails.commons.spring' => {
+          level                                                  => 'warn',
+          additivity                                             => false,
+        },
+        'org.codehaus.groovy.grails.beans.factory' => {
+          level                                                 => 'warn',
+          additivity                                            => false,
+        },
+        'grails' => {
+          level               => 'info',
+          additivity          => false,
+        },
+      },
+      appenders  => {
+        'stdout' => {
+          type   => 'console',
+          layout => '%-5p %c{1}: %m%n',
+        },
+        'cmd-logger' => {
+          type       => 'rollingfile',
+          filename       => "${service_logs_dir}/commands.log",
+          append     => true,
+          layout     => '%d{ISO8601} [%t] %-5p %c - %m%n',
+        },
+        'server-logger' => {
+          type          => 'rollingfile',
+          filename      => "${service_logs_dir}/rundeck.log",
+          append        => true,
+          layout        => '%d{ISO8601} [%t] %-5p %c - %m%n',
+        },
+        'audit' => {
+          type          => 'rollingfile',
+          filename      => "${service_logs_dir}/rundeck.audit.log",
+          append        => true,
+          layout        => '%d{ISO8601} - %m%n',
+        },
+        'options' => {
+          type          => 'rollingfile',
+          filename      => "${service_logs_dir}/rundeck.options.log",
+          append        => true,
+          layout        => '[%d{ISO8601}] %X{httpStatusCode} %X{contentLength}B %X{durationTime}ms %X{lastModifiedDateTime} [%X{jobName}] %X{url} %X{contentSHA1}%n',
+        },
+        'jobchanges' => {
+          type          => 'rollingfile',
+          filename      => "${service_logs_dir}/rundeck.jobs.log",
+          append        => true,
+          layout        => '[%d{ISO8601}] %X{user} %X{change} [%X{id}] %X{project} "%X{groupPath}/%X{jobName}" (%X{method})%n',
+        },
+        'apirequests' => {
+          type          => 'rollingfile',
+          filename      => "${service_logs_dir}/rundeck.api.log",
+          append        => true,
+          layout        => '[%d{ISO8601}] %X{remoteHost} %X{secure} %X{remoteUser} %X{authToken} %X{duration} %X{project} "%X{method} %X{uri}" (%X{userAgent})%n',
+        },
+        'webaccess' => {
+          type          => 'rollingfile',
+          filename      => "${service_logs_dir}/rundeck.access.log",
+          append        => true,
+          layout        => '[%d{ISO8601}] "%X{method} %X{uri}" %X{remoteHost} %X{secure} %X{remoteUser} %X{authToken} %X{duration} %X{project} [%X{contentType}] (%X{userAgent})%n',
+        },
+      },
+    },
+  }
+
   $keystore = '/etc/rundeck/ssl/keystore'
   $keystore_password = 'adminadmin'
   $key_password = 'adminadmin'
