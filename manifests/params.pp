@@ -252,7 +252,7 @@ class rundeck::params {
     'dialect'         => '',
   }
 
-  $log4j_configfile_name = '/tmp/config.xml'
+  $log4j_configfile_path = '/tmp/config.xml'
 
   $log4j_configfile_settings = {
     user            => 'rundeck',
@@ -309,55 +309,55 @@ class rundeck::params {
       },
       appenders  => {
         'stdout' => {
-          path   => $log4j_configfile_name,
+          path   => $log4j_configfile_path,
           type   => 'console',
           target => 'SYSTEM_OUT',
           layout => '%-5p %c{1}: %m%n',
         },
         'cmd-logger' => {
-          path     => $log4j_configfile_name,
+          path     => $log4j_configfile_path,
           type     => 'rollingfile',
           filename => "${service_logs_dir}/commands.log",
           append   => true,
           layout   => '%d{ISO8601} [%t] %-5p %c - %m%n',
         },
         'server-logger' => {
-          path     => $log4j_configfile_name,
+          path     => $log4j_configfile_path,
           type     => 'rollingfile',
           filename => "${service_logs_dir}/rundeck.log",
           append   => true,
           layout   => '%d{ISO8601} [%t] %-5p %c - %m%n',
         },
         'audit' => {
-          path     => $log4j_configfile_name,
+          path     => $log4j_configfile_path,
           type     => 'rollingfile',
           filename => "${service_logs_dir}/rundeck.audit.log",
           append   => true,
           layout   => '%d{ISO8601} - %m%n',
         },
         'options' => {
-          path     => $log4j_configfile_name,
+          path     => $log4j_configfile_path,
           type     => 'rollingfile',
           filename => "${service_logs_dir}/rundeck.options.log",
           append   => true,
           layout   => '[%d{ISO8601}] %X{httpStatusCode} %X{contentLength}B %X{durationTime}ms %X{lastModifiedDateTime} [%X{jobName}] %X{url} %X{contentSHA1}%n',
         },
         'jobchanges' => {
-          path     => $log4j_configfile_name,
+          path     => $log4j_configfile_path,
           type     => 'rollingfile',
           filename => "${service_logs_dir}/rundeck.jobs.log",
           append   => true,
           layout   => '[%d{ISO8601}] %X{user} %X{change} [%X{id}] %X{project} "%X{groupPath}/%X{jobName}" (%X{method})%n',
         },
         'apirequests' => {
-          path     => $log4j_configfile_name,
+          path     => $log4j_configfile_path,
           type     => 'rollingfile',
           filename => "${service_logs_dir}/rundeck.api.log",
           append   => true,
           layout   => '[%d{ISO8601}] %X{remoteHost} %X{secure} %X{remoteUser} %X{authToken} %X{duration} %X{project} "%X{method} %X{uri}" (%X{userAgent})%n',
         },
         'webaccess' => {
-          path     => $log4j_configfile_name,
+          path     => $log4j_configfile_path,
           type     => 'rollingfile',
           filename => "${service_logs_dir}/rundeck.access.log",
           append   => true,

@@ -106,6 +106,15 @@
 # [*rdeck_home*]
 #   directory under which the projects directories live.
 #
+# [*log4j_configfile_path*]
+#   Absolute path of the log4j config file e.g. /tmp/config.xml
+#
+# [*log4j_configfile_settings*]
+#   Global log4j settings.
+#
+# [*log4j_configs*]
+#   Log4j logger and appender configs
+#
 class rundeck (
   $package_ensure               = $rundeck::params::package_ensure,
   $package_source               = $rundeck::params::package_source,
@@ -150,6 +159,9 @@ class rundeck (
   $java_home                    = $rundeck::params::java_home,
   $rdeck_home                   = $rundeck::params::rdeck_home,
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
+  $log4j_configfile_path        = $rundeck::params::log4j_configfile_path,
+  $log4j_configfile_settings    = $rundeck::params::log4j_configfile_settings,
+  $log4j_configs                = $rundeck::params::log4j_configs,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
@@ -174,6 +186,9 @@ class rundeck (
   validate_string($service_name)
   validate_string($package_ensure)
   validate_hash($mail_config)
+  validate_hash($log4j_configs)
+  validate_hash($log4j_configfile_settings)
+  validate_absolute_path($log4j_configfile_path)
   validate_string($user)
   validate_string($group)
   validate_string($server_web_context)
