@@ -195,6 +195,11 @@ class rundeck (
   validate_absolute_path($rdeck_home)
   validate_rd_policy($acl_policies)
 
+  class { '::log4j':
+    data   => $log4j_configfile_settings,
+    notify => Class['::rundeck::service'],
+  }
+
   class { '::rundeck::facts': } ->
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>
