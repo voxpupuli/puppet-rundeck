@@ -255,13 +255,16 @@ class rundeck::params {
   $log4j_configfile_path = '/tmp/config.xml'
 
   $log4j_configfile_settings = {
-    user            => 'rundeck',
-    group           => 'rundeck',
-    mode            => '0644',
-    monitorInterval => '40',
-    rootLevel       => 'warn',
-    replace         => true,
-    xmllint         => false,
+    "${log4j_configfile_path}" =>
+    {
+      user            => 'rundeck',
+      group           => 'rundeck',
+      mode            => '0644',
+      monitorInterval => '40',
+      rootLevel       => 'warn',
+      replace         => true,
+      xmllint         => false,
+    },
   }
 
   $log4j_configs = {

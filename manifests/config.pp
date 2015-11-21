@@ -154,7 +154,9 @@ class rundeck::config(
     notify          => Service[$service_name],
   }
 
+  create_resources(::log4j::configfile, $log4j_configfile_settings)
+
   class { '::log4j':
-    data   => $log4j_configfile_settings,
+    data   => $log4j_configs,
   }
 }
