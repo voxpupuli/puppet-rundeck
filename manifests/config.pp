@@ -24,6 +24,8 @@ class rundeck::config(
   $clustermode_enabled   = $rundeck::clustermode_enabled,
   $grails_server_url     = $rundeck::grails_server_url,
   $database_config       = $rundeck::database_config,
+  $certificate_keyfile   = $rundeck::certificate_keyfile,
+  $certificate_certfile  = $rundeck::certificate_certfile,
   $keystore              = $rundeck::keystore,
   $keystore_password     = $rundeck::keystore_password,
   $key_password          = $rundeck::key_password,

@@ -38,8 +38,8 @@ class rundeck::params {
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
-    'framework.server.port'     => '4440',
-    'framework.server.url'      => "http://${::fqdn}:4440",
+    'framework.server.port'     => '4443',
+    'framework.server.url'      => "https://${::fqdn}:4443",
     'framework.server.username' => 'admin',
     'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
@@ -265,9 +265,10 @@ class rundeck::params {
 
   $java_home = undef
 
-  $ssl_enabled = false
+  $ssl_enabled = true
   $ssl_port = '4443'
-
+  $certificate_keyfile = '/etc/rundeck/ssl/rundeck.key'
+  $certificate_certfile = '/etc/rundeck/ssl/rundeck.crt'
   $package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
 
   $web_xml = "${rdeck_base}/exp/webapp/WEB-INF/web.xml"

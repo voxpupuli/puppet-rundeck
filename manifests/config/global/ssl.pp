@@ -7,15 +7,17 @@
 # This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled
 #
 class rundeck::config::global::ssl(
-  $keystore            = $rundeck::config::keystore,
-  $keystore_password   = $rundeck::config::keystore_password,
-  $key_password        = $rundeck::config::key_password,
-  $truststore          = $rundeck::config::truststore,
-  $truststore_password = $rundeck::config::truststore_password,
-  $properties_dir      = $rundeck::config::properties_dir,
-  $user                = $rundeck::config::user,
-  $group               = $rundeck::config::group,
-  $service_name        = $rundeck::service_name,
+  $certificate_keyfile  = $rundeck::config::certificate_keyfile,
+  $certificate_certfile = $rundeck::config::certificate_certfile,
+  $keystore             = $rundeck::config::keystore,
+  $keystore_password    = $rundeck::config::keystore_password,
+  $key_password         = $rundeck::config::key_password,
+  $truststore           = $rundeck::config::truststore,
+  $truststore_password  = $rundeck::config::truststore_password,
+  $properties_dir       = $rundeck::config::properties_dir,
+  $user                 = $rundeck::config::user,
+  $group                = $rundeck::config::group,
+  $service_name         = $rundeck::service_name,
 ) {
 
   $properties_file = "${properties_dir}/ssl/ssl.properties"
@@ -79,5 +81,31 @@ class rundeck::config::global::ssl(
     setting => 'truststore.password',
     value   => $truststore_password,
     require => File[$properties_file],
+  }
+
+  java_ks { 'rundeck:/etc/rundeck/ssl/keystore':
+    ensure         => present,
+    private_key    => $certificate_keyfile,
+    certificate    => $certificate_certfile,
+    password       => $keystore_password,
+    ks_keypassword => $key_password,
+    trustcacerts   => true,
+    require        => [
+      File[$certificate_certfile],
+      File[$certificate_keyfile]
+    ],
+  }
+  ->
+  java_ks { 'rundeck:/etc/rundeck/ssl/truststore':
+    ensure         => present,
+    private_key    => $certificate_keyfile,
+    certificate    => $certificate_certfile,
+    password       => $truststore_password,
+    ks_keypassword => $key_password,
+    trustcacerts   => true,
+    require        =>  [
+      File[$certificate_certfile],
+      File[$certificate_keyfile]
+    ],
   }
 }

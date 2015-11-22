@@ -64,6 +64,12 @@
 # [*grails_server_url*]
 #  The url used in sending email notifications.
 #
+# [*certificate_keyfile*]
+#  Full path to the SSL private key to be used by Rundeck.
+#
+# [*certificate_certfile*]
+#  Full path to the SSL public key to be used by Rundeck.
+#
 # [*keystore*]
 #  Full path to the java keystore to be used by Rundeck.
 #
@@ -129,6 +135,8 @@ class rundeck (
   $clustermode_enabled          = $rundeck::params::clustermode_enabled,
   $grails_server_url            = $rundeck::params::grails_server_url,
   $database_config              = $rundeck::params::database_config,
+  $certificate_keyfile          = $rundeck::params::certificate_keyfile,
+  $certificate_certfile         = $rundeck::params::certificate_certfile,
   $keystore                     = $rundeck::params::keystore,
   $keystore_password            = $rundeck::params::keystore_password,
   $key_password                 = $rundeck::params::key_password,
@@ -166,7 +174,8 @@ class rundeck (
   validate_string($grails_server_url)
   validate_hash($database_config)
   validate_absolute_path($keystore)
-  validate_absolute_path($keystore)
+  validate_absolute_path($certificate_certfile)
+  validate_absolute_path($certificate_keyfile)
   validate_string($keystore_password)
   validate_string($key_password)
   validate_absolute_path($truststore)
