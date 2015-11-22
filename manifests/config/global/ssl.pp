@@ -90,10 +90,6 @@ class rundeck::config::global::ssl(
     password       => $keystore_password,
     ks_keypassword => $key_password,
     trustcacerts   => true,
-    require        => [
-      File[$certificate_certfile],
-      File[$certificate_keyfile]
-    ],
   }
   ->
   java_ks { 'rundeck:/etc/rundeck/ssl/truststore':
@@ -103,9 +99,5 @@ class rundeck::config::global::ssl(
     password       => $truststore_password,
     ks_keypassword => $key_password,
     trustcacerts   => true,
-    require        =>  [
-      File[$certificate_certfile],
-      File[$certificate_keyfile]
-    ],
   }
 }
