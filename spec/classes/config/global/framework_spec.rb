@@ -18,8 +18,8 @@ describe 'rundeck' do
         framework_details = {
           'framework.server.name' => 'test.domain.com',
           'framework.server.hostname' => 'test.domain.com',
-          'framework.server.port' => '4440',
-          'framework.server.url' => 'http://test.domain.com:4440',
+          'framework.server.port' => '4443',
+          'framework.server.url' => 'https://test.domain.com:4443',
           'framework.server.username' => 'admin',
           'framework.server.password' => 'admin',
           'framework.projects.dir' => '/var/lib/rundeck/projects',
