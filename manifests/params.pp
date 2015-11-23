@@ -38,8 +38,8 @@ class rundeck::params {
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
-    'framework.server.port'     => '4443',
-    'framework.server.url'      => "https://${::fqdn}:4443",
+    'framework.server.port'     => undef, #'4443',
+    'framework.server.url'      => undef, #"https://${::fqdn}:4443",
     'framework.server.username' => 'admin',
     'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
@@ -114,7 +114,7 @@ class rundeck::params {
       'for' => {
         'resource' => [
           { 'equals' => {'kind' => 'job'}, 'allow' => ['create','delete'] },
-          { 'equals' => {'kind' => 'node'}, 'allow' => ['read','create','update','refresh'] },
+          { 'equals' => {'kind' => 'node'}, 'allow' => ['read','create','update','refresh'] }, # lint:ignore:80chars
           { 'equals' => {'kind' => 'event'}, 'allow' => ['read','create'] }
         ],
         'adhoc' => [
@@ -245,7 +245,7 @@ class rundeck::params {
   $database_config = {
     'type'            => 'h2',
     'dbCreate'        => 'update',
-    'url'             => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true',
+    'url'             => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true', # lint:ignore:80chars
     'driverClassName' => '',
     'username'        => '',
     'password'        => '',

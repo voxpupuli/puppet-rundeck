@@ -14,13 +14,15 @@
 # === Parameters
 #
 # [*package_ensure*]
-#   Ensure the state of the rundeck package, either present, absent or a specific version
+#   Ensure the state of the rundeck package
+#   Present, absent or a specific version
 #
 # [*auth_types*]
 #   The method used to authenticate to rundeck. Default is file.
 #
 # [*properties_dir*]
-#   The path to the configuration directory where the properties file are stored.
+#   The path to the configuration directory
+#   where the properties file is stored.
 #
 # [*service_logs_dir*]
 #   The path to the directory to store logs.
@@ -56,7 +58,8 @@
 #  The log4j logging level to be set for the Rundeck application.
 #
 # [*rss_enabled*]
-#  Boolean value if set to true enables RSS feeds that are public (non-authenticated)
+#  Boolean value if set to true enables RSS feeds
+#  that are public (non-authenticated)
 #
 # [*clustermode_enabled*]
 #  Boolean value if set to true enables cluster mode
@@ -98,7 +101,8 @@
 #  Name of the role that is required for all users to be allowed access.
 #
 # [*session_timeout*]
-#  Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
+#  Session timeout is an expired time limit for a logged in
+#  Rundeck GUI user which as been inactive for a period of time.
 #
 # [*user*]
 #   The user that rundeck is installed as.
@@ -168,7 +172,7 @@ class rundeck (
   validate_hash($projects)
   validate_string($projects_organization)
   validate_string($projects_description)
-  validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$'])
+  validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$']) # lint:ignore:80chars
   validate_bool($rss_enabled)
   validate_bool($clustermode_enabled)
   validate_string($grails_server_url)
