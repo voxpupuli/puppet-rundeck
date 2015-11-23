@@ -84,20 +84,20 @@ class rundeck::config::global::ssl(
   }
 
   java_ks { 'rundeck:/etc/rundeck/ssl/keystore':
-    ensure         => present,
-    private_key    => $certificate_keyfile,
-    certificate    => $certificate_certfile,
-    password       => $keystore_password,
-    ks_keypassword => $key_password,
-    trustcacerts   => true,
+    ensure       => present,
+    private_key  => $certificate_keyfile,
+    certificate  => $certificate_certfile,
+    password     => $keystore_password,
+    destkeypass  => $key_password,
+    trustcacerts => true,
   }
   ->
   java_ks { 'rundeck:/etc/rundeck/ssl/truststore':
-    ensure         => present,
-    private_key    => $certificate_keyfile,
-    certificate    => $certificate_certfile,
-    password       => $truststore_password,
-    ks_keypassword => $key_password,
-    trustcacerts   => true,
+    ensure       => present,
+    private_key  => $certificate_keyfile,
+    certificate  => $certificate_certfile,
+    password     => $truststore_password,
+    destkeypass  => $key_password,
+    trustcacerts => true,
   }
 }
