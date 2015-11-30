@@ -39,6 +39,6 @@
     {
       "name": "danielgil/log4j",
       "version_requirement": ">= 1.0.3 <2.0.0"
-    },
+    }
   ]
 }
