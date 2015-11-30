@@ -32,12 +32,6 @@ describe 'rundeck' do
           expect(content).to include('admin:admin,user,admin,architect,deploy,build')
         end
 
-        it { should contain_file('/etc/rundeck/log4j.properties') }
-        it 'should generate valid content for log4j.propertiess' do
-          content = catalogue.resource('file', '/etc/rundeck/log4j.properties')[:content]
-          expect(content).to include('log4j.appender.server-logger.file=/var/log/rundeck/rundeck.log')
-        end
-
         it { should contain_file('/etc/rundeck/profile') }
         it 'should generate valid content for profile' do
           content = catalogue.resource('file', '/etc/rundeck/profile')[:content]

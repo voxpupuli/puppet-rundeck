@@ -3,5 +3,6 @@ fixtures:
     stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
     inifile: "https://github.com/puppetlabs/puppetlabs-inifile.git"
     archive: "https://github.com/puppet-community/puppet-archive.git"
+    log4j: "https://github.com/danielgil/log4j.git"
   symlinks:
     rundeck: "#{source_dir}"

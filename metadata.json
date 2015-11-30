@@ -14,7 +14,7 @@
       "operatingsystemrelease": ["5.0","6.0","7.0"]
     },
     { "operatingsystem": "CentOS",
-      "operatingsystemrelease": ["5.0","6.0", "7.0"]
+      "operatingsystemrelease": ["5.0","6.0","7.0"]
     },
     { "operatingsystem": "Debian",
       "operatingsystemrelease": ["6.0","7.0"]
@@ -35,6 +35,10 @@
     {
       "name": "puppet/archive",
       "version_requirement": ">= 0.3.0 <1.0.0"
+    },
+    {
+      "name": "danielgil/log4j",
+      "version_requirement": ">= 1.0.3 <2.0.0"
     }
   ]
 }
