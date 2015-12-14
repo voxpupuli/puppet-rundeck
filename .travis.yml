@@ -5,10 +5,6 @@ sudo: false
 language: ruby
 cache: bundler
 bundler_args: --without system_tests
-addons:
-  apt:
-    packages:
-      - libaugeas-dev
 before_install: rm Gemfile.lock || true
 script:
   - 'bundle exec rake $CHECK'

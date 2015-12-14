@@ -1,8 +1,11 @@
 AllCops:
+  Include:
+    - ./**/*.rb
   Exclude:
     - vendor/**/*
     - pkg/**/*
     - spec/fixtures/**/*
+    - files/**/*
 
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
@@ -48,4 +51,8 @@ Style/WordArray:
 # this catches the cases of using `module` for parser functions, types, or
 # providers
 Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
   Enabled: false
