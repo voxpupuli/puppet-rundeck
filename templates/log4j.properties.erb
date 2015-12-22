@@ -61,6 +61,9 @@ log4j.additivity.org.codehaus.groovy.grails.beans.factory=false
 log4j.logger.grails=info,stdout, server-logger
 log4j.additivity.grails=false
 
+# Disable h2database logger if desired (value = on|off)
+log4j.logger.h2database=<%= @database_config['enable_h2_logs'] %>
+
 
 ####################################################################################################
 #
