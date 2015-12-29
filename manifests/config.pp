@@ -78,26 +78,29 @@ class rundeck::config(
   if 'file' in $auth_types {
     $active_directory_auth_flag = 'sufficient'
     $ldap_auth_flag = 'sufficient'
-  }
-  elsif 'active_directory' in $auth_types {
-    $active_directory_auth_flag = 'required'
-    $ldap_auth_flag = 'sufficient'
-    $ldap_login_module = 'JettyCachingLdapLoginModule'
-  }
-  elsif 'active_directory_shared' in $auth_types {
-    $active_directory_auth_flag = 'requisite'
-    $ldap_auth_flag = 'sufficient'
-    $ldap_login_module = 'JettyCombinedLdapLoginModule'
-  }
-  elsif 'ldap_shared' in $auth_types {
-    $ldap_auth_flag = 'requisite'
-    $ldap_login_module = 'JettyCombinedLdapLoginModule'
-  }
-  else {
-    $ldap_auth_flag = 'required'
-    $ldap_login_module = 'JettyCachingLdapLoginModule'
+  } else {
+    if 'active_directory' in $auth_types {
+      $active_directory_auth_flag = 'required'
+      $ldap_auth_flag = 'sufficient'
+    }
+    elsif 'active_directory_shared' in $auth_types {
+      $active_directory_auth_flag = 'requisite'
+      $ldap_auth_flag = 'sufficient'
+    }
+    elsif 'ldap_shared' in $auth_types {
+      $ldap_auth_flag = 'requisite'
+    }
+    elsif 'ldap' in $auth_types {
+      $ldap_auth_flag = 'required'
+    }
   }
 
+  if 'active_directory' in $auth_types or 'ldap' in $auth_types {
+    $ldap_login_module = 'JettyCachingLdapLoginModule'
+  }
+  elsif 'active_directory_shared' in $auth_types or 'ldap_shared' in $auth_types {
+    $ldap_login_module = 'JettyCombinedLdapLoginModule'
+  }
   file { "${properties_dir}/jaas-auth.conf":
     owner   => $user,
     group   => $group,
