@@ -2,13 +2,14 @@ com.dtolabs.rundeck.jetty.jaas.<%= @ldap_login_module %> <%= @ldap_auth_flag %>
   debug="true"
   contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
 <%-
-provider_url =  if @auth_config['ldap']['url']
-                    @auth_config['ldap']['url']
-                else
-                    server = @auth_config['ldap']['server']
-                    port = @auth_config['ldap']['port']
-                    "ldap://#{server}:#{port}"
-                end
+provider_url =
+  if @auth_config['ldap']['url']
+    @auth_config['ldap']['url']
+  else
+    server = @auth_config['ldap']['server']
+    port = @auth_config['ldap']['port']
+    "ldap://#{server}:#{port}"
+  end
 -%>
   providerUrl="<%= provider_url %>"
   authenticationMethod="simple"

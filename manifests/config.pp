@@ -55,13 +55,7 @@ class rundeck::config(
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that
   #
-  if 'file' in $auth_types {
-    $_deploy_realm = true
-  }
-  if 'ldap_shared' in $auth_types {
-    $_deploy_realm = true
-  }
-  if 'active_directory_shared' in $auth_types {
+  if 'file' in $auth_types or 'ldap_shared' in $auth_types or 'active_directory_shared' in $auth_types {
     $_deploy_realm = true
   }
   if $_deploy_realm {
@@ -78,26 +72,29 @@ class rundeck::config(
   if 'file' in $auth_types {
     $active_directory_auth_flag = 'sufficient'
     $ldap_auth_flag = 'sufficient'
-  }
-  elsif 'active_directory' in $auth_types {
-    $active_directory_auth_flag = 'required'
-    $ldap_auth_flag = 'sufficient'
-    $ldap_login_module = 'JettyCachingLdapLoginModule'
-  }
-  elsif 'active_directory_shared' in $auth_types {
-    $active_directory_auth_flag = 'requisite'
-    $ldap_auth_flag = 'sufficient'
-    $ldap_login_module = 'JettyCombinedLdapLoginModule'
-  }
-  elsif 'ldap_shared' in $auth_types {
-    $ldap_auth_flag = 'requisite'
-    $ldap_login_module = 'JettyCombinedLdapLoginModule'
-  }
-  else {
-    $ldap_auth_flag = 'required'
-    $ldap_login_module = 'JettyCachingLdapLoginModule'
+  } else {
+    if 'active_directory' in $auth_types {
+      $active_directory_auth_flag = 'required'
+      $ldap_auth_flag = 'sufficient'
+    }
+    elsif 'active_directory_shared' in $auth_types {
+      $active_directory_auth_flag = 'requisite'
+      $ldap_auth_flag = 'sufficient'
+    }
+    elsif 'ldap_shared' in $auth_types {
+      $ldap_auth_flag = 'requisite'
+    }
+    elsif 'ldap' in $auth_types {
+      $ldap_auth_flag = 'required'
+    }
   }
 
+  if 'active_directory' in $auth_types or 'ldap' in $auth_types {
+    $ldap_login_module = 'JettyCachingLdapLoginModule'
+  }
+  elsif 'active_directory_shared' in $auth_types or 'ldap_shared' in $auth_types {
+    $ldap_login_module = 'JettyCombinedLdapLoginModule'
+  }
   file { "${properties_dir}/jaas-auth.conf":
     owner   => $user,
     group   => $group,

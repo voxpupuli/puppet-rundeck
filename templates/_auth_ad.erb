@@ -1,7 +1,17 @@
 com.dtolabs.rundeck.jetty.jaas.<%= @ldap_login_module %> <%= @active_directory_auth_flag %>
   debug="true"
   contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
-  providerUrl="ldap://<%= @auth_config['active_directory']['server'] %>:<%= @auth_config['active_directory']['port'] %>"
+<%-
+provider_url =
+  if @auth_config['active_directory']['url']
+    @auth_config['active_directory']['url']
+  else
+    server = @auth_config['active_directory']['server']
+    port = @auth_config['active_directory']['port']
+    "ldap://#{server}:#{port}"
+  end
+-%>
+  providerUrl="<%= provider_url %>"
   authenticationMethod="simple"
   forceBindingLogin="<%= @auth_config['active_directory']['force_binding'] %>"
   <%- if @auth_config['active_directory']['bind_dn'] -%>
