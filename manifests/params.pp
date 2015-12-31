@@ -250,6 +250,7 @@ class rundeck::params {
     'username'        => '',
     'password'        => '',
     'dialect'         => '',
+    'enable_h2_logs'  => 'on',
   }
 
   $keystore = '/etc/rundeck/ssl/keystore'
