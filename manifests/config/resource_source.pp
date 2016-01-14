@@ -140,7 +140,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.requireFileExists",
-        value   => true,
+        value   => bool2str(true),
         require => File[$properties_file],
       }
 
@@ -149,7 +149,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.includeServerNode",
-        value   => $include_server_node,
+        value   => bool2str($include_server_node),
         require => File[$properties_file],
       }
 
@@ -158,7 +158,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.generateFileAutomatically",
-        value   => true,
+        value   => bool2str(true),
         require => File[$properties_file],
       }
 
@@ -209,7 +209,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.cache",
-        value   => $url_cache,
+        value   => bool2str($url_cache),
         require => File[$properties_file],
       }
     }
@@ -280,7 +280,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.argsQuoted",
-        value   => $script_args_quoted,
+        value   => bool2str($script_args_quoted),
         require => File[$properties_file],
       }
     }
@@ -298,7 +298,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.useDefaultMapping",
-        value   => $use_default_mapping,
+        value   => bool2str($use_default_mapping),
         require => File[$properties_file],
       }
       ini_setting { "resources.source.${number}.config.runningOnly":
@@ -306,7 +306,7 @@ define rundeck::config::resource_source(
         path    => $properties_file,
         section => '',
         setting => "resources.source.${number}.config.runningOnly",
-        value   => $running_only,
+        value   => bool2str($running_only),
         require => File[$properties_file],
       }
     }
