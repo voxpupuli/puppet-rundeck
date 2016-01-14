@@ -150,6 +150,7 @@ class rundeck (
   $java_home                    = $rundeck::params::java_home,
   $rdeck_home                   = $rundeck::params::rdeck_home,
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
+  $file_keystorage_keys         = $rundeck::params::file_keystorage_keys,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
@@ -179,6 +180,7 @@ class rundeck (
   validate_string($server_web_context)
   validate_absolute_path($rdeck_home)
   validate_rd_policy($acl_policies)
+  validate_hash($file_keystorage_keys)
 
   class { '::rundeck::facts': } ->
   class { '::rundeck::install': } ->
