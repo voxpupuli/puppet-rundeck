@@ -180,7 +180,6 @@ class rundeck (
   validate_absolute_path($rdeck_home)
   validate_rd_policy($acl_policies)
 
-  class { '::rundeck::facts': } ->
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>
   class { '::rundeck::service': } ->
