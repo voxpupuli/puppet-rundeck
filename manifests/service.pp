@@ -37,5 +37,6 @@ class rundeck::service(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
+    subscribe  => Package['rundeck'],
   }
 }

@@ -34,6 +34,9 @@ The rundeck module primary class, guides the basic installation and management o
 #####`package_ensure`
 Ensure the state of the rundeck package, either present, absent or a specific version
 
+#####`deb_package_source`
+Source directory of the debian package for rundeck. Example: https://dl.bintray.com/rundeck/rundeck-deb
+
 #####`auth_types`
 The method used to authenticate to Rundeck. Options: file, ldap, active_directory, ldap_shared,
 active_directory_shared. Default is file.
@@ -49,6 +52,12 @@ The user that Rundeck is installed as.
 
 #####`group`
 The group that the Rundeck user is a member of.
+
+#####`manage_user`
+Manage rundeck::user. Defaults to true.
+
+#####`manage_group`
+Manage rundeck::group. Defaults to true.
 
 #####`rdeck_base`
 The installation directory for Rundeck.
@@ -262,6 +271,7 @@ This module is tested on the following platforms:
 
 * CentOS 5
 * CentOS 6
+* CentOS 7
 * Ubuntu 12.04
 * Ubuntu 14.04
 

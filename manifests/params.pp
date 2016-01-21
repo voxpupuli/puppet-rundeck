@@ -234,6 +234,8 @@ class rundeck::params {
 
   $user = 'rundeck'
   $group = 'rundeck'
+  $manage_user = true
+  $manage_group = true
 
   $loglevel = 'INFO'
   $rss_enabled = false
@@ -269,7 +271,7 @@ class rundeck::params {
   $ssl_enabled = false
   $ssl_port = '4443'
 
-  $package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
+  $deb_package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
 
   $web_xml = "${rdeck_base}/exp/webapp/WEB-INF/web.xml"
   $security_role = 'user'
