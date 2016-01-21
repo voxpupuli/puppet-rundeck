@@ -8,12 +8,12 @@ for:
   <%- kind.each do |rules| -%>
   <%- first_key = true -%>
   <%- rules.each do |type, action| -%>
-  <%- if ['allow','deny'].include?(type) -%>
+  <%- if %w( allow deny ).include?(type) -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
-  <%- elsif ['match','equals','contains'].include?(type) -%>
+  <%- elsif %w( match equals contains ).include?(type) -%>
     <%- action.each do |k,v| -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>:
-      <%- if ['kind','path','name','group'].include?(k) -%><%='  '%><%- else -%><%-end-%>
+      <%- if %w( kind path name group rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
       <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
     <%- end -%>
   <%- end -%>
