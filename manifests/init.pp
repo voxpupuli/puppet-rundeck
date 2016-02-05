@@ -52,6 +52,9 @@
 # [*projects_description*]
 #  The description that will be set by default for any projects.
 #
+# [*projects_storage_type*]
+#  The storage type for any projects. Must be 'filesystem' or 'db'
+#
 # [*rd_loglevel*]
 #  The log4j logging level to be set for the Rundeck application.
 #
@@ -63,6 +66,9 @@
 #
 # [*grails_server_url*]
 #  The url used in sending email notifications.
+#
+# [*key_storage_type*]
+#  Type used to store secrets. Must be 'file' or 'db'
 #
 # [*keystore*]
 #  Full path to the java keystore to be used by Rundeck.
@@ -124,11 +130,13 @@ class rundeck (
   $projects                     = $rundeck::params::projects,
   $projects_organization        = $rundeck::params::projects_default_org,
   $projects_description         = $rundeck::params::projects_default_desc,
+  $projects_storage_type        = $rundeck::params::projects_storage_type,
   $rd_loglevel                  = $rundeck::params::loglevel,
   $rss_enabled                  = $rundeck::params::rss_enabled,
   $clustermode_enabled          = $rundeck::params::clustermode_enabled,
   $grails_server_url            = $rundeck::params::grails_server_url,
   $database_config              = $rundeck::params::database_config,
+  $key_storage_type             = $rundeck::params::key_storage_type,
   $keystore                     = $rundeck::params::keystore,
   $keystore_password            = $rundeck::params::keystore_password,
   $key_password                 = $rundeck::params::key_password,
@@ -159,13 +167,14 @@ class rundeck (
   validate_hash($projects)
   validate_string($projects_organization)
   validate_string($projects_description)
-  validate_re($rd_loglevel, ['^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$'])
+  validate_re($rd_loglevel, [ '^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$' ])
+  validate_re($projects_storage_type, [ '^db$', '^filesystem$' ])
   validate_bool($rss_enabled)
   validate_bool($clustermode_enabled)
   validate_string($grails_server_url)
   validate_hash($database_config)
   validate_absolute_path($keystore)
-  validate_absolute_path($keystore)
+  validate_re($key_storage_type, [ '^db$', '^file$' ])
   validate_string($keystore_password)
   validate_string($key_password)
   validate_absolute_path($truststore)
