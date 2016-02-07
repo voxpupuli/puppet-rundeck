@@ -39,6 +39,8 @@ class rundeck::config(
   $acl_policies          = $rundeck::acl_policies,
   $api_policies          = $rundeck::api_policies,
   $rdeck_config_template = $rundeck::rdeck_config_template,
+  $file_keystorage_keys  = $rundeck::file_keystorage_keys,
+
 ) inherits rundeck::params {
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
@@ -138,10 +140,13 @@ class rundeck::config(
   include '::rundeck::config::global::framework'
   include '::rundeck::config::global::project'
   include '::rundeck::config::global::rundeck_config'
+  include '::rundeck::config::global::file_keystore'
 
   Class[rundeck::config::global::framework] ->
   Class[rundeck::config::global::project] ->
-  Class[rundeck::config::global::rundeck_config]
+  Class[rundeck::config::global::rundeck_config] ->
+  Class[rundeck::config::global::file_keystore]
+
 
   if $ssl_enabled {
     include '::rundeck::config::global::ssl'
