@@ -4,13 +4,17 @@
 
 # == Class rundeck::install
 #
-# This private class installs the rundeck package and it's dependencies
+# This private class installs the rundeck package and its dependencies
 #
 class rundeck::install(
-  $package_source     = $rundeck::package_source,
+  $deb_package_source = $rundeck::deb_package_source,
   $package_ensure     = $rundeck::package_ensure,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
-  $rdeck_home         = $rundeck::rdeck_home
+  $rdeck_home         = $rundeck::rdeck_home,
+  $user               = $rundeck::user,
+  $group              = $rundeck::group,
+  $manage_user        = $rundeck::manage_user,
+  $manage_group       = $rundeck::manage_group,
 ) {
 
   if $caller_module_name != $module_name {
@@ -20,9 +24,6 @@ class rundeck::install(
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
   $projects_dir = $framework_config['framework.projects.dir']
   $plugin_dir = $framework_config['framework.libext.dir']
-
-  $user = $rundeck::user
-  $group = $rundeck::group
 
   case $::osfamily {
     'RedHat': {
@@ -37,55 +38,41 @@ class rundeck::install(
         }
       }
 
-      ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
-      ensure_resource('package', 'rundeck-config', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
+      package { ['rundeck', 'rundeck-config']:
+        ensure => $package_ensure,
+      }
     }
     'Debian': {
 
-      $version = inline_template("<% package_version = '${package_ensure}' %><%= package_version.split('-')[0] %>")
+      $version = regsubst($package_ensure, '^(\d+)-(\d+)-GA$', '\1')
 
-      if $::rundeck_version != $version {
-        exec { 'download rundeck package':
-          command => "/usr/bin/wget ${package_source}/rundeck-${package_ensure}.deb -O /tmp/rundeck-${package_ensure}.deb",
-          unless  => "/usr/bin/test -f /tmp/rundeck-${package_ensure}.deb",
+      if $::rundeck_version != $version and $deb_package_source != undef {
+        archive { "/tmp/rundeck-${package_ensure}.deb":
+          ensure => present,
+          source => "${deb_package_source}/rundeck-${package_ensure}.deb",
         }
-
-        exec { 'stop rundeck service':
-          command => '/usr/sbin/service rundeckd stop',
-          unless  => "/bin/bash -c 'if pgrep -f RunServer > /dev/null; then echo 1; else echo 0; fi'",
+        ~>
+        package { 'rundeck':
+          ensure => present,
+          source => "/tmp/rundeck-${package_ensure}.deb",
         }
-
-        exec { 'install rundeck package':
-          command => "/usr/bin/dpkg --force-confold --ignore-depends 'java7-runtime' -i /tmp/rundeck-${package_ensure}.deb",
-          unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
-          require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ],
+      } else {
+        package { 'rundeck':
+          ensure => $package_ensure,
         }
       }
-
     }
     default: {
       err("The osfamily: ${::osfamily} is not supported")
     }
   }
 
-  if $group == 'rundeck' {
-    ensure_resource('group', 'rundeck', { 'ensure' => 'present' } )
-  } else {
+  if $manage_group {
     ensure_resource('group', $group, { 'ensure' => 'present' } )
-    
-    group { 'rundeck':
-      ensure => absent,
-    }
   }
 
-  if $user == 'rundeck' {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-  } else {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-    
-    user { 'rundeck':
-      ensure => absent,
-    }
+  if $manage_user {
+    ensure_resource('user', $user, { 'ensure' => 'present' } )
   }
 
   file { $rdeck_home:

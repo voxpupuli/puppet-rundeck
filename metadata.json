@@ -1,12 +1,12 @@
 {
   "name":         "puppet-rundeck",
   "version":      "2.1.0",
-  "author":       "puppetcommunity",
+  "author":       "voxpupuli",
   "license":      "Apache-2.0",
-  "summary":      "Module for managing the installatation and configuration of the rundeck orchestration tool",
-  "source":       "https://github.com/puppet-community/puppet-rundeck",
-  "project_page": "https://github.com/puppet-community/puppet-rundeck",
-  "issues_url":   "https://github.com/puppet-community/puppet-rundeck/issues",
+  "summary":      "Module for managing the installation and configuration of the rundeck orchestration tool",
+  "source":       "https://github.com/voxpupuli/puppet-rundeck",
+  "project_page": "https://github.com/voxpupuli/puppet-rundeck",
+  "issues_url":   "https://github.com/voxpupuli/puppet-rundeck/issues",
   "tags": ["orchestration", "rundeck"],
   "operatingsystem_support": [
     {
@@ -33,8 +33,8 @@
       "version_requirement": ">= 1.0.3 <2.0.0"
     },
     {
-      "name": "puppet/archive",
-      "version_requirement": ">= 0.3.0 <1.0.0"
+      "name": "voxpupuli/archive",
+      "version_requirement": ">= 0.3.0"
     }
   ]
 }

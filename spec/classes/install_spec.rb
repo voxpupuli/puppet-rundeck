@@ -18,8 +18,7 @@ describe 'rundeck' do
         if osfamily.eql?('RedHat')
           it { should contain_yumrepo('bintray-rundeck') }
         else
-          it { should contain_exec('download rundeck package') }
-          it { should contain_exec('install rundeck package') }
+          it { should contain_package('rundeck') }
           it { should_not contain_yumrepo('bintray-rundeck') }
         end
 
@@ -67,20 +66,8 @@ describe 'rundeck' do
     end
 
     it do
-      should contain_group('rundeck').with(
-        'ensure' => 'absent',
-      )
-    end
-
-    it do
       should contain_user('A1234').with(
         'ensure' => 'present',
-      )
-    end
-
-    it do
-      should contain_user('rundeck').with(
-        'ensure' => 'absent',
       )
     end
   end
