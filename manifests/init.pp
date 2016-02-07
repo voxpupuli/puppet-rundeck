@@ -152,8 +152,6 @@ class rundeck (
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
 ) inherits rundeck::params {
 
-  #validate_re($package_ensure, '\d+\.\d+\.\d+')
-
   validate_array($auth_types)
   validate_hash($auth_config)
   validate_bool($ssl_enabled)

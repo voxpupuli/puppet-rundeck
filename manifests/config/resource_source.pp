@@ -95,7 +95,7 @@ define rundeck::config::resource_source(
   }
 
   validate_string($project_name)
-  validate_re($number, '[1-9]*')
+  validate_integer($number)
   validate_re($source_type, ['^file$', '^directory$', '^url$', '^script$', '^aws-ec2$'])
   validate_bool($include_server_node)
   validate_absolute_path($projects_dir)
@@ -183,7 +183,7 @@ define rundeck::config::resource_source(
     'url': {
 
       validate_string($url)
-      validate_re($url_timeout, '[0-9]*')
+      validate_integer($url_timeout)
       validate_bool($url_cache)
 
       ini_setting { "${name}::resources.source.${number}.config.url":

@@ -61,8 +61,8 @@ define rundeck::config::project(
   }
 
   validate_absolute_path($ssh_keypath_real)
-  validate_re($file_copier_provider, ['jsch-scp','script-copy','stub'])
-  validate_re($node_executor_provider, ['jsch-ssh', 'script-exec', 'stub'])
+  validate_re($file_copier_provider, ['^jsch-scp$','^script-copy$','^stub$'])
+  validate_re($node_executor_provider, ['^jsch-ssh$', '^script-exec$', '^stub$'])
   validate_hash($resource_sources)
   validate_absolute_path($projects_dir_real)
   validate_re($user, '[a-zA-Z0-9]{3,}')
