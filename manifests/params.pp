@@ -278,6 +278,7 @@ class rundeck::params {
   $session_timeout = 30
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
+  $rdeck_profile_template = 'rundeck/profile.erb'
 
   $file_keystorage_keys = { }
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"

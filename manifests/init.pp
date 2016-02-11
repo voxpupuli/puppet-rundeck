@@ -124,6 +124,14 @@
 # [*manage_default_api_policy*]
 #   Boolean value if set to true enables default api policy management
 #
+# [*rdeck_config_template*]
+#
+#   Allows you to override the rundeck-config template
+#
+# [*rdeck_profile_template*]
+#
+#   Allows you to override the profile template
+#
 class rundeck (
   $package_ensure               = $rundeck::params::package_ensure,
   $package_source               = $rundeck::params::package_source,
@@ -170,6 +178,7 @@ class rundeck (
   $java_home                    = $rundeck::params::java_home,
   $rdeck_home                   = $rundeck::params::rdeck_home,
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
+  $rdeck_profile_template       = $rundeck::params::rdeck_profile_template,
   $file_keystorage_keys         = $rundeck::params::file_keystorage_keys,
   $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,

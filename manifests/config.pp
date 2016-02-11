@@ -41,6 +41,7 @@ class rundeck::config(
   $acl_policies                = $rundeck::acl_policies,
   $api_policies                = $rundeck::api_policies,
   $rdeck_config_template       = $rundeck::rdeck_config_template,
+  $rdeck_profile_template      = $rundeck::rdeck_profile_template,
   $file_keystorage_keys        = $rundeck::file_keystorage_keys,
   $manage_default_admin_policy = $rundeck::manage_default_admin_policy,
   $manage_default_api_policy   = $rundeck::manage_default_api_policy,
@@ -146,7 +147,7 @@ class rundeck::config(
     owner   => $user,
     group   => $group,
     mode    => '0640',
-    content => template('rundeck/profile.erb'),
+    content => template($rdeck_profile_template),
     notify  => Service[$service_name],
     require => File[$properties_dir],
   }
