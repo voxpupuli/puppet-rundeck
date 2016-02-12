@@ -263,6 +263,12 @@ class rundeck::params {
 
   $resource_sources = {}
 
+  $preauthenticated_config = {
+    'enabled'       => false,
+    'attributeName' => 'REMOTE_USER_GROUPS',
+    'delimiter'     => ':',
+  }
+
   $server_web_context = undef
   $jvm_args = '-Xmx1024m -Xms256m -server'
 

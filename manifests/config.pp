@@ -35,6 +35,7 @@ class rundeck::config(
   $key_storage_type            = $rundeck::key_storage_type,
   $service_name                = $rundeck::service_name,
   $mail_config                 = $rundeck::mail_config,
+  $preauthenticated_config     = $rundeck::preauthenticated_config,
   $security_config             = $rundeck::security_config,
   $security_role               = $rundeck::security_role,
   $session_timeout             = $rundeck::session_timeout,
