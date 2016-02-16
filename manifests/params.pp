@@ -277,5 +277,6 @@ class rundeck::params {
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
 
-  $file_keystorage_dir = undef
+  $file_keystorage_dir = '/var/lib/rundeck/var/storage'
+  $file_keystorage_keys = { }
 }

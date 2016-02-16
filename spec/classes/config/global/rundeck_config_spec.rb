@@ -30,6 +30,10 @@ describe 'rundeck' do
 
           grails.serverURL = "http://test.domain.com:4440"
           rundeck.clusterMode.enabled = "false"
+
+          rundeck.storage.provider."1".config.baseDir = "/var/lib/rundeck/var/storage"
+          rundeck.storage.provider."1".path = "/"
+          rundeck.storage.provider."1".type = "file"
         CONFIG
 
         it do
