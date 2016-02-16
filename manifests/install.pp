@@ -7,14 +7,15 @@
 # This private class installs the rundeck package and its dependencies
 #
 class rundeck::install(
-  $deb_package_source = $rundeck::deb_package_source,
-  $package_ensure     = $rundeck::package_ensure,
-  $manage_yum_repo    = $rundeck::manage_yum_repo,
-  $rdeck_home         = $rundeck::rdeck_home,
-  $user               = $rundeck::user,
-  $group              = $rundeck::group,
-  $manage_user        = $rundeck::manage_user,
-  $manage_group       = $rundeck::manage_group,
+  $package_source  = $rundeck::package_source,
+  $package_ensure  = $rundeck::package_ensure,
+  $package_name    = $rundeck::package_name,
+  $manage_yum_repo = $rundeck::manage_yum_repo,
+  $rdeck_home      = $rundeck::rdeck_home,
+  $user            = $rundeck::user,
+  $group           = $rundeck::group,
+  $manage_user     = $rundeck::manage_user,
+  $manage_group    = $rundeck::manage_group,
 ) {
 
   if $caller_module_name != $module_name {
@@ -37,33 +38,30 @@ class rundeck::install(
           before   => Package['rundeck'],
         }
       }
-
-      package { ['rundeck', 'rundeck-config']:
-        ensure => $package_ensure,
-      }
+      $package_list = [ $package_name, "${package_name}-config", ]
     }
     'Debian': {
-
       $version = regsubst($package_ensure, '^(\d+)-(\d+)-GA$', '\1')
 
-      if $::rundeck_version != $version and $deb_package_source != undef {
         archive { "/tmp/rundeck-${package_ensure}.deb":
           ensure => present,
-          source => "${deb_package_source}/rundeck-${package_ensure}.deb",
+          source => "${package_source}/rundeck-${package_ensure}.deb",
         }
-        ~>
-        package { 'rundeck':
-          ensure => present,
-          source => "/tmp/rundeck-${package_ensure}.deb",
-        }
-      } else {
-        package { 'rundeck':
-          ensure => $package_ensure,
-        }
-      }
+      $package_list = [ $package_name, ]
     }
     default: {
       err("The osfamily: ${::osfamily} is not supported")
+    }
+  }
+  
+  if $package_source {
+    package { $package_list:
+      ensure => $package_ensure,
+      source => "${package_source}/${title}-",
+    }
+  } else {
+    package { $package_list:
+      ensure => $package_ensure,
     }
   }
 
