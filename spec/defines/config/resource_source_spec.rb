@@ -11,6 +11,11 @@ describe 'rundeck::config::resource_source', :type => :define do
             'source_type' => 'file',
             'include_server_node' => false,
             'resource_format' => 'resourcexml',
+            'url_cache' => true,
+            'url_timeout' => '50',
+            'directory' => '/',
+            'script_args_quoted' => true,
+            'script_interpreter' => '/bin/bash',
           }
         end
         let(:facts) do
@@ -58,7 +63,11 @@ describe 'rundeck::config::resource_source', :type => :define do
             'url' => 'http\://localhost\:9999',
             'include_server_node' => true,
             'url_cache' => true,
-            'url_timeout' => '30',
+            'url_timeout' => '50',
+            'directory' => '/',
+            'resource_format' => 'resourcexml',
+            'script_args_quoted' => true,
+            'script_interpreter' => '/bin/bash'
           }
         end
         let(:facts) do
@@ -66,12 +75,13 @@ describe 'rundeck::config::resource_source', :type => :define do
             :osfamily     => osfamily,
             :serialnumber => 0,
             :puppetversion   => Puppet.version,
+            :rundeck_version => '',
           }
         end
 
         url_details = {
           'resources.source.1.config.url' => 'http\://localhost\:9999',
-          'resources.source.1.config.timeout' => '30',
+          'resources.source.1.config.timeout' => '50',
           'resources.source.1.config.cache' => 'true',
           'resources.source.1.type' => 'url'
         }
@@ -95,6 +105,12 @@ describe 'rundeck::config::resource_source', :type => :define do
             'source_type' => 'directory',
             'directory' => '/fubar/resources',
             'include_server_node' => true,
+            'resource_format' => 'resourcexml',
+            'url_cache' => true,
+            'url_timeout' => '50',
+            'script_args_quoted' => true,
+            'script_interpreter' => '/bin/bash'
+
           }
         end
         let(:facts) do
@@ -134,6 +150,9 @@ describe 'rundeck::config::resource_source', :type => :define do
             'resource_format' => 'resourcexml',
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash',
+            'url_cache' => true,
+            'url_timeout' => '30',
+            'directory' => '/',
           }
         end
         let(:facts) do

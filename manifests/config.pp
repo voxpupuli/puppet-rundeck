@@ -59,6 +59,8 @@ class rundeck::config(
   #
   if 'file' in $auth_types or 'ldap_shared' in $auth_types or 'active_directory_shared' in $auth_types {
     $_deploy_realm = true
+  } else {
+    $_deploy_realm = false
   }
   if $_deploy_realm {
     file { "${properties_dir}/realm.properties":
