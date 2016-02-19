@@ -1,5 +1,23 @@
+#2016-02-19 - Release 2.2.0
+### Summary
+  New defined type for managing file-based keystores and lots of bugfixes.
+
+#### Features
+- Adding new defined type `rundeck::config::file_keystore` for provisioning of password and public keys for file-based keystorage (#172)
+
+#### Bugfixes
+- Adding missing ssh_keypath to project defined type (#153)
+- Added ldap login module if ldap in the provided auth_types (#163)
+- Ensuring config that uses ini_file always uses string values (#164)
+- Adding 'rundeck_server' property to acl_template (#148)
+- Fix validation of resource_source number parameter (#171)
+
+#### Improvements
+- Disable H2 database logging in log4j.properties (#161)
+- Move rundeck_version to a proper fact (#165)
+
 ##2015-11-20 - Release 2.1.0
-# Summary
+### Summary
 Fixing the autoload bug in the new acl validation function.
 Lots of new parameters to customize settings.
 
