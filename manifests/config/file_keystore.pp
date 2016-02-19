@@ -53,7 +53,7 @@ define rundeck::config::file_keystore (
   $group = $::rundeck::config::group,
   $content_creation_time = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
   $content_modify_time = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
-  $content_size = size($value),
+  $content_size = undef,
   $content_mask = 'content',
   $auth_created_username = $::rundeck::framework_config['framework.ssh.user'],
   $auth_modified_username = $::rundeck::framework_config['framework.ssh.user'],
@@ -62,6 +62,12 @@ define rundeck::config::file_keystore (
 
   validate_re($data_type, [ 'password', 'public', 'private' ])
   validate_re($content_type, [ 'application/x-rundeck-data-password', 'application/pgp-keys', 'application/octet-stream' ])
+
+  if !$content_size {
+    $content_size_value = size($value)
+  } else {
+    $content_size_value = $content_size
+  }
 
   $key_fqpath = "${file_keystorage_dir}/content/keys/${path}"
   $meta_fqpath = "${file_keystorage_dir}/meta/keys/${path}"
