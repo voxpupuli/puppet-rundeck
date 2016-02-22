@@ -31,6 +31,8 @@ class rundeck::config(
   $truststore_password   = $rundeck::truststore_password,
   $service_logs_dir      = $rundeck::service_logs_dir,
   $file_keystorage_dir   = $rundeck::file_keystorage_dir,
+  $projects_storage_type = $rundeck::projects_storage_type,
+  $key_storage_type      = $rundeck::key_storage_type,
   $service_name          = $rundeck::service_name,
   $mail_config           = $rundeck::mail_config,
   $security_config       = $rundeck::security_config,
@@ -62,6 +64,7 @@ class rundeck::config(
   } else {
     $_deploy_realm = false
   }
+
   if $_deploy_realm {
     file { "${properties_dir}/realm.properties":
       owner   => $user,

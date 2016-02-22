@@ -14,6 +14,8 @@ class rundeck::config::global::rundeck_config(
   $grails_server_url     = $rundeck::config::grails_server_url,
   $properties_dir        = $rundeck::config::properties_dir,
   $file_keystorage_dir   = $rundeck::config::file_keystorage_dir,
+  $projects_storage_type = $rundeck::config::projects_storage_type,
+  $key_storage_type      = $rundeck::config::key_storage_type,
   $user                  = $rundeck::config::user,
   $group                 = $rundeck::config::group,
   $mail_config           = $rundeck::config::mail_config,

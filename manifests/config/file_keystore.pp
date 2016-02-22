@@ -49,15 +49,15 @@ define rundeck::config::file_keystore (
   $path,
   $data_type,
   $content_type,
-  $user = $::rundeck::config::user,
-  $group = $::rundeck::config::group,
-  $content_creation_time = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
-  $content_modify_time = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
-  $content_size = undef,
-  $content_mask = 'content',
-  $auth_created_username = $::rundeck::framework_config['framework.ssh.user'],
+  $content_size           = undef,
+  $user                   = $::rundeck::config::user,
+  $group                  = $::rundeck::config::group,
+  $content_creation_time  = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
+  $content_modify_time    = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
+  $content_mask           = 'content',
+  $auth_created_username  = $::rundeck::framework_config['framework.ssh.user'],
   $auth_modified_username = $::rundeck::framework_config['framework.ssh.user'],
-  $file_keystorage_dir = $::rundeck::file_keystorage_dir,
+  $file_keystorage_dir    = $::rundeck::file_keystorage_dir,
 ) {
 
   validate_re($data_type, [ 'password', 'public', 'private' ])
@@ -100,5 +100,4 @@ define rundeck::config::file_keystore (
     require => Exec["create ${path}_${name} meta path"],
     replace => false,
   }
-
 }

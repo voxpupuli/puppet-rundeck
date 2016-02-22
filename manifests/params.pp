@@ -254,6 +254,8 @@ class rundeck::params {
   }
 
   $keystore = '/etc/rundeck/ssl/keystore'
+  $key_storage_type = 'file'
+  $projects_storage_type = 'filesystem'
   $keystore_password = 'adminadmin'
   $key_password = 'adminadmin'
   $truststore = '/etc/rundeck/ssl/truststore'
@@ -277,6 +279,6 @@ class rundeck::params {
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
 
-  $file_keystorage_dir = '/var/lib/rundeck/var/storage'
   $file_keystorage_keys = { }
+  $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"
 }
