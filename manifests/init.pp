@@ -106,6 +106,9 @@
 # [*rdeck_home*]
 #   directory under which the projects directories live.
 #
+# [*manage_default_policy*]
+#   Boolean value if set to true enables default policy management
+#
 class rundeck (
   $package_ensure               = $rundeck::params::package_ensure,
   $package_source               = $rundeck::params::package_source,
@@ -150,6 +153,7 @@ class rundeck (
   $java_home                    = $rundeck::params::java_home,
   $rdeck_home                   = $rundeck::params::rdeck_home,
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
+  $manage_default_policy        = $rundeck::params::manage_default_policy,
 ) inherits rundeck::params {
 
   #validate_re($package_ensure, '\d+\.\d+\.\d+')
@@ -179,6 +183,7 @@ class rundeck (
   validate_string($server_web_context)
   validate_absolute_path($rdeck_home)
   validate_rd_policy($acl_policies)
+  validate_bool($manage_default_policy)
 
   class { '::rundeck::facts': } ->
   class { '::rundeck::install': } ->

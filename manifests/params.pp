@@ -278,4 +278,6 @@ class rundeck::params {
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
 
   $file_keystorage_dir = undef
+
+  $manage_default_policy = true
 }
