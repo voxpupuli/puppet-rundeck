@@ -42,7 +42,7 @@ class rundeck::config(
   $api_policies          = $rundeck::api_policies,
   $rdeck_config_template = $rundeck::rdeck_config_template,
   $file_keystorage_keys  = $rundeck::file_keystorage_keys,
-
+  $manage_default_policy = $rundeck::manage_default_policy,
 ) inherits rundeck::params {
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
@@ -119,18 +119,20 @@ class rundeck::config(
     require => File[$properties_dir],
   }
 
-  rundeck::config::aclpolicyfile { 'admin':
-    acl_policies   => $acl_policies,
-    owner          => $user,
-    group          => $group,
-    properties_dir => $properties_dir,
-  }
+  if($manage_default_policy == true){
+    rundeck::config::aclpolicyfile { 'admin':
+      acl_policies   => $acl_policies,
+      owner          => $user,
+      group          => $group,
+      properties_dir => $properties_dir,
+    }
 
-  rundeck::config::aclpolicyfile { 'apitoken':
-    acl_policies   => $api_policies,
-    owner          => $user,
-    group          => $group,
-    properties_dir => $properties_dir,
+    rundeck::config::aclpolicyfile { 'apitoken':
+      acl_policies   => $api_policies,
+      owner          => $user,
+      group          => $group,
+      properties_dir => $properties_dir,
+    }
   }
 
   file { "${properties_dir}/profile":
