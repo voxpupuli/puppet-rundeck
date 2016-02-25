@@ -7,42 +7,45 @@
 # This private class is called from `rundeck` to manage the configuration
 #
 class rundeck::config(
-  $auth_types            = $rundeck::auth_types,
-  $auth_template         = $rundeck::auth_template,
-  $realm_template        = $rundeck::realm_template,
-  $user                  = $rundeck::user,
-  $group                 = $rundeck::group,
-  $server_web_context    = $rundeck::server_web_context,
-  $jvm_args              = $rundeck::jvm_args,
-  $java_home             = $rundeck::java_home,
-  $ssl_enabled           = $rundeck::ssl_enabled,
-  $projects              = $rundeck::projects,
-  $projects_organization = $rundeck::projects_default_org,
-  $projects_description  = $rundeck::projects_default_desc,
-  $rd_loglevel           = $rundeck::rd_loglevel,
-  $rss_enabled           = $rundeck::rss_enabled,
-  $clustermode_enabled   = $rundeck::clustermode_enabled,
-  $grails_server_url     = $rundeck::grails_server_url,
-  $database_config       = $rundeck::database_config,
-  $keystore              = $rundeck::keystore,
-  $keystore_password     = $rundeck::keystore_password,
-  $key_password          = $rundeck::key_password,
-  $truststore            = $rundeck::truststore,
-  $truststore_password   = $rundeck::truststore_password,
-  $service_logs_dir      = $rundeck::service_logs_dir,
-  $file_keystorage_dir   = $rundeck::file_keystorage_dir,
-  $projects_storage_type = $rundeck::projects_storage_type,
-  $key_storage_type      = $rundeck::key_storage_type,
-  $service_name          = $rundeck::service_name,
-  $mail_config           = $rundeck::mail_config,
-  $security_config       = $rundeck::security_config,
-  $security_role         = $rundeck::security_role,
-  $session_timeout       = $rundeck::session_timeout,
-  $acl_policies          = $rundeck::acl_policies,
-  $api_policies          = $rundeck::api_policies,
-  $rdeck_config_template = $rundeck::rdeck_config_template,
-  $file_keystorage_keys  = $rundeck::file_keystorage_keys,
-  $manage_default_policy = $rundeck::manage_default_policy,
+  $auth_types                  = $rundeck::auth_types,
+  $auth_template               = $rundeck::auth_template,
+  $realm_template              = $rundeck::realm_template,
+  $user                        = $rundeck::user,
+  $group                       = $rundeck::group,
+  $server_web_context          = $rundeck::server_web_context,
+  $jvm_args                    = $rundeck::jvm_args,
+  $java_home                   = $rundeck::java_home,
+  $ssl_enabled                 = $rundeck::ssl_enabled,
+  $projects                    = $rundeck::projects,
+  $projects_organization       = $rundeck::projects_default_org,
+  $projects_description        = $rundeck::projects_default_desc,
+  $rd_loglevel                 = $rundeck::rd_loglevel,
+  $rss_enabled                 = $rundeck::rss_enabled,
+  $clustermode_enabled         = $rundeck::clustermode_enabled,
+  $grails_server_url           = $rundeck::grails_server_url,
+  $database_config             = $rundeck::database_config,
+  $keystore                    = $rundeck::keystore,
+  $keystore_password           = $rundeck::keystore_password,
+  $key_password                = $rundeck::key_password,
+  $truststore                  = $rundeck::truststore,
+  $truststore_password         = $rundeck::truststore_password,
+  $service_logs_dir            = $rundeck::service_logs_dir,
+  $file_keystorage_dir         = $rundeck::file_keystorage_dir,
+  $projects_storage_type       = $rundeck::projects_storage_type,
+  $key_storage_type            = $rundeck::key_storage_type,
+  $service_name                = $rundeck::service_name,
+  $mail_config                 = $rundeck::mail_config,
+  $security_config             = $rundeck::security_config,
+  $security_role               = $rundeck::security_role,
+  $session_timeout             = $rundeck::session_timeout,
+  $acl_policies                = $rundeck::acl_policies,
+  $api_policies                = $rundeck::api_policies,
+  $rdeck_config_template       = $rundeck::rdeck_config_template,
+  $file_keystorage_keys        = $rundeck::file_keystorage_keys,
+  $manage_default_admin_policy = $rundeck::manage_default_admin_policy,
+  $manage_default_api_policy   = $rundeck::manage_default_api_policy,
+  $acl_template                = $rundeck::acl_template,
+  $api_template                = $rundeck::api_template,
 ) inherits rundeck::params {
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
@@ -119,19 +122,23 @@ class rundeck::config(
     require => File[$properties_dir],
   }
 
-  if($manage_default_policy == true){
+  if $manage_default_admin_policy {
     rundeck::config::aclpolicyfile { 'admin':
       acl_policies   => $acl_policies,
       owner          => $user,
       group          => $group,
       properties_dir => $properties_dir,
+      template_file  => $acl_template,
     }
+  }
 
+  if $manage_default_api_policy {
     rundeck::config::aclpolicyfile { 'apitoken':
       acl_policies   => $api_policies,
       owner          => $user,
       group          => $group,
       properties_dir => $properties_dir,
+      template_file  => $api_template,
     }
   }
 

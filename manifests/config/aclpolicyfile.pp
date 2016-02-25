@@ -67,6 +67,7 @@ define rundeck::config::aclpolicyfile(
   $owner          = 'rundeck',
   $group          = 'rundeck',
   $properties_dir = '/etc/rundeck',
+  $template_file  = "${module_name}/aclpolicy.erb",
 ) {
 
   validate_array($acl_policies)
@@ -75,7 +76,7 @@ define rundeck::config::aclpolicyfile(
     owner   => $owner,
     group   => $group,
     mode    => '0640',
-    content => template("${module_name}/aclpolicy.erb"),
+    content => template($template_file),
     require => File[$properties_dir],
   }
 }
