@@ -19,6 +19,12 @@
 # [*auth_types*]
 #   The method used to authenticate to rundeck. Default is file.
 #
+# [*acl_template*]
+#   The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
+#
+# [*api_template*]
+#   The template used for apitoken acl policy. Default is rundeck/aclpolicy.erb.
+#
 # [*properties_dir*]
 #   The path to the configuration directory where the properties file are stored.
 #
@@ -112,6 +118,12 @@
 # [*rdeck_home*]
 #   directory under which the projects directories live.
 #
+# [*manage_default_admin_policy*]
+#   Boolean value if set to true enables default admin policy management
+#
+# [*manage_default_api_policy*]
+#   Boolean value if set to true enables default api policy management
+#
 class rundeck (
   $package_ensure               = $rundeck::params::package_ensure,
   $package_source               = $rundeck::params::package_source,
@@ -159,6 +171,8 @@ class rundeck (
   $rdeck_home                   = $rundeck::params::rdeck_home,
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
   $file_keystorage_keys         = $rundeck::params::file_keystorage_keys,
+  $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
+  $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,
 ) inherits rundeck::params {
 
   validate_array($auth_types)
@@ -188,6 +202,8 @@ class rundeck (
   validate_absolute_path($rdeck_home)
   validate_rd_policy($acl_policies)
   validate_hash($file_keystorage_keys)
+  validate_bool($manage_default_admin_policy)
+  validate_bool($manage_default_api_policy)
 
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>

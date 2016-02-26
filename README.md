@@ -38,6 +38,12 @@ Ensure the state of the rundeck package, either present, absent or a specific ve
 The method used to authenticate to Rundeck. Options: file, ldap, active_directory, ldap_shared,
 active_directory_shared. Default is file.
 
+#####`acl_template`
+The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
+
+#####`api_template`
+The template used for apitoken acl policy. Default is rundeck/aclpolicy.erb.
+
 #####`properties_dir`
 The path to the configuration directory where the properties file are stored.
 
