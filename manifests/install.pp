@@ -72,7 +72,7 @@ class rundeck::install(
     ensure_resource('group', 'rundeck', { 'ensure' => 'present' } )
   } else {
     ensure_resource('group', $group, { 'ensure' => 'present' } )
-    
+
     group { 'rundeck':
       ensure => absent,
     }
@@ -82,7 +82,7 @@ class rundeck::install(
     ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
   } else {
     ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-    
+
     user { 'rundeck':
       ensure => absent,
     }
