@@ -5,7 +5,7 @@ describe 'rundeck' do
     %w(Debian RedHat).each do |osfamily|
       let(:params) do
         {
-          :ssl_enabled => true,
+          :ssl_enabled => true
         }
       end
       let(:facts) do
@@ -13,7 +13,7 @@ describe 'rundeck' do
           :osfamily => osfamily,
           :serialnumber => 0,
           :rundeck_version => '',
-          :puppetversion   => Puppet.version,
+          :puppetversion   => Puppet.version
         }
       end
 
@@ -22,7 +22,7 @@ describe 'rundeck' do
         'keystore.password' => 'adminadmin',
         'key.password' => 'adminadmin',
         'truststore' => '/etc/rundeck/ssl/truststore',
-        'truststore.password' => 'adminadmin',
+        'truststore.password' => 'adminadmin'
       }
 
       it { should contain_file('/etc/rundeck/ssl').with('ensure' => 'directory') }

@@ -11,7 +11,7 @@ describe 'rundeck' do
             :fqdn            => 'test.domain.com',
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 
@@ -30,7 +30,7 @@ describe 'rundeck' do
           'framework.libext.dir' => '/var/lib/rundeck/libext',
           'framework.ssh.keypath' => '/var/lib/rundeck/.ssh/id_rsa',
           'framework.ssh.user' => 'rundeck',
-          'framework.ssh.timeout' => '0',
+          'framework.ssh.timeout' => '0'
         }
 
         it { should contain_file('/etc/rundeck/framework.properties') }
@@ -50,8 +50,8 @@ describe 'rundeck' do
       let(:params) do
         {
           :framework_config => {
-            'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700',
-          },
+            'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
+          }
         }
       end
       let(:facts) do
@@ -60,7 +60,7 @@ describe 'rundeck' do
           :fqdn            => 'test.domain.com',
           :serialnumber    => 0,
           :rundeck_version => '',
-          :puppetversion   => Puppet.version,
+          :puppetversion   => Puppet.version
         }
       end
 

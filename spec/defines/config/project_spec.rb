@@ -26,7 +26,7 @@ describe 'rundeck::config::project', :type => :define do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 

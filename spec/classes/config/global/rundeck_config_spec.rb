@@ -11,7 +11,7 @@ describe 'rundeck' do
             :fqdn            => 'test.domain.com',
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 

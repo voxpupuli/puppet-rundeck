@@ -15,7 +15,7 @@ describe 'rundeck::config::resource_source', :type => :define do
             'url_timeout' => '50',
             'directory' => '/',
             'script_args_quoted' => true,
-            'script_interpreter' => '/bin/bash',
+            'script_interpreter' => '/bin/bash'
           }
         end
         let(:facts) do
@@ -23,7 +23,7 @@ describe 'rundeck::config::resource_source', :type => :define do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 
@@ -75,7 +75,7 @@ describe 'rundeck::config::resource_source', :type => :define do
             :osfamily     => osfamily,
             :serialnumber => 0,
             :puppetversion   => Puppet.version,
-            :rundeck_version => '',
+            :rundeck_version => ''
           }
         end
 
@@ -118,7 +118,7 @@ describe 'rundeck::config::resource_source', :type => :define do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 
@@ -152,7 +152,7 @@ describe 'rundeck::config::resource_source', :type => :define do
             'script_interpreter' => '/bin/bash',
             'url_cache' => true,
             'url_timeout' => '30',
-            'directory' => '/',
+            'directory' => '/'
           }
         end
         let(:facts) do
@@ -160,7 +160,7 @@ describe 'rundeck::config::resource_source', :type => :define do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 

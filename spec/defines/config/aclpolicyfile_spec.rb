@@ -5,7 +5,7 @@ describe 'rundeck::config::aclpolicyfile', :type => :define do
     {
       'description' => 'Admin, all access',
       'context' => {
-        'project' => '.*',
+        'project' => '.*'
       },
       'for' => {
         'resource' => [
@@ -13,7 +13,7 @@ describe 'rundeck::config::aclpolicyfile', :type => :define do
         ]
       },
       'by' => [
-        { 'group' => ['admin'] },
+        { 'group' => ['admin'] }
       ]
     },
     {
@@ -27,7 +27,7 @@ describe 'rundeck::config::aclpolicyfile', :type => :define do
         ]
       },
       'by' => [
-        { 'groups' => ['admin'] },
+        { 'groups' => ['admin'] }
       ]
     }
   ]
@@ -54,7 +54,7 @@ describe 'rundeck::config::aclpolicyfile', :type => :define do
         :acl_policies   => test_policies,
         :properties_dir => '/etc/rundeck-acl',
         :owner          => 'myUser',
-        :group          => 'myGroup',
+        :group          => 'myGroup'
       }
     end
 

@@ -7,7 +7,7 @@ module PuppetX
       # RundeckValidator class
       class RundeckValidator
         def raise_err(msg)
-          fail(Puppet::ParseError, "The policy is invalid - #{msg}")
+          raise(Puppet::ParseError, "The policy is invalid - #{msg}")
         end
 
         def validate_description(description)
@@ -218,7 +218,7 @@ module PuppetX
               raise_err('by section must only contain [username,group]') unless %w(username group).include?(k)
             end
             %w(username group).each do |type|
-              raise_err("by:#{type} is not a String or an Array") if item.key?(type) && (!item[type].is_a? String) && (!item[type].is_a? Array)
+              raise_err("by:#{type} is not a String or an Array") if item.key?(type) && !item[type].is_a?(String) && !item[type].is_a?(Array)
             end
           end
         end

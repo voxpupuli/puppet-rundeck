@@ -10,7 +10,7 @@ describe 'rundeck' do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 
@@ -19,7 +19,7 @@ describe 'rundeck' do
           'project.etc.dir' => '/var/lib/rundeck/projects/${project.name}/etc',
           'project.resources.file' => '/var/lib/rundeck/projects/${project.name}/etc/resources.xml',
           'project.description' => '',
-          'project.organization' => '',
+          'project.organization' => ''
         }
 
         it { should contain_file('/etc/rundeck/project.properties') }

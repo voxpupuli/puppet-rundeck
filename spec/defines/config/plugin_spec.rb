@@ -20,7 +20,7 @@ describe 'rundeck::config::plugin', :type => :define do
             :osfamily        => 'Debian',
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 
@@ -57,7 +57,7 @@ describe 'rundeck::config::plugin', :type => :define do
             :osfamily        => 'Debian',
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => Puppet.version,
+            :puppetversion   => Puppet.version
           }
         end
 

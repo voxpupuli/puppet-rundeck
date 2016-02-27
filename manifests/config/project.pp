@@ -1,7 +1,7 @@
 # Author::    Liam Bennett (mailto:lbennett@opentable.com)
 # Copyright:: Copyright (c) 2013 OpenTable Inc
 # License::   MIT
-
+#
 # == Define rundeck::config::project
 #
 # This definition is used to configure rundeck projects
@@ -17,6 +17,15 @@
 # [*resource_sources*]
 #  A hash of rundeck::config::resource_source that will be used to specifiy the node
 #  resources for this project
+#
+# [*framework_config*]
+#   Rundeck config
+#
+# [*user*]
+#   Rundeck user
+#
+# [*group*]
+#   Rundeck group
 #
 # [*ssh_keypath*]
 #   The path the the ssh key that will be used by the ssh/scp providers
@@ -35,10 +44,10 @@
 #  resource_sources       => $resource_hash
 # }
 #
-define rundeck::config::project(
-  $file_copier_provider   = $rundeck::params::file_copier_provider,
-  $node_executor_provider = $rundeck::params::node_executor_provider,
-  $resource_sources       = $rundeck::params::resource_sources,
+define rundeck::config::project (
+  $file_copier_provider   = $rundeck::file_copier_provider,
+  $node_executor_provider = $rundeck::node_executor_provider,
+  $resource_sources       = $rundeck::resource_sources,
   $framework_config       = $rundeck::framework_config,
   $user                   = $rundeck::user,
   $group                  = $rundeck::group,
@@ -46,9 +55,9 @@ define rundeck::config::project(
   $projects_dir           = undef,
 ) {
 
-  include ::rundeck::params
+  include ::rundeck
 
-  $framework_properties = deep_merge($rundeck::params::framework_config, $framework_config)
+  $framework_properties = deep_merge($rundeck::framework_config, $framework_config)
 
   $ssh_keypath_real = $ssh_keypath ? {
     undef   => $framework_properties['framework.ssh.keypath'],
@@ -80,7 +89,7 @@ define rundeck::config::project(
   }
 
   file { $properties_file:
-    ensure  => present,
+    ensure  => file,
     owner   => $user,
     group   => $group,
     require => File["${project_dir}/etc"],
