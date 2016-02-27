@@ -7,7 +7,7 @@ describe 'rundeck' do
       :fqdn            => 'test.domain.com',
       :serialnumber    => 0,
       :rundeck_version => '',
-      :puppetversion   => Puppet.version,
+      :puppetversion   => Puppet.version
     }
   end
   describe 'add file-based key storage' do
@@ -19,15 +19,15 @@ describe 'rundeck' do
             'value'        => 'gobbledygook',
             'path'         => 'foo/bar',
             'data_type'    => 'password',
-            'content_type' => 'application/x-rundeck-data-password',
+            'content_type' => 'application/x-rundeck-data-password'
           },
           'public_key' => {
             'value'        => 'ssh-rsa AAAAB3rhwL1EoAIuI3hw9wZL146zjPZ6FIqgZKvO24fpZENYnNfmHn5AuOGBXYGTjeVPMzwV7o0mt3iRWk8J9Ujqvzp45IHfEAE7SO2frEIbfALdcwcNggSReQa0du4nd user@localhost',
             'path'         => 'foo/bar',
             'data_type'    => 'public',
-            'content_type' => 'application/pgp-keys',
-          },
-        },
+            'content_type' => 'application/pgp-keys'
+          }
+        }
       }
     end
 

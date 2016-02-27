@@ -11,10 +11,10 @@ describe 'validate_rd_policy' do
         'for' => {
           'resource' => [
             { 'equals' => { 'kind' => 'job' }, 'allow' => ['create'] }
-          ],
+          ]
         },
         'by' => [{
-          'group' => ['admin'],
+          'group' => ['admin']
         }]
       }
 
@@ -159,7 +159,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'job' }, 'fubar' => ['create'] },
+                                             { 'equals' => { 'kind' => 'job' }, 'fubar' => ['create'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource does not contain a rule action of [allow,deny]')
         end
@@ -173,7 +173,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'fubar' => { 'kind' => 'job' }, 'deny' => ['create'] },
+                                             { 'fubar' => { 'kind' => 'job' }, 'deny' => ['create'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource does not contain a matching statement of [match,equals,contains]')
         end
@@ -187,7 +187,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:job can only contain actions/)
         end
@@ -201,7 +201,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'node' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'kind' => 'node' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:node can only contain actions/)
         end
@@ -215,7 +215,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'event' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'kind' => 'event' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:event can only contain actions/)
         end
@@ -284,7 +284,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'adhoc' => [
-                                             { 'fubar' => ['create'] },
+                                             { 'fubar' => ['create'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:adhoc does not contain a rule action of [allow,deny]')
         end
@@ -296,7 +296,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'adhoc' => [
-                                             { 'allow' => ['x'] },
+                                             { 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:adhoc can only contain actions/)
         end
@@ -365,7 +365,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'equals' => { 'name' => 'job' }, 'fubar' => ['create'] },
+                                             { 'equals' => { 'name' => 'job' }, 'fubar' => ['create'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job does not contain a rule action of [allow,deny]')
         end
@@ -379,7 +379,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['create'] },
+                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['create'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job does not contain a matching statement of [match,equals,contains]')
         end
@@ -393,7 +393,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'equals' => { 'name' => 'test-job' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'name' => 'test-job' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:job name:test-job can only contain actions/)
         end
@@ -407,7 +407,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'equals' => { 'group' => 'test-group' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'group' => 'test-group' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:job group:test-group can only contain actions/)
         end
@@ -476,7 +476,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'name' => 'test.mycorp.com' }, 'fubar' => ['read'] },
+                                             { 'equals' => { 'name' => 'test.mycorp.com' }, 'fubar' => ['read'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node does not contain a rule action of [allow,deny]')
         end
@@ -490,7 +490,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['read'] },
+                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['read'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node does not contain a matching statement of [match,equals,contains]')
         end
@@ -504,7 +504,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:node can only contain actions/)
         end

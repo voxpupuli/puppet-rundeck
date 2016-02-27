@@ -10,7 +10,7 @@ describe 'rundeck' do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => '3.8.1',
+            :puppetversion   => '3.8.1'
           }
         end
 
@@ -32,7 +32,7 @@ describe 'rundeck' do
           :operatingsystem => 'Nexenta',
           :serialnumber    => 0,
           :rundeck_version => '',
-          :puppetversion   => '3.8.1',
+          :puppetversion   => '3.8.1'
         }
       end
 
@@ -46,7 +46,7 @@ describe 'rundeck' do
         :osfamily        => 'RedHat',
         :serialnumber    => 0,
         :rundeck_version => '',
-        :puppetversion   => '3.8.1',
+        :puppetversion   => '3.8.1'
       }
     end
 
@@ -58,9 +58,9 @@ describe 'rundeck' do
           :auth_types => ['ldap'],
           :auth_config => {
             'ldap' => {
-              'role_username_member_attribute' => 'memberUid',
-            },
-          },
+              'role_username_member_attribute' => 'memberUid'
+            }
+          }
         }
       end
       it { should contain_file('/etc/rundeck/jaas-auth.conf') }
@@ -79,9 +79,9 @@ describe 'rundeck' do
             'ldap'     => {
               'url'    => 'ldaps://myrealldap.example.com',
               'server' => 'fakeldap',
-              'port'   => '983',
-            },
-          },
+              'port'   => '983'
+            }
+          }
         }
       end
       it { should contain_file('/etc/rundeck/jaas-auth.conf') }

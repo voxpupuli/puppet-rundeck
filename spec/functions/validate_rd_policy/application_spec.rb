@@ -11,10 +11,10 @@ describe 'validate_rd_policy' do
         'for' => {
           'resource' => [
             { 'equals' => { 'kind' => 'project' }, 'allow' => ['create'] }
-          ],
+          ]
         },
         'by' => [{
-          'group' => ['admin'],
+          'group' => ['admin']
         }]
       }
 
@@ -159,7 +159,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'job' }, 'fubar' => ['admin'] },
+                                             { 'equals' => { 'kind' => 'job' }, 'fubar' => ['admin'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource does not contain a rule action of [allow,deny]')
         end
@@ -173,7 +173,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'fubar' => { 'kind' => 'job' }, 'deny' => ['admin'] },
+                                             { 'fubar' => { 'kind' => 'job' }, 'deny' => ['admin'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource does not contain a matching statement of [match,equals,contains]')
         end
@@ -187,7 +187,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'project' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'kind' => 'project' }, 'allow' => ['x'] }
                                            ]
                                          },
                                          'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:project can only contain actions/)
@@ -202,7 +202,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'system' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'kind' => 'system' }, 'allow' => ['x'] }
                                            ]
                                          },
                                          'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:system can only contain actions/)
@@ -217,7 +217,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'user' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'kind' => 'user' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:user can only contain actions/)
         end
@@ -231,7 +231,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:job can only contain actions/)
         end
@@ -300,7 +300,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'project' => [
-                                             { 'equals' => { 'name' => 'test' }, 'fubar' => ['read'] },
+                                             { 'equals' => { 'name' => 'test' }, 'fubar' => ['read'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:project does not contain a rule action of [allow,deny]')
         end
@@ -314,7 +314,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'project' => [
-                                             { 'fubar' => { 'name' => 'test' }, 'deny' => ['read'] },
+                                             { 'fubar' => { 'name' => 'test' }, 'deny' => ['read'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:project does not contain a matching statement of [match,equals,contains]')
         end
@@ -328,7 +328,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'project' => [
-                                             { 'equals' => { 'name' => 'test' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'name' => 'test' }, 'allow' => ['x'] }
                                            ]
                                          },
                                          'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:project name can only contain actions/)
@@ -398,7 +398,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'storage' => [
-                                             { 'equals' => { 'name' => 'test' }, 'fubar' => ['read'] },
+                                             { 'equals' => { 'name' => 'test' }, 'fubar' => ['read'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:storage does not contain a rule action of [allow,deny]')
         end
@@ -412,7 +412,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'storage' => [
-                                             { 'fubar' => { 'name' => 'test' }, 'deny' => ['read'] },
+                                             { 'fubar' => { 'name' => 'test' }, 'deny' => ['read'] }
                                            ]
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:storage does not contain a matching statement of [match,equals,contains]')
         end
@@ -426,7 +426,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'storage' => [
-                                             { 'equals' => { 'name' => 'test' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'name' => 'test' }, 'allow' => ['x'] }
                                            ]
                                          },
                                          'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:storage name can only contain actions/)
@@ -441,7 +441,7 @@ describe 'validate_rd_policy' do
                                          },
                                          'for' => {
                                            'storage' => [
-                                             { 'equals' => { 'path' => 'test' }, 'allow' => ['x'] },
+                                             { 'equals' => { 'path' => 'test' }, 'allow' => ['x'] }
                                            ]
                                          },
                                          'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:storage path can only contain actions/)

@@ -7,7 +7,7 @@ describe 'rundeck' do
       :fqdn            => 'test.domain.com',
       :serialnumber    => 0,
       :rundeck_version => '',
-      :puppetversion   => Puppet.version,
+      :puppetversion   => Puppet.version
     }
   end
 
@@ -33,8 +33,8 @@ describe 'rundeck' do
       {
         :auth_config => {
           'file' => {
-            'auth_users' => [],
-          },
+            'auth_users' => []
+          }
         }
       }
     end
@@ -59,16 +59,16 @@ describe 'rundeck' do
               {
                 'username' => 'testuser',
                 'password' => 'password',
-                'roles'    => %w(user deploy),
+                'roles'    => %w(user deploy)
               },
               {
                 'username' => 'anotheruser',
                 'password' => 'anotherpassword',
-                'roles'    => ['user'],
-              },
-            ],
-          },
-        },
+                'roles'    => ['user']
+              }
+            ]
+          }
+        }
       }
     end
 
@@ -95,14 +95,14 @@ describe 'rundeck' do
               {
                 'username' => 'testuser',
                 'password' => 'password',
-                'roles'    => %w(user deploy),
+                'roles'    => %w(user deploy)
               },
               {
                 'username' => 'anotheruser',
                 'password' => 'anotherpassword',
-                'roles'    => ['user'],
-              },
-            ],
+                'roles'    => ['user']
+              }
+            ]
           },
 
           'ldap' => {
@@ -122,9 +122,9 @@ describe 'rundeck' do
             'role_member_attribute'   => 'member',
             'role_object_class'       => 'group',
             'supplemental_roles'      => 'user',
-            'nested_groups'           => 'true',
-          },
-        },
+            'nested_groups'           => 'true'
+          }
+        }
       }
     end
 
@@ -156,14 +156,14 @@ describe 'rundeck' do
               {
                 'username' => 'testuser',
                 'password' => 'password',
-                'roles'    => %w(user deploy),
+                'roles'    => %w(user deploy)
               },
               {
                 'username' => 'anotheruser',
                 'password' => 'anotherpassword',
-                'roles'    => ['user'],
-              },
-            ],
+                'roles'    => ['user']
+              }
+            ]
           },
 
           'active_directory' => {
@@ -183,9 +183,9 @@ describe 'rundeck' do
             'role_member_attribute'   => 'member',
             'role_object_class'       => 'group',
             'supplemental_roles'      => 'user',
-            'nested_groups'           => 'true',
-          },
-        },
+            'nested_groups'           => 'true'
+          }
+        }
       }
     end
 
@@ -215,11 +215,11 @@ describe 'rundeck' do
             'auth_users' => [
               {
                 'username' => 'testuser',
-                'password' => 'password',
-              },
-            ],
-          },
-        },
+                'password' => 'password'
+              }
+            ]
+          }
+        }
       }
     end
 
@@ -243,10 +243,10 @@ describe 'rundeck' do
             'auth_users' => {
               'username' => 'testuser',
               'password' => 'password',
-              'roles'    => %w(user deploy),
-            },
-          },
-        },
+              'roles'    => %w(user deploy)
+            }
+          }
+        }
       }
     end
 
