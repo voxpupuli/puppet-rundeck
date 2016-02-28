@@ -36,6 +36,10 @@ describe 'rundeck' do
           rundeck.storage.provider."1".type = "file"
           rundeck.storage.provider."1".config.baseDir = "/var/lib/rundeck/var/storage"
           rundeck.storage.provider."1".path = "/"
+
+          rundeck.security.authorization.preauthenticated.enabled = "false"
+          rundeck.security.authorization.preauthenticated.attributeName = "REMOTE_USER_GROUPS"
+          rundeck.security.authorization.preauthenticated.delimiter = ":"
         CONFIG
 
         it do

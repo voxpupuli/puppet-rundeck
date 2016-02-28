@@ -42,3 +42,7 @@ rundeck.storage.provider."1".config.baseDir = "<%= @file_keystorage_dir %>"
 rundeck.storage.provider."1".type = "db"
 <%- end -%>
 rundeck.storage.provider."1".path = "/"
+
+rundeck.security.authorization.preauthenticated.enabled = "<%= @preauthenticated_config['enabled']%>"
+rundeck.security.authorization.preauthenticated.attributeName = "<%= @preauthenticated_config['attributeName']%>"
+rundeck.security.authorization.preauthenticated.delimiter = "<%= @preauthenticated_config['delimiter']%>"

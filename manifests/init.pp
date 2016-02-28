@@ -97,6 +97,10 @@
 # [*mail_config*]
 #  A hash of the notification email configuraton.
 #
+# [*preauthenticated_config*]
+#
+#  A hash of the rundeck preauthenticated config mode
+#
 # [*security_config*]
 #  A hash of the rundeck security configuration.
 #
@@ -167,6 +171,7 @@ class rundeck (
   $service_script               = $rundeck::params::service_script,
   $service_config               = $rundeck::params::service_config,
   $mail_config                  = $rundeck::params::mail_config,
+  $preauthenticated_config      = $rundeck::params::preauthenticated_config,
   $security_config              = $rundeck::params::security_config,
   $security_role                = $rundeck::params::security_role,
   $session_timeout              = $rundeck::params::session_timeout,
@@ -205,6 +210,7 @@ class rundeck (
   validate_string($service_name)
   validate_string($package_ensure)
   validate_hash($mail_config)
+  validate_hash($preauthenticated_config)
   validate_string($user)
   validate_string($group)
   validate_string($server_web_context)

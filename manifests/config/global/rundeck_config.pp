@@ -7,20 +7,21 @@
 # This private class is called from rundeck::config used to manage the rundeck-config properties
 #
 class rundeck::config::global::rundeck_config(
-  $rd_loglevel           = $rundeck::config::loglevel,
-  $rdeck_base            = $rundeck::config::rdeck_base,
-  $rss_enabled           = $rundeck::config::rss_enabled,
-  $clustermode_enabled   = $rundeck::config::clustermode_enabled,
-  $grails_server_url     = $rundeck::config::grails_server_url,
-  $properties_dir        = $rundeck::config::properties_dir,
-  $file_keystorage_dir   = $rundeck::config::file_keystorage_dir,
-  $projects_storage_type = $rundeck::config::projects_storage_type,
-  $key_storage_type      = $rundeck::config::key_storage_type,
-  $user                  = $rundeck::config::user,
-  $group                 = $rundeck::config::group,
-  $mail_config           = $rundeck::config::mail_config,
-  $security_config       = $rundeck::config::security_config,
-  $rdeck_config_template = $rundeck::config::rdeck_config_template,
+  $rd_loglevel             = $rundeck::config::loglevel,
+  $rdeck_base              = $rundeck::config::rdeck_base,
+  $rss_enabled             = $rundeck::config::rss_enabled,
+  $clustermode_enabled     = $rundeck::config::clustermode_enabled,
+  $grails_server_url       = $rundeck::config::grails_server_url,
+  $properties_dir          = $rundeck::config::properties_dir,
+  $file_keystorage_dir     = $rundeck::config::file_keystorage_dir,
+  $projects_storage_type   = $rundeck::config::projects_storage_type,
+  $key_storage_type        = $rundeck::config::key_storage_type,
+  $user                    = $rundeck::config::user,
+  $group                   = $rundeck::config::group,
+  $mail_config             = $rundeck::config::mail_config,
+  $preauthenticated_config = $rundeck::config::preauthenticated_config,
+  $security_config         = $rundeck::config::security_config,
+  $rdeck_config_template   = $rundeck::config::rdeck_config_template,
 ) {
 
   $properties_file = "${properties_dir}/rundeck-config.groovy"
