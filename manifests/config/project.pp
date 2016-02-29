@@ -11,27 +11,26 @@
 # [*file_copier_provider*]
 #  The type of proivder that will be used for copying files to each of the nodes
 #
+# [*framework_config*]
+#  Rundeck config
+#
+# [*group*]
+#  Rundeck group
+#
 # [*node_executor_provider*]
 #  The type of provider that will be used to gather node resources
 #
+# [*projects_dir*]
+#  The directory where rundeck is configured to store project information
+#
 # [*resource_sources*]
-#  A hash of rundeck::config::resource_source that will be used to specifiy the node
-#  resources for this project
-#
-# [*framework_config*]
-#   Rundeck config
-#
-# [*user*]
-#   Rundeck user
-#
-# [*group*]
-#   Rundeck group
+#  A hash of rundeck::config::resource_source that will be used to specifiy the node resources for this project
 #
 # [*ssh_keypath*]
-#   The path the the ssh key that will be used by the ssh/scp providers
+#  The path the the ssh key that will be used by the ssh/scp providers
 #
-# [*projects_dir*]
-#   The directory where rundeck is configured to store project information
+# [*user*]
+#  Rundeck user
 #
 # === Examples
 #
@@ -46,13 +45,13 @@
 #
 define rundeck::config::project (
   $file_copier_provider   = $rundeck::file_copier_provider,
-  $node_executor_provider = $rundeck::node_executor_provider,
-  $resource_sources       = $rundeck::resource_sources,
   $framework_config       = $rundeck::framework_config,
-  $user                   = $rundeck::user,
   $group                  = $rundeck::group,
-  $ssh_keypath            = undef,
+  $node_executor_provider = $rundeck::node_executor_provider,
   $projects_dir           = undef,
+  $resource_sources       = $rundeck::resource_sources,
+  $ssh_keypath            = undef,
+  $user                   = $rundeck::user,
 ) {
 
   include ::rundeck

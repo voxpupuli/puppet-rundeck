@@ -7,12 +7,12 @@
 # This private class is called from rundeck::config used to manage the default project properties
 #
 class rundeck::config::global::project(
+  $group                 = $rundeck::config::group,
+  $projects_description  = $rundeck::config::projects_default_desc,
   $projects_dir          = $rundeck::config::projects_dir,
   $projects_organization = $rundeck::config::projects_default_org,
-  $projects_description  = $rundeck::config::projects_default_desc,
   $properties_dir        = $rundeck::config::properties_dir,
   $user                  = $rundeck::config::user,
-  $group                 = $rundeck::config::group
 ) {
 
   $properties_file = "${properties_dir}/project.properties"

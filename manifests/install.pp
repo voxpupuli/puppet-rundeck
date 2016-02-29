@@ -7,10 +7,10 @@
 # This private class installs the rundeck package and it's dependencies
 #
 class rundeck::install(
-  $package_source     = $rundeck::package_source,
-  $package_ensure     = $rundeck::package_ensure,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
-  $rdeck_home         = $rundeck::rdeck_home
+  $package_ensure     = $rundeck::package_ensure,
+  $package_source     = $rundeck::package_source,
+  $rdeck_home         = $rundeck::rdeck_home,
 ) {
 
   if $caller_module_name != $module_name {

@@ -7,57 +7,56 @@
 #
 # === Parameters
 #
-# [*value*]
-#   The actual value (password) of the named key
-#
-# [*path*]
-#   The actual value (password) of the named key
-#
-# [*data_type*]
-#   Date type (password, public-key or private-key)
-#
-# [*content_type*]
-#   MIME type of the content
-#
-# [*user*]
-#   default system user for the Rundeck framework
-#
-# [*group*]
-#   default system group for the Rundeck framework
-#
-# [*content_size*]
-#   Size of the content string in bytes
-#
-# [*content_mask*]
-#   Content mask (default is 'content')
-#
-# [*content_creation_time*]
-#   When the key was first created
-#
 # [*auth_created_username*]
 #   User who created the key
 #
 # [*auth_modified_username*]
 #   User who last modified the key
 #
+# [*content_creation_time*]
+#   When the key was first created
+#
+# [*content_mask*]
+#   Content mask (default is 'content')
+#
+# [*content_size*]
+#   Size of the content string in bytes
+#
+# [*content_type*]
+#   MIME type of the content
+#
+# [*data_type*]
+#   Date type (password, public-key or private-key)
+#
 # [*file_keystorage_dir*]
 #   Base directory for file-based key storage (defaulted to /var/lib/rundeck/var/storage)
 #
-
+# [*group*]
+#   default system group for the Rundeck framework
+#
+# [*path*]
+#   The actual value (password) of the named key
+#
+# [*user*]
+#   default system user for the Rundeck framework
+#
+# [*value*]
+#   The actual value (password) of the named key
+#
 define rundeck::config::file_keystore (
-  $value,
-  $path,
-  $data_type,
   $content_type,
-  $content_size           = undef,
-  $user                   = $::rundeck::config::user,
-  $group                  = $::rundeck::config::group,
-  $content_creation_time  = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
-  $content_modify_time    = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
-  $content_mask           = 'content',
+  $data_type,
+  $path,
+  $value,
   $auth_created_username  = $::rundeck::framework_config['framework.ssh.user'],
   $auth_modified_username = $::rundeck::framework_config['framework.ssh.user'],
+  $content_creation_time  = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
+  $content_mask           = 'content',
+  $content_modify_time    = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
+  $content_size           = undef,
   $file_keystorage_dir    = $::rundeck::file_keystorage_dir,
+  $group                  = $::rundeck::config::group,
+  $user                   = $::rundeck::config::user,
 ) {
 
   validate_re($data_type, [ 'password', 'public', 'private' ])

@@ -18,7 +18,7 @@
 #   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 #
 class rundeck::config::global::web (
-  $security_role = $rundeck::params::security_role,
+  $security_role   = $rundeck::params::security_role,
   $session_timeout = $rundeck::params::session_timeout,
 ) inherits rundeck::params {
 

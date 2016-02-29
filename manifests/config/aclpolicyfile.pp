@@ -11,13 +11,13 @@
 # [*acl_policies*]
 #  An array containing acl policies. See rundeck::params::acl_policies / rundeck::params::api_policies as an example.
 #
-# [*$owner*]
-#  The user that rundeck is installed as.
-#
-# [*$group*]
+# [*group*]
 #  The group permission that rundeck is installed as.
 #
-# [*$properties_dir*]
+# [*owner*]
+#  The user that rundeck is installed as.
+#
+# [*properties_dir*]
 #  The rundeck configuration directory.
 #
 # === Examples
@@ -64,8 +64,8 @@
 #
 define rundeck::config::aclpolicyfile(
   $acl_policies,
-  $owner          = 'rundeck',
   $group          = 'rundeck',
+  $owner          = 'rundeck',
   $properties_dir = '/etc/rundeck',
   $template_file  = "${module_name}/aclpolicy.erb",
 ) {
