@@ -9,35 +9,23 @@
 #
 # === Parameters
 #
-# [*project_name*]
-#   The name of the project for which this resource in intended to be a part.
-#
-# [*number*]
-#   The sequential number of the resource within the project.
-#
-# [*source_type*]
-#   The source type where resources will come from: file, directory, url or script.
+# [*directory*]
+#   When the directory source_type is specified this is the path to that directory.
 #
 # [*include_server_node*]
 #   Boolean value to decide whether or not to include the server node in your list of avaliable nodes.
 #
+# [*number*]
+#   The sequential number of the resource within the project.
+#
+# [*project_name*]
+#   The name of the project for which this resource in intended to be a part.
+#
+# [*projects_dir*]
+#   The directory where rundeck is configured to store project information.
+#
 # [*resource_format*]
 #   The format of the resource that will procesed, either resourcexml or resourceyaml.
-#
-# [*url*]
-#   When the url source_type is specified this is the path to that url.
-#
-# [*url_timeout*]
-#   An integer value in seconds that rundeck will wait for resources from the url before timing out.
-#
-# [*url_cache*]
-#   Boolean value. Keep a local cache of the resources pulled from the url.
-#
-# [*directory*]
-#   When the directory source_type is specified this is the path to that directory.
-#
-# [*script_file*]
-#   When the script source_type is specified this is the path that that script.
 #
 # [*script_args*]
 #   A string of the full arguments to pass the the specified script.
@@ -45,11 +33,23 @@
 # [*script_args_quoted*]
 #   Boolean value. Quote the arguments of the script.
 #
+# [*script_file*]
+#   When the script source_type is specified this is the path that that script.
+#
 # [*script_interpreter*]
 #   The interpreter to use in executing the script. Defaults to: '/bin/bash'
 #
-# [*projects_dir*]
-#   The directory where rundeck is configured to store project information.
+# [*source_type*]
+#   The source type where resources will come from: file, directory, url or script.
+#
+# [*url*]
+#   When the url source_type is specified this is the path to that url.
+#
+# [*url_cache*]
+#   Boolean value. Keep a local cache of the resources pulled from the url.
+#
+# [*url_timeout*]
+#   An integer value in seconds that rundeck will wait for resources from the url before timing out.
 #
 # === Examples
 #
@@ -64,22 +64,22 @@
 # }
 #
 define rundeck::config::resource_source(
-  $project_name        = undef,
-  $number              = '1',
-  $source_type         = $rundeck::params::default_source_type,
-  $include_server_node = $rundeck::params::include_server_node,
-  $resource_format     = $rundeck::params::resource_format,
-  $url                 = '',
-  $url_timeout         = $rundeck::params::url_timeout,
-  $url_cache           = $rundeck::params::url_cache,
   $directory           = $rundeck::params::default_resource_dir,
-  $script_file         = '',
+  $include_server_node = $rundeck::params::include_server_node,
+  $mapping_params      = '',
+  $number              = '1',
+  $project_name        = undef,
+  $resource_format     = $rundeck::params::resource_format,
+  $running_only        = true,
   $script_args         = '',
   $script_args_quoted  = $rundeck::params::script_args_quoted,
+  $script_file         = '',
   $script_interpreter  = $rundeck::params::script_interpreter,
-  $mapping_params      = '',
+  $source_type         = $rundeck::params::default_source_type,
+  $url                 = '',
+  $url_cache           = $rundeck::params::url_cache,
+  $url_timeout         = $rundeck::params::url_timeout,
   $use_default_mapping = true,
-  $running_only        = true,
 ) {
 
   include ::rundeck

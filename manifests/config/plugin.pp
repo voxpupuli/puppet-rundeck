@@ -8,11 +8,12 @@
 #
 # === Parameters
 #
+# [*ensure*]
+#   Set present or absent to add or remove the plugin
+#
 # [*source*]
 #   The http source or local path from which to get the jar plugin.
 #
-# [*ensure*]
-#   Set present or absent to add or remove the plugin
 # === Examples
 #
 # Install a custom plugin:

@@ -8,10 +8,10 @@
 # It ensure the service is running
 #
 class rundeck::service(
-  $service_name = $rundeck::service_name,
+  $service_config = $rundeck::service_config,
   $service_manage = $rundeck::service_manage,
+  $service_name   = $rundeck::service_name,
   $service_script = $rundeck::service_script,
-  $service_config = $rundeck::service_config
 ) {
 
   if $caller_module_name != $module_name {

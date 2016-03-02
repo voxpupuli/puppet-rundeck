@@ -7,9 +7,9 @@
 # This private class is called from rundeck::config used to manage the framework properties of rundeck
 #
 class rundeck::config::global::framework(
+  $group            = $rundeck::config::group,
   $properties_dir   = $rundeck::config::properties_dir,
   $user             = $rundeck::config::user,
-  $group            = $rundeck::config::group
 
 ) {
 
