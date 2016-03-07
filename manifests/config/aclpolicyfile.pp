@@ -64,9 +64,9 @@
 #
 define rundeck::config::aclpolicyfile(
   $acl_policies,
-  $group          = 'rundeck',
-  $owner          = 'rundeck',
-  $properties_dir = '/etc/rundeck',
+  $group          = $rundeck::params::group,
+  $owner          = $rundeck::params::user,
+  $properties_dir = $rundeck::config::properties_dir,
   $template_file  = "${module_name}/aclpolicy.erb",
 ) {
 
