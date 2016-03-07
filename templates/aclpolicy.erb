@@ -1,44 +1,4 @@
-<%- @acl_policies.each_with_index do |policy, index| -%>
-description: '<%= policy['description'] %>'
-context:
-  <%= policy['context'].keys[0] %>: '<%= policy['context'].values[0] %>'
-for:
-<%- policy['for'].each do |resource,kind| -%>
-  <%= resource %>:
-  <%- kind.each do |rules| -%>
-  <%- first_key = true -%>
-  <%- rules.each do |type, action| -%>
-  <%- if %w( allow deny ).include?(type) -%>
-    <% if first_key -%>-<%- else %> <% end -%> <%= type %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
-  <%- elsif %w( match equals contains ).include?(type) -%>
-    <%- action.each do |k,v| -%>
-    <% if first_key -%>-<%- else %> <% end -%> <%= type %>:
-      <%- if %w( kind path name group rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
-      <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
-    <%- end -%>
-  <%- end -%>
-  <%- first_key = false -%>
-  <%- end -%>
-  <%- end -%>
-<%- end -%>
-by:
-<%- policy['by'].each do |by| -%>
-<%-   if !by['group'].nil? && by['group'] != :undef -%>
-  group:
-  <%- by['group'].each do |group| -%>
-    - '<%= group %>'
-  <%- end -%>
-<%-   end -%>
-<%-   if !by['username'].nil? && by['username'] != :undef -%>
-  username:
-  <%- by['username'].each do |username| -%>
-    - '<%= username %>'
-  <%- end -%>
-<%-   end -%>
-<%- end -%>
-<%- if index != (@acl_policies.length-1) -%>
+<%- @acl_policies.each do |policy| -%>
+<%= YAML.dump(policy) %>
 
----
-
-<%- end -%>
 <%- end -%>

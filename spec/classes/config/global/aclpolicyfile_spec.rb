@@ -14,36 +14,37 @@ describe 'rundeck' do
           }
         end
 
-        default_acl = <<-CONFIG.gsub(/[^\S\n]{10}/, '')
-description: 'Admin, all access'
+        default_acl = <<-CONFIG
+---
+description: "Admin, all access"
 context:
-  project: '.*'
+  project: ".*"
 for:
   resource:
-    - allow: '*'
+    - allow: "*"
   adhoc:
-    - allow: '*'
+    - allow: "*"
   job:
-    - allow: '*'
+    - allow: "*"
   node:
-    - allow: '*'
+    - allow: "*"
 by:
   group:
-    - 'admin'
+    - admin
 
 ---
-
-description: 'Admin, all access'
+description: "Admin, all access"
 context:
-  application: 'rundeck'
+  application: rundeck
 for:
   resource:
-    - allow: '*'
+    - allow: "*"
   project:
-    - allow: '*'
+    - allow: "*"
 by:
   group:
-    - 'admin'
+      - admin
+
         CONFIG
 
         it do
