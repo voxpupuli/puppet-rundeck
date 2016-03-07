@@ -12,6 +12,7 @@ class rundeck::service(
   $service_manage = $rundeck::service_manage,
   $service_name   = $rundeck::service_name,
   $service_script = $rundeck::service_script,
+  $service_ensure = $rundeck::service_ensure,
 ) {
 
   if $caller_module_name != $module_name {
@@ -33,7 +34,7 @@ class rundeck::service(
   }
 
   service { $service_name:
-    ensure     => running,
+    ensure     => $service_ensure,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
