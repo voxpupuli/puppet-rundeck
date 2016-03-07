@@ -89,10 +89,35 @@ class rundeck::install(
   }
 
   file { $rdeck_home:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0755',
+    ensure  => directory,
+    recurse => true,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+  }
+
+  file { $rundeck::params::service_logs_dir:
+    ensure  => directory,
+    recurse => true,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+  }
+
+  file { $rundeck::params::framework_config['framework.etc.dir']:
+    ensure  => directory,
+    recurse => true,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+  }
+
+  file { '/var/rundeck/':
+    ensure  => directory,
+    recurse => true,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
   }
 
   ensure_resource(file, $projects_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group})
