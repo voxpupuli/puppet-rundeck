@@ -29,7 +29,7 @@
 #   $key2 => {
 #      $value        => 'ssh-rsa Th1sIsn0tRe@alLyAnRSAk3y',
 #      $path         => 'myproject/pubkeys',
-#      $data_type    => 'password',
+#      $data_type    => 'public',
 #      $content_type => 'application/pgp-keys', },
 # }
 # ```
