@@ -14,7 +14,7 @@ describe 'rundeck' do
           }
         end
 
-        default_acl = <<-CONFIG
+        default_acl = <<EOF
 ---
 description: "Admin, all access"
 context:
@@ -31,7 +31,6 @@ for:
 by:
   group:
     - admin
-
 ---
 description: "Admin, all access"
 context:
@@ -43,14 +42,11 @@ for:
     - allow: "*"
 by:
   group:
-      - admin
-
-        CONFIG
+    - admin
+EOF
 
         it do
-          should contain_file('/etc/rundeck/admin.aclpolicy').with(
-            'content' => default_acl
-        )
+          should contain_file('/etc/rundeck/admin.aclpolicy').with_content(default_acl)
         end
       end
     end

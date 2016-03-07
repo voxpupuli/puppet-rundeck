@@ -1,4 +1,3 @@
 <%- @acl_policies.each do |policy| -%>
-<%= YAML.dump(policy) %>
-
+<%= policy.to_yaml(:SortKeys => true, :UseHeader => true).gsub(/\ +$/, '').gsub(/^\ \ /o, '') %>
 <%- end -%>
