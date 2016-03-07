@@ -82,9 +82,9 @@ class rundeck::params {
           {'allow' => '*'},
         ],
       },
-      'by' => [{
-        'group' => ['admin']
-      }]
+      'by' => {
+        'group' => ['admin'],
+      }
     },
     {
       'description' => 'Admin, all access',
@@ -99,9 +99,9 @@ class rundeck::params {
           {'allow' => '*'},
         ],
       },
-      'by' => [{
-        'group' => ['admin']
-      }]
+      'by' => {
+        'group' => ['admin'],
+      }
     }
   ]
 
@@ -124,9 +124,9 @@ class rundeck::params {
           {'allow' => ['read','run']}
         ],
       },
-      'by' => [{
-        'group' => ['api_token_group']
-      }]
+      'by' => {
+        'group' => ['api_token_group'],
+      }
     },
     {
       'description' => 'API Application level access control',
@@ -144,9 +144,9 @@ class rundeck::params {
           { 'match' => {'path' => '(keys|keys/.*)'}, 'allow' => '*' },
         ],
       },
-      'by' => [{
-        'group' => ['api_token_group']
-      }]
+      'by' => {
+        'group' => ['api_token_group'],
+      }
     }
   ]
 
