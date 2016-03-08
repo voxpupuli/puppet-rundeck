@@ -26,6 +26,9 @@
 # [*resource_sources*]
 #  A hash of rundeck::config::resource_source that will be used to specifiy the node resources for this project
 #
+# [*scm_import_properties*]
+#  A hash of name value pairs representing properties for the scm-import.properties file
+#
 # [*ssh_keypath*]
 #  The path the the ssh key that will be used by the ssh/scp providers
 #
@@ -40,7 +43,8 @@
 #  ssh_keypath            => '/var/lib/rundeck/.ssh/id_rsa',
 #  file_copier_provider   => 'jsch-scp',
 #  node_executor_provider => 'jsch-ssh',
-#  resource_sources       => $resource_hash
+#  resource_sources       => $resource_hash,
+#  scm_import_properties  => $scm_import_properties_hash
 # }
 #
 define rundeck::config::project (
@@ -50,6 +54,7 @@ define rundeck::config::project (
   $node_executor_provider = $rundeck::node_executor_provider,
   $projects_dir           = undef,
   $resource_sources       = $rundeck::resource_sources,
+  $scm_import_properties  = $rundeck::scm_import_properties,
   $ssh_keypath            = undef,
   $user                   = $rundeck::user,
 ) {
@@ -72,12 +77,14 @@ define rundeck::config::project (
   validate_re($file_copier_provider, ['^jsch-scp$','^script-copy$','^stub$'])
   validate_re($node_executor_provider, ['^jsch-ssh$', '^script-exec$', '^stub$'])
   validate_hash($resource_sources)
+  validate_hash($scm_import_properties)
   validate_absolute_path($projects_dir_real)
   validate_re($user, '[a-zA-Z0-9]{3,}')
   validate_re($group, '[a-zA-Z0-9]{3,}')
 
   $project_dir = "${projects_dir_real}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"
+  $scm_import_properties_file = "${project_dir}/etc/scm-import.properties"
 
   file {  $project_dir :
     ensure  => directory,
@@ -92,6 +99,15 @@ define rundeck::config::project (
     owner   => $user,
     group   => $group,
     require => File["${project_dir}/etc"],
+  }
+
+  file { $scm_import_properties_file:
+    ensure  => present,
+    content => template('rundeck/scm-import.properties.erb'),
+    owner   => $user,
+    group   => $group,
+    require => File["${project_dir}/etc"],
+    replace => false,
   }
 
   file { "${project_dir}/var":

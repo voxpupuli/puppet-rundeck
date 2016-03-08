@@ -262,6 +262,7 @@ class rundeck::params {
   $truststore_password = 'adminadmin'
 
   $resource_sources = {}
+  $scm_import_properties = {}
 
   $preauthenticated_config = {
     'enabled'       => false,
