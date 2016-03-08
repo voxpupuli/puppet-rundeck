@@ -33,4 +33,20 @@ class rundeck::config::global::web (
     incl    => $rundeck::params::web_xml,
     changes => [ "set web-app/session-config/session-timeout/#text '${session_timeout}'" ],
   }
+
+  if $rundeck::preauthenticated_config['enabled'] {
+    augeas { 'rundeck/web.xml/security-constraint/auth-constraint':
+      lens    => 'Xml.lns',
+      incl    => $rundeck::params::web_xml,
+      changes => [ 'rm web-app/security-constraint/auth-constraint' ],
+    }
+  }
+  else {
+    augeas { 'rundeck/web.xml/security-constraint/auth-constraint/role-name':
+      lens    => 'Xml.lns',
+      incl    => $rundeck::params::web_xml,
+      changes => [ "set web-app/security-constraint[last()+1]/auth-constraint/role-name/#text '*'" ],
+      onlyif  => 'match web-app/security-constraint/auth-constraint/role-name size == 0',
+    }
+  }
 }
