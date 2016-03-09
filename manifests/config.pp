@@ -50,6 +50,12 @@ class rundeck::config(
   $user                        = $rundeck::user,
 ) inherits rundeck::params {
 
+  File {
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+  }
+
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
   $auth_config      = deep_merge($rundeck::params::auth_config, $rundeck::auth_config)
 
@@ -72,9 +78,6 @@ class rundeck::config(
 
   if $_deploy_realm {
     file { "${properties_dir}/realm.properties":
-      owner   => $user,
-      group   => $group,
-      mode    => '0640',
       content => template($realm_template),
       require => File[$properties_dir],
       notify  => Service[$service_name],
@@ -108,17 +111,11 @@ class rundeck::config(
     $ldap_login_module = 'JettyCombinedLdapLoginModule'
   }
   file { "${properties_dir}/jaas-auth.conf":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
     content => template($auth_template),
     require => File[$properties_dir],
   }
 
   file { "${properties_dir}/log4j.properties":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
     content => template('rundeck/log4j.properties.erb'),
     notify  => Service[$service_name],
     require => File[$properties_dir],
@@ -145,9 +142,6 @@ class rundeck::config(
   }
 
   file { "${properties_dir}/profile":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
     content => template($rdeck_profile_template),
     notify  => Service[$service_name],
     require => File[$properties_dir],
