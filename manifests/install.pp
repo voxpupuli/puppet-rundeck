@@ -94,6 +94,11 @@ class rundeck::install(
     owner   => $user,
     group   => $group,
     mode    => '0640',
+  }~>
+  file { $rundeck::params::framework_config['framework.ssh.keypath']:
+    owner   => $user,
+    group   => $group,
+    mode    => '0600',
   }
 
   file { $rundeck::params::service_logs_dir:
