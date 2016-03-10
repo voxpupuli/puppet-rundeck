@@ -24,6 +24,12 @@ class rundeck::install(
   $user = $rundeck::user
   $group = $rundeck::group
 
+  File {
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+  }
+
   case $::osfamily {
     'RedHat': {
       if $manage_yum_repo == true {
@@ -89,35 +95,23 @@ class rundeck::install(
   }
 
   file { $rdeck_home:
-    ensure  => directory,
-    recurse => true,
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
+    ensure => directory,
+  } ~>
+
+  file { $rundeck::params::framework_config['framework.ssh.keypath']:
+    owner => $user,
+    group => $group,
+    mode  => '0600',
   }
 
   file { $rundeck::params::service_logs_dir:
     ensure  => directory,
     recurse => true,
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-  }
-
-  file { $rundeck::params::framework_config['framework.etc.dir']:
-    ensure  => directory,
-    recurse => true,
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
   }
 
   file { '/var/rundeck/':
     ensure  => directory,
     recurse => true,
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
   }
 
   ensure_resource(file, $projects_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group})
