@@ -102,8 +102,17 @@ define rundeck::config::resource_source(
   validate_re($user, '[a-zA-Z0-9]{3,}')
   validate_re($group, '[a-zA-Z0-9]{3,}')
 
-  ensure_resource('file', "${projects_dir}/${project_name}", {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
-  ensure_resource('file', "${projects_dir}/${project_name}/etc", {'ensure' => 'directory', 'owner' => $user, 'group' => $group, 'require' => File["${projects_dir}/${project_name}"]} )
+  ensure_resource('file', "${projects_dir}/${project_name}", {
+    'ensure' => 'directory',
+    'owner'  => $user,
+    'group'  => $group
+  } )
+  ensure_resource('file', "${projects_dir}/${project_name}/etc", {
+    'ensure'  => 'directory',
+    'owner'   => $user,
+    'group'   => $group,
+    'require' => File["${projects_dir}/${project_name}"]
+  } )
 
   $properties_dir  = "${projects_dir}/${project_name}/etc"
   $properties_file = "${properties_dir}/project.properties"
