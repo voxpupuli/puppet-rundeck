@@ -50,6 +50,12 @@ class rundeck::config(
   $user                        = $rundeck::user,
 ) inherits rundeck::params {
 
+  File {
+    owner  => $user,
+    group  => $group,
+    mode   => '0640',
+  }
+
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
   $auth_config      = deep_merge($rundeck::params::auth_config, $rundeck::auth_config)
 
@@ -57,8 +63,6 @@ class rundeck::config(
   $rdeck_base     = $framework_config['rdeck.base']
   $projects_dir   = $framework_config['framework.projects.dir']
   $properties_dir = $framework_config['framework.etc.dir']
-
-  ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 
   #
   # Checking if we need to deploy realm file
@@ -72,9 +76,6 @@ class rundeck::config(
 
   if $_deploy_realm {
     file { "${properties_dir}/realm.properties":
-      owner   => $user,
-      group   => $group,
-      mode    => '0640',
       content => template($realm_template),
       require => File[$properties_dir],
       notify  => Service[$service_name],
@@ -108,17 +109,11 @@ class rundeck::config(
     $ldap_login_module = 'JettyCombinedLdapLoginModule'
   }
   file { "${properties_dir}/jaas-auth.conf":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
     content => template($auth_template),
     require => File[$properties_dir],
   }
 
   file { "${properties_dir}/log4j.properties":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
     content => template('rundeck/log4j.properties.erb'),
     notify  => Service[$service_name],
     require => File[$properties_dir],
@@ -162,7 +157,6 @@ class rundeck::config(
   Class[rundeck::config::global::project] ->
   Class[rundeck::config::global::rundeck_config] ->
   Class[rundeck::config::global::file_keystore]
-
 
   if $ssl_enabled {
     include '::rundeck::config::global::ssl'
