@@ -1,30 +1,28 @@
 # Author::    Liam Bennett (mailto:lbennett@opentable.com)
 # Copyright:: Copyright (c) 2013 OpenTable Inc
 # License::   MIT
-
+#
 # == Class rundeck::install
 #
 # This private class installs the rundeck package and it's dependencies
 #
-class rundeck::install(
-  $manage_yum_repo    = $rundeck::manage_yum_repo,
-  $package_ensure     = $rundeck::package_ensure,
-  $package_source     = $rundeck::package_source,
-  $rdeck_home         = $rundeck::rdeck_home,
+class rundeck::install (
+  $group            = $rundeck::group,
+  $manage_yum_repo  = $rundeck::manage_yum_repo,
+  $package_ensure   = $rundeck::package_ensure,
+  $package_source   = $rundeck::package_source,
+  $plugin_dir       = $rundeck::plugin_dir,
+  $projects_dir     = $rundeck::projects_dir,
+  $rdeck_home       = $rundeck::rdeck_home,
+  $service_logs_dir = $rundeck::service_logs_dir,
+  $ssh_keypath      = $rundeck::ssh_keypath,
+  $user             = $rundeck::user
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
-
-  $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
-  $projects_dir = $framework_config['framework.projects.dir']
-  $plugin_dir = $framework_config['framework.libext.dir']
-
-  $user = $rundeck::user
-  $group = $rundeck::group
+  assert_private()
 
   File {
+    ensure => directory,
     owner  => $user,
     group  => $group,
     mode   => '0640',
@@ -32,7 +30,7 @@ class rundeck::install(
 
   case $::osfamily {
     'RedHat': {
-      if $manage_yum_repo == true {
+      if str2bool($manage_yum_repo) {
         yumrepo { 'bintray-rundeck':
           baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
           descr    => 'bintray rundeck repo',
@@ -74,39 +72,19 @@ class rundeck::install(
     }
   }
 
-  if $group == 'rundeck' {
-    ensure_resource('group', 'rundeck', { 'ensure' => 'present' } )
-  } else {
-    ensure_resource('group', $group, { 'ensure' => 'present' } )
+  ensure_resource('group', $group, { 'ensure' => 'present' } )
+  ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
 
-    group { 'rundeck':
-      ensure => absent,
-    }
+  file { $rdeck_home: }
+  ->
+  file { $ssh_keypath:
+    ensure => file,
+    mode   => '0600',
   }
 
-  if $user == 'rundeck' {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-  } else {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-
-    user { 'rundeck':
-      ensure => absent,
-    }
-  }
-
-  file { $rdeck_home:
-    ensure  => directory,
-  } ~>
-  file { $framework_config['framework.ssh.keypath']:
-    mode    => '0600',
-  }
-
-  file { $rundeck::service_logs_dir:
-    ensure  => directory,
-  }
+  file { $service_logs_dir: }
 
   file { '/var/rundeck/':
-    ensure  => directory,
     recurse => true,
   }
 

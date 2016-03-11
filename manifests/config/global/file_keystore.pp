@@ -38,25 +38,29 @@
 # [*file_keystorage_dir*]
 #    The default base directory for file-based key storage
 #
-
-
-class rundeck::config::global::file_keystore(
-  $file_keystorage_dir = $::rundeck::file_keystorage_dir,
-  $group               = $rundeck::config::group,
-  $keys                = $::rundeck::config::file_keystorage_keys,
-  $user                = $rundeck::config::user,
+class rundeck::config::global::file_keystore (
+  $file_keystorage_dir = $rundeck::file_keystorage_dir,
+  $group               = $rundeck::group,
+  $keys                = $rundeck::file_keystorage_keys,
+  $user                = $rundeck::user,
 ) {
 
+  assert_private()
+
   File {
-    ensure => directory,
-    mode   => '0775',
-    owner  => $user,
-    group  => $group,
+    ensure  => directory,
+    mode    => '0775',
+    owner   => $user,
+    group   => $group,
+    require => File[$file_keystorage_dir],
   }
 
-  file { $file_keystorage_dir: }
-  file { [ "${file_keystorage_dir}/content", "${file_keystorage_dir}/content/keys" ]: }
-  file { [ "${file_keystorage_dir}/meta", "${file_keystorage_dir}/meta/keys" ]: }
+  file { [
+    "${file_keystorage_dir}/content",
+    "${file_keystorage_dir}/content/keys",
+    "${file_keystorage_dir}/meta",
+    "${file_keystorage_dir}/meta/keys",
+  ]: }
 
-  create_resources(rundeck::config::file_keystore, $keys)
+  create_resources(rundeck::file_keystore, $keys)
 }

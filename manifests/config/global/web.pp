@@ -18,33 +18,34 @@
 #   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 #
 class rundeck::config::global::web (
-  $security_role   = $rundeck::params::security_role,
-  $session_timeout = $rundeck::params::session_timeout,
-) inherits rundeck::params {
+  $preauthenticated_config = $rundeck::preauthenticated_config,
+  $security_role           = $rundeck::security_role,
+  $session_timeout         = $rundeck::session_timeout,
+  $web_xml                 = $rundeck::web_xml,
+) {
+
+  assert_private()
+
+  Augeas {
+    lens => 'Xml.lns',
+    incl => $web_xml,
+  }
 
   augeas { 'rundeck/web.xml/security-role/role-name':
-    lens    => 'Xml.lns',
-    incl    => $rundeck::params::web_xml,
     changes => [ "set web-app/security-role/role-name/#text '${security_role}'" ],
   }
 
   augeas { 'rundeck/web.xml/session-config/session-timeout':
-    lens    => 'Xml.lns',
-    incl    => $rundeck::params::web_xml,
     changes => [ "set web-app/session-config/session-timeout/#text '${session_timeout}'" ],
   }
 
-  if $rundeck::preauthenticated_config['enabled'] {
+  if $preauthenticated_config['enabled'] {
     augeas { 'rundeck/web.xml/security-constraint/auth-constraint':
-      lens    => 'Xml.lns',
-      incl    => $rundeck::params::web_xml,
       changes => [ 'rm web-app/security-constraint/auth-constraint' ],
     }
   }
   else {
     augeas { 'rundeck/web.xml/security-constraint/auth-constraint/role-name':
-      lens    => 'Xml.lns',
-      incl    => $rundeck::params::web_xml,
       changes => [ "set web-app/security-constraint[last()+1]/auth-constraint/role-name/#text '*'" ],
       onlyif  => 'match web-app/security-constraint/auth-constraint/role-name size == 0',
     }

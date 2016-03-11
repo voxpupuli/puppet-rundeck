@@ -48,23 +48,29 @@ define rundeck::config::file_keystore (
   $data_type,
   $path,
   $value,
-  $auth_created_username  = $::rundeck::framework_config['framework.ssh.user'],
-  $auth_modified_username = $::rundeck::framework_config['framework.ssh.user'],
+  $auth_created_username  = $rundeck::ssh_user,
+  $auth_modified_username = $rundeck::ssh_user,
   $content_creation_time  = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
   $content_mask           = 'content',
   $content_modify_time    = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
   $content_size           = undef,
-  $file_keystorage_dir    = $::rundeck::file_keystorage_dir,
-  $group                  = $::rundeck::config::group,
-  $user                   = $::rundeck::config::user,
+  $file_keystorage_dir    = $rundeck::file_keystorage_dir,
+  $group                  = $rundeck::group,
+  $user                   = $rundeck::user,
 ) {
 
-  validate_re($data_type, [ 'password', 'public', 'private' ])
+  validate_string($content_creation_time)
+  validate_string($content_mask)
+  validate_string($content_modify_time)
   validate_re($content_type, [ 'application/x-rundeck-data-password', 'application/pgp-keys', 'application/octet-stream' ])
+  validate_re($data_type, [ 'password', 'public', 'private' ])
+  validate_absolute_path($path)
+  validate_string($value)
 
   if !$content_size {
     $content_size_value = size($value)
   } else {
+    validate_integer($content_size)
     $content_size_value = $content_size
   }
 
@@ -82,21 +88,20 @@ define rundeck::config::file_keystore (
   }
 
   File {
-    ensure => present,
-    mode   => '0664',
-    owner  => $user,
-    group  => $group,
+    ensure  => file,
+    mode    => '0664',
+    owner   => $user,
+    group   => $group,
+    replace => false,
   }
 
   file { "${key_fqpath}/${name}.${data_type}":
     content => $value,
     require => Exec["create ${path}_${name} key path"],
-    replace => false,
   }
 
   file { "${meta_fqpath}/${name}.${data_type}":
     content => template('rundeck/file_keystorage_meta.erb'),
     require => Exec["create ${path}_${name} meta path"],
-    replace => false,
   }
 }

@@ -1,3 +1,17 @@
-<%- @framework_config.sort.each do |k,v| -%>
-<%= k %> = <%= v %>
-<%- end -%>
+framework.server.name     = <%= @server_name %>
+framework.server.hostname = <%= @server_hostname %>
+framework.server.port     = <%= @server_port %>
+framework.server.url      = <%= @server_url %>
+framework.server.username = <%= @auth_config['admin_user'] %>
+framework.server.password = <%= @auth_config['admin_password'] %>
+rdeck.base                = <%= @rdeck_base %>
+framework.projects.dir    = <%= @projects_dir %>
+framework.etc.dir         = <%= @properties_dir %>
+framework.var.dir         = <%= @rdeck_base %>/var
+framework.tmp.dir         = <%= @rdeck_base %>/var/tmp,
+framework.logs.dir        = <%= @logs_dir %>
+framework.libext.dir      = <%= @plugin_dir %>
+framework.ssh.keypath     = <%= @ssh_keypath %>
+framework.ssh.user        = <%= @ssh_user %>
+framework.ssh.timeout     = <%= @ssh_timeout %>
+rundeck.server.uuid       = <%= @server_uuid %>

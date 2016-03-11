@@ -1,16 +1,17 @@
 # Author::    Liam Bennett (mailto:lbennett@opentable.com)
 # Copyright:: Copyright (c) 2013 OpenTable Inc
 # License::   MIT
-
+#
 # == Class rundeck::config
 #
 # This private class is called from `rundeck` to manage the configuration
 #
-class rundeck::config(
+class rundeck::config (
   $acl_policies                = $rundeck::acl_policies,
   $acl_template                = $rundeck::acl_template,
   $api_policies                = $rundeck::api_policies,
   $api_template                = $rundeck::api_template,
+  $auth_config                 = $rundeck::auth_config,
   $auth_template               = $rundeck::auth_template,
   $auth_types                  = $rundeck::auth_types,
   $clustermode_enabled         = $rundeck::clustermode_enabled,
@@ -25,14 +26,17 @@ class rundeck::config(
   $key_storage_type            = $rundeck::key_storage_type,
   $keystore                    = $rundeck::keystore,
   $keystore_password           = $rundeck::keystore_password,
+  $logs_dir                    = $rundeck::logs_dir,
   $mail_config                 = $rundeck::mail_config,
   $manage_default_admin_policy = $rundeck::manage_default_admin_policy,
   $manage_default_api_policy   = $rundeck::manage_default_api_policy,
   $preauthenticated_config     = $rundeck::preauthenticated_config,
   $projects                    = $rundeck::projects,
-  $projects_description        = $rundeck::projects_default_desc,
-  $projects_organization       = $rundeck::projects_default_org,
+  $projects_dir                = $rundeck::projects_dir,
+  $projects_description        = $rundeck::projects_description,
+  $projects_organization       = $rundeck::projects_organization,
   $projects_storage_type       = $rundeck::projects_storage_type,
+  $properties_dir              = $rundeck::properties_dir,
   $rd_loglevel                 = $rundeck::rd_loglevel,
   $rdeck_config_template       = $rundeck::rdeck_config_template,
   $rdeck_profile_template      = $rundeck::rdeck_profile_template,
@@ -42,27 +46,23 @@ class rundeck::config(
   $security_role               = $rundeck::security_role,
   $server_web_context          = $rundeck::server_web_context,
   $service_logs_dir            = $rundeck::service_logs_dir,
-  $service_name                = $rundeck::service_name,
   $session_timeout             = $rundeck::session_timeout,
   $ssl_enabled                 = $rundeck::ssl_enabled,
   $truststore                  = $rundeck::truststore,
   $truststore_password         = $rundeck::truststore_password,
   $user                        = $rundeck::user,
-) inherits rundeck::params {
+) {
+
+  assert_private()
 
   File {
-    owner  => $user,
-    group  => $group,
-    mode   => '0640',
+    ensure  => file,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    require => File[$properties_dir],
+    notify  => Service['rundeckd'],
   }
-
-  $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
-  $auth_config      = deep_merge($rundeck::params::auth_config, $rundeck::auth_config)
-
-  $logs_dir       = $framework_config['framework.logs.dir']
-  $rdeck_base     = $framework_config['rdeck.base']
-  $projects_dir   = $framework_config['framework.projects.dir']
-  $properties_dir = $framework_config['framework.etc.dir']
 
   #
   # Checking if we need to deploy realm file
@@ -77,8 +77,6 @@ class rundeck::config(
   if $_deploy_realm {
     file { "${properties_dir}/realm.properties":
       content => template($realm_template),
-      require => File[$properties_dir],
-      notify  => Service[$service_name],
     }
   }
 
@@ -110,13 +108,10 @@ class rundeck::config(
   }
   file { "${properties_dir}/jaas-auth.conf":
     content => template($auth_template),
-    require => File[$properties_dir],
   }
 
   file { "${properties_dir}/log4j.properties":
     content => template('rundeck/log4j.properties.erb'),
-    notify  => Service[$service_name],
-    require => File[$properties_dir],
   }
 
   if $manage_default_admin_policy {
@@ -140,12 +135,7 @@ class rundeck::config(
   }
 
   file { "${properties_dir}/profile":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
     content => template($rdeck_profile_template),
-    notify  => Service[$service_name],
-    require => File[$properties_dir],
   }
 
   include '::rundeck::config::global::framework'
@@ -169,6 +159,5 @@ class rundeck::config(
   class { '::rundeck::config::global::web':
     security_role   => $security_role,
     session_timeout => $session_timeout,
-    notify          => Service[$service_name],
   }
 }
