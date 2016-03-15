@@ -52,10 +52,11 @@ class rundeck::config::global::file_keystore (
     mode    => '0775',
     owner   => $user,
     group   => $group,
-    require => File[$file_keystorage_dir],
   }
 
+
   file { [
+    $file_keystorage_dir,
     "${file_keystorage_dir}/content",
     "${file_keystorage_dir}/content/keys",
     "${file_keystorage_dir}/meta",
