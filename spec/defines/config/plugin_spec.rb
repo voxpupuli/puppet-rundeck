@@ -11,10 +11,12 @@ describe 'rundeck::config::plugin', :type => :define do
         let(:title) { name }
         let(:params) do
           {
-            'source' => source
+            'source' => source,
+            'plugin_config' => {
+              'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
+            }
           }
         end
-
         let(:facts) do
           {
             :osfamily        => 'Debian',
@@ -36,6 +38,11 @@ describe 'rundeck::config::plugin', :type => :define do
             'owner'  => 'rundeck',
             'group'  => 'rundeck'
           )
+        end
+      
+        it 'should generate valid content for framework.properties' do
+          content = catalogue.resource('concat::fragment', "framework.properties+20_#{name}")[:content]
+          expect(content).to match(/^framework\.plugin\.StreamingLogWriter\.LogstashPlugin\.port\ *=\ *9700$/)
         end
       end
 

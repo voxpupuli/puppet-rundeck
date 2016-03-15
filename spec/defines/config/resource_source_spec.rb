@@ -28,7 +28,7 @@ describe 'rundeck' do
                 :puppetversion   => Puppet.version
               }
             end
-    
+
             file_details = {
               'resources.source.1.config.requireFileExists' => 'true',
               'resources.source.1.config.includeServerNode' => 'false',
@@ -37,7 +37,7 @@ describe 'rundeck' do
               'resources.source.1.config.file' => '/var/lib/rundeck/projects/test/etc/source one.xml',
               'resources.source.1.type' => 'file'
             }
-    
+
             file_details.each do |key, value|
               it do
                 should contain_ini_setting("source one::#{key}").with(
@@ -47,7 +47,7 @@ describe 'rundeck' do
                 )
               end
             end
-    
+
             it do
               should contain_file('/var/lib/rundeck/projects/test').with(
                 'owner' => 'rundeck',
@@ -55,7 +55,7 @@ describe 'rundeck' do
               )
             end
           end
-    
+
           describe "rundeck::config::resource_source definition with url parameters on #{osfamily}" do
             let(:title) { 'source one' }
             let(:params) do
@@ -80,14 +80,14 @@ describe 'rundeck' do
                 :rundeck_version => ''
               }
             end
-    
+
             url_details = {
               'resources.source.1.config.url' => 'http\://localhost\:9999',
               'resources.source.1.config.timeout' => '50',
               'resources.source.1.config.cache' => 'true',
               'resources.source.1.type' => 'url'
             }
-    
+
             url_details.each do |key, value|
               it do
                 should contain_ini_setting("source one::#{key}").with(
@@ -98,7 +98,7 @@ describe 'rundeck' do
               end
             end
           end
-    
+
           describe "rundeck::config::resource definition with directory parameters on #{osfamily}" do
             let(:title) { 'source one' }
             let(:params) do
@@ -112,7 +112,7 @@ describe 'rundeck' do
                 'url_timeout' => '50',
                 'script_args_quoted' => true,
                 'script_interpreter' => '/bin/bash'
-    
+
               }
             end
             let(:facts) do
@@ -123,12 +123,12 @@ describe 'rundeck' do
                 :puppetversion   => Puppet.version
               }
             end
-    
+
             directory_details = {
               'resources.source.1.config.directory' => '/fubar/resources',
               'resources.source.1.type' => 'directory'
             }
-    
+
             directory_details.each do |key, value|
               it do
                 should contain_ini_setting("source one::#{key}").with(
@@ -139,7 +139,7 @@ describe 'rundeck' do
               end
             end
           end
-    
+
           describe "rundeck::config::resource definition with script parameters on #{osfamily}" do
             let(:title) { 'source one' }
             let(:params) do
@@ -165,7 +165,7 @@ describe 'rundeck' do
                 :puppetversion   => Puppet.version
               }
             end
-    
+
             script_details = {
               'resources.source.1.config.file' => '/fubar/test.sh',
               'resources.source.1.config.interpreter' => '/bin/bash',
@@ -174,7 +174,7 @@ describe 'rundeck' do
               'resources.source.1.config.argsQuoted' => true,
               'resources.source.1.type' => 'script'
             }
-    
+
             script_details.each do |key, value|
               it do
                 should contain_ini_setting("source one::#{key}").with(

@@ -29,12 +29,16 @@ class rundeck::config::global::framework (
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group } )
 
-  file { "${properties_dir}/framework.properties":
-    ensure  => file,
-    content => template('rundeck/framework.properties.erb'),
+  concat { "${properties_dir}/framework.properties":
     owner   => $user,
     group   => $group,
     mode    => '0640',
     require => File[$properties_dir],
+  }
+
+  concat::fragment { 'framework.properties+10_main':
+    target  => "${properties_dir}/framework.properties",
+    content => template('rundeck/framework.properties.erb'),
+    order   => 10,
   }
 }

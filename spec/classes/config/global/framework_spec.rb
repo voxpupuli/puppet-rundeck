@@ -33,41 +33,14 @@ describe 'rundeck' do
           'framework.ssh.timeout' => '0'
         }
 
-        it { should contain_file('/etc/rundeck/framework.properties') }
+        it { should contain_concat('/etc/rundeck/framework.properties') }
 
         framework_details.each do |key, value|
           it 'should generate valid content for framework.properties' do
-            content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+            content = catalogue.resource('concat::fragment', 'framework.properties+10_main')[:content]
             expect(content).to match(/^#{key}\ *=\ *#{value}$/)
           end
         end
-      end
-    end
-  end
-
-  context 'add plugin configuration' do
-    describe 'add plugin configuration for the logstash plugin' do
-      let(:params) do
-        {
-          :framework_config => {
-            'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
-          }
-        }
-      end
-      let(:facts) do
-        {
-          :osfamily        => 'Debian',
-          :fqdn            => 'test.domain.com',
-          :serialnumber    => 0,
-          :rundeck_version => '',
-          :puppetversion   => Puppet.version
-        }
-      end
-
-      it 'should generate valid content for framework.properties' do
-        content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
-        expect(content).to match(/framework.server.name\ *=\ *test.domain.com/)
-        expect(content).to match('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
       end
     end
   end
