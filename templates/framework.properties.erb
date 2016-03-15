@@ -2,8 +2,8 @@ framework.server.name     = <%= @server_name %>
 framework.server.hostname = <%= @server_hostname %>
 framework.server.port     = <%= @server_port %>
 framework.server.url      = <%= @server_url %>
-framework.server.username = <%= @auth_config['admin_user'] %>
-framework.server.password = <%= @auth_config['admin_password'] %>
+framework.server.username = <%= @auth_config['file']['admin_user'] %>
+framework.server.password = <%= @auth_config['file']['admin_password'] %>
 rdeck.base                = <%= @rdeck_base %>
 framework.projects.dir    = <%= @projects_dir %>
 framework.etc.dir         = <%= @properties_dir %>

@@ -38,7 +38,7 @@ describe 'rundeck' do
         framework_details.each do |key, value|
           it 'should generate valid content for framework.properties' do
             content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
-            expect(content).to include("#{key} = #{value}")
+            expect(content).to match(/^#{key}\ *=\ *#{value}$/)
           end
         end
       end
@@ -66,8 +66,8 @@ describe 'rundeck' do
 
       it 'should generate valid content for framework.properties' do
         content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
-        expect(content).to include('framework.server.name = test.domain.com')
-        expect(content).to include('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
+        expect(content).to match(/framework.server.name\ *=\ *test.domain.com/)
+        expect(content).to match('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
       end
     end
   end
