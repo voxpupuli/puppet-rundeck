@@ -1,0 +1,11 @@
+[realms]
+<%- @kerberos_realms.each do |domain, realm| -%>
+    <%= realm %> = {
+        kdc = <%= domain %>
+    }
+<%- end -%>
+
+[domain_realm]
+<%- @kerberos_realms.each do |domain, realm| -%>
+    <%= domain %> = <%= realm %>
+<%- end -%>

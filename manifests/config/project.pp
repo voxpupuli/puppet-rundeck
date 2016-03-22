@@ -52,6 +52,7 @@ define rundeck::config::project (
   $framework_config       = $rundeck::framework_config,
   $group                  = $rundeck::group,
   $node_executor_provider = $rundeck::node_executor_provider,
+  $node_executor_settings = {},
   $projects_dir           = undef,
   $resource_sources       = $rundeck::resource_sources,
   $scm_import_properties  = $rundeck::scm_import_properties,
@@ -61,7 +62,7 @@ define rundeck::config::project (
 
   include ::rundeck
 
-  $framework_properties = deep_merge($rundeck::framework_config, $framework_config)
+  $framework_properties = deep_merge($rundeck::params::framework_config, $rundeck::framework_config, $framework_config)
 
   $ssh_keypath_real = $ssh_keypath ? {
     undef   => $framework_properties['framework.ssh.keypath'],
@@ -75,7 +76,6 @@ define rundeck::config::project (
 
   validate_absolute_path($ssh_keypath_real)
   validate_re($file_copier_provider, ['^jsch-scp$','^script-copy$','^stub$'])
-  validate_re($node_executor_provider, ['^jsch-ssh$', '^script-exec$', '^stub$'])
   validate_hash($resource_sources)
   validate_hash($scm_import_properties)
   validate_absolute_path($projects_dir_real)
@@ -176,4 +176,11 @@ define rundeck::config::project (
     value   => $node_executor_provider,
     require => File[$properties_file],
   }
+
+  $node_executor_settings_defaults = {
+    path    => $properties_file,
+    require => File[$properties_file],
+  }
+
+  create_ini_settings($node_executor_settings, $node_executor_settings_defaults)
 }

@@ -253,6 +253,8 @@ class rundeck::params {
     'enable_h2_logs'  => 'on',
   }
 
+  $kerberos_realms = {}
+
   $keystore = '/etc/rundeck/ssl/keystore'
   $key_storage_type = 'file'
   $projects_storage_type = 'filesystem'
