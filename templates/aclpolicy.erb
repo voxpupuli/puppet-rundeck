@@ -13,7 +13,7 @@ for:
   <%- elsif %w( match equals contains ).include?(type) -%>
     <%- action.each do |k,v| -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>:
-      <%- if %w( kind path name group rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
+      <%- if %w( kind path name nodename group rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
       <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
     <%- end -%>
   <%- end -%>
