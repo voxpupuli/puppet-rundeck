@@ -19,6 +19,7 @@ class rundeck::config(
   $file_keystorage_keys        = $rundeck::file_keystorage_keys,
   $grails_server_url           = $rundeck::grails_server_url,
   $group                       = $rundeck::group,
+  $gui_config                  = $rundeck::gui_config,
   $java_home                   = $rundeck::java_home,
   $jvm_args                    = $rundeck::jvm_args,
   $key_password                = $rundeck::key_password,

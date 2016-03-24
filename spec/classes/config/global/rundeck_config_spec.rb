@@ -40,6 +40,7 @@ describe 'rundeck' do
           rundeck.security.authorization.preauthenticated.enabled = "false"
           rundeck.security.authorization.preauthenticated.attributeName = "REMOTE_USER_GROUPS"
           rundeck.security.authorization.preauthenticated.delimiter = ":"
+
         CONFIG
 
         it do

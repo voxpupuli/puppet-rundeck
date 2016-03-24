@@ -263,6 +263,7 @@ class rundeck::params {
 
   $resource_sources = {}
   $scm_import_properties = {}
+  $gui_config = {}
 
   $preauthenticated_config = {
     'enabled'       => false,

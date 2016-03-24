@@ -22,6 +22,7 @@ class rundeck::config::global::rundeck_config(
   $rss_enabled             = $rundeck::config::rss_enabled,
   $security_config         = $rundeck::config::security_config,
   $user                    = $rundeck::config::user,
+  $gui_config              = $rundeck::config::gui_config,
 ) {
 
   $properties_file = "${properties_dir}/rundeck-config.groovy"
