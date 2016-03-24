@@ -12,7 +12,7 @@ class rundeck::params {
   case $::osfamily {
     'Debian': {
       $package_name = 'rundeck'
-      $package_ensure = '2.5.1-1-GA'
+      $package_ensure = '2.6.4-1-GA'
       $service_name = 'rundeckd'
       $manage_yum_repo = false
     }
@@ -27,33 +27,13 @@ class rundeck::params {
     }
   }
 
-  $service_manage = false
   $service_config = ''
   $service_script = ''
 
   $rdeck_base = '/var/lib/rundeck'
   $rdeck_home = '/var/lib/rundeck'
+  $logs_dir = "${rdeck_base}/logs"
   $service_logs_dir = '/var/log/rundeck'
-
-  $framework_config = {
-    'framework.server.name'     => $::fqdn,
-    'framework.server.hostname' => $::fqdn,
-    'framework.server.port'     => '4440',
-    'framework.server.url'      => "http://${::fqdn}:4440",
-    'framework.server.username' => 'admin',
-    'framework.server.password' => 'admin',
-    'rdeck.base'                => '/var/lib/rundeck',
-    'framework.projects.dir'    => '/var/lib/rundeck/projects',
-    'framework.etc.dir'         => '/etc/rundeck',
-    'framework.var.dir'         => '/var/lib/rundeck/var',
-    'framework.tmp.dir'         => '/var/lib/rundeck/var/tmp',
-    'framework.logs.dir'        => '/var/lib/rundeck/logs',
-    'framework.libext.dir'      => '/var/lib/rundeck/libext',
-    'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
-    'framework.ssh.user'        => 'rundeck',
-    'framework.ssh.timeout'     => '0',
-    'rundeck.server.uuid'       => $::serialnumber,
-  }
 
   $auth_types = ['file']
   $auth_users = {}
@@ -151,9 +131,9 @@ class rundeck::params {
   ]
 
   $auth_config = {
-    'file' => {
-      'admin_user'     => $framework_config['framework.server.username'],
-      'admin_password' => $framework_config['framework.server.password'],
+    'file'             => {
+      'admin_user'     => 'admin',
+      'admin_password' => 'admin',
       'auth_users'     => {},
       'file'           => '/etc/rundeck/realm.properties',
     },
@@ -215,8 +195,8 @@ class rundeck::params {
   }
 
   $projects = {}
-  $projects_default_org = ''
-  $projects_default_desc = ''
+  $projects_organization = ''
+  $projects_description = ''
 
   $file_copier_provider = 'jsch-scp'
   $node_executor_provider = 'jsch-ssh'
@@ -270,13 +250,18 @@ class rundeck::params {
     'delimiter'     => ':',
   }
 
+  $server_hostname = $::fqdn
+  $server_name = $::fqdn
+  $server_port = 4440
+  $server_url = "http://${server_name}:${server_port}"
+  $server_uuid = "$::serialnumber"
   $server_web_context = undef
   $jvm_args = '-Xmx1024m -Xms256m -server'
 
   $java_home = undef
 
   $ssl_enabled = false
-  $ssl_port = '4443'
+  $ssl_port = 4443
 
   $package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
 
@@ -288,9 +273,14 @@ class rundeck::params {
   $rdeck_profile_template = 'rundeck/profile.erb'
 
   $file_keystorage_keys = { }
-  $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"
-
+  $file_keystorage_dir = "${rdeck_base}/var/storage"
+  $properties_dir = '/etc/rundeck'
+  $plugin_dir = "${rdeck_base}/libext"
+  $projects_dir = "${rdeck_base}/projects"
+  $ssh_keypath = "${rdeck_base}/.ssh/id_rsa"
+  $ssh_timeout = 0
+  $ssh_user = 'rundeck'
+  $ssh_password = 'rundeck'
   $manage_default_admin_policy = true
   $manage_default_api_policy   = true
-
 }

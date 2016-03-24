@@ -5,35 +5,34 @@
 # == Class rundeck::service
 #
 # This class is meant to be called from `rundeck`
-# It ensure the service is running
+# It ensures the service is running
 #
-class rundeck::service(
+class rundeck::service (
   $service_config = $rundeck::service_config,
-  $service_manage = $rundeck::service_manage,
   $service_name   = $rundeck::service_name,
   $service_script = $rundeck::service_script,
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
+  assert_private()
+
+  File {
+    ensure => file,
+    notify => Service['rundeckd'],
   }
 
-  if $service_manage {
-    file { '/etc/init/rundeckd.conf':
-      ensure  => present,
-      mode    => '0644',
-      content => template($service_config),
-    }
+  #file { '/etc/init/rundeckd.conf':
+  #  mode    => '0644',
+  #  content => template($service_config),
+  #}
+  #
+  #file { '/etc/init.d/rundeckd':
+  #  mode    => '0755',
+  #  content => template($service_script),
+  #}
 
-    file { '/etc/init.d/rundeckd':
-      ensure  => present,
-      mode    => '0755',
-      content => template($service_script),
-    }
-  }
-
-  service { $service_name:
+  service { 'rundeckd':
     ensure     => running,
+    name       => $service_name,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,

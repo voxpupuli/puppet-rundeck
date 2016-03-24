@@ -10,7 +10,7 @@ describe 'rundeck' do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => '3.8.1'
+            :puppetversion   => Puppet.version
           }
         end
         plugin_dir = '/var/lib/rundeck/libext'
@@ -56,7 +56,7 @@ describe 'rundeck' do
         :osfamily        => 'Debian',
         :serialnumber    => 0,
         :rundeck_version => '',
-        :puppetversion   => '3.8.1'
+        :puppetversion   => Puppet.version
       }
     end
 
@@ -67,20 +67,8 @@ describe 'rundeck' do
     end
 
     it do
-      should contain_group('rundeck').with(
-        'ensure' => 'absent',
-      )
-    end
-
-    it do
       should contain_user('A1234').with(
         'ensure' => 'present',
-      )
-    end
-
-    it do
-      should contain_user('rundeck').with(
-        'ensure' => 'absent',
       )
     end
   end

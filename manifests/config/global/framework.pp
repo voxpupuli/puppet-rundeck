@@ -6,26 +6,39 @@
 #
 # This private class is called from rundeck::config used to manage the framework properties of rundeck
 #
-class rundeck::config::global::framework(
-  $group            = $rundeck::config::group,
-  $properties_dir   = $rundeck::config::properties_dir,
-  $user             = $rundeck::config::user,
-
+class rundeck::config::global::framework (
+  $auth_config      = $rundeck::auth_config,
+  $group            = $rundeck::group,
+  $logs_dir         = $rundeck::logs_dir,
+  $plugin_dir       = $rundeck::plugin_dir,
+  $projects_dir     = $rundeck::projects_dir,
+  $properties_dir   = $rundeck::properties_dir,
+  $rdeck_base       = $rundeck::rdeck_base,
+  $server_hostname  = $rundeck::server_hostname,
+  $server_name      = $rundeck::server_name,
+  $server_port      = $rundeck::server_port,
+  $server_url       = $rundeck::server_url,
+  $server_uuid      = $rundeck::server_uuid,
+  $ssh_keypath      = $rundeck::ssh_keypath,
+  $ssh_timeout      = $rundeck::ssh_timeout,
+  $ssh_user         = $rundeck::ssh_user,
+  $user             = $rundeck::user,
 ) {
 
-  $properties_file = "${properties_dir}/framework.properties"
+  assert_private()
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group } )
 
-  $framework_config = merge($rundeck::params::framework_config, $rundeck::framework_config)
-
-  file { $properties_file:
-    ensure  => present,
-    content => template('rundeck/framework.properties.erb'),
+  concat { "${properties_dir}/framework.properties":
     owner   => $user,
     group   => $group,
     mode    => '0640',
     require => File[$properties_dir],
   }
 
+  concat::fragment { 'framework.properties+10_main':
+    target  => "${properties_dir}/framework.properties",
+    content => template('rundeck/framework.properties.erb'),
+    order   => 10,
+  }
 }

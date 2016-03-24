@@ -10,7 +10,7 @@ describe 'rundeck' do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => '3.8.1'
+            :puppetversion   => Puppet.version
           }
         end
         it { should contain_service('rundeckd') }

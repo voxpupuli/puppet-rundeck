@@ -11,9 +11,6 @@
 # [*file_copier_provider*]
 #  The type of proivder that will be used for copying files to each of the nodes
 #
-# [*framework_config*]
-#  Rundeck config
-#
 # [*group*]
 #  Rundeck group
 #
@@ -49,131 +46,95 @@
 #
 define rundeck::config::project (
   $file_copier_provider   = $rundeck::file_copier_provider,
-  $framework_config       = $rundeck::framework_config,
   $group                  = $rundeck::group,
   $node_executor_provider = $rundeck::node_executor_provider,
-  $projects_dir           = undef,
+  $projects_dir           = $rundeck::projects_dir,
   $resource_sources       = $rundeck::resource_sources,
   $scm_import_properties  = $rundeck::scm_import_properties,
-  $ssh_keypath            = undef,
+  $ssh_keypath            = $rundeck::ssh_keypath,
   $user                   = $rundeck::user,
 ) {
 
   include ::rundeck
 
-  $framework_properties = deep_merge($rundeck::framework_config, $framework_config)
-
-  $ssh_keypath_real = $ssh_keypath ? {
-    undef   => $framework_properties['framework.ssh.keypath'],
-    default => $ssh_keypath,
-  }
-
-  $projects_dir_real = $projects_dir ? {
-    undef   => $framework_properties['framework.projects.dir'],
-    default => $projects_dir,
-  }
-
-  validate_absolute_path($ssh_keypath_real)
   validate_re($file_copier_provider, ['^jsch-scp$','^script-copy$','^stub$'])
   validate_re($node_executor_provider, ['^jsch-ssh$', '^script-exec$', '^stub$'])
   validate_hash($resource_sources)
   validate_hash($scm_import_properties)
-  validate_absolute_path($projects_dir_real)
-  validate_re($user, '[a-zA-Z0-9]{3,}')
-  validate_re($group, '[a-zA-Z0-9]{3,}')
 
-  $project_dir = "${projects_dir_real}/${name}"
+  $project_dir = "${projects_dir}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"
   $scm_import_properties_file = "${project_dir}/etc/scm-import.properties"
 
-  file {  $project_dir :
-    ensure  => directory,
-    owner   => $user,
-    group   => $group,
-    mode    => '0775',
-    require => File[$projects_dir_real],
-  }
-
-  file { $properties_file:
+  File {
     ensure  => file,
     owner   => $user,
     group   => $group,
+    mode    => '0775',
+    require => File[$properties_file],
+  }
+
+  Ini_setting {
+    ensure  => present,
+    path    => $properties_file,
+    section => '',
+    require => File[$properties_file],
+  }
+
+  file { $project_dir:
+    ensure  => directory,
+    require => File[$projects_dir],
+  }
+
+  file { $properties_file:
     require => File["${project_dir}/etc"],
   }
 
   file { $scm_import_properties_file:
-    ensure  => present,
     content => template('rundeck/scm-import.properties.erb'),
-    owner   => $user,
-    group   => $group,
-    require => File["${project_dir}/etc"],
     replace => false,
+    require => File["${project_dir}/etc"],
   }
 
   file { "${project_dir}/var":
     ensure  => directory,
-    owner   => $user,
-    group   => $group,
     require => File[$project_dir],
   }
 
   file { "${project_dir}/etc":
     ensure  => directory,
-    owner   => $user,
-    group   => $group,
     require => File[$project_dir],
   }
 
   ini_setting { "${name}::project.name":
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.name',
     value   => $name,
-    require => File[$properties_file],
   }
 
   ini_setting { "${name}::project.ssh-authentication":
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.ssh-authentication',
     value   => 'privateKey',
-    require => File[$properties_file],
   }
 
   ini_setting { "${name}::project.ssh-keypath":
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.ssh-keypath',
-    value   => $ssh_keypath_real,
-    require => File[$properties_file],
+    value   => $ssh_keypath,
   }
 
   $resource_source_defaults = {
     project_name => $name,
   }
 
-
   create_resources(rundeck::config::resource_source, $resource_sources, $resource_source_defaults)
 
   #TODO: there are more settings to be added here for both filecopier and nodeexecutor
   ini_setting { "${name}::service.FileCopier.default.provider":
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'service.FileCopier.default.provider',
     value   => $file_copier_provider,
-    require => File[$properties_file],
   }
 
   ini_setting { "${name}::service.NodeExecutor.default.provider":
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'service.NodeExecutor.default.provider',
     value   => $node_executor_provider,
-    require => File[$properties_file],
   }
 }

@@ -9,7 +9,7 @@ describe 'rundeck' do
             :osfamily        => osfamily,
             :serialnumber    => 0,
             :rundeck_version => '',
-            :puppetversion   => '3.8.1'
+            :puppetversion   => Puppet.version
           }
         end
 
@@ -65,7 +65,7 @@ describe 'rundeck' do
           :osfamily        => 'RedHat',
           :serialnumber    => 0,
           :rundeck_version => '',
-          :puppetversion   => '3.8.1'
+          :puppetversion   => Puppet.version
         }
       end
       let(:params) { { :jvm_args => jvm_args } }

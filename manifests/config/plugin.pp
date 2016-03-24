@@ -1,7 +1,7 @@
 # Author::    Liam Bennett (mailto:lbennett@opentable.com)
 # Copyright:: Copyright (c) 2013 OpenTable Inc
 # License::   MIT
-
+#
 # == Define rundeck::config::plugin
 #
 # This definition is used to install jars for rundeck's plugins
@@ -14,6 +14,10 @@
 # [*source*]
 #   The http source or local path from which to get the jar plugin.
 #
+# [*plugin_config*]
+#   A hash of key/value pairs to be added to framework.properies
+#   for the plugin
+#
 # === Examples
 #
 # Install a custom plugin:
@@ -23,28 +27,32 @@
 #  source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
 # }
 #
-define rundeck::config::plugin(
+define rundeck::config::plugin (
   $source,
-  $ensure   = 'present',
+  $ensure         = 'present',
+  $plugin_config  = {},
 ) {
 
   include '::rundeck'
   include '::archive'
 
-  $framework_config = deep_merge($::rundeck::params::framework_config, $::rundeck::framework_config)
+  $group          = $::rundeck::group
+  $plugin_dir     = $::rundeck::plugin_dir
+  $properties_dir = $::rundeck::properties_dir
+  $user           = $::rundeck::user
 
-  $user = $rundeck::user
-  $group = $rundeck::group
-  $plugin_dir = $framework_config['framework.libext.dir']
-
+  validate_hash($plugin_config)
   validate_string($source)
-  validate_absolute_path($plugin_dir)
-  validate_re($user, '[a-zA-Z0-9]{3,}')
-  validate_re($group, '[a-zA-Z0-9]{3,}')
   validate_re($ensure, ['^present$', '^absent$'])
 
-  if $ensure == 'present' {
+  file { "${plugin_dir}/${name}":
+    ensure => $ensure,
+    mode   => '0644',
+    owner  => $user,
+    group  => $group,
+  }
 
+  if $ensure == 'present' {
     archive { "download plugin ${name}":
       ensure  => present,
       source  => $source,
@@ -53,19 +61,10 @@ define rundeck::config::plugin(
       before  => File["${plugin_dir}/${name}"],
     }
 
-    file { "${plugin_dir}/${name}":
-      mode  => '0644',
-      owner => $user,
-      group => $group,
+    concat::fragment { "framework.properties+20_${name}":
+      target  => "${properties_dir}/framework.properties",
+      content => template('rundeck/framework.properties-plugin.erb'),
+      order   => 20,
     }
-
   }
-  elsif $ensure == 'absent' {
-
-    file { "${plugin_dir}/${name}":
-      ensure => 'absent',
-    }
-
-  }
-
 }

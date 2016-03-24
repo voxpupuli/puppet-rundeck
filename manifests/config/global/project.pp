@@ -6,21 +6,30 @@
 #
 # This private class is called from rundeck::config used to manage the default project properties
 #
-class rundeck::config::global::project(
-  $group                 = $rundeck::config::group,
-  $projects_description  = $rundeck::config::projects_default_desc,
-  $projects_dir          = $rundeck::config::projects_dir,
-  $projects_organization = $rundeck::config::projects_default_org,
-  $properties_dir        = $rundeck::config::properties_dir,
-  $user                  = $rundeck::config::user,
+class rundeck::config::global::project (
+  $group                 = $rundeck::group,
+  $projects_description  = $rundeck::projects_description,
+  $projects_dir          = $rundeck::projects_dir,
+  $projects_organization = $rundeck::projects_organization,
+  $properties_dir        = $rundeck::properties_dir,
+  $user                  = $rundeck::user,
 ) {
+
+  assert_private()
 
   $properties_file = "${properties_dir}/project.properties"
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
 
-  file { $properties_file:
+  Ini_setting {
     ensure  => present,
+    path    => $properties_file,
+    section => '',
+    require => File[$properties_file],
+  }
+
+  file { $properties_file:
+    ensure  => file,
     owner   => $user,
     group   => $group,
     mode    => '0640',
@@ -28,47 +37,27 @@ class rundeck::config::global::project(
   }
 
   ini_setting { 'project.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.dir',
     value   => "${projects_dir}/\${project.name}",
-    require => File[$properties_file],
   }
 
   ini_setting { 'project.etc.dir':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.etc.dir',
     value   => "${projects_dir}/\${project.name}/etc",
-    require => File[$properties_file],
   }
 
   ini_setting { 'project.resources.file':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.resources.file',
     value   => "${projects_dir}/\${project.name}/etc/resources.xml",
-    require => File[$properties_file],
   }
 
   ini_setting { 'project.description':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.description',
     value   => $projects_organization,
-    require => File[$properties_file],
   }
 
   ini_setting { 'project.organization':
-    ensure  => present,
-    path    => $properties_file,
-    section => '',
     setting => 'project.organization',
     value   => $projects_description,
-    require => File[$properties_file],
   }
 }
