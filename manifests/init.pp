@@ -31,6 +31,9 @@
 # [*group*]
 #  The group permission that rundeck is installed as.
 #
+# [*gui_config*]
+#  Hash of properties for customizing the [Rundeck GUI](http://rundeck.org/docs/administration/gui-customization.html)
+#
 # [*java_home*]
 #  Set the home directory of java.
 #
@@ -142,6 +145,7 @@ class rundeck (
   $framework_config             = $rundeck::params::framework_config,
   $grails_server_url            = $rundeck::params::grails_server_url,
   $group                        = $rundeck::params::group,
+  $gui_config                   = $rundeck::params::gui_config,
   $java_home                    = $rundeck::params::java_home,
   $jvm_args                     = $rundeck::params::jvm_args,
   $key_password                 = $rundeck::params::key_password,
@@ -191,6 +195,7 @@ class rundeck (
   validate_bool($rss_enabled)
   validate_bool($clustermode_enabled)
   validate_string($grails_server_url)
+  validate_hash($gui_config)
   validate_hash($database_config)
   validate_absolute_path($keystore)
   validate_re($key_storage_type, [ '^db$', '^file$' ])
