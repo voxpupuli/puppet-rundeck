@@ -85,6 +85,9 @@
 # [*rd_loglevel*]
 #  The log4j logging level to be set for the Rundeck application.
 #
+# [*rd_auditlevel*]
+#  The log4j logging level to be set for the Rundeck application.
+#
 # [*rdeck_base*]
 #  The installation directory for rundeck.
 #
@@ -164,6 +167,7 @@ class rundeck (
   $projects_organization        = $rundeck::params::projects_default_org,
   $projects_storage_type        = $rundeck::params::projects_storage_type,
   $rd_loglevel                  = $rundeck::params::loglevel,
+  $rd_auditlevel                = $rundeck::params::loglevel,
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
   $rdeck_home                   = $rundeck::params::rdeck_home,
   $rdeck_profile_template       = $rundeck::params::rdeck_profile_template,
@@ -191,6 +195,7 @@ class rundeck (
   validate_string($projects_organization)
   validate_string($projects_description)
   validate_re($rd_loglevel, [ '^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$' ])
+  validate_re($rd_auditlevel, [ '^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$' ])
   validate_re($projects_storage_type, [ '^db$', '^filesystem$' ])
   validate_bool($rss_enabled)
   validate_bool($clustermode_enabled)
