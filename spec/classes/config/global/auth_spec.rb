@@ -22,9 +22,9 @@ describe 'rundeck' do
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
     end
 
-    it 'should contain PropertyFileLoginModule and be required' do
+    it 'should contain PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule required')
+      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
   end
 
@@ -44,9 +44,9 @@ describe 'rundeck' do
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
     end
 
-    it 'should contain PropertyFileLoginModule and be required' do
+    it 'should contain PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule required')
+      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
   end
 
@@ -79,9 +79,9 @@ describe 'rundeck' do
       expect(content).to include('anotheruser:anotherpassword,user')
     end
 
-    it 'should contain PropertyFileLoginModule and be required' do
+    it 'should contain PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule required')
+      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
   end
 
@@ -135,9 +135,9 @@ describe 'rundeck' do
       expect(content).to include('anotheruser:anotherpassword,user')
     end
 
-    it 'should contain PropertyFileLoginModule and be required' do
+    it 'should contain PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule required')
+      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
 
     it 'should contain JettyCachingLdapLoginModule and be sufficient' do
@@ -196,9 +196,9 @@ describe 'rundeck' do
       expect(content).to include('anotheruser:anotherpassword,user')
     end
 
-    it 'should contain PropertyFileLoginModule and be required' do
+    it 'should contain PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule required')
+      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
 
     it 'should contain JettyCachingLdapLoginModule and be sufficient' do
@@ -229,9 +229,9 @@ describe 'rundeck' do
       expect(content).to include('testuser:password')
     end
 
-    it 'should contain PropertyFileLoginModule and be required' do
+    it 'should contain PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule required')
+      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
   end
 
@@ -256,9 +256,9 @@ describe 'rundeck' do
       expect(content).to include('testuser:password,user,deploy')
     end
 
-    it 'should contain PropertyFileLoginModule and be required' do
+    it 'should contain PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule required')
+      expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
   end
 end
