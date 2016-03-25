@@ -13,7 +13,7 @@ log4j.com.dtolabs.rundeck.core=INFO, cmd-logger
 #log4j.additivity.org.codehaus.groovy.grails.plugins.quartz=false
 
 # Enable audit logging
-log4j.logger.com.dtolabs.rundeck.core.authorization=info, audit
+log4j.logger.com.dtolabs.rundeck.core.authorization=<%= @rd_auditlevel %>, audit
 log4j.additivity.com.dtolabs.rundeck.core.authorization=false
 
 # Enable options remote URL logging
