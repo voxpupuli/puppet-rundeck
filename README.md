@@ -239,6 +239,27 @@ The group permission that rundeck is installed as.
 ###Configuring shared authentication credentials
 To perform LDAP authentication and file authorization see example examples/ldap\_shared.pp
 
+###Configure a MySQL database
+
+To use an external MySQL database, the `database_config` hash must be set to
+override the default values which result in a local file based storage.  To
+enable `key` and `project` storage in the database, you must also set the two
+parameters associated parameters.
+
+```puppet
+class { '::rundeck':
+  key_storage_type      => 'db',
+  projects_storage_type => 'db',
+  database_config       => {
+    'type'              => 'mysql',
+    'url'               => $db_url,
+    'username'          => 'rundeck',
+    'password'          => $db_pass,
+    'driverClassName'   => 'com.mysql.jdbc.Driver',
+  }
+}
+```
+
 ##Reference
 
 ###Classes
