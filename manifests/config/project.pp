@@ -24,13 +24,13 @@
 #  The directory where rundeck is configured to store project information
 #
 # [*resource_sources*]
-#  A hash of rundeck::config::resource_source that will be used to specifiy the node resources for this project
+#  A hash of rundeck::config::resource_source that will be used to specify the node resources for this project
 #
 # [*scm_import_properties*]
 #  A hash of name value pairs representing properties for the scm-import.properties file
 #
 # [*ssh_keypath*]
-#  The path the the ssh key that will be used by the ssh/scp providers
+#  The path to the ssh key that will be used by the ssh/scp providers
 #
 # [*user*]
 #  Rundeck user
