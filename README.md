@@ -90,7 +90,7 @@ Boolean value if set to true enables cluster mode
 The url used in sending email notifications.
 
 #####`dataSource_config`
-A hash of the data Source configuraton.
+A hash of the data Source configuration.
 
 #####`keystore`
 Full path to the java keystore to be used by Rundeck.
@@ -125,11 +125,11 @@ Whether to manage the YUM repository containing the Rundeck rpm. Defaults to tru
 #####`file_keystorage_dir`
 The location of stored data like public keys, private keys.
 
-####Define: `aclpolicyfile`
+####Define: `rundeck::config::aclpolicyfile`
 A definition for creating custom acl policy files
 
 #####`acl_policies`
-An array containing acl policies. See rundeck::params::acl_policies / rundeck::params::api_policies as an example.
+An array containing ACL policies. See rundeck::params::acl_policies / rundeck::params::api_policies as an example.
 
 #####`owner`
 The user that rundeck is installed as.
@@ -140,10 +140,10 @@ The group permission that rundeck is installed as.
 #####`properties_dir`
 The rundeck configuration directory.
 
-####Define: `rundeck::plugin`
+####Define: `rundeck::config::plugin`
 A definition for installing rundeck plugins
 
-**Parameters within `rundeck::plugin`:**
+**Parameters within `rundeck::config::plugin`:**
 
 #####`source`
 The http source or local path from which to get the jar plugin.
@@ -154,7 +154,7 @@ Default set to 'present' and can be set to 'absent' to remove the plugin for the
 #####`timeout`
 Timeout in seconds.  Default is set to 300 seconds which is the default for the Exec type.
 
-####Define: `rundeck::project`
+####Define: `rundeck::config::project`
 A definition for managing rundeck projects
 
 **Parameters within `rundeck::project`:**
@@ -181,7 +181,7 @@ The user that rundeck is installed as.
 #####`group`
 The group permission that rundeck is installed as.
 
-####Define: `rundeck::resource_source`
+####Define: `rundeck::config::resource_source`
 A definition for managing the resource sources for a given project
 
 **Parameters within `rundeck::resource_source`:**
