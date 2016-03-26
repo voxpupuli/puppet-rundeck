@@ -41,6 +41,8 @@ for:
     - allow: '*'
   project:
     - allow: '*'
+  storage:
+    - allow: '*'
 by:
   group:
     - 'admin'
