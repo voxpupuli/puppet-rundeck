@@ -22,6 +22,7 @@ class rundeck::config(
   $gui_config                  = $rundeck::gui_config,
   $java_home                   = $rundeck::java_home,
   $jvm_args                    = $rundeck::jvm_args,
+  $kerberos_realms             = $rundeck::kerberos_realms,
   $key_password                = $rundeck::key_password,
   $key_storage_type            = $rundeck::key_storage_type,
   $keystore                    = $rundeck::keystore,
@@ -171,5 +172,16 @@ class rundeck::config(
     security_role   => $security_role,
     session_timeout => $session_timeout,
     notify          => Service[$service_name],
+  }
+
+  if !empty($kerberos_realms) {
+    file { "${properties_dir}/krb5.conf":
+      owner   => $user,
+      group   => $group,
+      mode    => '0640',
+      content => template('rundeck/krb5.conf.erb'),
+      notify  => Service[$service_name],
+      require => File[$properties_dir],
+    }
   }
 }

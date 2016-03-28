@@ -40,6 +40,9 @@
 # [*jvm_args*]
 #  Extra arguments for the JVM.
 #
+# [*kerberos_realms*]
+# A hash of mappings between Kerberos domain DNS names and realm names
+#
 # [*key_password*]
 #  The default key password.
 #
@@ -151,6 +154,7 @@ class rundeck (
   $gui_config                   = $rundeck::params::gui_config,
   $java_home                    = $rundeck::params::java_home,
   $jvm_args                     = $rundeck::params::jvm_args,
+  $kerberos_realms              = $rundeck::params::kerberos_realms,
   $key_password                 = $rundeck::params::key_password,
   $key_storage_type             = $rundeck::params::key_storage_type,
   $keystore                     = $rundeck::params::keystore,
@@ -202,6 +206,7 @@ class rundeck (
   validate_string($grails_server_url)
   validate_hash($gui_config)
   validate_hash($database_config)
+  validate_hash($kerberos_realms)
   validate_absolute_path($keystore)
   validate_re($key_storage_type, [ '^db$', '^file$' ])
   validate_string($keystore_password)
