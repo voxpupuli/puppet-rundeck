@@ -55,7 +55,8 @@ define rundeck::config::project (
   $node_executor_settings = {},
   $projects_dir           = undef,
   $resource_sources       = $rundeck::resource_sources,
-  $scm_import_properties  = $rundeck::scm_import_properties,
+  $scm_import_properties  = {},
+  $scm_export_properties  = {},
   $ssh_keypath            = undef,
   $user                   = $rundeck::user,
 ) {
@@ -85,6 +86,7 @@ define rundeck::config::project (
   $project_dir = "${projects_dir_real}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"
   $scm_import_properties_file = "${project_dir}/etc/scm-import.properties"
+  $scm_export_properties_file = "${project_dir}/etc/scm-export.properties"
 
   file {  $project_dir :
     ensure  => directory,
@@ -104,6 +106,15 @@ define rundeck::config::project (
   file { $scm_import_properties_file:
     ensure  => present,
     content => template('rundeck/scm-import.properties.erb'),
+    owner   => $user,
+    group   => $group,
+    require => File["${project_dir}/etc"],
+    replace => false,
+  }
+
+  file { $scm_export_properties_file:
+    ensure  => present,
+    content => template('rundeck/scm-export.properties.erb'),
     owner   => $user,
     group   => $group,
     require => File["${project_dir}/etc"],

@@ -15,7 +15,6 @@ describe 'rundeck::config::project', :type => :define do
             },
             :file_copier_provider => 'jsch-scp',
             :resource_sources => {},
-            :scm_import_properties => {},
             :node_executor_provider => 'jsch-ssh',
             :user  => 'rundedck',
             :group => 'rundeck'
