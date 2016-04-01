@@ -146,6 +146,7 @@ class rundeck (
   $auth_types                   = $rundeck::params::auth_types,
   $clustermode_enabled          = $rundeck::params::clustermode_enabled,
   $database_config              = $rundeck::params::database_config,
+  $deb_download                 = $rundeck::params::deb_download,
   $file_keystorage_dir          = $rundeck::params::file_keystorage_dir,
   $file_keystorage_keys         = $rundeck::params::file_keystorage_keys,
   $framework_config             = $rundeck::params::framework_config,
