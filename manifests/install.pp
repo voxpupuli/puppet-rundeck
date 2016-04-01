@@ -7,6 +7,7 @@
 # This private class installs the rundeck package and it's dependencies
 #
 class rundeck::install(
+  $deb_download       = $rundeck::deb_download,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
   $package_ensure     = $rundeck::package_ensure,
   $package_source     = $rundeck::package_source,
@@ -47,27 +48,28 @@ class rundeck::install(
       ensure_resource('package', 'rundeck-config', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
     }
     'Debian': {
+      if $deb_download == true {
 
-      $version = inline_template("<% package_version = '${package_ensure}' %><%= package_version.split('-')[0] %>")
+        $version = inline_template("<% package_version = '${package_ensure}' %><%= package_version.split('-')[0] %>")
 
-      if $::rundeck_version != $version {
-        exec { 'download rundeck package':
-          command => "/usr/bin/wget ${package_source}/rundeck-${package_ensure}.deb -O /tmp/rundeck-${package_ensure}.deb",
-          unless  => "/usr/bin/test -f /tmp/rundeck-${package_ensure}.deb",
-        }
+        if $::rundeck_version != $version {
+          exec { 'download rundeck package':
+            command => "/usr/bin/wget ${package_source}/rundeck-${package_ensure}.deb -O /tmp/rundeck-${package_ensure}.deb",
+            unless  => "/usr/bin/test -f /tmp/rundeck-${package_ensure}.deb",
+          }
 
-        exec { 'stop rundeck service':
-          command => '/usr/sbin/service rundeckd stop',
-          unless  => "/bin/bash -c 'if pgrep -f RunServer > /dev/null; then echo 1; else echo 0; fi'",
-        }
+          exec { 'stop rundeck service':
+            command => '/usr/sbin/service rundeckd stop',
+            unless  => "/bin/bash -c 'if pgrep -f RunServer > /dev/null; then echo 1; else echo 0; fi'",
+          }
 
-        exec { 'install rundeck package':
-          command => "/usr/bin/dpkg --force-confold --ignore-depends 'java7-runtime' -i /tmp/rundeck-${package_ensure}.deb",
-          unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
-          require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ],
+          exec { 'install rundeck package':
+            command => "/usr/bin/dpkg --force-confold --ignore-depends 'java7-runtime' -i /tmp/rundeck-${package_ensure}.deb",
+            unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
+            require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ],
+          }
         }
       }
-
     }
     default: {
       err("The osfamily: ${::osfamily} is not supported")
