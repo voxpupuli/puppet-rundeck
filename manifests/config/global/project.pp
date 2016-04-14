@@ -59,7 +59,7 @@ class rundeck::config::global::project(
     path    => $properties_file,
     section => '',
     setting => 'project.description',
-    value   => $projects_organization,
+    value   => $projects_description,
     require => File[$properties_file],
   }
 
@@ -68,7 +68,7 @@ class rundeck::config::global::project(
     path    => $properties_file,
     section => '',
     setting => 'project.organization',
-    value   => $projects_description,
+    value   => $projects_organization,
     require => File[$properties_file],
   }
 }
