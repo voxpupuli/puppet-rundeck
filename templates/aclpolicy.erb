@@ -11,8 +11,8 @@ for:
   <%- if %w( allow deny ).include?(type) -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
   <%- elsif %w( match equals contains ).include?(type) -%>
-    <%- action.each do |k,v| -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>:
+    <%- action.each do |k,v| -%>
       <%- if %w( kind path name nodename group rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
       <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
     <%- end -%>
