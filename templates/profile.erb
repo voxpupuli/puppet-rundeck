@@ -24,6 +24,7 @@ export RDECK_JVM="-Drdeck.config=<%= @properties_dir %> \
 -Drdeck.runlogs=<%= @logs_dir %> \
 -Drundeck.config.location=<%= @properties_dir %>/rundeck-config.groovy \
 -Djava.security.auth.login.config=<%= @properties_dir %>/jaas-auth.conf \
+-Drundeck.jetty.connector.forwarded=true \
 <%- if !(@kerberos_realms.empty?) -%>
 -Djava.security.krb5.conf=<%= @properties_dir %>/krb5.conf \
 <%- end -%>
