@@ -121,6 +121,9 @@
 # [*service_name*]
 #  The name of the rundeck service.
 #
+#  [*service_ensure*]
+#  State of the rundeck service (defaults to 'running')
+#
 # [*session_timeout*]
 #  Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 #
@@ -186,6 +189,7 @@ class rundeck (
   $service_manage               = $rundeck::params::service_manage,
   $service_name                 = $rundeck::params::service_name,
   $service_script               = $rundeck::params::service_script,
+  $service_ensure               = $rundeck::params::service_ensure,
   $session_timeout              = $rundeck::params::session_timeout,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
   $truststore                   = $rundeck::params::truststore,
