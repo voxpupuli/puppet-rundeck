@@ -3,11 +3,11 @@ require 'spec_helper'
 describe 'rundeck' do
   let(:facts) do
     {
-      :osfamily        => 'Debian',
-      :fqdn            => 'test.domain.com',
-      :serialnumber    => 0,
-      :rundeck_version => '',
-      :puppetversion   => Puppet.version
+      osfamily: 'Debian',
+      fqdn: 'test.domain.com',
+      serialnumber: 0,
+      rundeck_version: '',
+      puppetversion: Puppet.version
     }
   end
 
@@ -17,12 +17,12 @@ describe 'rundeck' do
       }
     end
 
-    it 'should generate valid content for realm.properties' do
+    it 'generates valid content for realm.properties' do
       content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
     end
 
-    it 'should contain PropertyFileLoginModule and be sufficient' do
+    it 'contains PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
@@ -31,7 +31,7 @@ describe 'rundeck' do
   describe 'with empty auth users array' do
     let(:params) do
       {
-        :auth_config => {
+        auth_config: {
           'file' => {
             'auth_users' => []
           }
@@ -39,12 +39,12 @@ describe 'rundeck' do
       }
     end
 
-    it 'should generate valid content for realm.properties' do
+    it 'generates valid content for realm.properties' do
       content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
     end
 
-    it 'should contain PropertyFileLoginModule and be sufficient' do
+    it 'contains PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
@@ -53,7 +53,7 @@ describe 'rundeck' do
   describe 'with auth users array' do
     let(:params) do
       {
-        :auth_config => {
+        auth_config: {
           'file' => {
             'auth_users' => [
               {
@@ -72,14 +72,14 @@ describe 'rundeck' do
       }
     end
 
-    it 'should generate valid content for realm.properties' do
+    it 'generates valid content for realm.properties' do
       content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
       expect(content).to include('testuser:password,user,deploy')
       expect(content).to include('anotheruser:anotherpassword,user')
     end
 
-    it 'should contain PropertyFileLoginModule and be sufficient' do
+    it 'contains PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
@@ -88,8 +88,8 @@ describe 'rundeck' do
   describe 'with multiauth ldap and file auth users array' do
     let(:params) do
       {
-        :auth_types  => %w(ldap file),
-        :auth_config => {
+        auth_types: %w(ldap file),
+        auth_config: {
           'file' => {
             'auth_users' => [
               {
@@ -128,19 +128,19 @@ describe 'rundeck' do
       }
     end
 
-    it 'should generate valid content for realm.properties' do
+    it 'generates valid content for realm.properties' do
       content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
       expect(content).to include('testuser:password,user,deploy')
       expect(content).to include('anotheruser:anotherpassword,user')
     end
 
-    it 'should contain PropertyFileLoginModule and be sufficient' do
+    it 'contains PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
 
-    it 'should contain JettyCachingLdapLoginModule and be sufficient' do
+    it 'contains JettyCachingLdapLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule sufficient')
     end
@@ -149,8 +149,8 @@ describe 'rundeck' do
   describe 'with multiauth active_directory and file auth users array' do
     let(:params) do
       {
-        :auth_types  => %w(active_directory file),
-        :auth_config => {
+        auth_types: %w(active_directory file),
+        auth_config: {
           'file' => {
             'auth_users' => [
               {
@@ -189,19 +189,19 @@ describe 'rundeck' do
       }
     end
 
-    it 'should generate valid content for realm.properties' do
+    it 'generates valid content for realm.properties' do
       content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
       expect(content).to include('testuser:password,user,deploy')
       expect(content).to include('anotheruser:anotherpassword,user')
     end
 
-    it 'should contain PropertyFileLoginModule and be sufficient' do
+    it 'contains PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
 
-    it 'should contain JettyCachingLdapLoginModule and be sufficient' do
+    it 'contains JettyCachingLdapLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule sufficient')
     end
@@ -210,7 +210,7 @@ describe 'rundeck' do
   describe 'with auth user without roles' do
     let(:params) do
       {
-        :auth_config => {
+        auth_config: {
           'file' => {
             'auth_users' => [
               {
@@ -223,13 +223,13 @@ describe 'rundeck' do
       }
     end
 
-    it 'should generate valid content for realm.properties' do
+    it 'generates valid content for realm.properties' do
       content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
       expect(content).to include('testuser:password')
     end
 
-    it 'should contain PropertyFileLoginModule and be sufficient' do
+    it 'contains PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end
@@ -238,7 +238,7 @@ describe 'rundeck' do
   describe 'backward compatibility (no array of users)' do
     let(:params) do
       {
-        :auth_config => {
+        auth_config: {
           'file' => {
             'auth_users' => {
               'username' => 'testuser',
@@ -250,13 +250,13 @@ describe 'rundeck' do
       }
     end
 
-    it 'should generate valid content for realm.properties' do
+    it 'generates valid content for realm.properties' do
       content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
       expect(content).to include('admin:admin,user,admin,architect,deploy,build')
       expect(content).to include('testuser:password,user,deploy')
     end
 
-    it 'should contain PropertyFileLoginModule and be sufficient' do
+    it 'contains PropertyFileLoginModule and be sufficient' do
       jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
       expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
     end

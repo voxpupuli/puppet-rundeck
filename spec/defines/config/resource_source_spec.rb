@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rundeck::config::resource_source', :type => :define do
+describe 'rundeck::config::resource_source', type: :define do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::resource_source definition with default parameters on #{osfamily}" do
@@ -20,10 +20,10 @@ describe 'rundeck::config::resource_source', :type => :define do
         end
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 
@@ -72,10 +72,10 @@ describe 'rundeck::config::resource_source', :type => :define do
         end
         let(:facts) do
           {
-            :osfamily     => osfamily,
-            :serialnumber => 0,
-            :puppetversion   => Puppet.version,
-            :rundeck_version => ''
+            osfamily: osfamily,
+            serialnumber: 0,
+            puppetversion: Puppet.version,
+            rundeck_version: ''
           }
         end
 
@@ -115,10 +115,10 @@ describe 'rundeck::config::resource_source', :type => :define do
         end
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 
@@ -157,10 +157,10 @@ describe 'rundeck::config::resource_source', :type => :define do
         end
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 

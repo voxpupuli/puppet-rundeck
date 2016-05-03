@@ -5,15 +5,15 @@ describe 'rundeck' do
     %w(Debian RedHat).each do |osfamily|
       let(:params) do
         {
-          :ssl_enabled => true
+          ssl_enabled: true
         }
       end
       let(:facts) do
         {
-          :osfamily => osfamily,
-          :serialnumber => 0,
-          :rundeck_version => '',
-          :puppetversion   => Puppet.version
+          osfamily: osfamily,
+          serialnumber: 0,
+          rundeck_version: '',
+          puppetversion: Puppet.version
         }
       end
 

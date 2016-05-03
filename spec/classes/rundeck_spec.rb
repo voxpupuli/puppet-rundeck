@@ -7,10 +7,10 @@ describe 'rundeck' do
         let(:params) { {} }
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => '3.8.1'
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: '3.8.1'
           }
         end
 
@@ -28,11 +28,11 @@ describe 'rundeck' do
     describe 'rundeck class without any parameters on Solaris/Nexenta' do
       let(:facts) do
         {
-          :osfamily        => 'Solaris',
-          :operatingsystem => 'Nexenta',
-          :serialnumber    => 0,
-          :rundeck_version => '',
-          :puppetversion   => '3.8.1'
+          osfamily: 'Solaris',
+          operatingsystem: 'Nexenta',
+          serialnumber: 0,
+          rundeck_version: '',
+          puppetversion: '3.8.1'
         }
       end
 
@@ -43,10 +43,10 @@ describe 'rundeck' do
   context 'non-platform-specific config parameters' do
     let(:facts) do
       {
-        :osfamily        => 'RedHat',
-        :serialnumber    => 0,
-        :rundeck_version => '',
-        :puppetversion   => '3.8.1'
+        osfamily: 'RedHat',
+        serialnumber: 0,
+        rundeck_version: '',
+        puppetversion: '3.8.1'
       }
     end
 
@@ -55,8 +55,8 @@ describe 'rundeck' do
     describe 'setting auth_config ldap roleUsernameMemberAttribute' do
       let(:params) do
         {
-          :auth_types => ['ldap'],
-          :auth_config => {
+          auth_types: ['ldap'],
+          auth_config: {
             'ldap' => {
               'role_username_member_attribute' => 'memberUid'
             }
@@ -64,18 +64,18 @@ describe 'rundeck' do
         }
       end
       it { should contain_file('/etc/rundeck/jaas-auth.conf') }
-      it 'should generate valid content for jaas-auth.conf' do
+      it 'generates valid content for jaas-auth.conf' do
         content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
         expect(content).to include('roleUsernameMemberAttribute="memberUid"')
-        expect(content).to_not include('roleMemberAttribute')
+        expect(content).not_to include('roleMemberAttribute')
       end
     end
 
     describe 'setting auth_config ldap url' do
       let(:params) do
         {
-          :auth_types  => ['ldap'],
-          :auth_config => {
+          auth_types: ['ldap'],
+          auth_config: {
             'ldap'     => {
               'url'    => 'ldaps://myrealldap.example.com',
               'server' => 'fakeldap',
@@ -85,10 +85,10 @@ describe 'rundeck' do
         }
       end
       it { should contain_file('/etc/rundeck/jaas-auth.conf') }
-      it 'should generate valid content for jaas-auth.conf' do
+      it 'generates valid content for jaas-auth.conf' do
         content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
         expect(content).to include('providerUrl="ldaps://myrealldap.example.com"')
-        expect(content).to_not include('providerUrl="ldap://fakeldap:983"')
+        expect(content).not_to include('providerUrl="ldap://fakeldap:983"')
       end
     end
   end

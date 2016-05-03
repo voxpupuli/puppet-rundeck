@@ -1,8 +1,8 @@
 require 'spec_helper_acceptance'
 
 describe 'rundeck class' do
-  context 'default parameters on ubuntu', :if => fact('osfamily').eql?('Debian') do
-    it 'should work with no errors' do
+  context 'default parameters on ubuntu', if: fact('osfamily').eql?('Debian') do
+    it 'works with no errors' do
       pp = <<-EOS
       class { 'java':
         distribution => 'jre'
@@ -13,7 +13,7 @@ describe 'rundeck class' do
       EOS
 
       # Run it twice and test for idempotency
-      expect(apply_manifest(pp, :expect_changes => true).exit_code).to eq(2)
+      expect(apply_manifest(pp, expect_changes: true).exit_code).to eq(2)
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
@@ -26,8 +26,8 @@ describe 'rundeck class' do
     end
   end
 
-  context 'default parameters on centos', :if => fact('osfamily').eql?('RedHat') do
-    it 'should work with no errors' do
+  context 'default parameters on centos', if: fact('osfamily').eql?('RedHat') do
+    it 'works with no errors' do
       pp = <<-EOS
       class { 'java':
         distribution => 'jre'
@@ -38,7 +38,7 @@ describe 'rundeck class' do
       EOS
 
       # Run it twice and test for idempotency
-      expect(apply_manifest(pp).exit_code).to_not eq(1)
+      expect(apply_manifest(pp).exit_code).not_to eq(1)
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
 

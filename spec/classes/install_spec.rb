@@ -7,10 +7,10 @@ describe 'rundeck' do
         let(:params) { {} }
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => '3.8.1'
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: '3.8.1'
           }
         end
         plugin_dir = '/var/lib/rundeck/libext'
@@ -47,16 +47,16 @@ describe 'rundeck' do
   describe 'different user and group' do
     let(:params) do
       {
-        :user  => 'A1234',
-        :group => 'A1234'
+        user: 'A1234',
+        group: 'A1234'
       }
     end
     let(:facts) do
       {
-        :osfamily        => 'Debian',
-        :serialnumber    => 0,
-        :rundeck_version => '',
-        :puppetversion   => '3.8.1'
+        osfamily: 'Debian',
+        serialnumber: 0,
+        rundeck_version: '',
+        puppetversion: '3.8.1'
       }
     end
 

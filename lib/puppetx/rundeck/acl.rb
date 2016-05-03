@@ -124,15 +124,17 @@ module PuppetX
 
         def validate_app_actions(type, actions, property, _value = '')
           app_actions = {
-            'resource' => { 'project' => ['create'],
-                            'system'  => ['read'],
-                            'user' => ['admin'],
-                            'job'  => ['admin']
-                          },
+            'resource' => {
+              'project' => ['create'],
+              'system'  => ['read'],
+              'user'    => ['admin'],
+              'job'     => ['admin']
+            },
             'project' => { 'name' => %w(read configure delete import export delete_execution admin) },
-            'storage' => { 'name' => %w(create update read delete),
-                           'path' => %w(create update read delete)
-                         }
+            'storage' => {
+              'name' => %w(create update read delete),
+              'path' => %w(create update read delete)
+            }
           }
 
           case type

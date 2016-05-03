@@ -7,10 +7,10 @@ describe 'rundeck' do
         let(:params) { {} }
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :fqdn            => 'test.domain.com',
-            :serialnumber    => 0,
-            :rundeck_version => ''
+            osfamily: osfamily,
+            fqdn: 'test.domain.com',
+            serialnumber: 0,
+            rundeck_version: ''
           }
         end
 
@@ -49,9 +49,7 @@ by:
         CONFIG
 
         it do
-          should contain_file('/etc/rundeck/admin.aclpolicy').with(
-            'content' => default_acl
-        )
+          should contain_file('/etc/rundeck/admin.aclpolicy').with_content(default_acl)
         end
       end
     end

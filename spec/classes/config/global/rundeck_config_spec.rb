@@ -7,11 +7,11 @@ describe 'rundeck' do
         let(:params) { {} }
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :fqdn            => 'test.domain.com',
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: osfamily,
+            fqdn: 'test.domain.com',
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 

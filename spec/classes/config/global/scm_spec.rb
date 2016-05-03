@@ -3,11 +3,11 @@ require 'spec_helper'
 describe 'rundeck' do
   let(:facts) do
     {
-      :osfamily        => 'Debian',
-      :fqdn            => 'test.domain.com',
-      :serialnumber    => 0,
-      :rundeck_version => '',
-      :puppetversion   => Puppet.version
+      osfamily: 'Debian',
+      fqdn: 'test.domain.com',
+      serialnumber: 0,
+      rundeck_version: '',
+      puppetversion: Puppet.version
     }
   end
   describe 'add scm properties to project' do
@@ -52,20 +52,20 @@ describe 'rundeck' do
     }
     let(:params) do
       {
-        :projects => project_hash
+        projects: project_hash
       }
     end
 
     # content and meta data for passwords
     it { should contain_file('/var/lib/rundeck/projects/project_1/etc/scm-import.properties') }
     project_hash['project_1']['scm_import_properties'].each do |key, value|
-      it 'should generate valid content for scm-import.properties' do
+      it 'generates valid content for scm-import.properties' do
         content = catalogue.resource('file', '/var/lib/rundeck/projects/project_1/etc/scm-import.properties')[:content]
         expect(content).to include("#{key} = #{value}")
       end
     end
     project_hash['project_1']['scm_export_properties'].each do |key, value|
-      it 'should generate valid content for scm-export.properties' do
+      it 'generates valid content for scm-export.properties' do
         content = catalogue.resource('file', '/var/lib/rundeck/projects/project_1/etc/scm-export.properties')[:content]
         expect(content).to include("#{key} = #{value}")
       end

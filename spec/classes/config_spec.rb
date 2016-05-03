@@ -6,10 +6,10 @@ describe 'rundeck' do
       describe "rundeck::config class without any parameters on #{osfamily}" do
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => '3.8.1'
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: '3.8.1'
           }
         end
 
@@ -20,26 +20,26 @@ describe 'rundeck' do
         it { should contain_file('/etc/rundeck').with('ensure' => 'directory') }
 
         it { should contain_file('/etc/rundeck/jaas-auth.conf') }
-        it 'should generate valid content for jaas-auth.conf' do
+        it 'generates valid content for jaas-auth.conf' do
           content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
           expect(content).to include('PropertyFileLoginModule')
           expect(content).to include('/etc/rundeck/realm.properties')
         end
 
         it { should contain_file('/etc/rundeck/realm.properties') }
-        it 'should generate valid content for realm.properties' do
+        it 'generates valid content for realm.properties' do
           content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
           expect(content).to include('admin:admin,user,admin,architect,deploy,build')
         end
 
         it { should contain_file('/etc/rundeck/log4j.properties') }
-        it 'should generate valid content for log4j.propertiess' do
+        it 'generates valid content for log4j.propertiess' do
           content = catalogue.resource('file', '/etc/rundeck/log4j.properties')[:content]
           expect(content).to include('log4j.appender.server-logger.file=/var/log/rundeck/rundeck.log')
         end
 
         it { should contain_file('/etc/rundeck/profile') }
-        it 'should generate valid content for profile' do
+        it 'generates valid content for profile' do
           content = catalogue.resource('file', '/etc/rundeck/profile')[:content]
           expect(content).to include('-Drdeck.base=/var/lib/rundeck')
           expect(content).to include('-Drundeck.server.configDir=/etc/rundeck')
@@ -62,15 +62,15 @@ describe 'rundeck' do
       jvm_args = '-Dserver.http.port=8008 -Xms2048m -Xmx2048m -server'
       let(:facts) do
         {
-          :osfamily        => 'RedHat',
-          :serialnumber    => 0,
-          :rundeck_version => '',
-          :puppetversion   => '3.8.1'
+          osfamily: 'RedHat',
+          serialnumber: 0,
+          rundeck_version: '',
+          puppetversion: '3.8.1'
         }
       end
-      let(:params) { { :jvm_args => jvm_args } }
+      let(:params) { { jvm_args: jvm_args } }
       it { should contain_file('/etc/rundeck/profile') }
-      it 'should generate valid content for profile' do
+      it 'generates valid content for profile' do
         content = catalogue.resource('file', '/etc/rundeck/profile')[:content]
         expect(content).to include("RDECK_JVM=\"$RDECK_JVM #{jvm_args}\"")
       end

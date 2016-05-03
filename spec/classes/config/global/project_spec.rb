@@ -7,10 +7,10 @@ describe 'rundeck' do
         let(:params) { {} }
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 

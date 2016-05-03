@@ -69,19 +69,9 @@ define rundeck::config::file_keystore (
   }
 
   $key_fqpath = "${file_keystorage_dir}/content/keys/${path}"
+  $key_dirtree = dirtree($key_fqpath, $file_keystorage_dir)
   $meta_fqpath = "${file_keystorage_dir}/meta/keys/${path}"
-
-  exec { "create ${path}_${name} key path":
-    provider => shell,
-    command  => "mkdir -m 775 -p ${key_fqpath}; chown -R ${user}:${group} ${key_fqpath}",
-    creates  => $key_fqpath,
-  }
-
-  exec { "create ${path}_${name} meta path":
-    provider => shell,
-    command  => "mkdir -m 775 -p ${meta_fqpath}; chown -R ${user}:${group} ${meta_fqpath}",
-    creates  => $meta_fqpath,
-  }
+  $meta_dirtree = dirtree($meta_fqpath, $file_keystorage_dir)
 
   File {
     ensure => present,
@@ -90,15 +80,17 @@ define rundeck::config::file_keystore (
     group  => $group,
   }
 
+  ensure_resource('file', [$meta_dirtree, $key_dirtree], {'ensure' => 'directory'})
+
   file { "${key_fqpath}/${name}.${data_type}":
     content => $value,
-    require => Exec["create ${path}_${name} key path"],
     replace => false,
+    require => File[$key_fqpath],
   }
 
   file { "${meta_fqpath}/${name}.${data_type}":
     content => template('rundeck/file_keystorage_meta.erb'),
-    require => Exec["create ${path}_${name} meta path"],
     replace => false,
+    require => File[$meta_fqpath],
   }
 }
