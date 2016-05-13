@@ -16,14 +16,24 @@ dataSource {
   <%- end -%>
 }
 
-<%- if !@mail_config.empty? %>
+<%- if !@mail_config.empty? && @mail_config.keys != ['defaults.from'] %>
 grails {
   mail {
+    <%- if @mail_config['host'] -%>
     host = "<%= @mail_config['host'] %>"
+    <%- end -%>
+    <%- if @mail_config['username'] -%>
     username = "<%= @mail_config['username'] %>"
+    <%- end -%>
+    <%- if @mail_config['port'] -%>
     port = <%= @mail_config['port'] %>
+    <%- end -%>
+    <%- if @mail_config['password'] -%>
     password = "<%= @mail_config['password'] %>"
+    <%- end -%>
+    <%- if @mail_config['props'] -%>
     props = [<% @mail_config['props'].each do |k,v| -%>"<%= k %>":"<%= v %>",<% end %>]
+    <%- end -%>
   }
 }
 <%- end -%>
