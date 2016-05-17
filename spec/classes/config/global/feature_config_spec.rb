@@ -9,24 +9,24 @@ describe 'rundeck' do
 
       let(:facts) do
         {
-          osfamily: osfamily,
-          fqdn: 'test.domain.com',
-          serialnumber: 0,
-          rundeck_version: '',
-          puppetversion: Puppet.version
+          :osfamily        => osfamily,
+          :fqdn            => 'test.domain.com',
+          :serialnumber    => 0,
+          :rundeck_version => '',
+          :puppetversion   => Puppet.version
         }
       end
 
       let(:params) do
         {
-          feature_config: feature_config_hash
+          :feature_config => feature_config_hash
         }
       end
 
       # content and meta data for passwords
-      it 'generates feature_config content for rundeck-config.groovy' do
+      it 'should generate feature_config content for rundeck-config.groovy' do
         content = catalogue.resource('file', '/etc/rundeck/rundeck-config.groovy')[:content]
-        expect(content).to include('feature.incubator.parallelWorkflowStrategy = "true"')
+        expect(content).to include('feature.incubator.parallelWorkflowStrategy = true')
       end
     end
   end
