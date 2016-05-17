@@ -152,6 +152,7 @@ class rundeck (
   $deb_download                 = $rundeck::params::deb_download,
   $file_keystorage_dir          = $rundeck::params::file_keystorage_dir,
   $file_keystorage_keys         = $rundeck::params::file_keystorage_keys,
+  $feature_config               = $rundeck::params::feature_config,
   $framework_config             = $rundeck::params::framework_config,
   $grails_server_url            = $rundeck::params::grails_server_url,
   $group                        = $rundeck::params::group,

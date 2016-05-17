@@ -60,3 +60,7 @@ rundeck.security.authorization.preauthenticated.delimiter = "<%= @preauthenticat
 <%- @gui_config.sort.each do |k,v| -%>
 <%= k %> = "<%= v %>"
 <%- end -%>
+
+<%- @feature_config.sort.each do |k,v| -%>
+<%= k %> = "<%= v %>"
+<%- end -%>
