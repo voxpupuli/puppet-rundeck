@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rundeck::config::aclpolicyfile', :type => :define do
+describe 'rundeck::config::aclpolicyfile', type: :define do
   test_policies = [
     {
       'description' => 'Admin, all access',
@@ -36,7 +36,7 @@ describe 'rundeck::config::aclpolicyfile', :type => :define do
     let(:title) { 'defaultPolicy' }
     let(:params) do
       {
-        :acl_policies => test_policies
+        acl_policies: test_policies
       }
     end
 
@@ -51,10 +51,10 @@ describe 'rundeck::config::aclpolicyfile', :type => :define do
     let(:title) { 'myPolicy' }
     let(:params) do
       {
-        :acl_policies   => test_policies,
-        :properties_dir => '/etc/rundeck-acl',
-        :owner          => 'myUser',
-        :group          => 'myGroup'
+        acl_policies: test_policies,
+        properties_dir: '/etc/rundeck-acl',
+        owner: 'myUser',
+        group: 'myGroup'
       }
     end
 

@@ -7,11 +7,11 @@ describe 'rundeck' do
         let(:params) { {} }
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :fqdn            => 'test.domain.com',
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: osfamily,
+            fqdn: 'test.domain.com',
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 
@@ -36,7 +36,7 @@ describe 'rundeck' do
         it { should contain_file('/etc/rundeck/framework.properties') }
 
         framework_details.each do |key, value|
-          it 'should generate valid content for framework.properties' do
+          it 'generates valid content for framework.properties' do
             content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
             expect(content).to include("#{key} = #{value}")
           end
@@ -49,22 +49,22 @@ describe 'rundeck' do
     describe 'add plugin configuration for the logstash plugin' do
       let(:params) do
         {
-          :framework_config => {
+          framework_config: {
             'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
           }
         }
       end
       let(:facts) do
         {
-          :osfamily        => 'Debian',
-          :fqdn            => 'test.domain.com',
-          :serialnumber    => 0,
-          :rundeck_version => '',
-          :puppetversion   => Puppet.version
+          osfamily: 'Debian',
+          fqdn: 'test.domain.com',
+          serialnumber: 0,
+          rundeck_version: '',
+          puppetversion: Puppet.version
         }
       end
 
-      it 'should generate valid content for framework.properties' do
+      it 'generates valid content for framework.properties' do
         content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
         expect(content).to include('framework.server.name = test.domain.com')
         expect(content).to include('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')

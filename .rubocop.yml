@@ -1,8 +1,11 @@
+require: rubocop-rspec
 AllCops:
+  TargetRubyVersion: 1.9
   Include:
     - ./**/*.rb
   Exclude:
     - vendor/**/*
+    - .vendor/**/*
     - pkg/**/*
     - spec/fixtures/**/*
     - files/**/*
@@ -43,10 +46,6 @@ Style/TrailingCommaInLiteral:
 Style/ClosingParenthesisIndentation:
   Enabled: false
 
-# we still support ruby 1.8
-Style/HashSyntax:
-  Enabled: false
-
 Lint/AmbiguousRegexpLiteral:
   Enabled: true
 Style/RegexpLiteral:
@@ -68,4 +67,14 @@ Style/BlockDelimiters:
   Enabled: False
 
 Style/MultilineBlockLayout:
+  Enabled: False
+
+# Rspec
+
+# We don't use rspec in this way
+RSpec/DescribeClass:
+  Enabled: False
+
+# Example length is not necessarily an indicator of code quality
+RSpec/ExampleLength:
   Enabled: False

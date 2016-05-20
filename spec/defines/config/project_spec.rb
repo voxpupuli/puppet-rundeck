@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rundeck::config::project', :type => :define do
+describe 'rundeck::config::project', type: :define do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::project definition without any parameters on #{osfamily}" do
@@ -9,24 +9,24 @@ describe 'rundeck::config::project', :type => :define do
         let(:title) { 'test' }
         let(:params) do
           {
-            :framework_config => {
+            framework_config: {
               'framework.projects.dir' => projects_dir,
               'framework.ssh.keypath'  => '/var/lib/rundeck/.ssh/id_rsa'
             },
-            :file_copier_provider => 'jsch-scp',
-            :resource_sources => {},
-            :node_executor_provider => 'jsch-ssh',
-            :user  => 'rundedck',
-            :group => 'rundeck'
+            file_copier_provider: 'jsch-scp',
+            resource_sources: {},
+            node_executor_provider: 'jsch-ssh',
+            user: 'rundedck',
+            group: 'rundeck'
           }
         end
 
         let(:facts) do
           {
-            :osfamily        => osfamily,
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 

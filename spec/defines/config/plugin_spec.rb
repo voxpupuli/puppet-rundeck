@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rundeck::config::plugin', :type => :define do
+describe 'rundeck::config::plugin', type: :define do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::plugin definition without any parameters on #{osfamily}" do
@@ -17,10 +17,10 @@ describe 'rundeck::config::plugin', :type => :define do
 
         let(:facts) do
           {
-            :osfamily        => 'Debian',
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: 'Debian',
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 
@@ -54,10 +54,10 @@ describe 'rundeck::config::plugin', :type => :define do
 
         let(:facts) do
           {
-            :osfamily        => 'Debian',
-            :serialnumber    => 0,
-            :rundeck_version => '',
-            :puppetversion   => Puppet.version
+            osfamily: 'Debian',
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
           }
         end
 

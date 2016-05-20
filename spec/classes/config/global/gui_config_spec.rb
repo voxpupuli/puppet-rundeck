@@ -12,22 +12,22 @@ describe 'rundeck' do
 
       let(:facts) do
         {
-          :osfamily        => osfamily,
-          :fqdn            => 'test.domain.com',
-          :serialnumber    => 0,
-          :rundeck_version => '',
-          :puppetversion   => Puppet.version
+          osfamily: osfamily,
+          fqdn: 'test.domain.com',
+          serialnumber: 0,
+          rundeck_version: '',
+          puppetversion: Puppet.version
         }
       end
 
       let(:params) do
         {
-          :gui_config => gui_config_hash
+          gui_config: gui_config_hash
         }
       end
 
       # content and meta data for passwords
-      it 'should generate gui_config content for rundeck-config.groovy' do
+      it 'generates gui_config content for rundeck-config.groovy' do
         content = catalogue.resource('file', '/etc/rundeck/rundeck-config.groovy')[:content]
         expect(content).to include('rundeck.gui.title = "Test title"')
         expect(content).to include('rundeck.gui.brand.html = "<b>App</b>"')
