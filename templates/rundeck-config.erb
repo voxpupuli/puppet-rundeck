@@ -61,6 +61,8 @@ rundeck.security.authorization.preauthenticated.delimiter = "<%= @preauthenticat
 <%= k %> = "<%= v %>"
 <%- end -%>
 
+<%- if @feature_config.is_a? Hash -%>
 <%- @feature_config.sort.each do |k,v| -%>
 <%= k %> = "<%= v %>"
+<%- end -%>
 <%- end -%>
