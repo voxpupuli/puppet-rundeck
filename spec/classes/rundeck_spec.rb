@@ -16,10 +16,10 @@ describe 'rundeck' do
 
         it { should compile }
         it { should contain_class('rundeck::params') }
-        it { should contain_class('rundeck::install').that_comes_before('rundeck::config') }
+        it { should contain_class('rundeck::install').that_comes_before('Class[rundeck::config]') }
         it { should contain_class('rundeck::config') }
-        it { should contain_class('rundeck::service').that_comes_before('rundeck') }
-        it { should contain_class('rundeck').that_requires('rundeck::service') }
+        it { should contain_class('rundeck::service').that_comes_before('Class[rundeck]') }
+        it { should contain_class('rundeck').that_requires('Class[rundeck::service]') }
       end
     end
   end
