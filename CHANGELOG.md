@@ -1,3 +1,47 @@
+# 2016-05-26 - Release 2.3.0
+### Summary
+  - Rundeck [preauthenticated-mode](http://rundeck.org/docs/administration/authenticating-users.html#preauthenticated-mode) mode config.
+  - Several improvements and bugfixes.
+
+#### Features
+- Add ability to specify different project and key storage types [\#167](https://github.com/voxpupuli/puppet-rundeck/pull/167) ([jyaworski](https://github.com/jyaworski))
+- Add support for customizing profile [\#174](https://github.com/voxpupuli/puppet-rundeck/pull/174) ([danifr](https://github.com/danifr))
+- Support preauthenticated mode config [\#175](https://github.com/voxpupuli/puppet-rundeck/pull/175) ([danifr](https://github.com/danifr))
+- Added management of scm-import.properties [\#193](https://github.com/voxpupuli/puppet-rundeck/pull/193) ([dalisch](https://github.com/dalisch))
+- Add Rundeck GUI customization properties [\#210](https://github.com/voxpupuli/puppet-rundeck/pull/210) ([dalisch](https://github.com/dalisch))
+- Add note and example about using an external MySQL DB [\#213](https://github.com/voxpupuli/puppet-rundeck/pull/213) ([zleswomp](https://github.com/zleswomp))
+- Add CentOS 7 to tested platforms [\#214](https://github.com/voxpupuli/puppet-rundeck/pull/214) ([zleswomp](https://github.com/zleswomp))
+- Add ability to specify node executor settings [\#217](https://github.com/voxpupuli/puppet-rundeck/pull/217) ([DevOpsFu](https://github.com/DevOpsFu))
+- Add param to configure service state [\#223](https://github.com/voxpupuli/puppet-rundeck/pull/223) ([danifr](https://github.com/danifr))
+- Do not write non-existent mail configuration [\#234](https://github.com/voxpupuli/puppet-rundeck/pull/234) ([ak0ska](https://github.com/ak0ska))
+- Added option to template : 'forceBindingLoginUseRootContextForRoles' [\#228](https://github.com/voxpupuli/puppet-rundeck/pull/228) ([zlanyi](https://github.com/zlanyi))
+
+#### Bugfixes
+- Fix\(validate\_rd\_policy\) expand relative path for require [\#201](https://github.com/voxpupuli/puppet-rundeck/pull/201) ([igalic](https://github.com/igalic))
+- Fix indentation for nodename property in aclpolicy template [\#209](https://github.com/voxpupuli/puppet-rundeck/pull/209) ([cy4n](https://github.com/cy4n))
+- Fix audit loglevel 207 [\#212](https://github.com/voxpupuli/puppet-rundeck/pull/212) ([remixtj](https://github.com/remixtj))
+- Documentation fixes [\#215](https://github.com/voxpupuli/puppet-rundeck/pull/215) ([zleswomp](https://github.com/zleswomp))
+- Correcting values of project.organization and projection.description [\#221](https://github.com/voxpupuli/puppet-rundeck/pull/221) ([brmorris](https://github.com/brmorris))
+- Simple fix aclpolicy.erb template [\#222](https://github.com/voxpupuli/puppet-rundeck/pull/222) ([devcfgc](https://github.com/devcfgc))
+
+#### Improvements
+- Simplify the acl template [\#173](https://github.com/voxpupuli/puppet-rundeck/pull/173) ([grafjo](https://github.com/grafjo))
+- Default policy management is now optional [\#184](https://github.com/voxpupuli/puppet-rundeck/pull/184) ([bovy89](https://github.com/bovy89))
+- Linting changes and rubocop updates [\#185](https://github.com/voxpupuli/puppet-rundeck/pull/185) ([jyaworski](https://github.com/jyaworski))
+- Update from voxpupuli modulesync\_config [\#187](https://github.com/voxpupuli/puppet-rundeck/pull/187) ([jyaworski](https://github.com/jyaworski))
+- Order variables alphabetically [\#189](https://github.com/voxpupuli/puppet-rundeck/pull/189) ([danifr](https://github.com/danifr))
+- Remove auth-constraint from web.xml if preauthenticated mode enabled [\#190](https://github.com/voxpupuli/puppet-rundeck/pull/190) ([danifr](https://github.com/danifr))
+- Ensure rundeck directories are owned by $user and $group [\#191](https://github.com/voxpupuli/puppet-rundeck/pull/191) ([danifr](https://github.com/danifr))
+- Revert "Simplify the acl template" [\#195](https://github.com/voxpupuli/puppet-rundeck/pull/195) ([jyaworski](https://github.com/jyaworski))
+- Pin rake to avoid rubocop/rake 11 incompatibility [\#200](https://github.com/voxpupuli/puppet-rundeck/pull/200) ([roidelapluie](https://github.com/roidelapluie))
+- Refactored file permissions management [\#204](https://github.com/voxpupuli/puppet-rundeck/pull/204) ([dalisch](https://github.com/dalisch))
+- Update \_auth\_file.erb \(fixes \#206\) [\#211](https://github.com/voxpupuli/puppet-rundeck/pull/211) ([remixtj](https://github.com/remixtj))
+- Amend default policy for full storage control [\#216](https://github.com/voxpupuli/puppet-rundeck/pull/216) ([zleswomp](https://github.com/zleswomp))
+- Automate configuration of SCM export properties in a project [\#218](https://github.com/voxpupuli/puppet-rundeck/pull/218) ([dalisch](https://github.com/dalisch))
+- Allow disabling download of debian package. [\#219](https://github.com/voxpupuli/puppet-rundeck/pull/219) ([aequitas](https://github.com/aequitas))
+- Simple fix qualify command [\#220](https://github.com/voxpupuli/puppet-rundeck/pull/220) ([devcfgc](https://github.com/devcfgc))
+- Update from voxpupuli modulesync\_config [\#227](https://github.com/voxpupuli/puppet-rundeck/pull/227) ([jyaworski](https://github.com/jyaworski))
+
 #2016-02-19 - Release 2.2.0
 ### Summary
   New defined type for managing file-based keystores and lots of bugfixes.
