@@ -1,12 +1,12 @@
 {
-  "name":         "puppet-rundeck",
-  "version":      "3.0.0",
-  "author":       "voxpupuli",
-  "license":      "Apache-2.0",
-  "summary":      "Module for managing the installatation and configuration of the rundeck orchestration tool",
-  "source":       "https://github.com/voxpupuli/puppet-rundeck.git",
+  "name": "puppet-rundeck",
+  "version": "3.0.1-rc0",
+  "author": "voxpupuli",
+  "license": "Apache-2.0",
+  "summary": "Module for managing the installatation and configuration of the rundeck orchestration tool",
+  "source": "https://github.com/voxpupuli/puppet-rundeck.git",
   "project_page": "https://github.com/voxpupuli/puppet-rundeck",
-  "issues_url":   "https://github.com/voxpupuli/puppet-rundeck/issues",
+  "issues_url": "https://github.com/voxpupuli/puppet-rundeck/issues",
   "tags": [
     "orchestration",
     "rundeck",
@@ -15,16 +15,35 @@
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
-      "operatingsystemrelease": ["5.0","6.0","7.0"]
+      "operatingsystemrelease": [
+        "5.0",
+        "6.0",
+        "7.0"
+      ]
     },
-    { "operatingsystem": "CentOS",
-      "operatingsystemrelease": ["5.0","6.0", "7.0"]
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5.0",
+        "6.0",
+        "7.0"
+      ]
     },
-    { "operatingsystem": "Debian",
-      "operatingsystemrelease": ["6.0","7.0", "8.0"]
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6.0",
+        "7.0",
+        "8.0"
+      ]
     },
-    { "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": ["12.04","14.04", "16.04"]
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04",
+        "16.04"
+      ]
     }
   ],
   "dependencies": [
