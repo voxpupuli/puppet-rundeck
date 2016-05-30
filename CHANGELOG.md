@@ -1,5 +1,6 @@
-# 2016-05-26 - Release 2.3.0
+# 2016-05-26 - Release 3.0.0
 ### Summary
+  - We dropped Ruby1.8 support!
   - Rundeck [preauthenticated-mode](http://rundeck.org/docs/administration/authenticating-users.html#preauthenticated-mode) mode config.
   - Several improvements and bugfixes.
 
