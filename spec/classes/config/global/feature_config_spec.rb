@@ -26,7 +26,7 @@ describe 'rundeck' do
       # content and meta data for passwords
       it 'generates feature_config content for rundeck-config.groovy' do
         content = catalogue.resource('file', '/etc/rundeck/rundeck-config.groovy')[:content]
-        expect(content).to include('feature.incubator.parallelWorkflowStrategy = true')
+        expect(content).to include('feature.incubator.parallelWorkflowStrategy = "true"')
       end
     end
   end
