@@ -31,6 +31,9 @@ describe 'rundeck' do
       }
     end
 
+    # base key storage directory needs to be there first
+    it { should contain_file('/var/lib/rundeck/var/storage') }
+
     # content and meta data for passwords
     it { should contain_file('/var/lib/rundeck/var/storage/content/keys/foo/bar/password_key.password').with_content(/gobbledygook/) }
     it { should contain_file('/var/lib/rundeck/var/storage/meta/keys/foo/bar/password_key.password').with_content(%r{application/x-rundeck-data-password}) }

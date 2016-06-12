@@ -61,6 +61,7 @@ define rundeck::config::file_keystore (
 
   validate_re($data_type, [ 'password', 'public', 'private' ])
   validate_re($content_type, [ 'application/x-rundeck-data-password', 'application/pgp-keys', 'application/octet-stream' ])
+  ensure_resource('file', [ $file_keystorage_dir ], { 'ensure' => 'directory' })
 
   if !$content_size {
     $content_size_value = size($value)
