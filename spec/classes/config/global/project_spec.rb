@@ -29,7 +29,7 @@ describe 'rundeck' do
             should contain_ini_setting(key).with(
               'path'    => '/etc/rundeck/project.properties',
               'setting' => key,
-              'value'   => value,
+              'value'   => value
             )
           end
         end
