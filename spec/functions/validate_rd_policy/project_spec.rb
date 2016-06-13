@@ -22,7 +22,7 @@ describe 'validate_rd_policy' do
     end
 
     describe 'invalid policy' do
-      it { is_expected.to run.with_params({}).and_raise_error(Puppet::ParseError, //) }
+      it { is_expected.to run.with_params({}).and_raise_error(Puppet::ParseError, %r{}) }
 
       context 'description' do
         it do
@@ -189,7 +189,7 @@ describe 'validate_rd_policy' do
                                            'resource' => [
                                              { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:job can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:job can only contain actions})
         end
       end
 
@@ -203,7 +203,7 @@ describe 'validate_rd_policy' do
                                            'resource' => [
                                              { 'equals' => { 'kind' => 'node' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:node can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:node can only contain actions})
         end
       end
 
@@ -217,7 +217,7 @@ describe 'validate_rd_policy' do
                                            'resource' => [
                                              { 'equals' => { 'kind' => 'event' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:event can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:event can only contain actions})
         end
       end
 
@@ -298,7 +298,7 @@ describe 'validate_rd_policy' do
                                            'adhoc' => [
                                              { 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:adhoc can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:adhoc can only contain actions})
         end
       end
 
@@ -395,7 +395,7 @@ describe 'validate_rd_policy' do
                                            'job' => [
                                              { 'equals' => { 'name' => 'test-job' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:job name:test-job can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:job name:test-job can only contain actions})
         end
       end
 
@@ -409,7 +409,7 @@ describe 'validate_rd_policy' do
                                            'job' => [
                                              { 'equals' => { 'group' => 'test-group' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:job group:test-group can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:job group:test-group can only contain actions})
         end
       end
 
@@ -506,7 +506,7 @@ describe 'validate_rd_policy' do
                                            'node' => [
                                              { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:node can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:node can only contain actions})
         end
       end
 

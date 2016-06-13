@@ -14,7 +14,7 @@ describe 'rundeck' do
           }
         end
 
-        default_acl = <<-CONFIG.gsub(/[^\S\n]{10}/, '')
+        default_acl = <<-CONFIG.gsub(%r{[^\S\n]{10}}, '')
 description: 'Admin, all access'
 context:
   project: '.*'

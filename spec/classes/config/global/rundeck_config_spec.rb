@@ -15,7 +15,7 @@ describe 'rundeck' do
           }
         end
 
-        default_config = <<-CONFIG.gsub(/[^\S\n]{10}/, '')
+        default_config = <<-CONFIG.gsub(%r{[^\S\n]{10}}, '')
           loglevel.default = "INFO"
           rdeck.base = "/var/lib/rundeck"
           rss.enabled = "false"
