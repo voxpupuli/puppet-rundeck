@@ -36,7 +36,7 @@ describe 'rundeck' do
         }
       end
 
-      it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
+      it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
     end
   end
 
