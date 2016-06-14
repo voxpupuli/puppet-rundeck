@@ -64,22 +64,26 @@
 # }
 #
 define rundeck::config::resource_source(
-  $directory           = $rundeck::params::default_resource_dir,
-  $include_server_node = $rundeck::params::include_server_node,
-  $mapping_params      = '',
-  $number              = '1',
-  $project_name        = undef,
-  $resource_format     = $rundeck::params::resource_format,
-  $running_only        = true,
-  $script_args         = '',
-  $script_args_quoted  = $rundeck::params::script_args_quoted,
-  $script_file         = '',
-  $script_interpreter  = $rundeck::params::script_interpreter,
-  $source_type         = $rundeck::params::default_source_type,
-  $url                 = '',
-  $url_cache           = $rundeck::params::url_cache,
-  $url_timeout         = $rundeck::params::url_timeout,
-  $use_default_mapping = true,
+  $directory                          = $rundeck::params::default_resource_dir,
+  $include_server_node                = $rundeck::params::include_server_node,
+  $mapping_params                     = '',
+  $number                             = '1',
+  $project_name                       = undef,
+  $resource_format                    = $rundeck::params::resource_format,
+  $running_only                       = true,
+  $script_args                        = '',
+  $script_args_quoted                 = $rundeck::params::script_args_quoted,
+  $script_file                        = '',
+  $script_interpreter                 = $rundeck::params::script_interpreter,
+  $source_type                        = $rundeck::params::default_source_type,
+  $url                                = '',
+  $url_cache                          = $rundeck::params::url_cache,
+  $url_timeout                        = $rundeck::params::url_timeout,
+  $use_default_mapping                = true,
+  $puppet_enterprise_host             = '',
+  $puppet_enterprise_port             = '',
+  $puppet_enterprise_mapping_file     = '',
+  $puppet_enterprise_metrics_interval = '',
 ) {
 
   include ::rundeck
@@ -96,7 +100,7 @@ define rundeck::config::resource_source(
 
   validate_string($project_name)
   validate_integer($number)
-  validate_re($source_type, ['^file$', '^directory$', '^url$', '^script$', '^aws-ec2$'])
+  validate_re($source_type, ['^file$', '^directory$', '^url$', '^script$', '^aws-ec2$', '^puppet-enterprise$'])
   validate_bool($include_server_node)
   validate_absolute_path($projects_dir)
   validate_re($user, '[a-zA-Z0-9]{3,}')
@@ -190,7 +194,6 @@ define rundeck::config::resource_source(
       }
     }
     'url': {
-
       validate_string($url)
       validate_integer($url_timeout)
       validate_bool($url_cache)
@@ -316,6 +319,44 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.runningOnly",
         value   => bool2str($running_only),
+        require => File[$properties_file],
+      }
+    }
+    'puppet-enterprise': {
+      validate_string($puppet_enterprise_host)
+      validate_integer($puppet_enterprise_port)
+      validate_integer($puppet_enterprise_metrics_interval)
+      validate_absolute_path($puppet_enterprise_mapping_file)
+      ini_setting { "${name}::resources.source.${number}.config.PROPERTY_MAPPING_FILE":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.PROPERTY_MAPPING_FILE",
+        value   => $puppet_enterprise_mapping_file,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_HOST":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_HOST",
+        value   => $puppet_enterprise_host,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.PROPERTY_METRICS_INTERVAL":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.PROPERTY_METRICS_INTERVAL",
+        value   => $puppet_enterprise_metrics_interval,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_PORT":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_PORT",
+        value   => $puppet_enterprise_port,
         require => File[$properties_file],
       }
     }

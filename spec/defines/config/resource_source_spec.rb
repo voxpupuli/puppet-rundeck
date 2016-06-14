@@ -183,6 +183,54 @@ describe 'rundeck::config::resource_source', type: :define do
           end
         end
       end
+
+      describe "rundeck::config::resource definition with Puppet Enterprise parameters on #{osfamily}" do
+        let(:title) { 'source one' }
+        let(:params) do
+          {
+            'project_name' => 'test',
+            'include_server_node' => false,
+            'resource_format' => 'resourcexml',
+            'url_cache' => true,
+            'url_timeout' => '50',
+            'directory' => '/foo/bar/resources',
+            'script_args_quoted' => true,
+            'script_interpreter' => '/bin/bash',
+
+            'source_type' => 'puppet-enterprise',
+            'puppet_enterprise_host' => 'localhost',
+            'puppet_enterprise_port' => '8081',
+            'puppet_enterprise_mapping_file' => '/var/local/resource-mapping.json',
+            'puppet_enterprise_metrics_interval' => '15'
+          }
+        end
+        let(:facts) do
+          {
+            osfamily: osfamily,
+            serialnumber: 0,
+            rundeck_version: '',
+            puppetversion: Puppet.version
+          }
+        end
+
+        puppet_enterprise_details = {
+          'resources.source.1.type' => 'puppet-enterprise',
+          'resources.source.1.config.PROPERTY_PUPPETDB_HOST' => 'localhost',
+          'resources.source.1.config.PROPERTY_PUPPETDB_PORT' => '8081',
+          'resources.source.1.config.PROPERTY_METRICS_INTERVAL' => '15',
+          'resources.source.1.config.PROPERTY_MAPPING_FILE' => '/var/local/resource-mapping.json'
+        }
+
+        puppet_enterprise_details.each do |key, value|
+          it do
+            should contain_ini_setting("source one::#{key}").with(
+              'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
+              'setting' => key,
+              'value'   => value
+            )
+          end
+        end
+      end
     end
   end
 end
