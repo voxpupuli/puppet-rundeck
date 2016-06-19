@@ -14,7 +14,7 @@ describe 'rundeck' do
           }
         end
 
-        it { should compile }
+        it { should compile.with_all_deps }
         it { should contain_class('rundeck::params') }
         it { should contain_class('rundeck::install').that_comes_before('Class[rundeck::config]') }
         it { should contain_class('rundeck::config') }
