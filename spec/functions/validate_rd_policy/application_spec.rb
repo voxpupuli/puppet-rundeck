@@ -22,7 +22,7 @@ describe 'validate_rd_policy' do
     end
 
     describe 'invalid policy' do
-      it { is_expected.to run.with_params({}).and_raise_error(Puppet::ParseError, //) }
+      it { is_expected.to run.with_params({}).and_raise_error(Puppet::ParseError, %r{}) }
 
       context 'description' do
         it do
@@ -190,7 +190,7 @@ describe 'validate_rd_policy' do
                                              { 'equals' => { 'kind' => 'project' }, 'allow' => ['x'] }
                                            ]
                                          },
-                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:project can only contain actions/)
+                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:project can only contain actions})
         end
       end
 
@@ -205,7 +205,7 @@ describe 'validate_rd_policy' do
                                              { 'equals' => { 'kind' => 'system' }, 'allow' => ['x'] }
                                            ]
                                          },
-                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:system can only contain actions/)
+                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:system can only contain actions})
         end
       end
 
@@ -219,7 +219,7 @@ describe 'validate_rd_policy' do
                                            'resource' => [
                                              { 'equals' => { 'kind' => 'user' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:user can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:user can only contain actions})
         end
       end
 
@@ -233,7 +233,7 @@ describe 'validate_rd_policy' do
                                            'resource' => [
                                              { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] }
                                            ]
-                                         }).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:resource kind:job can only contain actions/)
+                                         }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:job can only contain actions})
         end
       end
 
@@ -331,7 +331,7 @@ describe 'validate_rd_policy' do
                                              { 'equals' => { 'name' => 'test' }, 'allow' => ['x'] }
                                            ]
                                          },
-                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:project name can only contain actions/)
+                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:project name can only contain actions})
         end
       end
 
@@ -429,7 +429,7 @@ describe 'validate_rd_policy' do
                                              { 'equals' => { 'name' => 'test' }, 'allow' => ['x'] }
                                            ]
                                          },
-                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:storage name can only contain actions/)
+                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:storage name can only contain actions})
         end
       end
 
@@ -444,7 +444,7 @@ describe 'validate_rd_policy' do
                                              { 'equals' => { 'path' => 'test' }, 'allow' => ['x'] }
                                            ]
                                          },
-                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, /^The policy is invalid - for:storage path can only contain actions/)
+                                         'by' => [{ 'group' => 'admins' }]).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:storage path can only contain actions})
         end
       end
 

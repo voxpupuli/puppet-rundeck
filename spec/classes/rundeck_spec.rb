@@ -14,7 +14,7 @@ describe 'rundeck' do
           }
         end
 
-        it { should compile }
+        it { should compile.with_all_deps }
         it { should contain_class('rundeck::params') }
         it { should contain_class('rundeck::install').that_comes_before('Class[rundeck::config]') }
         it { should contain_class('rundeck::config') }
@@ -36,7 +36,7 @@ describe 'rundeck' do
         }
       end
 
-      it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
+      it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
     end
   end
 

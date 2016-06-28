@@ -25,19 +25,19 @@ describe 'rundeck' do
 
         it do
           should contain_file('/var/lib/rundeck').with(
-            'ensure' => 'directory',
+            'ensure' => 'directory'
           )
         end
 
         it do
           should contain_file(plugin_dir).with(
-            'ensure' => 'directory',
+            'ensure' => 'directory'
           )
         end
 
         it do
           should contain_user('rundeck').with(
-            'ensure' => 'present',
+            'ensure' => 'present'
           )
         end
       end
@@ -62,25 +62,25 @@ describe 'rundeck' do
 
     it do
       should contain_group('A1234').with(
-        'ensure' => 'present',
+        'ensure' => 'present'
       )
     end
 
     it do
       should contain_group('rundeck').with(
-        'ensure' => 'absent',
+        'ensure' => 'absent'
       )
     end
 
     it do
       should contain_user('A1234').with(
-        'ensure' => 'present',
+        'ensure' => 'present'
       )
     end
 
     it do
       should contain_user('rundeck').with(
-        'ensure' => 'absent',
+        'ensure' => 'absent'
       )
     end
   end

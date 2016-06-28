@@ -33,7 +33,7 @@ describe 'rundeck' do
           should contain_ini_setting(key).with(
             'path' => '/etc/rundeck/ssl/ssl.properties',
             'setting' => key,
-            'value'   => value,
+            'value'   => value
           )
         end
       end
