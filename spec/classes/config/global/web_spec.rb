@@ -25,13 +25,10 @@ describe 'rundeck' do
   end
 
   context 'with security_role array' do
-    security_role = %w(DevOps roots)
-    let(:params) { { security_role: 'security_role' } }
-
-    security_role.each do |role|
-      it 'generates augeas resource with specified security_roles' do
-        should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/#text[last()] '\t\t'", "set web-app/security-role/role-name[last()+1]/#text '#{role}'", "set web-app/security-role/#text[last()+1] '\t'"])
-      end
+    let(:params) { { security_role: ['DevOps', 'roots'] } }
+    it 'generates augeas resource with specified security_role array' do
+      should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'DevOps'"])
+      should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'roots'"])
     end
   end
 
