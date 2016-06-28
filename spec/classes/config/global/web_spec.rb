@@ -24,14 +24,6 @@ describe 'rundeck' do
     end
   end
 
-  context 'with security_role array' do
-    let(:params) { { security_role: ['DevOps', 'roots'] } }
-    it 'generates augeas resource with specified security_role array' do
-      should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'DevOps'"])
-      should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'roots'"])
-    end
-  end
-
   context 'with session_timeout param' do
     let(:params) { { session_timeout: '60' } }
 
