@@ -17,15 +17,31 @@
 # [*session_timeout*]
 #   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 #
+# [*rundeck_config_global_web_sec_roles_true*]
+# Boolen value if you want to have more roles in web.xml
+#
+# [*rundeck_config_global_web_sec_roles*]
+# Array value if you set the value 'rundeck_config_global_web_sec_roles_true' to true and you have in hiera yaml file array:
+#  rundeck::config::global::web::security_roles:
+#    - DevOps
+#    - roots_ito
+#
 class rundeck::config::global::web (
-  $security_role   = $rundeck::params::security_role,
-  $session_timeout = $rundeck::params::session_timeout,
+  $security_role                            = $rundeck::params::security_role,
+  $session_timeout                          = $rundeck::params::session_timeout,
+  $rundeck_config_global_web_sec_roles_true = $rundeck::rundeck_config_global_web_sec_roles_true,
+  $rundeck_config_global_web_sec_roles      = $rundeck::rundeck_config_global_web_sec_roles,
 ) inherits rundeck::params {
 
-  augeas { 'rundeck/web.xml/security-role/role-name':
-    lens    => 'Xml.lns',
-    incl    => $rundeck::params::web_xml,
-    changes => [ "set web-app/security-role/role-name/#text '${security_role}'" ],
+  if $rundeck_config_global_web_sec_roles_true {
+    rundeck::config::global::securityroles { $rundeck_config_global_web_sec_roles: }
+  }
+  else {
+    augeas { 'rundeck/web.xml/security-role/role-name':
+      lens    => 'Xml.lns',
+      incl    => $rundeck::params::web_xml,
+      changes => [ "set web-app/security-role/role-name/#text '${security_role}'" ],
+    }
   }
 
   augeas { 'rundeck/web.xml/session-config/session-timeout':
