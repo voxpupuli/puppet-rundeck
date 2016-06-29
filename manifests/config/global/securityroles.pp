@@ -3,7 +3,7 @@
 # Date  : 03.06.2016
 # 
 
-define rundeck::config::global::securityroles ($security_role = $title) {
+define rundeck::config::global::securityroles ($security_role = $name) {
   augeas { "rundeck/web.xml/security-role/role-name/${security_role}":
     lens    => 'Xml.lns',
     incl    => $rundeck::params::web_xml,

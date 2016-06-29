@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck::config::global::securityroles', type: :define do
 test_roles = %w(DevOps roots)
+let(:title) { name }
 
   context 'test security roles with define' do
     let(:params) do
