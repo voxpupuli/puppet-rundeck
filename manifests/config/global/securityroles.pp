@@ -5,8 +5,8 @@
 
 define rundeck::config::global::securityroles ($security_role = $name) {
 
-  include ::rundeck
-  $web_xml = deep_merge($rundeck::params::rdeck_base, $rundeck::params::web_xml)
+  include '::rundeck'
+  $web_xml = deep_merge($::rundeck::params::rdeck_base, $::rundeck::params::web_xml)
 
   augeas { "rundeck/web.xml/security-role/role-name/${security_role}":
     lens    => 'Xml.lns',
