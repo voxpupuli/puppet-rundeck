@@ -130,6 +130,9 @@
 # [*ssl_enabled*]
 #  Enable ssl for the rundeck web application.
 #
+# [*ssl_port*]
+#  ssl port of the rundeck web application (default to '4443').
+#
 # [*truststore*]
 #  The full path to the java truststore to be used by Rundeck.
 #
@@ -193,6 +196,7 @@ class rundeck (
   $service_ensure               = $rundeck::params::service_ensure,
   $session_timeout              = $rundeck::params::session_timeout,
   $ssl_enabled                  = $rundeck::params::ssl_enabled,
+  $ssl_port                     = $rundeck::params::ssl_port,
   $truststore                   = $rundeck::params::truststore,
   $truststore_password          = $rundeck::params::truststore_password,
   $user                         = $rundeck::params::user,
