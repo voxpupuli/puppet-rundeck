@@ -33,7 +33,7 @@ describe 'rundeck' do
   end
 
   context "with security_role array" do
-    let(:params) { { :rundeck_config_global_web_sec_roles_true => true, :rundeck_config_global_web_sec_roles => %w(DevOps roots) } }
+    let(:params) { { 'rundeck_config_global_web_sec_roles_true' => true, 'rundeck_config_global_web_sec_roles' => %w(DevOps roots) } }
     it 'generates augeas resource with specified security_role (with array)' do
       should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'DevOps'"])
       should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'roots'"])

@@ -3,7 +3,7 @@
 # Date  : 03.06.2016
 # 
 
-define rundeck::config::global::securityroles ($security_role = $name) {
+define rundeck::config::global::securityroles ($security_role = $title) {
 
   include '::rundeck::params'
 
