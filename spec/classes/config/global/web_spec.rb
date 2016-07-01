@@ -35,8 +35,8 @@ describe 'rundeck' do
   context 'with security_role array' do
     let(:params) do
       {
-       rundeck_config_global_web_sec_roles_true: true,
-       rundeck_config_global_web_sec_roles: %w(devops roots)
+        rundeck_config_global_web_sec_roles_true: true,
+        rundeck_config_global_web_sec_roles: %w(devops roots)
       }
     end
     pp rundeck_config_global_web_sec_roles_true
