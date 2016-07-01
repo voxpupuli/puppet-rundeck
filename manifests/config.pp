@@ -47,6 +47,7 @@ class rundeck::config(
   $service_name                = $rundeck::service_name,
   $session_timeout             = $rundeck::session_timeout,
   $ssl_enabled                 = $rundeck::ssl_enabled,
+  $ssl_port                    = $rundeck::ssl_port,
   $truststore                  = $rundeck::truststore,
   $truststore_password         = $rundeck::truststore_password,
   $user                        = $rundeck::user,
