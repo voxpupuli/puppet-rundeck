@@ -205,8 +205,8 @@ class rundeck (
   $truststore                                = $rundeck::params::truststore,
   $truststore_password                       = $rundeck::params::truststore_password,
   $user                                      = $rundeck::params::user,
-  $rundeck_config_global_web_sec_roles_true = hiera('rundeck::config::global::web::security_roles_enabled', false),
-  $rundeck_config_global_web_sec_roles      = hiera('rundeck::config::global::web::security_roles', []),
+  $security_roles_array_enabled              = $rundeck::params::security_roles_array_enabled,
+  $security_roles_array                      = $rundeck::params::security_roles_array
 ) inherits rundeck::params {
 
   validate_array($auth_types)
@@ -242,8 +242,8 @@ class rundeck (
   validate_hash($file_keystorage_keys)
   validate_bool($manage_default_admin_policy)
   validate_bool($manage_default_api_policy)
-  validate_bool($rundeck_config_global_web_sec_roles_true)
-  validate_array($rundeck_config_global_web_sec_roles)
+  validate_bool($security_roles_array_enabled)
+  validate_array($security_roles_array)
 
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>

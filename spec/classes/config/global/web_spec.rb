@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe 'rundeck' do
   let(:facts) do
     {
@@ -26,23 +27,8 @@ describe 'rundeck' do
 
   context 'with session_timeout param' do
     let(:params) { { session_timeout: '60' } }
-
     it 'generates augeas resource with specified session_timeout' do
       should contain_augeas('rundeck/web.xml/session-config/session-timeout') .with_changes(["set web-app/session-config/session-timeout/#text '60'"])
-    end
-  end
-
-  context 'with security_role array' do
-    let(:params) do
-      {
-        rundeck_config_global_web_sec_roles_true: true,
-        rundeck_config_global_web_sec_roles: %w(devops roots)
-      }
-    end
-    puts "#{rundeck_config_global_web_sec_roles_true}, #{rundeck_config_global_web_sec_roles}"
-    it 'generates augeas resource with specified security_role (with array)' do
-      should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'devops'"])
-      should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'roots'"])
     end
   end
 end
