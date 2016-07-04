@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe 'rundeck' do
   let(:facts) do
     {

@@ -30,5 +30,3 @@ describe 'rundeck::config::securityroles', type: :define do
     end
   end
 end
-
-
