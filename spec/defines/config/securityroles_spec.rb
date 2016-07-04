@@ -22,7 +22,7 @@ describe 'rundeck::config::securityroles', type: :define do
         security_roles_array = %w(devops roots)
 
         security_roles_array.each do |roles|
-          it do
+          it "augeas with param: #{roles}" do
             contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text '#{roles}'"])
           end
         end
