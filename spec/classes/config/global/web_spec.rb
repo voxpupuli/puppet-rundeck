@@ -39,8 +39,6 @@ describe 'rundeck' do
         rundeck_config_global_web_sec_roles: %w(devops roots)
       }
     end
-    pp rundeck_config_global_web_sec_roles_true
-    pp rundeck_config_global_web_sec_roles
     it 'generates augeas resource with specified security_role (with array)' do
       should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'devops'"])
       should contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text 'roots'"])
