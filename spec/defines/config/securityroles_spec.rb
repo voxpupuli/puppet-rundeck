@@ -7,8 +7,7 @@ describe 'rundeck::config::securityroles', type: :define do
         let(:title) { 'source one' }
         let(:params) do
           {
-            #'security_roles_array' => %w(devops roots),
-            'security_roles_array_enabled' => true,
+            'security_roles_array_enabled' => true
           }
         end
         let(:facts) do
