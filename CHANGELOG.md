@@ -16,6 +16,7 @@
 - Add param to configure service state [\#223](https://github.com/voxpupuli/puppet-rundeck/pull/223) ([danifr](https://github.com/danifr))
 - Do not write non-existent mail configuration [\#234](https://github.com/voxpupuli/puppet-rundeck/pull/234) ([ak0ska](https://github.com/ak0ska))
 - Added option to template : 'forceBindingLoginUseRootContextForRoles' [\#228](https://github.com/voxpupuli/puppet-rundeck/pull/228) ([zlanyi](https://github.com/zlanyi))
+- Add support for more security role in web.xml [\#250](https://github.com/voxpupuli/puppet-rundeck/pull/250) ([zlanyi](https://github.com/zlanyi))
 
 #### Bugfixes
 - Fix\(validate\_rd\_policy\) expand relative path for require [\#201](https://github.com/voxpupuli/puppet-rundeck/pull/201) ([igalic](https://github.com/igalic))

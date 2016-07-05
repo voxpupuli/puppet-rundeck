@@ -119,6 +119,12 @@ A hash of the rundeck security configuration.
 #####`security_role`
 The name of the role that is required for all users to be allowed access.
 
+#####`security_roles_array_enabled`
+Boolean value if set to true enables security_roles_array.
+
+#####`security_roles_array`
+Array value if you want to have more role in web.xml
+
 #####`manage_yum_repo`
 Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
 
