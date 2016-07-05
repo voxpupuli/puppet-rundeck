@@ -29,12 +29,12 @@
 class rundeck::config::global::web (
   $security_role                            = $rundeck::params::security_role,
   $session_timeout                          = $rundeck::params::session_timeout,
-  $rundeck_config_global_web_sec_roles_true = $rundeck::rundeck_config_global_web_sec_roles_true,
-  $rundeck_config_global_web_sec_roles      = $rundeck::rundeck_config_global_web_sec_roles,
+  $security_roles_array_enabled             = $rundeck::params::security_roles_array_enabled,
+  $security_roles_array                     = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
 
-  if $rundeck_config_global_web_sec_roles_true {
-    rundeck::config::global::securityroles { $rundeck_config_global_web_sec_roles: }
+  if $security_roles_array_enabled {
+    rundeck::config::securityroles { $security_roles_array: }
   }
   else {
     augeas { 'rundeck/web.xml/security-role/role-name':

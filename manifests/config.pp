@@ -50,8 +50,8 @@ class rundeck::config(
   $truststore                               = $rundeck::truststore,
   $truststore_password                      = $rundeck::truststore_password,
   $user                                     = $rundeck::user,
-  $rundeck_config_global_web_sec_roles_true = $rundeck::rundeck_config_global_web_sec_roles_true,
-  $rundeck_config_global_web_sec_roles      = $rundeck::rundeck_config_global_web_sec_roles,
+  $security_roles_array_enabled             = $rundeck::security_roles_array_enabled,
+  $security_roles_array                     = $rundeck::security_roles_array,
 ) inherits rundeck::params {
 
   File {
@@ -171,11 +171,11 @@ class rundeck::config(
   create_resources(rundeck::config::project, $projects)
 
   class { '::rundeck::config::global::web':
-    security_role                            => $security_role,
-    session_timeout                          => $session_timeout,
-    rundeck_config_global_web_sec_roles_true => $rundeck_config_global_web_sec_roles_true,
-    rundeck_config_global_web_sec_roles      => $rundeck_config_global_web_sec_roles,
-    notify                                   => Service[$service_name],
+    security_role                => $security_role,
+    session_timeout              => $session_timeout,
+    security_roles_array_enabled => $security_roles_array_enabled,
+    security_roles_array         => $security_roles_array,
+    notify                       => Service[$service_name],
   }
 
   if !empty($kerberos_realms) {

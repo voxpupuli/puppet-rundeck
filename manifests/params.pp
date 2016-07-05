@@ -301,4 +301,7 @@ class rundeck::params {
   $manage_default_admin_policy = true
   $manage_default_api_policy   = true
 
+  $security_roles_array_enabled = false
+  $security_roles_array         = []
+
 }
