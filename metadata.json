@@ -2,7 +2,7 @@
   "name": "puppet-rundeck",
   "version": "3.0.1-rc0",
   "author": "voxpupuli",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "summary": "Module for managing the installatation and configuration of the rundeck orchestration tool",
   "source": "https://github.com/voxpupuli/puppet-rundeck.git",
   "project_page": "https://github.com/voxpupuli/puppet-rundeck",
