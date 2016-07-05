@@ -139,16 +139,22 @@
 # [*user*]
 #  The user that rundeck is installed as.
 #
-# [*rundeck_config_global_web_sec_roles_true*]
+# [*security_roles_array_enabled*]
 #  Boolean value if you need more roles. false or true (default is false).
 #
-# [*rundeck_config_global_web_sec_roles*]
-#  Array value if you need more roles and you set true the "rundeck_config_global_web_sec_roles_true" value.
+# [*security_roles_array*]
+#  Array value if you need more roles and you set true the "security_roles_array_enabled" value.
 #  Example: my.hiera.yaml:
-#  rundeck::config::global::web::security_roles:
+#  ...
+#  rundeck::config::global::web::security_roles_array_enabled: true
+#  rundeck::config::global::web::security_roles_array:
 #    - DevOps
 #    - roots_ito
-#.
+#  ...
+#  In your class:
+#  $security_roles_array_enabled = hiera('rundeck::config::global::web::security_roles_array_enabled', true),
+#  $security_roles_array         = hiera('rundeck::config::global::web::security_roles_array', []),
+#
 class rundeck (
   $acl_policies                              = $rundeck::params::acl_policies,
   $acl_template                              = $rundeck::params::acl_template,
