@@ -17,14 +17,11 @@
 # [*session_timeout*]
 #   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 #
-# [*rundeck_config_global_web_sec_roles_true*]
+# [*security_roles_array_enabled*]
 # Boolen value if you want to have more roles in web.xml
 #
-# [*rundeck_config_global_web_sec_roles*]
-# Array value if you set the value 'rundeck_config_global_web_sec_roles_true' to true and you have in hiera yaml file array:
-#  rundeck::config::global::web::security_roles:
-#    - DevOps
-#    - roots_ito
+# [*security_roles_array*]
+# Array value if you set the value 'security_roles_array_enabled' to true.
 #
 class rundeck::config::global::web (
   $security_role                            = $rundeck::params::security_role,
