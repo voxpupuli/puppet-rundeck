@@ -24,10 +24,10 @@
 # Array value if you set the value 'security_roles_array_enabled' to true.
 #
 class rundeck::config::global::web (
-  $security_role                            = $rundeck::params::security_role,
-  $session_timeout                          = $rundeck::params::session_timeout,
-  $security_roles_array_enabled             = $rundeck::params::security_roles_array_enabled,
-  $security_roles_array                     = $rundeck::params::security_roles_array,
+  $security_role                = $rundeck::params::security_role,
+  $session_timeout              = $rundeck::params::session_timeout,
+  $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
+  $security_roles_array         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
 
   if $security_roles_array_enabled {

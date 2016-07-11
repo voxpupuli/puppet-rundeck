@@ -215,8 +215,8 @@ class rundeck (
   $truststore                   = $rundeck::params::truststore,
   $truststore_password          = $rundeck::params::truststore_password,
   $user                         = $rundeck::params::user,
-  $security_roles_array_enabled              = $rundeck::params::security_roles_array_enabled,
-  $security_roles_array                      = $rundeck::params::security_roles_array,
+  $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
+  $security_roles_array         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
 
   validate_array($auth_types)
