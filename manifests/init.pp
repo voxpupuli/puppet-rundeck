@@ -141,7 +141,23 @@
 #
 # [*user*]
 #  The user that rundeck is installed as.
-#.
+#
+# [*security_roles_array_enabled*]
+#  Boolean value if you need more roles. false or true (default is false).
+#
+# [*security_roles_array*]
+#  Array value if you need more roles and you set true the "security_roles_array_enabled" value.
+#  Example: my.hiera.yaml:
+#  ...
+#  rundeck::config::global::web::security_roles_array_enabled: true
+#  rundeck::config::global::web::security_roles_array:
+#    - DevOps
+#    - roots_ito
+#  ...
+#  In your class:
+#  $security_roles_array_enabled = hiera('rundeck::config::global::web::security_roles_array_enabled', true),
+#  $security_roles_array         = hiera('rundeck::config::global::web::security_roles_array', []),
+#
 class rundeck (
   $acl_policies                 = $rundeck::params::acl_policies,
   $acl_template                 = $rundeck::params::acl_template,
@@ -199,6 +215,8 @@ class rundeck (
   $truststore                   = $rundeck::params::truststore,
   $truststore_password          = $rundeck::params::truststore_password,
   $user                         = $rundeck::params::user,
+  $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
+  $security_roles_array         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
 
   validate_array($auth_types)
@@ -234,6 +252,8 @@ class rundeck (
   validate_hash($file_keystorage_keys)
   validate_bool($manage_default_admin_policy)
   validate_bool($manage_default_api_policy)
+  validate_bool($security_roles_array_enabled)
+  validate_array($security_roles_array)
 
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>
