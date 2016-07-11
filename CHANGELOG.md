@@ -1,3 +1,7 @@
+# 2016-07-11 - Release 3.1.1
+### Summary
+- The last release could not be uploaded to the forge so we've to release a patch update
+
 # 2016-07-11 - Release 3.1.0
 ###Features
 - Add support for more security role in web.xml [\#250](https://github.com/voxpupuli/puppet-rundeck/pull/250) ([zlanyi](https://github.com/zlanyi))
