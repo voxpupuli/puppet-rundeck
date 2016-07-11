@@ -172,11 +172,11 @@ class rundeck::config(
   create_resources(rundeck::config::project, $projects)
 
   class { '::rundeck::config::global::web':
-    security_role                => $security_role,
-    session_timeout              => $session_timeout,
+    security_role   => $security_role,
+    session_timeout => $session_timeout,
     security_roles_array_enabled => $security_roles_array_enabled,
     security_roles_array         => $security_roles_array,
-    notify                       => Service[$service_name],
+    notify          => Service[$service_name],
   }
 
   if !empty($kerberos_realms) {
