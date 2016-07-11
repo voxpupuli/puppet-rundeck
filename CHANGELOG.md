@@ -1,3 +1,15 @@
+# 2016-07-11 - Release 3.1.0
+###Features
+- Add support for more security role in web.xml [\#250](https://github.com/voxpupuli/puppet-rundeck/pull/250) ([zlanyi](https://github.com/zlanyi))
+- able to change ssl port through parameter [\#249](https://github.com/voxpupuli/puppet-rundeck/pull/249) ([ltutar](https://github.com/ltutar))
+- modulesync to latest foxpupuli defaults [\#245](https://github.com/voxpupuli/puppet-rundeck/pull/245), [\#240](https://github.com/voxpupuli/puppet-rundeck/pull/240) ([bastelfreak](https://github.com/bastelfreak))
+- Sync metadata.json license to be same as LICENSE (MIT) [\#244](https://github.com/voxpupuli/puppet-rundeck/pull/244) ([juniorsysadmin](https://github.com/juniorsysadmin))
+- Remove `tests` directory [\#243](https://github.com/voxpupuli/puppet-rundeck/pull/243) ([alexjfisher](https://github.com/alexjfisher))
+- Example manifest to demo-install Rundeck on EL7 [\#242](https://github.com/voxpupuli/puppet-rundeck/pull/242) ([vinzent](https://github.com/vinzent))
+- added puppet enterprise resource type [\#241](https://github.com/voxpupuli/puppet-rundeck/pull/241) ([dalisch](https://github.com/dalisch))
+- fixed management of $file\_keystore\_dir [\#239](https://github.com/voxpupuli/puppet-rundeck/pull/239) ([dalisch](https://github.com/dalisch))
+
+
 # 2016-05-26 - Release 3.0.0
 ### Summary
   - We dropped Ruby1.8 support!
@@ -16,7 +28,6 @@
 - Add param to configure service state [\#223](https://github.com/voxpupuli/puppet-rundeck/pull/223) ([danifr](https://github.com/danifr))
 - Do not write non-existent mail configuration [\#234](https://github.com/voxpupuli/puppet-rundeck/pull/234) ([ak0ska](https://github.com/ak0ska))
 - Added option to template : 'forceBindingLoginUseRootContextForRoles' [\#228](https://github.com/voxpupuli/puppet-rundeck/pull/228) ([zlanyi](https://github.com/zlanyi))
-- Add support for more security role in web.xml [\#250](https://github.com/voxpupuli/puppet-rundeck/pull/250) ([zlanyi](https://github.com/zlanyi))
 
 #### Bugfixes
 - Fix\(validate\_rd\_policy\) expand relative path for require [\#201](https://github.com/voxpupuli/puppet-rundeck/pull/201) ([igalic](https://github.com/igalic))
