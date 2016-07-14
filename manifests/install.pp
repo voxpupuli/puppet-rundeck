@@ -24,6 +24,7 @@ class rundeck::install(
 
   $user = $rundeck::user
   $group = $rundeck::group
+  $manage_user_group = $rundeck::manage_user_group
 
   File {
     owner  => $user,
@@ -76,23 +77,25 @@ class rundeck::install(
     }
   }
 
-  if $group == 'rundeck' {
-    ensure_resource('group', 'rundeck', { 'ensure' => 'present' } )
-  } else {
-    ensure_resource('group', $group, { 'ensure' => 'present' } )
+  if $manage_user_group {
+    if $group == 'rundeck' {
+      ensure_resource('group', 'rundeck', { 'ensure' => 'present' } )
+    } else {
+      ensure_resource('group', $group, { 'ensure' => 'present' } )
 
-    group { 'rundeck':
-      ensure => absent,
+      group { 'rundeck':
+        ensure => absent,
+      }
     }
-  }
 
-  if $user == 'rundeck' {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-  } else {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+    if $user == 'rundeck' {
+      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+    } else {
+      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
 
-    user { 'rundeck':
-      ensure => absent,
+      user { 'rundeck':
+        ensure => absent,
+      }
     }
   }
 

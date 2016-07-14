@@ -64,6 +64,9 @@
 # [*manage_default_api_policy*]
 #  Boolean value if set to true enables default api policy management
 #
+# [*manage_user_group*]
+#  Boolean value if set to true lets this module manage the user and group resources
+#
 # [*package_ensure*]
 #  Ensure the state of the rundeck package, either present, absent or a specific version
 #
@@ -186,6 +189,7 @@ class rundeck (
   $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
+  $manage_user_group            = $rundeck::params::manage_user_group,
   $package_ensure               = $rundeck::params::package_ensure,
   $package_source               = $rundeck::params::package_source,
   $preauthenticated_config      = $rundeck::params::preauthenticated_config,
