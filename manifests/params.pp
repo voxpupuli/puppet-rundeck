@@ -241,6 +241,8 @@ class rundeck::params {
   $user = 'rundeck'
   $group = 'rundeck'
 
+  $manage_user_group = true
+
   $loglevel = 'INFO'
   $rss_enabled = false
 
