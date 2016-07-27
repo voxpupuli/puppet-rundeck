@@ -11,7 +11,7 @@ class rundeck::install(
   $manage_yum_repo    = $rundeck::manage_yum_repo,
   $package_ensure     = $rundeck::package_ensure,
   $package_source     = $rundeck::package_source,
-  $rdeck_home         = $rundeck::rdeck_home,
+  $rdeck_home         = $rundeck::rdeck_home
 ) {
 
   if $caller_module_name != $module_name {
@@ -24,6 +24,9 @@ class rundeck::install(
 
   $user = $rundeck::user
   $group = $rundeck::group
+  $user_id  = $rundeck::user_id
+  $group_id = $rundeck::group_id
+
 
   File {
     owner  => $user,
@@ -76,9 +79,20 @@ class rundeck::install(
     }
   }
 
-  if $group == 'rundeck' {
+  if $group == 'rundeck' and $group_id == '' {
     ensure_resource('group', 'rundeck', { 'ensure' => 'present' } )
-  } else {
+  }
+  elsif $group == 'rundeck' and $group_id != '' {
+    ensure_resource('group', 'rundeck', { 'ensure' => 'present', 'gid' => $group_id } )
+  }
+  elsif $group != 'rundeck' and $group_id != '' {
+    ensure_resource('group', $group, { 'ensure' => 'present', 'gid' => $group_id } )
+
+    group { 'rundeck':
+      ensure => absent,
+    }
+  }
+  else {
     ensure_resource('group', $group, { 'ensure' => 'present' } )
 
     group { 'rundeck':
@@ -86,15 +100,27 @@ class rundeck::install(
     }
   }
 
-  if $user == 'rundeck' {
+  if $user == 'rundeck' and $user_id == '' {
     ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-  } else {
+  }
+  elsif $user == 'rundeck' and $user_id != '' and $group_id != '' {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
+  }
+  elsif $user != 'rundeck' and $user_id != '' and $group_id != '' {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
+
+    user { 'rundeck':
+      ensure => absent,
+    }
+  }
+  else {
     ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
 
     user { 'rundeck':
       ensure => absent,
     }
   }
+
 
   file { $rdeck_home:
     ensure  => directory,
