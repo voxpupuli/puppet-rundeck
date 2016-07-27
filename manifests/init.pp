@@ -142,6 +142,12 @@
 # [*user*]
 #  The user that rundeck is installed as.
 #
+# [*user_id*]
+#  If you want to have always the same user id. Eg. because of the NFS share.
+#
+# [*group_id*]
+#  If you want to have always the same group id. Eg. because of the NFS share.
+#
 # [*security_roles_array_enabled*]
 #  Boolean value if you need more roles. false or true (default is false).
 #
@@ -216,6 +222,8 @@ class rundeck (
   $truststore                   = $rundeck::params::truststore,
   $truststore_password          = $rundeck::params::truststore_password,
   $user                         = $rundeck::params::user,
+  $user_id                      = $rundeck::params::user_id,
+  $group_id                     = $rundeck::params::group_id,
   $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
   $security_roles_array         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
@@ -255,6 +263,8 @@ class rundeck (
   validate_bool($manage_default_api_policy)
   validate_bool($security_roles_array_enabled)
   validate_array($security_roles_array)
+  validate_string($user_id)
+  validate_string($group_id)
 
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>
