@@ -89,8 +89,8 @@ describe 'rundeck' do
       {
         user: 'A1234',
         group: 'A1234',
-	user_id: '10000',
-	group_id: '10000'
+        user_id: '10000',
+        group_id: '10000'
       }
     end
     let(:facts) do
@@ -102,18 +102,18 @@ describe 'rundeck' do
       }
     end
     it do
-      should contain_group('A1234').with({
+      should contain_group('A1234').with(
         'ensure' => 'present',
         'gid' => '10000'
-      })
+      )
     end
 
     it do
-      should contain_user('A1234').with({
+      should contain_user('A1234').with(
         'ensure' => 'present',
         'gid' => '10000',
         'uid' => '10000'
-      })
+      )
     end
   end
 end
