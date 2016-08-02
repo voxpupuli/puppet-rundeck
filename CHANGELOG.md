@@ -1,3 +1,8 @@
+# 2016-07-27 - Release 3.1.1
+###Features
+- Add support to set user and group id. [\#254](https://github.com/voxpupuli/puppet-rundeck/pull/254) ([zlanyi](https://github.com/zlanyi))
+
+
 # 2016-07-11 - Release 3.1.0
 ###Features
 - Add support for more security role in web.xml [\#250](https://github.com/voxpupuli/puppet-rundeck/pull/250) ([zlanyi](https://github.com/zlanyi))

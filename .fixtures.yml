@@ -4,5 +4,6 @@ fixtures:
     inifile: "https://github.com/puppetlabs/puppetlabs-inifile.git"
     archive: "https://github.com/puppet-community/puppet-archive.git"
     dirtree: "https://github.com/puppetlabs/pltraining-dirtree.git"
+    java_ks: "https://github.com/puppetlabs/puppetlabs-java_ks.git"
   symlinks:
     rundeck: "#{source_dir}"

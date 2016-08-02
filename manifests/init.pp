@@ -28,6 +28,12 @@
 # [*grails_server_url*]
 #  The url used in sending email notifications.
 #
+# [*ssl_keyfile*]
+#  Full path to the SSL private key to be used by Rundeck.
+#
+# [*ssl_certfile*]
+#  Full path to the SSL public key to be used by Rundeck.
+##
 # [*group*]
 #  The group permission that rundeck is installed as.
 #
@@ -142,6 +148,12 @@
 # [*user*]
 #  The user that rundeck is installed as.
 #
+# [*user_id*]
+#  If you want to have always the same user id. Eg. because of the NFS share.
+#
+# [*group_id*]
+#  If you want to have always the same group id. Eg. because of the NFS share.
+#
 # [*security_roles_array_enabled*]
 #  Boolean value if you need more roles. false or true (default is false).
 #
@@ -182,6 +194,8 @@ class rundeck (
   $key_storage_type             = $rundeck::params::key_storage_type,
   $keystore                     = $rundeck::params::keystore,
   $keystore_password            = $rundeck::params::keystore_password,
+  $ssl_keyfile                  = $rundeck::params::ssl_keyfile,
+  $ssl_certfile                 = $rundeck::params::ssl_certfile,
   $mail_config                  = $rundeck::params::mail_config,
   $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,
@@ -215,6 +229,8 @@ class rundeck (
   $truststore                   = $rundeck::params::truststore,
   $truststore_password          = $rundeck::params::truststore_password,
   $user                         = $rundeck::params::user,
+  $user_id                      = $rundeck::params::user_id,
+  $group_id                     = $rundeck::params::group_id,
   $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
   $security_roles_array         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
@@ -235,6 +251,8 @@ class rundeck (
   validate_hash($database_config)
   validate_hash($kerberos_realms)
   validate_absolute_path($keystore)
+  validate_absolute_path($ssl_certfile)
+  validate_absolute_path($ssl_keyfile)
   validate_re($key_storage_type, [ '^db$', '^file$' ])
   validate_string($keystore_password)
   validate_string($key_password)
@@ -254,6 +272,8 @@ class rundeck (
   validate_bool($manage_default_api_policy)
   validate_bool($security_roles_array_enabled)
   validate_array($security_roles_array)
+  validate_string($user_id)
+  validate_string($group_id)
 
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>

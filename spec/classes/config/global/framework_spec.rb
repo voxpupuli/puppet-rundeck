@@ -71,4 +71,32 @@ describe 'rundeck' do
       end
     end
   end
+  context 'add port and url configuration' do
+    describe 'with ssl true' do
+      let(:params) do
+        {
+          framework_config: {
+            'framework.server.port' => '4443',
+            'framework.server.url' => 'https://test.domain.com:4443',
+          },
+          ssl_enabled: true
+        }
+      end
+      let(:facts) do
+        {
+          osfamily: 'Debian',
+          fqdn: 'test.domain.com',
+          serialnumber: 0,
+          rundeck_version: '',
+          puppetversion: Puppet.version
+        }
+      end
+
+      it 'generates valid content for framework.properties framework.server.port = 4443 and framework.server.url = https://test.domain.com:4443' do
+        content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+        expect(content).to include('framework.server.port = 4443')
+        expect(content).to include('framework.server.url = https://test.domain.com:4443')
+      end
+    end
+  end
 end

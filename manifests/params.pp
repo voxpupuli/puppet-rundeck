@@ -38,11 +38,24 @@ class rundeck::params {
   $rdeck_home = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
+  if $rundeck::ssl_enabled and $rundeck::ssl_port == undef {
+    $default_port = '4443'
+    $default_url = "https://${::fqdn}:4443"
+  }
+  elsif $rundeck::ssl_enabled and $rundeck::ssl_port != '' {
+    $default_port = '4443'
+    $default_url = "https://${::fqdn}:4443"
+  }
+  else {
+    $default_port = '4440'
+    $default_url = "http://${::fqdn}:4440"
+  }
+
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
-    'framework.server.port'     => '4440',
-    'framework.server.url'      => "http://${::fqdn}:4440",
+    'framework.server.port'     => $default_port,
+    'framework.server.url'      => $default_url,
     'framework.server.username' => 'admin',
     'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
@@ -240,13 +253,15 @@ class rundeck::params {
 
   $user = 'rundeck'
   $group = 'rundeck'
+  $user_id = ''
+  $group_id = ''
 
   $loglevel = 'INFO'
   $rss_enabled = false
 
   $clustermode_enabled = false
 
-  $grails_server_url = "http://${::fqdn}:4440"
+  $grails_server_url = $rundeck::params::default_url
 
   $database_config = {
     'type'            => 'h2',
@@ -284,7 +299,8 @@ class rundeck::params {
   $java_home = undef
 
   $ssl_enabled = false
-  $ssl_port = '4443'
+  $ssl_keyfile = '/etc/rundeck/ssl/rundeck.key'
+  $ssl_certfile = '/etc/rundeck/ssl/rundeck.crt'
 
   $package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
 
