@@ -240,6 +240,8 @@ class rundeck::params {
 
   $user = 'rundeck'
   $group = 'rundeck'
+  $user_id = ''
+  $group_id = ''
 
   $loglevel = 'INFO'
   $rss_enabled = false
