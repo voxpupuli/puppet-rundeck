@@ -33,7 +33,7 @@ class rundeck::config::global::ssl(
     'group'   => $group,
     'require' => File[$properties_dir]
     } )
-    
+
   java_ks { "rundeck:${properties_dir}/ssl/keystore":
     ensure       => present,
     private_key  => $ssl_keyfile,
