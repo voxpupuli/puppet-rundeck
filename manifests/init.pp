@@ -274,6 +274,7 @@ class rundeck (
   validate_array($security_roles_array)
   validate_string($user_id)
   validate_string($group_id)
+  validate_string($ssl_port)
 
   class { '::rundeck::install': } ->
   class { '::rundeck::config': } ~>

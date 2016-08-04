@@ -38,13 +38,16 @@ class rundeck::params {
   $rdeck_home = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
-  if $::ssl_enabled and $::ssl_port == undef {
+  $ssl_enabled = false
+  $ssl_port = '4443'
+
+  if $ssl_enabled and $ssl_port == undef {
     $default_port = '4443'
     $default_url = "https://${::fqdn}:4443"
   }
-  elsif $::ssl_enabled and $::ssl_port != '' {
-    $default_port = $::ssl_port
-    $default_url = "https://${::fqdn}:${rundeck::ssl_port}"
+  elsif $ssl_enabled and $ssl_port != '' {
+    $default_port = $ssl_port
+    $default_url = "https://${::fqdn}:${ssl_port}"
   }
   else {
     $default_port = '4440'
@@ -298,7 +301,6 @@ class rundeck::params {
 
   $java_home = undef
 
-  $ssl_enabled = false
   $ssl_keyfile = '/etc/rundeck/ssl/rundeck.key'
   $ssl_certfile = '/etc/rundeck/ssl/rundeck.crt'
 

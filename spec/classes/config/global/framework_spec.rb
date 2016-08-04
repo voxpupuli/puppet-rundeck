@@ -77,7 +77,7 @@ describe 'rundeck' do
         {
           framework_config: {
             'framework.server.port' => '443',
-            'framework.server.url' => 'https://test.domain.com:443',
+            'framework.server.url' => 'https://test.domain.com:443'
           },
           ssl_enabled: true
         }
