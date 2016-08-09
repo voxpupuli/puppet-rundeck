@@ -200,8 +200,9 @@ describe 'rundeck::config::resource_source', type: :define do
             'source_type' => 'puppet-enterprise',
             'puppet_enterprise_host' => 'localhost',
             'puppet_enterprise_port' => '8081',
+            'puppet_enterprise_metrics_interval' => '15',
             'puppet_enterprise_mapping_file' => '/var/local/resource-mapping.json',
-            'puppet_enterprise_metrics_interval' => '15'
+            'puppet_enterprise_ssl_dir' => '/opt/rundeck/puppetmaster_ssl'
           }
         end
         let(:facts) do
@@ -218,7 +219,8 @@ describe 'rundeck::config::resource_source', type: :define do
           'resources.source.1.config.PROPERTY_PUPPETDB_HOST' => 'localhost',
           'resources.source.1.config.PROPERTY_PUPPETDB_PORT' => '8081',
           'resources.source.1.config.PROPERTY_METRICS_INTERVAL' => '15',
-          'resources.source.1.config.PROPERTY_MAPPING_FILE' => '/var/local/resource-mapping.json'
+          'resources.source.1.config.PROPERTY_MAPPING_FILE' => '/var/local/resource-mapping.json',
+          'resources.source.1.config.PROPERTY_PUPPETDB_SSL_DIR' => '/opt/rundeck/puppetmaster_ssl'
         }
 
         puppet_enterprise_details.each do |key, value|
