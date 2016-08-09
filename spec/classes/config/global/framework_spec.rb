@@ -75,11 +75,8 @@ describe 'rundeck' do
     describe 'with ssl true' do
       let(:params) do
         {
-          framework_config: {
-            'framework.server.port' => '443',
-            'framework.server.url' => 'https://test.domain.com:443'
-          },
-          ssl_enabled: true
+          ssl_enabled: true,
+          ssl_port: '443'
         }
       end
       let(:facts) do
@@ -92,7 +89,7 @@ describe 'rundeck' do
         }
       end
 
-      it 'generates valid content for framework.properties framework.server.port = 4443 and framework.server.url = https://test.domain.com:4443' do
+      it 'generates valid content for framework.properties framework.server.port = 443 and framework.server.url = https://test.domain.com:443' do
         content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
         expect(content).to include('framework.server.port = 443')
         expect(content).to include('framework.server.url = https://test.domain.com:443')

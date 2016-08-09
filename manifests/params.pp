@@ -38,27 +38,13 @@ class rundeck::params {
   $rdeck_home = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
-  $ssl_enabled = false
-  $ssl_port = '4443'
 
-  if $ssl_enabled and $ssl_port == undef {
-    $default_port = '4443'
-    $default_url = "https://${::fqdn}:4443"
-  }
-  elsif $ssl_enabled and $ssl_port != '' {
-    $default_port = $ssl_port
-    $default_url = "https://${::fqdn}:${ssl_port}"
-  }
-  else {
-    $default_port = '4440'
-    $default_url = "http://${::fqdn}:4440"
-  }
 
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
-    'framework.server.port'     => $default_port,
-    'framework.server.url'      => $default_url,
+    'framework.server.port'     => '4440',
+    'framework.server.url'      => "http://${::fqdn}:4440",
     'framework.server.username' => 'admin',
     'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
@@ -264,7 +250,8 @@ class rundeck::params {
 
   $clustermode_enabled = false
 
-  $grails_server_url = $rundeck::params::default_url
+  $grails_server_url = "http://${::fqdn}:4440"
+
 
   $database_config = {
     'type'            => 'h2',
@@ -300,6 +287,9 @@ class rundeck::params {
   $jvm_args = '-Xmx1024m -Xms256m -server'
 
   $java_home = undef
+
+  $ssl_enabled = false
+  $ssl_port = '4443'
 
   $ssl_keyfile = '/etc/rundeck/ssl/rundeck.key'
   $ssl_certfile = '/etc/rundeck/ssl/rundeck.crt'
