@@ -41,6 +41,7 @@ class rundeck::config::global::ssl(
     password     => $keystore_password,
     destkeypass  => $key_password,
     trustcacerts => true,
+    notify       => Service[$service_name],
   } ->
   java_ks { "rundeck:${properties_dir}/ssl/truststore":
     ensure       => present,
@@ -49,6 +50,7 @@ class rundeck::config::global::ssl(
     password     => $truststore_password,
     destkeypass  => $key_password,
     trustcacerts => true,
+    notify       => Service[$service_name],
   }
 
   Ini_setting {
