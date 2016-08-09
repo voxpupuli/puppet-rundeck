@@ -38,8 +38,6 @@ class rundeck::params {
   $rdeck_home = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
-
-
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
@@ -251,7 +249,6 @@ class rundeck::params {
   $clustermode_enabled = false
 
   $grails_server_url = "http://${::fqdn}:4440"
-
 
   $database_config = {
     'type'            => 'h2',
