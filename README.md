@@ -65,6 +65,40 @@ Web context path to use, such as "/rundeck". http://host.domain:port/server_web_
 #####`ssl_enabled`
 Enable ssl for the Rundeck web application.
 
+#####`ssl_keyfile` and `ssl_certfile`
+
+If ssl_enabled is True, you must supply this parameter. It is recommended that you provide the .crt and .key files separately via other means, such as a role or profile manifest.
+
+How to: eg: environments/role/manifests/rundeck.pp
+```Puppet
+
+class role::rundeck (
+...
+  $ssl_keyfile                        = hiera('rundeck::config::ssl_keyfile', "/etc/rundeck/ssl/$fqdn.key"),
+  $ssl_certfile                       = hiera('rundeck::config::ssl_certfile', "/etc/rundeck/ssl/$fqdn.crt"),
+..
+){
+...
+  validate_string($ssl_keyfile)
+  validate_string($ssl_certfile)
+...
+  class { 'rundeck':
+...
+    ssl_keyfile                  => $ssl_keyfile,
+    ssl_certfile                 => $ssl_certfile,
+...
+  }
+...
+}
+
+```
+Am End please add the module below to your environments/Puppetfile to use java_ks:
+```Puppet
+mod 'java_ks',
+  :git => 'https://github.com/puppetlabs/puppetlabs-java_ks.git',
+  :tag => '1.4.1'
+```
+
 #####`session_timeout`
 Time limit (in minutes) for a logged in Rundeck web application user which as been inactive for a period of time.
 

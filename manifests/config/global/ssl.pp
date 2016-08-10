@@ -9,6 +9,8 @@
 class rundeck::config::global::ssl(
   $group               = $rundeck::config::group,
   $key_password        = $rundeck::config::key_password,
+  $ssl_keyfile         = $rundeck::config::ssl_keyfile,
+  $ssl_certfile        = $rundeck::config::ssl_certfile,
   $keystore            = $rundeck::config::keystore,
   $keystore_password   = $rundeck::config::keystore_password,
   $properties_dir      = $rundeck::config::properties_dir,
@@ -31,6 +33,25 @@ class rundeck::config::global::ssl(
     'group'   => $group,
     'require' => File[$properties_dir]
     } )
+
+  java_ks { "rundeck:${properties_dir}/ssl/keystore":
+    ensure       => present,
+    private_key  => $ssl_keyfile,
+    certificate  => $ssl_certfile,
+    password     => $keystore_password,
+    destkeypass  => $key_password,
+    trustcacerts => true,
+    notify       => Service[$service_name],
+  } ->
+  java_ks { "rundeck:${properties_dir}/ssl/truststore":
+    ensure       => present,
+    private_key  => $ssl_keyfile,
+    certificate  => $ssl_certfile,
+    password     => $truststore_password,
+    destkeypass  => $key_password,
+    trustcacerts => true,
+    notify       => Service[$service_name],
+  }
 
   Ini_setting {
     notify => Service[$service_name],

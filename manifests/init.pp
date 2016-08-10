@@ -28,6 +28,12 @@
 # [*grails_server_url*]
 #  The url used in sending email notifications.
 #
+# [*ssl_keyfile*]
+#  Full path to the SSL private key to be used by Rundeck.
+#
+# [*ssl_certfile*]
+#  Full path to the SSL public key to be used by Rundeck.
+#
 # [*group*]
 #  The group permission that rundeck is installed as.
 #
@@ -189,6 +195,8 @@ class rundeck (
   $keystore                     = $rundeck::params::keystore,
   $keystore_password            = $rundeck::params::keystore_password,
   $mail_config                  = $rundeck::params::mail_config,
+  $ssl_keyfile                  = $rundeck::params::ssl_keyfile,
+  $ssl_certfile                 = $rundeck::params::ssl_certfile,
   $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
@@ -243,6 +251,8 @@ class rundeck (
   validate_hash($database_config)
   validate_hash($kerberos_realms)
   validate_absolute_path($keystore)
+  validate_absolute_path($ssl_certfile)
+  validate_absolute_path($ssl_keyfile)
   validate_re($key_storage_type, [ '^db$', '^file$' ])
   validate_string($keystore_password)
   validate_string($key_password)
