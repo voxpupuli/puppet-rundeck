@@ -1,3 +1,5 @@
+# rubocop:disable RSpec/MultipleExpectations
+
 require 'spec_helper'
 
 describe 'rundeck' do

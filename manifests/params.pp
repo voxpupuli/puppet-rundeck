@@ -292,6 +292,9 @@ class rundeck::params {
   $ssl_enabled = false
   $ssl_port = '4443'
 
+  $ssl_keyfile = '/etc/rundeck/ssl/rundeck.key'
+  $ssl_certfile = '/etc/rundeck/ssl/rundeck.crt'
+
   $package_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
 
   $web_xml = "${rdeck_base}/exp/webapp/WEB-INF/web.xml"
