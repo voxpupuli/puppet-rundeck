@@ -36,6 +36,7 @@ class rundeck::config(
   $projects_organization        = $rundeck::projects_default_org,
   $projects_storage_type        = $rundeck::projects_storage_type,
   $rd_loglevel                  = $rundeck::rd_loglevel,
+  $rd_auditlevel                = $rundeck::rd_auditlevel,
   $rdeck_config_template        = $rundeck::rdeck_config_template,
   $rdeck_profile_template       = $rundeck::rdeck_profile_template,
   $realm_template               = $rundeck::realm_template,
