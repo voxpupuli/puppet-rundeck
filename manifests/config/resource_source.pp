@@ -82,6 +82,7 @@ define rundeck::config::resource_source(
   $use_default_mapping                = true,
   $puppet_enterprise_host             = '',
   $puppet_enterprise_port             = '',
+  $puppet_enterprise_ssl_dir          = '',
   $puppet_enterprise_mapping_file     = '',
   $puppet_enterprise_metrics_interval = '',
 ) {
@@ -325,15 +326,17 @@ define rundeck::config::resource_source(
     'puppet-enterprise': {
       validate_string($puppet_enterprise_host)
       validate_integer($puppet_enterprise_port)
-      validate_integer($puppet_enterprise_metrics_interval)
-      validate_absolute_path($puppet_enterprise_mapping_file)
-      ini_setting { "${name}::resources.source.${number}.config.PROPERTY_MAPPING_FILE":
-        ensure  => present,
-        path    => $properties_file,
-        section => '',
-        setting => "resources.source.${number}.config.PROPERTY_MAPPING_FILE",
-        value   => $puppet_enterprise_mapping_file,
-        require => File[$properties_file],
+
+      if ( $puppet_enterprise_mapping_file != '') {
+        validate_absolute_path($puppet_enterprise_mapping_file)
+        ini_setting { "${name}::resources.source.${number}.config.PROPERTY_MAPPING_FILE":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.PROPERTY_MAPPING_FILE",
+          value   => $puppet_enterprise_mapping_file,
+          require => File[$properties_file],
+        }
       }
       ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_HOST":
         ensure  => present,
@@ -343,13 +346,16 @@ define rundeck::config::resource_source(
         value   => $puppet_enterprise_host,
         require => File[$properties_file],
       }
-      ini_setting { "${name}::resources.source.${number}.config.PROPERTY_METRICS_INTERVAL":
-        ensure  => present,
-        path    => $properties_file,
-        section => '',
-        setting => "resources.source.${number}.config.PROPERTY_METRICS_INTERVAL",
-        value   => $puppet_enterprise_metrics_interval,
-        require => File[$properties_file],
+      if ( $puppet_enterprise_metrics_interval != '') {
+        validate_integer($puppet_enterprise_metrics_interval)
+        ini_setting { "${name}::resources.source.${number}.config.PROPERTY_METRICS_INTERVAL":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.PROPERTY_METRICS_INTERVAL",
+          value   => $puppet_enterprise_metrics_interval,
+          require => File[$properties_file],
+        }
       }
       ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_PORT":
         ensure  => present,
@@ -358,6 +364,17 @@ define rundeck::config::resource_source(
         setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_PORT",
         value   => $puppet_enterprise_port,
         require => File[$properties_file],
+      }
+      if ( $puppet_enterprise_ssl_dir != '') {
+        validate_absolute_path($puppet_enterprise_ssl_dir)
+        ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_SSL_DIR":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_SSL_DIR",
+          value   => $puppet_enterprise_ssl_dir,
+          require => File[$properties_file],
+        }
       }
     }
     default: {
