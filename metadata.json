@@ -1,7 +1,7 @@
 {
   "name": "puppet-rundeck",
   "version": "3.1.1-rc0",
-  "author": "voxpupuli",
+  "author": "Vox Pupuli",
   "license": "MIT",
   "summary": "Module for managing the installatation and configuration of the rundeck orchestration tool",
   "source": "https://github.com/voxpupuli/puppet-rundeck.git",
@@ -60,7 +60,7 @@
     },
     {
       "name": "puppet/archive",
-      "version_requirement": ">= 0.3.0 <=1.1.1"
+      "version_requirement": ">= 0.3.0 <2.0.0"
     },
     {
       "name": "puppetlabs/java_ks",
