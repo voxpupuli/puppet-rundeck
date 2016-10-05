@@ -1,6 +1,11 @@
-# 2016-07-27 - Release 3.1.1
-###Features
+## 2016-10-05 - Release 3.2.0
+- Modulesync with latest Vox Pupuli defaults
 - Add support to set user and group id. [\#254](https://github.com/voxpupuli/puppet-rundeck/pull/254) ([zlanyi](https://github.com/zlanyi))
+- Add puppet_enterprise_ssl_dir param [\#256](https://github.com/voxpupuli/puppet-rundeck/pull/258) ([ltutar](https://github.com/ltutar))
+- Improve test coverage [\#258](https://github.com/voxpupuli/puppet-rundeck/pull/258) ([ltutar](https://github.com/ltutar))
+- Add missing 'rd_auditlevel' parameter to config.pp [\#262](https://github.com/voxpupuli/puppet-rundeck/pull/262) ([tomtheun](https://github.com/tomtheun))
+- Update puppet/archive dependency [\#267](https://github.com/voxpupuli/puppet-rundeck/pull/267) ([alexjfisher](https://github.com/alexjfisher))
+- Feature: generate Keytool for SSL [\#261](https://github.com/voxpupuli/puppet-rundeck/pull/261) ([zlanyi](https://github.com/zlanyi))
 
 
 # 2016-07-11 - Release 3.1.0
