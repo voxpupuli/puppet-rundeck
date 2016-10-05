@@ -289,6 +289,8 @@ class rundeck::params {
 
   $java_home = undef
 
+  $sshkey_manage = true
+
   $ssl_enabled = false
   $ssl_port = '4443'
 

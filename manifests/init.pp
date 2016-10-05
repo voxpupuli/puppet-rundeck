@@ -133,6 +133,9 @@
 # [*session_timeout*]
 #  Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 #
+# [*sshkey_manage*]
+#  Should this module manage the sshkey used by rundeck at all.
+#
 # [*ssl_enabled*]
 #  Enable ssl for the rundeck web application.
 #
@@ -196,6 +199,7 @@ class rundeck (
   $keystore                     = $rundeck::params::keystore,
   $keystore_password            = $rundeck::params::keystore_password,
   $mail_config                  = $rundeck::params::mail_config,
+  $sshkey_manage                = $rundeck::params::sshkey_manage,
   $ssl_keyfile                  = $rundeck::params::ssl_keyfile,
   $ssl_certfile                 = $rundeck::params::ssl_certfile,
   $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
@@ -238,6 +242,7 @@ class rundeck (
 
   validate_array($auth_types)
   validate_hash($auth_config)
+  validate_bool($sshkey_manage)
   validate_bool($ssl_enabled)
   validate_hash($projects)
   validate_string($projects_organization)
