@@ -127,7 +127,7 @@ class rundeck::install(
     ensure  => directory,
   }
 
-  if $sshkey_manage {
+  if $::rundeck::sshkey_manage {
     file { $framework_config['framework.ssh.keypath']:
       mode    => '0600',
     }
