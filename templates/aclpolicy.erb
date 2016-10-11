@@ -13,7 +13,7 @@ for:
   <%- elsif %w( match equals contains ).include?(type) -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>:
     <%- action.each do |k,v| -%>
-      <%- if %w( kind path name nodename username hostname description osName osFamily osVersion osArch group tags rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
+      <%- if %w( kind path name nodename group tags rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
       <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
     <%- end -%>
   <%- end -%>
