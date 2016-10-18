@@ -80,6 +80,8 @@ define rundeck::config::resource_source(
   $url_cache                          = $rundeck::params::url_cache,
   $url_timeout                        = $rundeck::params::url_timeout,
   $use_default_mapping                = true,
+  $endpoint                           = '',
+  $refresh_interval                   = '30',
   $puppet_enterprise_host             = '',
   $puppet_enterprise_port             = '',
   $puppet_enterprise_ssl_dir          = '',
@@ -320,6 +322,22 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.runningOnly",
         value   => bool2str($running_only),
+        require => File[$properties_file],
+      }
+      ini_setting { "resources.source.${number}.config.endpoint":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.endpoint",
+        value   => $endpoint,
+        require => File[$properties_file],
+      }
+      ini_setting { "resources.source.${number}.config.refreshInterval":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.refreshInterval",
+        value   => $refresh_interval,
         require => File[$properties_file],
       }
     }

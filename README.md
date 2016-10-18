@@ -253,6 +253,12 @@ When the aws-ec2 source_type is specified, this boolean value indicates whether 
 #####`running_only`
 When the aws-ec2 source_type is specified, this boolean value indicates whether to show all EC2 instances or only running ones.
 
+#####`endpoint`
+When the aws-ec2 source_type is specified, this string represents the [regional API endpoint](http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region) to use. Omitting this will use the default region.
+
+#####`refresh_interval`
+When the aws-ec2 source_type is specified, this controls how frequently the EC2 nodes are refreshed. Default is 30.
+
 #####`url_timeout`
 An integer value in seconds that rundeck will wait for resources from the url before timing out.
 
