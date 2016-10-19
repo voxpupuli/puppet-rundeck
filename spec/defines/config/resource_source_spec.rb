@@ -97,6 +97,56 @@ describe 'rundeck::config::resource_source', type: :define do
         end
       end
 
+      describe "rundeck::config::resource_source definition with aws-ec2 parameters on #{osfamily}" do
+        let(:title) { 'source one' }
+        let(:params) do
+          {
+            'project_name' => 'test',
+            'include_server_node' => false,
+            'resource_format' => 'resourcexml',
+            'url_cache' => true,
+            'url_timeout' => '50',
+            'directory' => '/foo/bar/resources',
+            'script_args_quoted' => true,
+            'script_interpreter' => '/bin/bash',
+
+            'source_type' => 'aws-ec2',
+            'mapping_params' => 'description.default=test',
+            'use_default_mapping' => true,
+            'running_only' => true,
+            'refresh_interval' => 0,
+            'endpoint' => 'https\://ec2.us-east-1.amazonaws.com',
+          }
+        end
+        let(:facts) do
+          {
+            osfamily: osfamily,
+            serialnumber: 0,
+            puppetversion: Puppet.version,
+            rundeck_version: ''
+          }
+        end
+
+        ec2_details = {
+          'resources.source.1.config.mappingParams' => 'description.default=test',
+          'resources.source.1.config.useDefaultMapping' => true,
+          'resources.source.1.config.runningOnly' => true,
+          'resources.source.1.config.refreshInterval' => 0,
+          'resources.source.1.config.endpoint' => 'https\://ec2.us-east-1.amazonaws.com',
+          'resources.source.1.type' => 'aws-ec2'
+        }
+
+        ec2_details.each do |key, value|
+          it do
+            should contain_ini_setting("source one::#{key}").with(
+              'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
+              'setting' => key,
+              'value'   => value
+            )
+          end
+        end
+      end
+
       describe "rundeck::config::resource definition with directory parameters on #{osfamily}" do
         let(:title) { 'source one' }
         let(:params) do
