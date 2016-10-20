@@ -233,7 +233,7 @@ The name of the project for which this resource in intended to be a part.
 The sequential number of the resource within the project.
 
 #####`source_type`
-The source type where resources will come from: file, directory, url or script.
+The source type where resources will come from: file, directory, url, aws-ec2, or script.
 
 #####`include_server_node`
 Boolean value to decide whether or not to include the server node in your list of avaliable nodes.
@@ -243,6 +243,15 @@ The format of the resource that will procesed, either resourcexml or resourceyam
 
 #####`url`
 When the url source_type is specified this is the path to that url.
+
+#####`mapping_params`
+When the aws-ec2 source_type is specified, use these [mapping params](https://github.com/rundeck-plugins/rundeck-ec2-nodes-plugin#mapping-definition). The value should be a semicolon-delimited string.
+
+#####`use_default_mapping`
+When the aws-ec2 source_type is specified, this boolean value indicates whether to use the default mapping params in addition to those specified in `mapping_params`.
+
+#####`running_only`
+When the aws-ec2 source_type is specified, this boolean value indicates whether to show all EC2 instances or only running ones.
 
 #####`url_timeout`
 An integer value in seconds that rundeck will wait for resources from the url before timing out.
