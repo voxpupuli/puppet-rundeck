@@ -20,7 +20,7 @@ describe 'rundeck' do
         else
           it { is_expected.to contain_exec('download rundeck package') }
           it { is_expected.to contain_exec('install rundeck package') }
-          it { is_expected.to_not contain_yumrepo('bintray-rundeck') }
+          it { is_expected.not_to contain_yumrepo('bintray-rundeck') }
         end
 
         it do
