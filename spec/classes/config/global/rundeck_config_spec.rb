@@ -44,7 +44,7 @@ describe 'rundeck' do
         CONFIG
 
         it do
-          should contain_file('/etc/rundeck/rundeck-config.groovy').with(
+          is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with(
             'content' => default_config
           )
         end
