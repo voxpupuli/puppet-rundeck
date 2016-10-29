@@ -41,9 +41,9 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
     end
 
     it do
-      should contain_file('/etc/rundeck/defaultPolicy.aclpolicy').with('owner' => 'rundeck',
-                                                                       'group' => 'rundeck',
-                                                                       'mode'  => '0640')
+      is_expected.to contain_file('/etc/rundeck/defaultPolicy.aclpolicy').with('owner' => 'rundeck',
+                                                                               'group' => 'rundeck',
+                                                                               'mode'  => '0640')
     end
   end
 
@@ -59,9 +59,9 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
     end
 
     it do
-      should contain_file('/etc/rundeck-acl/myPolicy.aclpolicy').with('owner' => 'myUser',
-                                                                      'group' => 'myGroup',
-                                                                      'mode'  => '0640')
+      is_expected.to contain_file('/etc/rundeck-acl/myPolicy.aclpolicy').with('owner' => 'myUser',
+                                                                              'group' => 'myGroup',
+                                                                              'mode'  => '0640')
     end
   end
 end

@@ -22,11 +22,11 @@ describe 'rundeck' do
           'project.organization' => ''
         }
 
-        it { should contain_file('/etc/rundeck/project.properties') }
+        it { is_expected.to contain_file('/etc/rundeck/project.properties') }
 
         project_details.each do |key, value|
           it do
-            should contain_ini_setting(key).with(
+            is_expected.to contain_ini_setting(key).with(
               'path'    => '/etc/rundeck/project.properties',
               'setting' => key,
               'value'   => value

@@ -31,18 +31,18 @@ describe 'rundeck::config::project', type: :define do
         end
 
         it do
-          should contain_file("#{projects_dir}/test/var").with(
+          is_expected.to contain_file("#{projects_dir}/test/var").with(
             'ensure' => 'directory'
           )
         end
 
         it do
-          should contain_file("#{projects_dir}/test/etc").with(
+          is_expected.to contain_file("#{projects_dir}/test/etc").with(
             'ensure' => 'directory'
           )
         end
 
-        it { should contain_file("#{projects_dir}/test/etc/project.properties") }
+        it { is_expected.to contain_file("#{projects_dir}/test/etc/project.properties") }
 
         project_details = {
           'project.name' => 'test',
@@ -54,7 +54,7 @@ describe 'rundeck::config::project', type: :define do
 
         project_details.each do |key, value|
           it do
-            should contain_ini_setting("test::#{key}").with(
+            is_expected.to contain_ini_setting("test::#{key}").with(
               'path'    => '/var/rundeck/projects/test/etc/project.properties',
               'setting' => key,
               'value'   => value

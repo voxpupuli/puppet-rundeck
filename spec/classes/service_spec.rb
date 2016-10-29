@@ -13,7 +13,7 @@ describe 'rundeck' do
             puppetversion: '3.8.1'
           }
         end
-        it { should contain_service('rundeckd') }
+        it { is_expected.to contain_service('rundeckd') }
       end
     end
   end

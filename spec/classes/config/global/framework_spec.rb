@@ -35,7 +35,7 @@ describe 'rundeck' do
           'framework.ssh.timeout' => '0'
         }
 
-        it { should contain_file('/etc/rundeck/framework.properties') }
+        it { is_expected.to contain_file('/etc/rundeck/framework.properties') }
 
         framework_details.each do |key, value|
           it 'generates valid content for framework.properties' do

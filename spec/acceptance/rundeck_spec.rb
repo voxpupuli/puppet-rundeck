@@ -20,11 +20,11 @@ describe 'rundeck class' do
     end
 
     describe package('rundeck') do
-      it { should be_installed }
+      it { is_expected.to be_installed }
     end
 
     describe service('rundeckd') do
-      it { should be_running }
+      it { is_expected.to be_running }
     end
   end
 
@@ -45,11 +45,11 @@ describe 'rundeck class' do
     end
 
     describe package('rundeck') do
-      it { should be_installed }
+      it { is_expected.to be_installed }
     end
 
     describe service('rundeckd') do
-      it { should be_running }
+      it { is_expected.to be_running }
     end
   end
 end

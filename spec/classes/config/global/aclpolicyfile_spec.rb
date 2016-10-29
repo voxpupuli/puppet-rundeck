@@ -49,7 +49,7 @@ by:
         CONFIG
 
         it do
-          should contain_file('/etc/rundeck/admin.aclpolicy').with_content(default_acl)
+          is_expected.to contain_file('/etc/rundeck/admin.aclpolicy').with_content(default_acl)
         end
       end
     end
