@@ -16,27 +16,27 @@ describe 'rundeck' do
         plugin_dir = '/var/lib/rundeck/libext'
 
         if osfamily.eql?('RedHat')
-          it { should contain_yumrepo('bintray-rundeck') }
+          it { is_expected.to contain_yumrepo('bintray-rundeck') }
         else
-          it { should contain_exec('download rundeck package') }
-          it { should contain_exec('install rundeck package') }
-          it { should_not contain_yumrepo('bintray-rundeck') }
+          it { is_expected.to contain_exec('download rundeck package') }
+          it { is_expected.to contain_exec('install rundeck package') }
+          it { is_expected.not_to contain_yumrepo('bintray-rundeck') }
         end
 
         it do
-          should contain_file('/var/lib/rundeck').with(
+          is_expected.to contain_file('/var/lib/rundeck').with(
             'ensure' => 'directory'
           )
         end
 
         it do
-          should contain_file(plugin_dir).with(
+          is_expected.to contain_file(plugin_dir).with(
             'ensure' => 'directory'
           )
         end
 
         it do
-          should contain_user('rundeck').with(
+          is_expected.to contain_user('rundeck').with(
             'ensure' => 'present'
           )
         end
@@ -61,25 +61,25 @@ describe 'rundeck' do
     end
 
     it do
-      should contain_group('A1234').with(
+      is_expected.to contain_group('A1234').with(
         'ensure' => 'present'
       )
     end
 
     it do
-      should contain_group('rundeck').with(
+      is_expected.to contain_group('rundeck').with(
         'ensure' => 'absent'
       )
     end
 
     it do
-      should contain_user('A1234').with(
+      is_expected.to contain_user('A1234').with(
         'ensure' => 'present'
       )
     end
 
     it do
-      should contain_user('rundeck').with(
+      is_expected.to contain_user('rundeck').with(
         'ensure' => 'absent'
       )
     end
@@ -102,14 +102,14 @@ describe 'rundeck' do
       }
     end
     it do
-      should contain_group('A1234').with(
+      is_expected.to contain_group('A1234').with(
         'ensure' => 'present',
         'gid' => '10000'
       )
     end
 
     it do
-      should contain_user('A1234').with(
+      is_expected.to contain_user('A1234').with(
         'ensure' => 'present',
         'gid' => '10000',
         'uid' => '10000'

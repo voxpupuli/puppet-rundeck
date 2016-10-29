@@ -25,13 +25,13 @@ describe 'rundeck::config::plugin', type: :define do
         end
 
         it do
-          should contain_archive("download plugin #{name}").with(
+          is_expected.to contain_archive("download plugin #{name}").with(
             'source' => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
           )
         end
 
         it do
-          should contain_file("#{plugin_dir}/#{name}").with(
+          is_expected.to contain_file("#{plugin_dir}/#{name}").with(
             'mode'   => '0644',
             'owner'  => 'rundeck',
             'group'  => 'rundeck'
@@ -62,7 +62,7 @@ describe 'rundeck::config::plugin', type: :define do
         end
 
         it do
-          should contain_file("#{plugin_dir}/#{name}").with(
+          is_expected.to contain_file("#{plugin_dir}/#{name}").with(
             'ensure' => 'absent'
           )
         end
