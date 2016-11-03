@@ -26,7 +26,7 @@ class rundeck::config::global::framework(
   }
   else {
     $framework_config_port = { 'framework.server.port' => '4440' }
-    $framework_config_url = { 'framework.server.url' => "http://${::fqdn}:4440" }
+    $framework_config_url = { 'framework.server.url' => "http://${framework_config_base['framework.server.hostname']}:4440" }
   }
 
   $properties_file = "${properties_dir}/framework.properties"
