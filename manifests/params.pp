@@ -43,8 +43,6 @@ class rundeck::params {
     'framework.server.hostname' => $::fqdn,
     'framework.server.port'     => '4440',
     'framework.server.url'      => "http://${::fqdn}:4440",
-    'framework.server.username' => 'admin',
-    'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
     'framework.projects.dir'    => '/var/lib/rundeck/projects',
     'framework.etc.dir'         => '/etc/rundeck',
