@@ -4,10 +4,12 @@ describe 'rundeck' do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck class without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
         let(:params) { {} }
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: '3.8.1'
@@ -18,9 +20,7 @@ describe 'rundeck' do
         if osfamily.eql?('RedHat')
           it { is_expected.to contain_yumrepo('bintray-rundeck') }
         else
-          it { is_expected.to contain_exec('download rundeck package') }
-          it { is_expected.to contain_exec('install rundeck package') }
-          it { is_expected.not_to contain_yumrepo('bintray-rundeck') }
+          it { is_expected.to contain_apt__source('bintray-rundeck') }
         end
 
         it do
@@ -54,6 +54,7 @@ describe 'rundeck' do
     let(:facts) do
       {
         osfamily: 'Debian',
+        lsbdistid: 'debian',
         serialnumber: 0,
         rundeck_version: '',
         puppetversion: '3.8.1'
@@ -96,6 +97,7 @@ describe 'rundeck' do
     let(:facts) do
       {
         osfamily: 'Debian',
+        lsbdistid: 'debian',
         serialnumber: 0,
         rundeck_version: '',
         puppetversion: '3.8.1'

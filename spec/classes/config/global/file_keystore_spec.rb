@@ -4,6 +4,7 @@ describe 'rundeck' do
   let(:facts) do
     {
       osfamily: 'Debian',
+      lsbdistid: 'debian',
       fqdn: 'test.domain.com',
       serialnumber: 0,
       rundeck_version: '',

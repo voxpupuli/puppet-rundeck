@@ -6,9 +6,12 @@ describe 'rundeck' do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config class without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: '3.8.1'

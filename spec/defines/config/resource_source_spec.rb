@@ -4,6 +4,8 @@ describe 'rundeck::config::resource_source', type: :define do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::resource_source definition with default parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -21,6 +23,7 @@ describe 'rundeck::config::resource_source', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version
@@ -55,6 +58,8 @@ describe 'rundeck::config::resource_source', type: :define do
       end
 
       describe "rundeck::config::resource_source definition with url parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -73,6 +78,7 @@ describe 'rundeck::config::resource_source', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             puppetversion: Puppet.version,
             rundeck_version: ''
@@ -98,6 +104,8 @@ describe 'rundeck::config::resource_source', type: :define do
       end
 
       describe "rundeck::config::resource definition with directory parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -116,6 +124,7 @@ describe 'rundeck::config::resource_source', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version
@@ -139,6 +148,8 @@ describe 'rundeck::config::resource_source', type: :define do
       end
 
       describe "rundeck::config::resource definition with script parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -158,6 +169,7 @@ describe 'rundeck::config::resource_source', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version
@@ -185,6 +197,8 @@ describe 'rundeck::config::resource_source', type: :define do
       end
 
       describe "rundeck::config::resource definition with Puppet Enterprise parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -208,6 +222,7 @@ describe 'rundeck::config::resource_source', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version
