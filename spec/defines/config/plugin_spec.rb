@@ -18,6 +18,7 @@ describe 'rundeck::config::plugin', type: :define do
         let(:facts) do
           {
             osfamily: 'Debian',
+            lsbdistid: 'debian',
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version
@@ -55,6 +56,7 @@ describe 'rundeck::config::plugin', type: :define do
         let(:facts) do
           {
             osfamily: 'Debian',
+            lsbdistid: 'debian',
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version

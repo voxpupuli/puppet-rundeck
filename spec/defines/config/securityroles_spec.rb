@@ -4,6 +4,8 @@ describe 'rundeck::config::securityroles', type: :define do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::securityroles definition with array parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -13,6 +15,7 @@ describe 'rundeck::config::securityroles', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version
