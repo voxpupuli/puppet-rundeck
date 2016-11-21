@@ -123,17 +123,17 @@ class rundeck::install(
         ensure => absent,
       }
     }
-  }
 
-  File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
+    File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
 
-  file { $rdeck_home:
-    ensure  => directory,
-  }
+    file { $rdeck_home:
+      ensure  => directory,
+    }
 
-  if $::rundeck::sshkey_manage {
-    file { $framework_config['framework.ssh.keypath']:
-      mode    => '0600',
+    if $::rundeck::sshkey_manage {
+      file { $framework_config['framework.ssh.keypath']:
+        mode    => '0600',
+      }
     }
   }
 
