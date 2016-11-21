@@ -38,6 +38,8 @@ class rundeck::params {
   $rdeck_home = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
+  $manage_user = false
+
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,

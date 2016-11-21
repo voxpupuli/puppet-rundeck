@@ -11,7 +11,8 @@ class rundeck::install(
   $manage_yum_repo    = $rundeck::manage_yum_repo,
   $package_ensure     = $rundeck::package_ensure,
   $package_source     = $rundeck::package_source,
-  $rdeck_home         = $rundeck::rdeck_home
+  $rdeck_home         = $rundeck::rdeck_home,
+  $manage_user        = $undeck::manage_user
 ) {
 
   if $caller_module_name != $module_name {
@@ -100,24 +101,27 @@ class rundeck::install(
     }
   }
 
-  if $user == 'rundeck' and $user_id == '' {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-  }
-  elsif $user == 'rundeck' and $user_id != '' and $group_id != '' {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
-  }
-  elsif $user != 'rundeck' and $user_id != '' and $group_id != '' {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
+  if $manage_user == true {
 
-    user { 'rundeck':
-      ensure => absent,
+    if $user == 'rundeck' and $user_id == '' {
+      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
     }
-  }
-  else {
-    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+    elsif $user == 'rundeck' and $user_id != '' and $group_id != '' {
+      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
+    }
+    elsif $user != 'rundeck' and $user_id != '' and $group_id != '' {
+      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
 
-    user { 'rundeck':
-      ensure => absent,
+      user { 'rundeck':
+        ensure => absent,
+      }
+    }
+    else {
+      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+
+      user { 'rundeck':
+        ensure => absent,
+      }
     }
   }
 
