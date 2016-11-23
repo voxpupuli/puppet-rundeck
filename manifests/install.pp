@@ -9,6 +9,7 @@
 class rundeck::install(
   $deb_download       = $rundeck::deb_download,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
+  $manage_repo        = $rundeck::manage_repo,
   $package_ensure     = $rundeck::package_ensure,
   $package_source     = $rundeck::package_source,
   $rdeck_home         = $rundeck::rdeck_home
@@ -36,7 +37,7 @@ class rundeck::install(
 
   case $::osfamily {
     'RedHat': {
-      if $manage_yum_repo == true {
+      if ($manage_repo == true or $manage_yum_repo == true) {
         yumrepo { 'bintray-rundeck':
           baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
           descr    => 'bintray rundeck repo',
@@ -51,18 +52,44 @@ class rundeck::install(
       ensure_resource('package', 'rundeck-config', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
     }
     'Debian': {
-      include ::apt
-      apt::source { 'bintray-rundeck':
-        location => 'https://dl.bintray.com/rundeck/rundeck-deb',
-        release  => '/',
-        repos    => '',
-        key      => {
-          id     => '379CE192D401AB61',
-          server => 'keyserver.ubuntu.com',
-        },
-        before   => Package['rundeck'],
+      if $deb_download == true {
+
+        $version = inline_template("<% package_version = '${package_ensure}' %><%= package_version.split('-')[0] %>")
+
+        if $::rundeck_version != $version {
+          exec { 'download rundeck package':
+            command => "/usr/bin/wget ${package_source}/rundeck-${package_ensure}.deb -O /tmp/rundeck-${package_ensure}.deb",
+            unless  => "/usr/bin/test -f /tmp/rundeck-${package_ensure}.deb",
+          }
+
+          exec { 'stop rundeck service':
+            command => '/usr/sbin/service rundeckd stop',
+            unless  => "/bin/bash -c 'if pgrep -f RunServer > /dev/null; then echo 1; else echo 0; fi'",
+          }
+
+          exec { 'install rundeck package':
+            command => "/usr/bin/dpkg --force-confold --ignore-depends 'java7-runtime' -i /tmp/rundeck-${package_ensure}.deb",
+            unless  => "/usr/bin/dpkg -l | grep rundeck | grep ${version}",
+            require => [ Exec['download rundeck package'], Exec['stop rundeck service'] ],
+          }
+        }
       }
-      ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
+      else {
+        if $manage_repo == true {
+          include ::apt
+          apt::source { 'bintray-rundeck':
+            location => 'https://dl.bintray.com/rundeck/rundeck-deb',
+            release  => '/',
+            repos    => '',
+            key      => {
+              id     => '8756C4F765C9AC3CB6B85D62379CE192D401AB61',
+              server => 'keyserver.ubuntu.com',
+            },
+            before   => Package['rundeck'],
+          }
+        }
+        ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class[Apt::Update] } )
+      }
     }
     default: {
       err("The osfamily: ${::osfamily} is not supported")
