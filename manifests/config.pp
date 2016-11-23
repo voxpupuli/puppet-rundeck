@@ -180,6 +180,7 @@ class rundeck::config(
     security_roles_array_enabled => $security_roles_array_enabled,
     security_roles_array         => $security_roles_array,
     notify                       => Service[$service_name],
+    require                      => Class['::rundeck::install'],
   }
 
   if !empty($kerberos_realms) {
