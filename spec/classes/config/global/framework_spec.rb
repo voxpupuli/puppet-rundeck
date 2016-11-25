@@ -6,10 +6,13 @@ describe 'rundeck' do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::global::framework class without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:params) { {} }
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             fqdn: 'test.domain.com',
             serialnumber: 0,
             rundeck_version: '',
@@ -59,6 +62,7 @@ describe 'rundeck' do
       let(:facts) do
         {
           osfamily: 'Debian',
+          lsbdistid: 'debian',
           fqdn: 'test.domain.com',
           serialnumber: 0,
           rundeck_version: '',
@@ -84,6 +88,7 @@ describe 'rundeck' do
       let(:facts) do
         {
           osfamily: 'Debian',
+          lsbdistid: 'debian',
           fqdn: 'test.domain.com',
           serialnumber: 0,
           rundeck_version: '',

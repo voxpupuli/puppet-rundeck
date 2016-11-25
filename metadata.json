@@ -65,6 +65,10 @@
     {
       "name": "puppetlabs/java_ks",
       "version_requirement": ">= 1.0.3 <2.0.0"
+    },
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">= 2.2.0 <3.0.0"
     }
   ]
 }

@@ -4,6 +4,8 @@ describe 'rundeck::config::project', type: :define do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::project definition without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         projects_dir = '/var/rundeck/projects'
 
         let(:title) { 'test' }
@@ -24,6 +26,7 @@ describe 'rundeck::config::project', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version

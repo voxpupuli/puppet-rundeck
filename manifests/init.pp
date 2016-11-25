@@ -204,6 +204,7 @@ class rundeck (
   $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,
   $manage_yum_repo              = $rundeck::params::manage_yum_repo,
+  $manage_repo                  = $rundeck::params::manage_repo,
   $package_ensure               = $rundeck::params::package_ensure,
   $package_source               = $rundeck::params::package_source,
   $preauthenticated_config      = $rundeck::params::preauthenticated_config,
