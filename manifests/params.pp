@@ -282,6 +282,8 @@ class rundeck::params {
     'delimiter'     => ':',
   }
 
+  $quartz_job_threadcount = 10
+
   $server_web_context = undef
   $jvm_args = '-Xmx1024m -Xms256m -server'
 
