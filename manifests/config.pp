@@ -35,6 +35,7 @@ class rundeck::config(
   $projects_description         = $rundeck::projects_default_desc,
   $projects_organization        = $rundeck::projects_default_org,
   $projects_storage_type        = $rundeck::projects_storage_type,
+  $quartz_job_threadcount       = $rundeck::quartz_job_threadcount,
   $rd_loglevel                  = $rundeck::rd_loglevel,
   $rd_auditlevel                = $rundeck::rd_auditlevel,
   $rdeck_config_template        = $rundeck::rdeck_config_template,

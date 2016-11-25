@@ -35,6 +35,7 @@ describe 'rundeck' do
           rundeck.clusterMode.enabled = "false"
 
           rundeck.projectsStorageType = "filesystem"
+          quartz.props.threadPool.threadCount = "10"
 
           rundeck.storage.provider."1".type = "file"
           rundeck.storage.provider."1".config.baseDir = "/var/lib/rundeck/var/storage"

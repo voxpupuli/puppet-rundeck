@@ -44,6 +44,7 @@ grails.serverURL = "<%= @grails_server_url %>"
 rundeck.clusterMode.enabled = "<%= @clustermode_enabled %>"
 
 rundeck.projectsStorageType = "<%= @projects_storage_type %>"
+quartz.props.threadPool.threadCount = "<%= @quartz_job_threadcount %>"
 
 <%- if @key_storage_type == 'file' -%>
 rundeck.storage.provider."1".type = "file"

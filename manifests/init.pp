@@ -91,6 +91,9 @@
 # [*properties_dir*]
 #  The path to the configuration directory where the properties file are stored.
 #
+# [*quartz_job_threadcount*]
+#  The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
+#
 # [*rd_loglevel*]
 #  The log4j logging level to be set for the Rundeck application.
 #
@@ -213,6 +216,7 @@ class rundeck (
   $projects_description         = $rundeck::params::projects_default_desc,
   $projects_organization        = $rundeck::params::projects_default_org,
   $projects_storage_type        = $rundeck::params::projects_storage_type,
+  $quartz_job_threadcount       = $rundeck::params::quartz_job_threadcount,
   $rd_loglevel                  = $rundeck::params::loglevel,
   $rd_auditlevel                = $rundeck::params::loglevel,
   $rdeck_config_template        = $rundeck::params::rdeck_config_template,
@@ -269,6 +273,7 @@ class rundeck (
   validate_string($package_ensure)
   validate_hash($mail_config)
   validate_hash($preauthenticated_config)
+  validate_integer($quartz_job_threadcount)
   validate_string($user)
   validate_string($group)
   validate_string($server_web_context)
