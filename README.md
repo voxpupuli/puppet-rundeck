@@ -141,6 +141,10 @@ The organization value that will be set by default for any projects.
 
 The description that will be set by default for any projects.
 
+##### `quartz_job_threadcount`
+
+The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
+
 ##### `rd_loglevel`
 
 The log4j logging level to be set for the Rundeck application.
