@@ -298,27 +298,27 @@ define rundeck::config::resource_source(
       }
     }
     'aws-ec2': {
-      ini_setting { "resources.source.${number}.config.mappingParams":
+      ini_setting { "${name}::resources.source.${number}.config.mappingParams":
         ensure  => present,
         path    => $properties_file,
         section => '',
-        setting => "resources.source.${number}.config.mappingParams",
+        setting => "${name}::resources.source.${number}.config.mappingParams",
         value   => $mapping_params,
         require => File[$properties_file],
       }
-      ini_setting { "resources.source.${number}.config.useDefaultMapping":
+      ini_setting { "${name}::resources.source.${number}.config.useDefaultMapping":
         ensure  => present,
         path    => $properties_file,
         section => '',
-        setting => "resources.source.${number}.config.useDefaultMapping",
+        setting => "${name}::resources.source.${number}.config.useDefaultMapping",
         value   => bool2str($use_default_mapping),
         require => File[$properties_file],
       }
-      ini_setting { "resources.source.${number}.config.runningOnly":
+      ini_setting { "${name}::resources.source.${number}.config.runningOnly":
         ensure  => present,
         path    => $properties_file,
         section => '',
-        setting => "resources.source.${number}.config.runningOnly",
+        setting => "${name}::resources.source.${number}.config.runningOnly",
         value   => bool2str($running_only),
         require => File[$properties_file],
       }
