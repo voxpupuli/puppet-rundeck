@@ -302,7 +302,7 @@ define rundeck::config::resource_source(
         ensure  => present,
         path    => $properties_file,
         section => '',
-        setting => "${name}::resources.source.${number}.config.mappingParams",
+        setting => "resources.source.${number}.config.mappingParams",
         value   => $mapping_params,
         require => File[$properties_file],
       }
@@ -310,7 +310,7 @@ define rundeck::config::resource_source(
         ensure  => present,
         path    => $properties_file,
         section => '',
-        setting => "${name}::resources.source.${number}.config.useDefaultMapping",
+        setting => "resources.source.${number}.config.useDefaultMapping",
         value   => bool2str($use_default_mapping),
         require => File[$properties_file],
       }
@@ -318,7 +318,7 @@ define rundeck::config::resource_source(
         ensure  => present,
         path    => $properties_file,
         section => '',
-        setting => "${name}::resources.source.${number}.config.runningOnly",
+        setting => "resources.source.${number}.config.runningOnly",
         value   => bool2str($running_only),
         require => File[$properties_file],
       }
