@@ -52,7 +52,8 @@
       "version_requirement": ">= 4.6.0 <5.0.0"
     },
     {
-      "name": "pltraining/dirtree"
+      "name": "pltraining/dirtree",
+      "version_requirement": ">= 0.3.0 <2.0.0"
     },
     {
       "name": "puppetlabs/inifile",
@@ -61,6 +62,12 @@
     {
       "name": "puppet/archive",
       "version_requirement": ">= 0.3.0 <1.0.0"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.8.7 <5.0.0"
     }
   ]
 }
