@@ -42,6 +42,7 @@ matrix:
 branches:
   only:
   - master
+  - /^v\d/
 notifications:
   email: false
 deploy:
