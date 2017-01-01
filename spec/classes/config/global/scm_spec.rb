@@ -4,6 +4,7 @@ describe 'rundeck' do
   let(:facts) do
     {
       osfamily: 'Debian',
+      lsbdistid: 'debian',
       fqdn: 'test.domain.com',
       serialnumber: 0,
       rundeck_version: '',
@@ -57,7 +58,7 @@ describe 'rundeck' do
     end
 
     # content and meta data for passwords
-    it { should contain_file('/var/lib/rundeck/projects/project_1/etc/scm-import.properties') }
+    it { is_expected.to contain_file('/var/lib/rundeck/projects/project_1/etc/scm-import.properties') }
     project_hash['project_1']['scm_import_properties'].each do |key, value|
       it 'generates valid content for scm-import.properties' do
         content = catalogue.resource('file', '/var/lib/rundeck/projects/project_1/etc/scm-import.properties')[:content]

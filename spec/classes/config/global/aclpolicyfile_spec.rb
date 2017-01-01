@@ -4,10 +4,13 @@ describe 'rundeck' do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::global::aclpolicyfile class without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:params) { {} }
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             fqdn: 'test.domain.com',
             serialnumber: 0,
             rundeck_version: ''
@@ -49,7 +52,7 @@ by:
         CONFIG
 
         it do
-          should contain_file('/etc/rundeck/admin.aclpolicy').with_content(default_acl)
+          is_expected.to contain_file('/etc/rundeck/admin.aclpolicy').with_content(default_acl)
         end
       end
     end

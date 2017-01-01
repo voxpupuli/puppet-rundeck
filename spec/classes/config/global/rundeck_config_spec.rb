@@ -4,10 +4,13 @@ describe 'rundeck' do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::global::rundeck_config class without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:params) { {} }
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             fqdn: 'test.domain.com',
             serialnumber: 0,
             rundeck_version: '',
@@ -32,6 +35,7 @@ describe 'rundeck' do
           rundeck.clusterMode.enabled = "false"
 
           rundeck.projectsStorageType = "filesystem"
+          quartz.props.threadPool.threadCount = "10"
 
           rundeck.storage.provider."1".type = "file"
           rundeck.storage.provider."1".config.baseDir = "/var/lib/rundeck/var/storage"
@@ -44,7 +48,7 @@ describe 'rundeck' do
         CONFIG
 
         it do
-          should contain_file('/etc/rundeck/rundeck-config.groovy').with(
+          is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with(
             'content' => default_config
           )
         end

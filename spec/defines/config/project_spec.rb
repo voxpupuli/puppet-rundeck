@@ -4,6 +4,8 @@ describe 'rundeck::config::project', type: :define do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck::config::project definition without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         projects_dir = '/var/rundeck/projects'
 
         let(:title) { 'test' }
@@ -24,6 +26,7 @@ describe 'rundeck::config::project', type: :define do
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: Puppet.version
@@ -31,18 +34,18 @@ describe 'rundeck::config::project', type: :define do
         end
 
         it do
-          should contain_file("#{projects_dir}/test/var").with(
+          is_expected.to contain_file("#{projects_dir}/test/var").with(
             'ensure' => 'directory'
           )
         end
 
         it do
-          should contain_file("#{projects_dir}/test/etc").with(
+          is_expected.to contain_file("#{projects_dir}/test/etc").with(
             'ensure' => 'directory'
           )
         end
 
-        it { should contain_file("#{projects_dir}/test/etc/project.properties") }
+        it { is_expected.to contain_file("#{projects_dir}/test/etc/project.properties") }
 
         project_details = {
           'project.name' => 'test',
@@ -54,7 +57,7 @@ describe 'rundeck::config::project', type: :define do
 
         project_details.each do |key, value|
           it do
-            should contain_ini_setting("test::#{key}").with(
+            is_expected.to contain_ini_setting("test::#{key}").with(
               'path'    => '/var/rundeck/projects/test/etc/project.properties',
               'setting' => key,
               'value'   => value

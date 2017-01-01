@@ -6,22 +6,25 @@ describe 'rundeck' do
   context 'supported operating systems' do
     %w(Debian RedHat).each do |osfamily|
       describe "rundeck class without any parameters on #{osfamily}" do
+        lsbdistid = 'debian' if osfamily.eql?('Debian')
+
         let(:params) { {} }
         let(:facts) do
           {
             osfamily: osfamily,
+            lsbdistid: lsbdistid,
             serialnumber: 0,
             rundeck_version: '',
             puppetversion: '3.8.1'
           }
         end
 
-        it { should compile.with_all_deps }
-        it { should contain_class('rundeck::params') }
-        it { should contain_class('rundeck::install').that_comes_before('Class[rundeck::config]') }
-        it { should contain_class('rundeck::config') }
-        it { should contain_class('rundeck::service').that_comes_before('Class[rundeck]') }
-        it { should contain_class('rundeck').that_requires('Class[rundeck::service]') }
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_class('rundeck::params') }
+        it { is_expected.to contain_class('rundeck::install').that_comes_before('Class[rundeck::config]') }
+        it { is_expected.to contain_class('rundeck::config') }
+        it { is_expected.to contain_class('rundeck::service').that_comes_before('Class[rundeck]') }
+        it { is_expected.to contain_class('rundeck').that_requires('Class[rundeck::service]') }
       end
     end
   end
@@ -38,7 +41,7 @@ describe 'rundeck' do
         }
       end
 
-      it { expect { should contain_package('rundeck') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
+      it { expect { is_expected.to contain_package('rundeck') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
     end
   end
 
@@ -65,7 +68,7 @@ describe 'rundeck' do
           }
         }
       end
-      it { should contain_file('/etc/rundeck/jaas-auth.conf') }
+      it { is_expected.to contain_file('/etc/rundeck/jaas-auth.conf') }
       it 'generates valid content for jaas-auth.conf' do
         content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
         expect(content).to include('roleUsernameMemberAttribute="memberUid"')
@@ -86,7 +89,7 @@ describe 'rundeck' do
           }
         }
       end
-      it { should contain_file('/etc/rundeck/jaas-auth.conf') }
+      it { is_expected.to contain_file('/etc/rundeck/jaas-auth.conf') }
       it 'generates valid content for jaas-auth.conf' do
         content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
         expect(content).to include('providerUrl="ldaps://myrealldap.example.com"')
