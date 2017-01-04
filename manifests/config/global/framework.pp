@@ -18,11 +18,11 @@ class rundeck::config::global::framework(
 
   if $ssl_enabled and $ssl_port == '' {
     $framework_config_port = { 'framework.server.port' => '4443' }
-    $framework_config_url = { 'framework.server.url' => "http://${framework_config_base['framework.server.hostname']}:4443" }
+    $framework_config_url = { 'framework.server.url' => "https://${framework_config_base['framework.server.hostname']}:4443" }
   }
   elsif $ssl_enabled and $ssl_port != '' {
     $framework_config_port = { 'framework.server.port' => $ssl_port }
-    $framework_config_url = { 'framework.server.url' => "http://${framework_config_base['framework.server.hostname']}:${ssl_port}" }
+    $framework_config_url = { 'framework.server.url' => "https://${framework_config_base['framework.server.hostname']}:${ssl_port}" }
   }
   else {
     $framework_config_port = { 'framework.server.port' => '4440' }

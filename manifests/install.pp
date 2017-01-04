@@ -9,10 +9,10 @@
 class rundeck::install(
   $deb_download       = $rundeck::deb_download,
   $manage_yum_repo    = $rundeck::manage_yum_repo,
+  $manage_repo        = $rundeck::manage_repo,
   $package_ensure     = $rundeck::package_ensure,
   $package_source     = $rundeck::package_source,
-  $rdeck_home         = $rundeck::rdeck_home,
-  $manage_user        = $undeck::manage_user
+  $rdeck_home         = $rundeck::rdeck_home
 ) {
 
   if $caller_module_name != $module_name {
@@ -37,7 +37,7 @@ class rundeck::install(
 
   case $::osfamily {
     'RedHat': {
-      if $manage_yum_repo == true {
+      if ($manage_repo == true or $manage_yum_repo == true) {
         yumrepo { 'bintray-rundeck':
           baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
           descr    => 'bintray rundeck repo',
@@ -74,6 +74,22 @@ class rundeck::install(
           }
         }
       }
+      else {
+        if $manage_repo == true {
+          include ::apt
+          apt::source { 'bintray-rundeck':
+            location => 'https://dl.bintray.com/rundeck/rundeck-deb',
+            release  => '/',
+            repos    => '',
+            key      => {
+              id     => '8756C4F765C9AC3CB6B85D62379CE192D401AB61',
+              server => 'keyserver.ubuntu.com',
+            },
+            before   => Package['rundeck'],
+          }
+        }
+        ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class[Apt::Update] } )
+      }
     }
     default: {
       err("The osfamily: ${::osfamily} is not supported")
@@ -101,27 +117,24 @@ class rundeck::install(
     }
   }
 
-  if $manage_user == true {
+  if $user == 'rundeck' and $user_id == '' {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+  }
+  elsif $user == 'rundeck' and $user_id != '' and $group_id != '' {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
+  }
+  elsif $user != 'rundeck' and $user_id != '' and $group_id != '' {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
 
-    if $user == 'rundeck' and $user_id == '' {
-      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
+    user { 'rundeck':
+      ensure => absent,
     }
-    elsif $user == 'rundeck' and $user_id != '' and $group_id != '' {
-      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
-    }
-    elsif $user != 'rundeck' and $user_id != '' and $group_id != '' {
-      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group], 'uid' => $user_id, 'gid' => $group_id } )
+  }
+  else {
+    ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
 
-      user { 'rundeck':
-        ensure => absent,
-      }
-    }
-    else {
-      ensure_resource('user', $user, { 'ensure' => 'present', 'groups' => [$group] } )
-
-      user { 'rundeck':
-        ensure => absent,
-      }
+    user { 'rundeck':
+      ensure => absent,
     }
   }
 
