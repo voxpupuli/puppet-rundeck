@@ -12,16 +12,18 @@ class rundeck::params {
   case $::osfamily {
     'Debian': {
       $package_name = 'rundeck'
-      $package_ensure = '2.5.1-1-GA'
       $service_name = 'rundeckd'
-      $manage_yum_repo = false
       $deb_download = true
+      $package_ensure = '2.5.1-1-GA'
+      $manage_repo = true
+      $manage_yum_repo = false
     }
     'RedHat', 'Amazon': {
       $package_name = 'rundeck'
       $package_ensure = 'installed'
       $service_name = 'rundeckd'
       $manage_yum_repo = true
+      $manage_repo = $manage_yum_repo
       $deb_download = false
     }
     default: {
@@ -38,13 +40,13 @@ class rundeck::params {
   $rdeck_home = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
 
-  $manage_user = false
-
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
     'framework.server.port'     => '4440',
     'framework.server.url'      => "http://${::fqdn}:4440",
+    'framework.server.username' => 'admin',
+    'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
     'framework.projects.dir'    => '/var/lib/rundeck/projects',
     'framework.etc.dir'         => '/etc/rundeck',
@@ -279,6 +281,8 @@ class rundeck::params {
     'attributeName' => 'REMOTE_USER_GROUPS',
     'delimiter'     => ':',
   }
+
+  $quartz_job_threadcount = 10
 
   $server_web_context = undef
   $jvm_args = '-Xmx1024m -Xms256m -server'
