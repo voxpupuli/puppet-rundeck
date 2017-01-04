@@ -17,12 +17,12 @@ class rundeck::config::global::framework(
   $framework_config_base = merge($rundeck::params::framework_config, $rundeck::framework_config)
 
   if $ssl_enabled {
-    $framework_config_url_base = "https://${::fqdn}" 
+    $framework_config_url_base = "https://${::fqdn}"
   }
   else {
-    $framework_config_url_base = "http://${::fqdn}" 
+    $framework_config_url_base = "http://${::fqdn}"
   }
- 
+
   if $framework_config_base['framework.server.port'] != $rundeck::params::framework_config['framework.server.port'] {
     $framework_config_port = { 'framework.server.port' => $framework_config_base['framework.server.port'] }
   }
