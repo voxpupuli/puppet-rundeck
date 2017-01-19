@@ -132,6 +132,9 @@ class rundeck::params {
         'adhoc' => [
           {'allow' => ['read','run','kill']}
         ],
+        'job' => [
+          {'allow' => ['create','read','update','delete','run','kill']}
+        ],
         'node' => [
           {'allow' => ['read','run']}
         ],
