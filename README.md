@@ -209,17 +209,9 @@ Boolean value if set to true enables security_roles_array.
 
 Array value if you want to have more role in web.xml
 
-##### `deb_download`
-
-Whether to download .deb installation File from rundeck instead of installing from APT repo. Defaults to true for backwards compatibility.
-
 ##### `manage_repo`
 
 Whether to manage the bintray YUM/APT repository containing the Rundeck rpm/deb. Defaults to true. 
-
-##### `manage_yum_repo`
-
-Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
 
 ##### `file_keystorage_dir`
 
