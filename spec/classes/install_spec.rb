@@ -19,10 +19,10 @@ describe 'rundeck' do
 
         if osfamily.eql?('RedHat')
           it { is_expected.to contain_yumrepo('bintray-rundeck') }
-        else
-          it { is_expected.to contain_exec('download rundeck package') }
-          it { is_expected.to contain_exec('install rundeck package') }
-          it { is_expected.not_to contain_yumrepo('bintray-rundeck') }
+        end
+
+        if osfamily.eql?('Debian')
+          it { is_expected.to contain_apt__source('bintray-rundeck').with_location('https://dl.bintray.com/rundeck/rundeck-deb') }
         end
 
         it do

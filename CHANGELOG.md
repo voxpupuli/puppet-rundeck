@@ -1,3 +1,24 @@
+# Changelog
+
+## 2017-01-13 - Release 3.3.0
+
+This is the last release with puppet3 support!
+- Add tags to fix aclpolicy
+- Bump puppetlabs/inifile dependency version
+- This adds a boolean class parameter to the rundeck class to allow people
+- Add more specific scope on the variable
+- Fix several markdown issues
+- rubocop: fix RSpec/ImplicitExpect
+- rubocop: fix RSpec/NotToNot
+- Add missing badges
+- Install rundeck from apt for osfamily debian
+- Add backwards compatibility for debian installations with wget deb files
+- Add puppetlabs/apt module dependency
+- Add variable quartz_job_threadCount
+- Set puppet minimum version_requirement to 3.8.7
+- Set minimum version dependencies (for Puppet 4)
+- Add userPasswordAttribute to ldap config, like AD config
+
 ## 2016-10-05 - Release 3.2.0
 - Modulesync with latest Vox Pupuli defaults
 - Add support to set user and group id. [\#254](https://github.com/voxpupuli/puppet-rundeck/pull/254) ([zlanyi](https://github.com/zlanyi))
