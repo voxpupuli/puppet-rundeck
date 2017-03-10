@@ -83,8 +83,12 @@ define rundeck::config::resource_source(
   $puppet_enterprise_host             = '',
   $puppet_enterprise_port             = '',
   $puppet_enterprise_ssl_dir          = '',
+  $puppet_enterprise_certificate_name = '',
   $puppet_enterprise_mapping_file     = '',
   $puppet_enterprise_metrics_interval = '',
+  $puppet_enterprise_node_query       = '',
+  $puppet_enterprise_default_node_tag = '',
+  $puppet_enterprise_tag_source       = '',
 ) {
 
   include ::rundeck
@@ -373,6 +377,54 @@ define rundeck::config::resource_source(
           section => '',
           setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_SSL_DIR",
           value   => $puppet_enterprise_ssl_dir,
+          require => File[$properties_file],
+        }
+      }
+      if ( $puppet_enterprise_certificate_name != '' ) {
+        validate_string($puppet_enterprise_certificate_name)
+
+        ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_CERTIFICATE_NAME":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_CERTIFICATE_NAME",
+          value   => $puppet_enterprise_certificate_name,
+          require => File[$properties_file],
+        }
+      }
+      if ( $puppet_enterprise_node_query != '' ) {
+        validate_string($puppet_enterprise_node_query)
+
+        ini_setting { "${name}::resources.source.${number}.config.PROPERTY_NODE_QUERY":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.PROPERTY_NODE_QUERY",
+          value   => $puppet_enterprise_node_query,
+          require => File[$properties_file],
+        }
+      }
+      if ( $puppet_enterprise_default_node_tag != '' ) {
+        validate_string($puppet_enterprise_default_node_tag)
+
+        ini_setting { "${name}::resources.source.${number}.config.PROPERTY_DEFAULT_NODE_TAG":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.PROPERTY_DEFAULT_NODE_TAG",
+          value   => $puppet_enterprise_default_node_tag,
+          require => File[$properties_file],
+        }
+      }
+      if ( $puppet_enterprise_tag_source != '' ) {
+        validate_string($puppet_enterprise_tag_source)
+
+        ini_setting { "${name}::resources.source.${number}.config.PROPERTY_TAGS_SOURCE":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.PROPERTY_TAGS_SOURCE",
+          value   => $puppet_enterprise_tag_source,
           require => File[$properties_file],
         }
       }
