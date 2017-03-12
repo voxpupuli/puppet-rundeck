@@ -18,6 +18,8 @@ describe 'rundeck::config::plugin', type: :define do
         let(:facts) do
           {
             osfamily: 'Debian',
+            os: { family: 'Debian' },
+            operatingsystem: 'Debian',
             lsbdistid: 'debian',
             serialnumber: 0,
             rundeck_version: '',
@@ -56,6 +58,7 @@ describe 'rundeck::config::plugin', type: :define do
         let(:facts) do
           {
             osfamily: 'Debian',
+            os: { family: 'Debian' },
             lsbdistid: 'debian',
             serialnumber: 0,
             rundeck_version: '',
