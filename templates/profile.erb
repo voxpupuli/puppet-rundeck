@@ -1,33 +1,54 @@
+RDECK_INSTALL=<%= @rdeck_base %>
 RDECK_BASE=<%= @rdeck_base %>
-export RDECK_BASE
+RDECK_CONFIG=<%= @properties_dir %>
+RDECK_SERVER_BASE="${RDECK_SERVER_BASE:-$RDECK_BASE}"
+RDECK_SERVER_CONFIG="${RDECK_SERVER_CONFIG:-$RDECK_CONFIG}"
+RDECK_SERVER_DATA="${RDECK_SERVER_DATA:-$RDECK_BASE/data}"
+RDECK_PROJECTS="${RDECK_PROJECTS:-$RDECK_BASE/projects}"
+RUNDECK_TEMPDIR="${RUNDECK_TEMPDIR:-/tmp/rundeck}"
+RUNDECK_WORKDIR="${RUNDECK_TEMPDIR:-$RDECK_BASE/work}"
+RUNDECK_LOGDIR="${RUNDECK_LOGDIR:-$RDECK_BASE/logs}"
+RDECK_JVM_SETTINGS="${RDECK_JVM_SETTINGS:- -XX:MaxPermSize=256m}"
+RDECK_TRUSTSTORE_FILE="${RDECK_TRUSTSTORE_FILE:-$RDECK_CONFIG/ssl/truststore}"
+RDECK_TRUSTSTORE_TYPE="${RDECK_TRUSTSTORE_TYPE:-jks}"
+JAAS_CONF="${JAAS_CONF:-$RDECK_CONFIG/jaas-loginmodule.conf}"
+LOGIN_MODULE="${LOGIN_MODULE:-authentication}"
+RDECK_HTTP_PORT=${RDECK_HTTP_PORT:-4440}
+RDECK_HTTPS_PORT=${RDECK_HTTPS_PORT:-4443}
 
 <% if @java_home %>
 export JAVA_HOME=<%= @java_home %>
 <% end %>
 
-JAVA_CMD=java
-
-if [ ! -z $JAVA_HOME ]; then
-PATH=$PATH:$JAVA_HOME/bin
-export PATH
-JAVA_CMD=$JAVA_HOME/bin/java
+# If no JAVA_CMD, try to find it in $JAVA_HOME
+if [ -z "$JAVA_CMD" ] && [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/bin/java" ] ; then
+  JAVA_CMD=$JAVA_HOME/bin/java
+  PATH=$PATH:$JAVA_HOME/bin
+elif [ -z "$JAVA_CMD" ] ; then
+  JAVA_CMD=java
 fi
 
-export CLI_CP=$(find <%= @rdeck_base %>/cli -name \*.jar -printf %p:)
-export BOOTSTRAP_CP=$(find <%= @rdeck_base %>/bootstrap -name \*.jar -printf %p:)
-export RDECK_JVM="-Drdeck.config=<%= @properties_dir %> \
--Drdeck.base=<%= @rdeck_base %> \
--Drundeck.server.configDir=<%= @properties_dir %> \
--Dserver.datastore.path=<%= @rdeck_base %>/data \
--Drundeck.server.serverDir=<%= @rdeck_base %> \
--Drdeck.projects=<%= @projects_dir %> \
--Drdeck.runlogs=<%= @logs_dir %> \
--Drundeck.config.location=<%= @properties_dir %>/rundeck-config.groovy \
--Djava.security.auth.login.config=<%= @properties_dir %>/jaas-auth.conf \
-<%- if !(@kerberos_realms.empty?) -%>
--Djava.security.krb5.conf=<%= @properties_dir %>/krb5.conf \
-<%- end -%>
--Dloginmodule.name=authentication"
+# build classpath without lone : that includes .
+for jar in $(find $RDECK_INSTALL/cli -name '*.jar') ; do
+  CLI_CP=${CLI_CP:+$CLI_CP:}$jar
+done
+for jar in $(find $RDECK_INSTALL/bootstrap -name '*.jar') ; do
+  BOOTSTRAP_CP=${BOOTSTRAP_CP:+$BOOTSTRAP_CP:}$jar
+done
+
+#   -Dloginmodule.name=
+RDECK_JVM="-Djava.security.auth.login.config=$JAAS_CONF \
+           -Dloginmodule.name=$LOGIN_MODULE \
+           -Drdeck.config=$RDECK_CONFIG \
+           -Drundeck.server.configDir=$RDECK_SERVER_CONFIG \
+           -Dserver.datastore.path=$RDECK_SERVER_DATA/rundeck \
+           -Drundeck.server.serverDir=$RDECK_INSTALL \
+           -Drdeck.projects=$RDECK_PROJECTS \
+           -Drdeck.runlogs=$RUNDECK_LOGDIR \
+           -Drundeck.config.location=$RDECK_CONFIG/rundeck-config.properties \
+           -Djava.io.tmpdir=$RUNDECK_TEMPDIR \
+           -Drundeck.server.workDir=$RUNDECK_WORKDIR \
+           -Dserver.http.port=$RDECK_HTTP_PORT"
 
 <%- if @server_web_context -%>
 RDECK_JVM="$RDECK_JVM -Dserver.web.context=<%= @server_web_context %>"
@@ -35,21 +56,20 @@ RDECK_JVM="$RDECK_JVM -Dserver.web.context=<%= @server_web_context %>"
 
 RDECK_JVM="$RDECK_JVM <%= @jvm_args %>"
 
+#
+# Set min/max heap size
+#
+RDECK_JVM="$RDECK_JVM $RDECK_JVM_SETTINGS"
+#
+# SSL Configuration - Uncomment the following to enable.  Check SSL.properties for details.
+#
+
 <%- if @ssl_enabled -%>
-export RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=<%= @properties_dir %>/ssl/ssl.properties -Dserver.https.port=<%= @ssl_port %>"
-export RDECK_SSL_OPTS="-Djavax.net.ssl.trustStore=<%= @properties_dir %>/ssl/truststore -Djavax.net.ssl.trustStoreType=jks -Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol"
+RDECK_SSL_OPTS="-Djavax.net.ssl.trustStore=<%= @properties_dir %>/ssl/truststore -Djavax.net.ssl.trustStoreType=jks -Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol"
+RDECK_JVM="$RDECK_JVM -Drundeck.ssl.config=<%= @properties_dir %>/ssl/ssl.properties -Dserver.https.port=<%= @ssl_port %> ${RDECK_SSL_OPTS}"
 <%- end -%>
 
-if test -t 0 -a -z "$RUNDECK_CLI_TERSE"
-then
-RUNDECK_CLI_TERSE=true
-export RUNDECK_CLI_TERSE
-fi
-
-if test -n "$JRE_HOME"
-then
 unset JRE_HOME
-fi
 
 umask 002
 
