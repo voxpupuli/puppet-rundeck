@@ -30,6 +30,7 @@ class rundeck::config(
   $mail_config                  = $rundeck::mail_config,
   $manage_default_admin_policy  = $rundeck::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::manage_default_api_policy,
+  $overrides_dir                = $rundeck::overrides_dir,
   $preauthenticated_config      = $rundeck::preauthenticated_config,
   $projects                     = $rundeck::projects,
   $projects_description         = $rundeck::projects_default_desc,
@@ -150,9 +151,6 @@ class rundeck::config(
 
   if ($rdeck_profile_template) {
     file { "${properties_dir}/profile":
-      owner   => $user,
-      group   => $group,
-      mode    => '0640',
       content => template($rdeck_profile_template),
       notify  => Service[$service_name],
       require => File[$properties_dir],
@@ -160,10 +158,7 @@ class rundeck::config(
   }
 
   file { "${overrides_dir}/${service_name}":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-    content => template('templates/profile_overrides.erb'),
+    content => template('rundeck/profile_overrides.erb'),
     notify  => Service[$service_name],
   }
 
