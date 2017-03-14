@@ -11,12 +11,14 @@ class rundeck::params {
 
   case $::osfamily {
     'Debian': {
+      $overrides_dir = '/etc/default'
       $package_name = 'rundeck'
       $package_ensure = 'installed'
       $service_name = 'rundeckd'
       $manage_repo = true
     }
     'RedHat', 'Amazon': {
+      $overrides_dir = '/etc/sysconfig'
       $package_name = 'rundeck'
       $package_ensure = 'installed'
       $service_name = 'rundeckd'
@@ -309,7 +311,7 @@ class rundeck::params {
   $session_timeout = 30
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
-  $rdeck_profile_template = 'rundeck/profile.erb'
+  $rdeck_profile_template = undef
 
   $file_keystorage_keys = { }
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"

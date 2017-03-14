@@ -148,13 +148,23 @@ class rundeck::config(
     }
   }
 
-  file { "${properties_dir}/profile":
+  if ($rdeck_profile_template) {
+    file { "${properties_dir}/profile":
+      owner   => $user,
+      group   => $group,
+      mode    => '0640',
+      content => template($rdeck_profile_template),
+      notify  => Service[$service_name],
+      require => File[$properties_dir],
+    }
+  }
+
+  file { "${overrides_dir}/${service_name}":
     owner   => $user,
     group   => $group,
     mode    => '0640',
-    content => template($rdeck_profile_template),
+    content => template('templates/profile_overrides.erb'),
     notify  => Service[$service_name],
-    require => File[$properties_dir],
   }
 
   include '::rundeck::config::global::framework'
