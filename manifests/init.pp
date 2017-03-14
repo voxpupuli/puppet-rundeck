@@ -110,7 +110,7 @@
 #  directory under which the projects directories live.
 #
 # [*rdeck_profile_template*]
-#  Allows you to override the profile template
+#  Allows you to use your own profile template instead of the default from the package maintainer
 #
 # [*rss_enabled*]
 #  Boolean value if set to true enables RSS feeds that are public (non-authenticated)
