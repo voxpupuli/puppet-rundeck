@@ -58,6 +58,7 @@ define rundeck::config::project (
   $scm_import_properties  = {},
   $scm_export_properties  = {},
   $ssh_keypath            = undef,
+  $ssh_user               = undef,
   $user                   = $rundeck::user,
 ) {
 
@@ -160,6 +161,17 @@ define rundeck::config::project (
     setting => 'project.ssh-keypath',
     value   => $ssh_keypath_real,
     require => File[$properties_file],
+  }
+
+  if $ssh_user != undef {
+    ini_setting { "${name}::project.ssh-user":
+      ensure  => present,
+      path    => $properties_file,
+      section => '',
+      setting => 'project.ssh.user',
+      value   => $ssh_user,
+      require => File[$properties_file],
+    }
   }
 
   $resource_source_defaults = {
