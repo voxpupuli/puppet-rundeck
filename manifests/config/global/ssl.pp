@@ -42,8 +42,8 @@ class rundeck::config::global::ssl(
     destkeypass  => $key_password,
     trustcacerts => true,
     notify       => Service[$service_name],
-  } ->
-  java_ks { "rundeck:${properties_dir}/ssl/truststore":
+  }
+  -> java_ks { "rundeck:${properties_dir}/ssl/truststore":
     ensure       => present,
     private_key  => $ssl_keyfile,
     certificate  => $ssl_certfile,
