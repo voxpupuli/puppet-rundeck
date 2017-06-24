@@ -1,21 +1,14 @@
 require 'spec_helper'
 
 describe 'rundeck' do
-  context 'supported operating systems' do
-    %w(Debian RedHat).each do |osfamily|
-      describe "rundeck::config::global::project class without any parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
+  on_supported_os.each do |os, facts|
+    context "on #{os} " do
+      let :facts do
+        facts
+      end
 
+      describe "rundeck::config::global::project class without any parameters on #{os}" do
         let(:params) { {} }
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
-          }
-        end
 
         project_details = {
           'project.dir' => '/var/lib/rundeck/projects/${project.name}',

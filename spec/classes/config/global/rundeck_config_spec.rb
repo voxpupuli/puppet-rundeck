@@ -1,22 +1,14 @@
 require 'spec_helper'
 
 describe 'rundeck' do
-  context 'supported operating systems' do
-    %w(Debian RedHat).each do |osfamily|
-      describe "rundeck::config::global::rundeck_config class without any parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
+  on_supported_os.each do |os, facts|
+    context "on #{os} " do
+      let :facts do
+        facts
+      end
 
+      describe "rundeck::config::global::rundeck_config class without any parameters on #{os}" do
         let(:params) { {} }
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            fqdn: 'test.domain.com',
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
-          }
-        end
 
         default_config = <<-CONFIG.gsub(%r{[^\S\n]{10}}, '')
           loglevel.default = "INFO"
@@ -31,7 +23,7 @@ describe 'rundeck' do
             url = "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true"
           }
 
-          grails.serverURL = "http://test.domain.com:4440"
+          grails.serverURL = "http://foo.example.com:4440"
           rundeck.clusterMode.enabled = "false"
 
           rundeck.projectsStorageType = "filesystem"
@@ -47,11 +39,7 @@ describe 'rundeck' do
 
         CONFIG
 
-        it do
-          is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with(
-            'content' => default_config
-          )
-        end
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with('content' => default_config) }
       end
     end
   end

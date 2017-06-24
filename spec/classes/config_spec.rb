@@ -3,21 +3,13 @@
 require 'spec_helper'
 
 describe 'rundeck' do
-  context 'supported operating systems' do
-    %w(Debian RedHat).each do |osfamily|
-      describe "rundeck::config class without any parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
+  on_supported_os.each do |os, facts|
+    context "on #{os} " do
+      let :facts do
+        facts
+      end
 
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: '3.8.1'
-          }
-        end
-
+      describe "rundeck::config class without any parameters on #{os}" do
         it { is_expected.to contain_class('rundeck::config::global::framework') }
         it { is_expected.to contain_class('rundeck::config::global::project') }
         it { is_expected.to contain_class('rundeck::config::global::rundeck_config') }
@@ -61,23 +53,16 @@ describe 'rundeck' do
         it { is_expected.to contain_rundeck__config__aclpolicyfile('admin') }
         it { is_expected.to contain_rundeck__config__aclpolicyfile('apitoken') }
       end
-    end
 
-    describe 'rundeck::config with jvm_args set' do
-      jvm_args = '-Dserver.http.port=8008 -Xms2048m -Xmx2048m -server'
-      let(:facts) do
-        {
-          osfamily: 'RedHat',
-          serialnumber: 0,
-          rundeck_version: '',
-          puppetversion: '3.8.1'
-        }
-      end
-      let(:params) { { jvm_args: jvm_args } }
-      it { is_expected.to contain_file('/etc/rundeck/profile') }
-      it 'generates valid content for profile' do
-        content = catalogue.resource('file', '/etc/rundeck/profile')[:content]
-        expect(content).to include("RDECK_JVM=\"$RDECK_JVM #{jvm_args}\"")
+      describe 'rundeck::config with jvm_args set' do
+        jvm_args = '-Dserver.http.port=8008 -Xms2048m -Xmx2048m -server'
+        let(:params) { { jvm_args: jvm_args } }
+
+        it { is_expected.to contain_file('/etc/rundeck/profile') }
+        it 'generates valid content for profile' do
+          content = catalogue.resource('file', '/etc/rundeck/profile')[:content]
+          expect(content).to include("RDECK_JVM=\"$RDECK_JVM #{jvm_args}\"")
+        end
       end
     end
   end
