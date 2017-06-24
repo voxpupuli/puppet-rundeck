@@ -162,15 +162,15 @@ class rundeck::config(
   include '::rundeck::config::global::rundeck_config'
   include '::rundeck::config::global::file_keystore'
 
-  Class[rundeck::config::global::framework] ->
-  Class[rundeck::config::global::project] ->
-  Class[rundeck::config::global::rundeck_config] ->
-  Class[rundeck::config::global::file_keystore]
+  Class[rundeck::config::global::framework]
+  -> Class[rundeck::config::global::project]
+  -> Class[rundeck::config::global::rundeck_config]
+  -> Class[rundeck::config::global::file_keystore]
 
   if $ssl_enabled {
     include '::rundeck::config::global::ssl'
-    Class[rundeck::config::global::rundeck_config] ->
-    Class[rundeck::config::global::ssl]
+    Class[rundeck::config::global::rundeck_config]
+    -> Class[rundeck::config::global::ssl]
   }
 
   create_resources(rundeck::config::project, $projects)

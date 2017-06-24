@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'rundeck' do
   context 'supported operating systems' do
-    %w(Debian RedHat).each do |osfamily|
+    %w[Debian RedHat].each do |osfamily|
       let(:params) do
         {
           ssl_enabled: true

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'rundeck' do
   context 'supported operating systems' do
-    %w(Debian RedHat).each do |osfamily|
+    %w[Debian RedHat].each do |osfamily|
       gui_config_hash = {
         'rundeck.gui.title'         => 'Test title',
         'rundeck.gui.brand.html'    => '<b>App</b>',
