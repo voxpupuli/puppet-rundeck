@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not impact the functionality of the module.
 
+## [v4.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.1) (2017-07-04)
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v4.0.0...v4.0.1)
+
+**Fixed bugs:**
+
+- Add missing undeckd= in profile.erb [\#323](https://github.com/voxpupuli/puppet-rundeck/pull/323) ([stigboyeandersen](https://github.com/stigboyeandersen))
+- Change to use `fqdn\_uuid\(\)` function [\#322](https://github.com/voxpupuli/puppet-rundeck/pull/322) ([petems](https://github.com/petems))
+
+**Closed issues:**
+
+- Rundeck service not starting [\#319](https://github.com/voxpupuli/puppet-rundeck/issues/319)
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.0) (2017-06-27)
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v3.3.0...v4.0.0)
 
@@ -18,6 +30,7 @@ These should not impact the functionality of the module.
 
 **Merged pull requests:**
 
+- release 4.0.0 [\#321](https://github.com/voxpupuli/puppet-rundeck/pull/321) ([bastelfreak](https://github.com/bastelfreak))
 - Set debian apt\_repo as default debian installation method [\#308](https://github.com/voxpupuli/puppet-rundeck/pull/308) ([cy4n](https://github.com/cy4n))
 - Update readme apt install [\#307](https://github.com/voxpupuli/puppet-rundeck/pull/307) ([cy4n](https://github.com/cy4n))
 
