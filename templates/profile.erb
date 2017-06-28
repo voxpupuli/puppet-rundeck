@@ -52,3 +52,5 @@ unset JRE_HOME
 fi
 
 umask 002
+
+rundeckd="$JAVA_CMD $RDECK_JVM $RDECK_SSL_OPTS -cp $BOOTSTRAP_CP com.dtolabs.rundeck.RunServer $RDECK_BASE"
