@@ -64,6 +64,47 @@ describe 'rundeck' do
             expect(content).not_to include('providerUrl="ldap://fakeldap:983"')
           end
         end
+
+        describe 'uuid setting' do
+          context 'when serialnumber fact present' do
+            let :facts do
+              facts.merge(fqdn: 'rundeck.example.com',
+                          serialnumber: '32142097')
+            end
+
+            it { is_expected.to contain_file('/etc/rundeck/framework.properties') }
+            it 'uses serialnumber fact for \'rundeck.server.uuid\'' do
+              content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+              expect(content).to include('rundeck.server.uuid = 32142097')
+            end
+          end
+
+          context 'when serialnumber fact absent' do
+            let :facts do
+              facts.merge(fqdn: 'rundeck.example.com', # uuid is ac7c2cbd-14fa-5ba3-b3f2-d436e9b8a3b0
+                          serialnumber: nil)
+            end
+
+            it { is_expected.to contain_file('/etc/rundeck/framework.properties') }
+            it 'uses serialnumber fact for \'rundeck.server.uuid\'' do
+              content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+              expect(content).to include('rundeck.server.uuid = ac7c2cbd-14fa-5ba3-b3f2-d436e9b8a3b0')
+            end
+          end
+
+          context 'when serialnumber is \'0\'' do
+            let :facts do
+              facts.merge(fqdn: 'rundeck.example.com', # uuid is ac7c2cbd-14fa-5ba3-b3f2-d436e9b8a3b0
+                          serialnumber: '0')
+            end
+
+            it { is_expected.to contain_file('/etc/rundeck/framework.properties') }
+            it 'uses serialnumber fact for \'rundeck.server.uuid\'' do
+              content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+              expect(content).to include('rundeck.server.uuid = ac7c2cbd-14fa-5ba3-b3f2-d436e9b8a3b0')
+            end
+          end
+        end
       end
     end
   end
