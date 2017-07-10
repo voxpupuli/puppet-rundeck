@@ -5,8 +5,8 @@ require 'spec_helper'
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
     context "on #{os} " do
-      overrides = "/etc/default/rundeckd"
-      overrides = "/etc/sysconfig/rundeckd" if ['RedHat', 'Amazon'].include? facts[:os]['family']
+      overrides = '/etc/default/rundeckd'
+      overrides = '/etc/sysconfig/rundeckd' if ['RedHat', 'Amazon'].include? facts[:os]['family']
 
       let :facts do
         facts
@@ -58,6 +58,7 @@ describe 'rundeck' do
       describe 'rundeck::config with rdeck_profile_template set' do
         template = 'rundeck/../spec/fixtures/files/profile.template'
         let(:params) { { rdeck_profile_template: template } }
+
         it { is_expected.to contain_file('/etc/rundeck/profile') }
       end
 
