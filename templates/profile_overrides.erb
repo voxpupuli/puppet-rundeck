@@ -1,0 +1,24 @@
+RDECK_BASE=<%= @rdeck_base %>
+RDECK_CONFIG=<%= @properties_dir %>
+RDECK_CONFIG_FILE=<%= @properties_dir %>/rundeck-config.groovy
+RDECK_INSTALL=<%= @rdeck_base %>
+JAAS_CONF=$RDECK_CONFIG/jaas-auth.conf
+LOGIN_MODULE=authentication
+JAVA_CMD=java
+RDECK_JVM_SETTINGS="<%= @jvm_args %>"
+
+<%- if @server_web_context -%>
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.web.context=<%= @server_web_context %>"
+<%- end -%>
+
+<%- if !(@kerberos_realms.empty?) -%>
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Djava.security.krb5.conf=$RDECK_CONFIG/krb5.conf"
+<%- end -%>
+
+<% if @java_home %>
+JAVA_HOME=<%= @java_home %>
+<% end %>
+
+<%- if @ssl_enabled -%>
+RUNDECK_WITH_SSL=true
+<%- end -%>

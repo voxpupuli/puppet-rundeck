@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe 'rundeck' do
+  let(:login_module) { 'org.eclipse.jetty.jaas.spi.PropertyFileLoginModule sufficient' }
+
   on_supported_os.each do |os, facts|
     context "on #{os} " do
       let :facts do
@@ -22,7 +24,7 @@ describe 'rundeck' do
 
         it 'contains PropertyFileLoginModule and be sufficient' do
           jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
+          expect(jaas_auth).to include(login_module)
         end
       end
 
@@ -44,7 +46,7 @@ describe 'rundeck' do
 
         it 'contains PropertyFileLoginModule and be sufficient' do
           jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
+          expect(jaas_auth).to include(login_module)
         end
       end
 
@@ -79,7 +81,7 @@ describe 'rundeck' do
 
         it 'contains PropertyFileLoginModule and be sufficient' do
           jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
+          expect(jaas_auth).to include(login_module)
         end
       end
 
@@ -132,16 +134,6 @@ describe 'rundeck' do
           expect(content).to include('testuser:password,user,deploy')
           expect(content).to include('anotheruser:anotherpassword,user')
         end
-
-        it 'contains PropertyFileLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
-        end
-
-        it 'contains JettyCachingLdapLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule sufficient')
-        end
       end
 
       describe 'with multiauth active_directory and file auth users array' do
@@ -193,16 +185,6 @@ describe 'rundeck' do
           expect(content).to include('testuser:password,user,deploy')
           expect(content).to include('anotheruser:anotherpassword,user')
         end
-
-        it 'contains PropertyFileLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
-        end
-
-        it 'contains JettyCachingLdapLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule sufficient')
-        end
       end
 
       describe 'with auth user without roles' do
@@ -229,7 +211,7 @@ describe 'rundeck' do
 
         it 'contains PropertyFileLoginModule and be sufficient' do
           jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
+          expect(jaas_auth).to include(login_module)
         end
       end
 
@@ -256,7 +238,7 @@ describe 'rundeck' do
 
         it 'contains PropertyFileLoginModule and be sufficient' do
           jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include('org.eclipse.jetty.plus.jaas.spi.PropertyFileLoginModule sufficient')
+          expect(jaas_auth).to include(login_module)
         end
       end
     end

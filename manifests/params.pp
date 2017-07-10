@@ -8,19 +8,17 @@
 # It sets variables according to platform
 #
 class rundeck::params {
+  $package_name = 'rundeck'
+  $package_ensure = 'installed'
+  $service_name = 'rundeckd'
+  $manage_repo = true
 
   case $::osfamily {
     'Debian': {
-      $package_name = 'rundeck'
-      $package_ensure = 'installed'
-      $service_name = 'rundeckd'
-      $manage_repo = true
+      $overrides_dir = '/etc/default'
     }
     'RedHat', 'Amazon': {
-      $package_name = 'rundeck'
-      $package_ensure = 'installed'
-      $service_name = 'rundeckd'
-      $manage_repo = true
+      $overrides_dir = '/etc/sysconfig'
     }
     default: {
       fail("${::operatingsystem} not supported")
@@ -309,7 +307,7 @@ class rundeck::params {
   $session_timeout = 30
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
-  $rdeck_profile_template = 'rundeck/profile.erb'
+  $rdeck_profile_template = undef
 
   $file_keystorage_keys = { }
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"
