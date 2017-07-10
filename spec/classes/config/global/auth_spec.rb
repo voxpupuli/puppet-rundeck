@@ -134,16 +134,6 @@ describe 'rundeck' do
           expect(content).to include('testuser:password,user,deploy')
           expect(content).to include('anotheruser:anotherpassword,user')
         end
-
-        it 'contains PropertyFileLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include(login_module)
-        end
-
-        it 'contains JettyCachingLdapLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include(login_module)
-        end
       end
 
       describe 'with multiauth active_directory and file auth users array' do
@@ -194,16 +184,6 @@ describe 'rundeck' do
           expect(content).to include('admin:admin,user,admin,architect,deploy,build')
           expect(content).to include('testuser:password,user,deploy')
           expect(content).to include('anotheruser:anotherpassword,user')
-        end
-
-        it 'contains PropertyFileLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include(login_module)
-        end
-
-        it 'contains JettyCachingLdapLoginModule and be sufficient' do
-          jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(jaas_auth).to include(login_module)
         end
       end
 
