@@ -8,21 +8,17 @@
 # It sets variables according to platform
 #
 class rundeck::params {
+  $package_name = 'rundeck'
+  $package_ensure = 'installed'
+  $service_name = 'rundeckd'
+  $manage_repo = true
 
   case $::osfamily {
     'Debian': {
       $overrides_dir = '/etc/default'
-      $package_name = 'rundeck'
-      $package_ensure = 'installed'
-      $service_name = 'rundeckd'
-      $manage_repo = true
     }
     'RedHat', 'Amazon': {
       $overrides_dir = '/etc/sysconfig'
-      $package_name = 'rundeck'
-      $package_ensure = 'installed'
-      $service_name = 'rundeckd'
-      $manage_repo = true
     }
     default: {
       fail("${::operatingsystem} not supported")
