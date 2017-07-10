@@ -1,6 +1,6 @@
 {
   "name": "puppet-rundeck",
-  "version": "4.0.2-rc0",
+  "version": "4.1.0",
   "author": "Vox Pupuli",
   "license": "MIT",
   "summary": "Module for managing the installatation and configuration of the rundeck orchestration tool",
