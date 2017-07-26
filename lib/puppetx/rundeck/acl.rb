@@ -20,7 +20,7 @@ module PuppetX
           raise_err('context can only contain project or application') unless context.keys.length == 1
           type = context.keys[0]
           raise_err("context:#{type} is not a String") unless context[type].is_a? String
-          raise_err('context can only be project or application') unless %w(application project).include? type
+          raise_err('context can only be project or application') unless %w[application project].include? type
         end
 
         def validate_rule_action(type, type_section, scope)
@@ -38,7 +38,7 @@ module PuppetX
               if k.eql?('allow') || k.eql?('deny')
                 action_found = true
                 actions = v
-              elsif %w(match equals contains).include?(k)
+              elsif %w[match equals contains].include?(k)
                 case type
                 when 'resource'
                   property = v['kind']
@@ -84,16 +84,16 @@ module PuppetX
         def validate_proj_actions(type, actions, property, value = '')
           project_actions = {
             'resource' => {
-              'job'   => %w(create delete),
-              'node'  => %w(read create update refresh),
-              'event' => %w(read create)
+              'job'   => %w[create delete],
+              'node'  => %w[read create update refresh],
+              'event' => %w[read create]
             },
-            'adhoc' => %w(read run runAs kill killAs),
+            'adhoc' => %w[read run runAs kill killAs],
             'job' => {
-              'name' => %w(read update delete run runAs kill killAs create),
-              'group' => %w(read update delete run runAs kill killAs create)
+              'name' => %w[read update delete run runAs kill killAs create],
+              'group' => %w[read update delete run runAs kill killAs create]
             },
-            'node' => %w(read run)
+            'node' => %w[read run]
           }
 
           case type
@@ -130,10 +130,10 @@ module PuppetX
               'user'    => ['admin'],
               'job'     => ['admin']
             },
-            'project' => { 'name' => %w(read configure delete import export delete_execution admin) },
+            'project' => { 'name' => %w[read configure delete import export delete_execution admin] },
             'storage' => {
-              'name' => %w(create update read delete),
-              'path' => %w(create update read delete)
+              'name' => %w[create update read delete],
+              'path' => %w[create update read delete]
             }
           }
 
@@ -186,9 +186,9 @@ module PuppetX
           else
             scope = context.keys[0]
             if scope.eql?('project')
-              resource_types = %w(job node adhoc project resource)
+              resource_types = %w[job node adhoc project resource]
             elsif scope.eql?('application')
-              resource_types = %w(resource project storage)
+              resource_types = %w[resource project storage]
             else
               raise_err("unknown scope: #{scope}")
             end
@@ -217,9 +217,9 @@ module PuppetX
             raise_err("by:#{item} is not a Hash") unless item.is_a? Hash
             raise_err('by is empty') if item.empty?
             item.each do |k, _v|
-              raise_err('by section must only contain [username,group]') unless %w(username group).include?(k)
+              raise_err('by section must only contain [username,group]') unless %w[username group].include?(k)
             end
-            %w(username group).each do |type|
+            %w[username group].each do |type|
               raise_err("by:#{type} is not a String or an Array") if item.key?(type) && !item[type].is_a?(String) && !item[type].is_a?(Array)
             end
           end

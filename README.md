@@ -149,6 +149,10 @@ The maximum number of threads used by Rundeck for concurrent jobs by default is 
 
 The log4j logging level to be set for the Rundeck application.
 
+##### `rdeck_profile_template` (**Requires Rundeck v2.8.x**)
+
+Allows you to use your own profile template instead of the default from the package maintainer
+
 ##### `rss_enabled`
 
 Boolean value if set to true enables RSS feeds that are public (non-authenticated)
@@ -209,9 +213,9 @@ Boolean value if set to true enables security_roles_array.
 
 Array value if you want to have more role in web.xml
 
-##### `manage_yum_repo`
+##### `manage_repo`
 
-Whether to manage the YUM repository containing the Rundeck rpm. Defaults to true.
+Whether to manage the bintray YUM/APT repository containing the Rundeck rpm/deb. Defaults to true. 
 
 ##### `file_keystorage_dir`
 

@@ -30,6 +30,7 @@ class rundeck::config(
   $mail_config                  = $rundeck::mail_config,
   $manage_default_admin_policy  = $rundeck::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::manage_default_api_policy,
+  $overrides_dir                = $rundeck::overrides_dir,
   $preauthenticated_config      = $rundeck::preauthenticated_config,
   $projects                     = $rundeck::projects,
   $projects_description         = $rundeck::projects_default_desc,
@@ -148,13 +149,17 @@ class rundeck::config(
     }
   }
 
-  file { "${properties_dir}/profile":
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-    content => template($rdeck_profile_template),
+  if ($rdeck_profile_template) {
+    file { "${properties_dir}/profile":
+      content => template($rdeck_profile_template),
+      notify  => Service[$service_name],
+      require => File[$properties_dir],
+    }
+  }
+
+  file { "${overrides_dir}/${service_name}":
+    content => template('rundeck/profile_overrides.erb'),
     notify  => Service[$service_name],
-    require => File[$properties_dir],
   }
 
   include '::rundeck::config::global::framework'
@@ -162,15 +167,15 @@ class rundeck::config(
   include '::rundeck::config::global::rundeck_config'
   include '::rundeck::config::global::file_keystore'
 
-  Class[rundeck::config::global::framework] ->
-  Class[rundeck::config::global::project] ->
-  Class[rundeck::config::global::rundeck_config] ->
-  Class[rundeck::config::global::file_keystore]
+  Class[rundeck::config::global::framework]
+  -> Class[rundeck::config::global::project]
+  -> Class[rundeck::config::global::rundeck_config]
+  -> Class[rundeck::config::global::file_keystore]
 
   if $ssl_enabled {
     include '::rundeck::config::global::ssl'
-    Class[rundeck::config::global::rundeck_config] ->
-    Class[rundeck::config::global::ssl]
+    Class[rundeck::config::global::rundeck_config]
+    -> Class[rundeck::config::global::ssl]
   }
 
   create_resources(rundeck::config::project, $projects)

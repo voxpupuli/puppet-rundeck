@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe 'rundeck::config::resource_source', type: :define do
-  context 'supported operating systems' do
-    %w(Debian RedHat).each do |osfamily|
-      describe "rundeck::config::resource_source definition with default parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
+  on_supported_os.each do |os, facts|
+    context "on #{os} " do
+      let :facts do
+        facts
+      end
 
+      describe "rundeck::config::resource_source definition with default parameters on #{os}" do
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -18,15 +20,6 @@ describe 'rundeck::config::resource_source', type: :define do
             'directory' => '/',
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash'
-          }
-        end
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
           }
         end
 
@@ -57,9 +50,7 @@ describe 'rundeck::config::resource_source', type: :define do
         end
       end
 
-      describe "rundeck::config::resource_source definition with url parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
-
+      describe "rundeck::config::resource_source definition with url parameters on #{os}" do
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -73,15 +64,6 @@ describe 'rundeck::config::resource_source', type: :define do
             'resource_format' => 'resourcexml',
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash'
-          }
-        end
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            puppetversion: Puppet.version,
-            rundeck_version: ''
           }
         end
 
@@ -103,9 +85,7 @@ describe 'rundeck::config::resource_source', type: :define do
         end
       end
 
-      describe "rundeck::config::resource definition with directory parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
-
+      describe "rundeck::config::resource definition with directory parameters on #{os}" do
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -119,15 +99,6 @@ describe 'rundeck::config::resource_source', type: :define do
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash'
 
-          }
-        end
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
           }
         end
 
@@ -147,9 +118,7 @@ describe 'rundeck::config::resource_source', type: :define do
         end
       end
 
-      describe "rundeck::config::resource definition with script parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
-
+      describe "rundeck::config::resource definition with script parameters on #{os}" do
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -164,15 +133,6 @@ describe 'rundeck::config::resource_source', type: :define do
             'url_cache' => true,
             'url_timeout' => '30',
             'directory' => '/'
-          }
-        end
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
           }
         end
 
@@ -196,9 +156,7 @@ describe 'rundeck::config::resource_source', type: :define do
         end
       end
 
-      describe "rundeck::config::resource definition with Puppet Enterprise parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
-
+      describe "rundeck::config::resource definition with Puppet Enterprise parameters on #{os}" do
         let(:title) { 'source one' }
         let(:params) do
           {
@@ -217,15 +175,6 @@ describe 'rundeck::config::resource_source', type: :define do
             'puppet_enterprise_metrics_interval' => '15',
             'puppet_enterprise_mapping_file' => '/var/local/resource-mapping.json',
             'puppet_enterprise_ssl_dir' => '/opt/rundeck/puppetmaster_ssl'
-          }
-        end
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
           }
         end
 

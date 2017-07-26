@@ -8,23 +8,17 @@
 # It sets variables according to platform
 #
 class rundeck::params {
+  $package_name = 'rundeck'
+  $package_ensure = 'installed'
+  $service_name = 'rundeckd'
+  $manage_repo = true
 
   case $::osfamily {
     'Debian': {
-      $package_name = 'rundeck'
-      $service_name = 'rundeckd'
-      $deb_download = true
-      $package_ensure = '2.5.1-1-GA'
-      $manage_repo = true
-      $manage_yum_repo = false
+      $overrides_dir = '/etc/default'
     }
     'RedHat', 'Amazon': {
-      $package_name = 'rundeck'
-      $package_ensure = 'installed'
-      $service_name = 'rundeckd'
-      $manage_yum_repo = true
-      $manage_repo = $manage_yum_repo
-      $deb_download = false
+      $overrides_dir = '/etc/sysconfig'
     }
     default: {
       fail("${::operatingsystem} not supported")
@@ -39,6 +33,12 @@ class rundeck::params {
   $rdeck_base = '/var/lib/rundeck'
   $rdeck_home = '/var/lib/rundeck'
   $service_logs_dir = '/var/log/rundeck'
+
+  $rdeck_uuid = $facts['serialnumber'] ? {
+    '0'     => fqdn_uuid($::fqdn),
+    undef   => fqdn_uuid($::fqdn),
+    default => $facts['serialnumber'],
+  }
 
   $framework_config = {
     'framework.server.name'     => $::fqdn,
@@ -57,7 +57,7 @@ class rundeck::params {
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
     'framework.ssh.user'        => 'rundeck',
     'framework.ssh.timeout'     => '0',
-    'rundeck.server.uuid'       => $::serialnumber,
+    'rundeck.server.uuid'       => $rdeck_uuid,
   }
 
   $auth_types = ['file']
@@ -127,6 +127,9 @@ class rundeck::params {
         ],
         'adhoc' => [
           {'allow' => ['read','run','kill']}
+        ],
+        'job' => [
+          {'allow' => ['create','read','update','delete','run','kill']}
         ],
         'node' => [
           {'allow' => ['read','run']}
@@ -304,7 +307,7 @@ class rundeck::params {
   $session_timeout = 30
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
-  $rdeck_profile_template = 'rundeck/profile.erb'
+  $rdeck_profile_template = undef
 
   $file_keystorage_keys = { }
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"

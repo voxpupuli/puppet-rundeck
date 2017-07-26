@@ -110,7 +110,7 @@
 #  directory under which the projects directories live.
 #
 # [*rdeck_profile_template*]
-#  Allows you to override the profile template
+#  Allows you to use your own profile template instead of the default from the package maintainer
 #
 # [*rss_enabled*]
 #  Boolean value if set to true enables RSS feeds that are public (non-authenticated)
@@ -186,7 +186,6 @@ class rundeck (
   $auth_types                   = $rundeck::params::auth_types,
   $clustermode_enabled          = $rundeck::params::clustermode_enabled,
   $database_config              = $rundeck::params::database_config,
-  $deb_download                 = $rundeck::params::deb_download,
   $file_keystorage_dir          = $rundeck::params::file_keystorage_dir,
   $file_keystorage_keys         = $rundeck::params::file_keystorage_keys,
   $framework_config             = $rundeck::params::framework_config,
@@ -206,7 +205,6 @@ class rundeck (
   $ssl_certfile                 = $rundeck::params::ssl_certfile,
   $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,
-  $manage_yum_repo              = $rundeck::params::manage_yum_repo,
   $manage_repo                  = $rundeck::params::manage_repo,
   $package_ensure               = $rundeck::params::package_ensure,
   $package_source               = $rundeck::params::package_source,
@@ -286,8 +284,8 @@ class rundeck (
   validate_string($user_id)
   validate_string($group_id)
 
-  class { '::rundeck::install': } ->
-  class { '::rundeck::config': } ~>
-  class { '::rundeck::service': } ->
-  Class['rundeck']
+  class { '::rundeck::install': }
+  -> class { '::rundeck::config': }
+  ~> class { '::rundeck::service': }
+  -> Class['rundeck']
 }

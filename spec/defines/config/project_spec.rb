@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe 'rundeck::config::project', type: :define do
-  context 'supported operating systems' do
-    %w(Debian RedHat).each do |osfamily|
-      describe "rundeck::config::project definition without any parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
+  on_supported_os.each do |os, facts|
+    context "on #{os} " do
+      let :facts do
+        facts
+      end
 
+      describe "rundeck::config::project definition without any parameters on #{os}" do
         projects_dir = '/var/rundeck/projects'
 
         let(:title) { 'test' }
@@ -23,27 +25,9 @@ describe 'rundeck::config::project', type: :define do
           }
         end
 
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
-          }
-        end
+        it { is_expected.to contain_file("#{projects_dir}/test/var").with('ensure' => 'directory') }
 
-        it do
-          is_expected.to contain_file("#{projects_dir}/test/var").with(
-            'ensure' => 'directory'
-          )
-        end
-
-        it do
-          is_expected.to contain_file("#{projects_dir}/test/etc").with(
-            'ensure' => 'directory'
-          )
-        end
+        it { is_expected.to contain_file("#{projects_dir}/test/etc").with('ensure' => 'directory') }
 
         it { is_expected.to contain_file("#{projects_dir}/test/etc/project.properties") }
 
