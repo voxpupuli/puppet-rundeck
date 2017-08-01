@@ -101,6 +101,10 @@ describe 'rundeck' do
           rundeck.security.authorization.preauthenticated.enabled = "false"
           rundeck.security.authorization.preauthenticated.attributeName = "REMOTE_USER_GROUPS"
           rundeck.security.authorization.preauthenticated.delimiter = ":"
+          rundeck.security.authorization.preauthenticated.userNameHeader = "X-Forwarded-Uuid"
+          rundeck.security.authorization.preauthenticated.userRolesHeader = "X-Forwarded-Roles"
+          rundeck.security.authorization.preauthenticated.redirectLogout = "false"
+          rundeck.security.authorization.preauthenticated.redirectUrl = "/oauth2/sign_in"
 
         CONFIG
 

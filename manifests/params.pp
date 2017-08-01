@@ -288,9 +288,13 @@ class rundeck::params {
   $gui_config = {}
 
   $preauthenticated_config = {
-    'enabled'       => false,
-    'attributeName' => 'REMOTE_USER_GROUPS',
-    'delimiter'     => ':',
+    'enabled'         => false,
+    'attributeName'   => 'REMOTE_USER_GROUPS',
+    'delimiter'       => ':',
+    'userNameHeader'  => 'X-Forwarded-Uuid',
+    'userRolesHeader' => 'X-Forwarded-Roles',
+    'redirectLogout'  => false,
+    'redirectUrl'     => '/oauth2/sign_in',
   }
 
   $quartz_job_threadcount = 10
