@@ -63,7 +63,7 @@ class rundeck::install(
           before   => Package['rundeck'],
         }
       }
-      ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class[Apt::Update] } )
+      ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] } )
     }
     default: {
       err("The osfamily: ${::osfamily} is not supported")
