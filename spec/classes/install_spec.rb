@@ -23,6 +23,8 @@ describe 'rundeck' do
           it { is_expected.to contain_yumrepo('bintray-rundeck') }
         when 'Debian'
           it { is_expected.to contain_apt__source('bintray-rundeck').with_location('https://dl.bintray.com/rundeck/rundeck-deb') }
+          it { is_expected.to contain_package('rundeck').that_notifies('Class[rundeck::service]') }
+          it { is_expected.to contain_package('rundeck').that_requires('Class[apt::update]') }
         end
       end
       describe 'different user and group' do
