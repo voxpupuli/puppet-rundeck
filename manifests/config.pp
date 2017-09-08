@@ -74,6 +74,9 @@ class rundeck::config(
   $projects_dir   = $framework_config['framework.projects.dir']
   $properties_dir = $framework_config['framework.etc.dir']
 
+  # Check for jetty auth template
+  $rundeck_before_27 = versioncmp($::rundeck_version, '2.7') < 0
+
   #
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that
