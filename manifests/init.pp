@@ -284,8 +284,12 @@ class rundeck (
   validate_string($user_id)
   validate_string($group_id)
 
-  class { '::rundeck::install': }
-  -> class { '::rundeck::config': }
-  ~> class { '::rundeck::service': }
-  -> Class['rundeck']
+  contain rundeck::install
+  contain rundeck::config
+  contain rundeck::service
+
+  Class['rundeck::install']
+  -> Class['rundeck::config']
+  ~> Class['rundeck::service']
+
 }

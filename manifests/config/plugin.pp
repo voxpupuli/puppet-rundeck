@@ -28,8 +28,8 @@ define rundeck::config::plugin(
   $ensure   = 'present',
 ) {
 
-  include '::rundeck'
-  include '::archive'
+  include rundeck
+  include archive
 
   $framework_config = deep_merge($::rundeck::params::framework_config, $::rundeck::framework_config)
 

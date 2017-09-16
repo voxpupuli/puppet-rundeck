@@ -2,7 +2,7 @@
 # Configuring shared authentication credentials
 # Performs LDAP authentication and file authorization
 #
-class { '::rundeck':
+class { 'rundeck':
   auth_types  => ['ldap_shared'],
   auth_config => {
     'file' =>  {

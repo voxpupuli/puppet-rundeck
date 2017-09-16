@@ -383,7 +383,7 @@ enable `key` and `project` storage in the database, you must also set the two
 parameters associated parameters.
 
 ```puppet
-class { '::rundeck':
+class { 'rundeck':
   key_storage_type      => 'db',
   projects_storage_type => 'db',
   database_config       => {

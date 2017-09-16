@@ -162,31 +162,31 @@ class rundeck::config(
     notify  => Service[$service_name],
   }
 
-  include '::rundeck::config::global::framework'
-  include '::rundeck::config::global::project'
-  include '::rundeck::config::global::rundeck_config'
-  include '::rundeck::config::global::file_keystore'
+  contain rundeck::config::global::framework
+  contain rundeck::config::global::project
+  contain rundeck::config::global::rundeck_config
+  contain rundeck::config::global::file_keystore
 
-  Class[rundeck::config::global::framework]
-  -> Class[rundeck::config::global::project]
-  -> Class[rundeck::config::global::rundeck_config]
-  -> Class[rundeck::config::global::file_keystore]
+  Class['rundeck::config::global::framework']
+  -> Class['rundeck::config::global::project']
+  -> Class['rundeck::config::global::rundeck_config']
+  -> Class['rundeck::config::global::file_keystore']
 
   if $ssl_enabled {
-    include '::rundeck::config::global::ssl'
-    Class[rundeck::config::global::rundeck_config]
-    -> Class[rundeck::config::global::ssl]
+    contain rundeck::config::global::ssl
+    Class['rundeck::config::global::rundeck_config']
+    -> Class['rundeck::config::global::ssl']
   }
 
   create_resources(rundeck::config::project, $projects)
 
-  class { '::rundeck::config::global::web':
+  class { 'rundeck::config::global::web':
     security_role                => $security_role,
     session_timeout              => $session_timeout,
     security_roles_array_enabled => $security_roles_array_enabled,
     security_roles_array         => $security_roles_array,
     notify                       => Service[$service_name],
-    require                      => Class['::rundeck::install'],
+    require                      => Class['rundeck::install'],
   }
 
   if !empty($kerberos_realms) {
