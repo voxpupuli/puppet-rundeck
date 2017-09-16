@@ -29,9 +29,18 @@ The rundeck puppet module for installing and managing [Rundeck](http://rundeck.o
 ## Module Description
 
 This module provides a way to manage the installation and configuration of
-rundeck, it's projects, jobs and plugins.
+rundeck, its projects, jobs and plugins.
 
 ## Setup
+
+###  Setup requirements
+
+You need a compatible version of Java installed; you can use the
+[puppetlabs/java](https://github.com/puppetlabs/puppetlabs-java) module if there
+isn't already a suitable version.
+
+On systems that use apt, there's a soft dependency on the
+[puppetlabs/apt](https://github.com/puppetlabs/puppetlabs-apt) module.
 
 ### Classes and Defined Types
 
