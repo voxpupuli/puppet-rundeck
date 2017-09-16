@@ -1,6 +1,9 @@
 ---
 .travis.yml:
   secure: "ExSbFQsxOlpFTc/4TTGJElIx0/sYNZ1I2Nbd9EfGPNeECXBgmqTdJmPqdV6cl3mKDFh+tSSxnIDZe5BILhmxIR7aF2lbf8jwcbo2nxe9qAZ42GDKNV2klNXUjR7kA7tz220RNO9rM3HDKAwrKtCPtwQ0Q5u90YGGJDj2nr7NUaM="
+  docker_sets:
+    - set: docker/ubuntu-16.04
+    - set: docker/centos-7
   addons:
     apt:
       packages:
