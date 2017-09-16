@@ -128,7 +128,6 @@ define rundeck::config::resource_source(
     section => '',
     setting => "resources.source.${number}.type",
     value   => $source_type,
-    require => File[$properties_file],
   }
 
   case downcase($source_type) {
@@ -155,7 +154,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.requireFileExists",
         value   => bool2str(true),
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.includeServerNode":
@@ -164,7 +162,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.includeServerNode",
         value   => bool2str($include_server_node),
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.generateFileAutomatically":
@@ -173,7 +170,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.generateFileAutomatically",
         value   => bool2str(true),
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.format":
@@ -182,7 +178,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.format",
         value   => $resource_format,
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.file":
@@ -191,7 +186,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.file",
         value   => $file,
-        require => File[$properties_file],
       }
     }
     'url': {
@@ -205,7 +199,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.url",
         value   => $url,
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.timeout":
@@ -214,7 +207,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.timeout",
         value   => $url_timeout,
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.cache":
@@ -223,7 +215,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.cache",
         value   => bool2str($url_cache),
-        require => File[$properties_file],
       }
     }
     'directory': {
@@ -242,7 +233,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.directory",
         value   => $directory,
-        require => File[$properties_file],
       }
     }
     'script': {
@@ -258,7 +248,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.file",
         value   => $script_file,
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.args":
@@ -267,7 +256,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.args",
         value   => $script_args,
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.format":
@@ -276,7 +264,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.format",
         value   => $resource_format,
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.interpreter":
@@ -285,7 +272,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.interpreter",
         value   => $script_interpreter,
-        require => File[$properties_file],
       }
 
       ini_setting { "${name}::resources.source.${number}.config.argsQuoted":
@@ -294,7 +280,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.argsQuoted",
         value   => bool2str($script_args_quoted),
-        require => File[$properties_file],
       }
     }
     'aws-ec2': {
@@ -304,7 +289,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.mappingParams",
         value   => $mapping_params,
-        require => File[$properties_file],
       }
       ini_setting { "${name}::resources.source.${number}.config.useDefaultMapping":
         ensure  => present,
@@ -312,7 +296,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.useDefaultMapping",
         value   => bool2str($use_default_mapping),
-        require => File[$properties_file],
       }
       ini_setting { "${name}::resources.source.${number}.config.runningOnly":
         ensure  => present,
@@ -320,7 +303,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.runningOnly",
         value   => bool2str($running_only),
-        require => File[$properties_file],
       }
     }
     'puppet-enterprise': {
@@ -335,7 +317,6 @@ define rundeck::config::resource_source(
           section => '',
           setting => "resources.source.${number}.config.PROPERTY_MAPPING_FILE",
           value   => $puppet_enterprise_mapping_file,
-          require => File[$properties_file],
         }
       }
       ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_HOST":
@@ -344,7 +325,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_HOST",
         value   => $puppet_enterprise_host,
-        require => File[$properties_file],
       }
       if ( $puppet_enterprise_metrics_interval != '') {
         validate_integer($puppet_enterprise_metrics_interval)
@@ -354,7 +334,6 @@ define rundeck::config::resource_source(
           section => '',
           setting => "resources.source.${number}.config.PROPERTY_METRICS_INTERVAL",
           value   => $puppet_enterprise_metrics_interval,
-          require => File[$properties_file],
         }
       }
       ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_PORT":
@@ -363,7 +342,6 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_PORT",
         value   => $puppet_enterprise_port,
-        require => File[$properties_file],
       }
       if ( $puppet_enterprise_ssl_dir != '') {
         validate_absolute_path($puppet_enterprise_ssl_dir)
@@ -373,7 +351,6 @@ define rundeck::config::resource_source(
           section => '',
           setting => "resources.source.${number}.config.PROPERTY_PUPPETDB_SSL_DIR",
           value   => $puppet_enterprise_ssl_dir,
-          require => File[$properties_file],
         }
       }
     }

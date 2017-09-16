@@ -65,42 +65,40 @@ define rundeck::config::project (
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $rundeck::framework_config, $framework_config)
 
-  $ssh_keypath_real = $ssh_keypath ? {
+  $_ssh_keypath = $ssh_keypath ? {
     undef   => $framework_properties['framework.ssh.keypath'],
     default => $ssh_keypath,
   }
 
-  $projects_dir_real = $projects_dir ? {
+  $_projects_dir = $projects_dir ? {
     undef   => $framework_properties['framework.projects.dir'],
     default => $projects_dir,
   }
 
-  validate_absolute_path($ssh_keypath_real)
+  validate_absolute_path($_ssh_keypath)
   validate_re($file_copier_provider, ['^jsch-scp$','^script-copy$','^stub$'])
   validate_hash($resource_sources)
   validate_hash($scm_import_properties)
-  validate_absolute_path($projects_dir_real)
+  validate_absolute_path($_projects_dir)
   validate_re($user, '[a-zA-Z0-9]{3,}')
   validate_re($group, '[a-zA-Z0-9]{3,}')
 
-  $project_dir = "${projects_dir_real}/${name}"
+  $project_dir = "${_projects_dir}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"
   $scm_import_properties_file = "${project_dir}/etc/scm-import.properties"
   $scm_export_properties_file = "${project_dir}/etc/scm-export.properties"
 
-  file {  $project_dir :
-    ensure  => directory,
-    owner   => $user,
-    group   => $group,
-    mode    => '0775',
-    require => File[$projects_dir_real],
+  file { $project_dir:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+    mode   => '0775',
   }
 
   file { $properties_file:
-    ensure  => file,
-    owner   => $user,
-    group   => $group,
-    require => File["${project_dir}/etc"],
+    ensure => file,
+    owner  => $user,
+    group  => $group,
   }
 
   file { $scm_import_properties_file:
@@ -108,7 +106,6 @@ define rundeck::config::project (
     content => template('rundeck/scm-import.properties.erb'),
     owner   => $user,
     group   => $group,
-    require => File["${project_dir}/etc"],
     replace => false,
   }
 
@@ -158,7 +155,7 @@ define rundeck::config::project (
     path    => $properties_file,
     section => '',
     setting => 'project.ssh-keypath',
-    value   => $ssh_keypath_real,
+    value   => $_ssh_keypath,
     require => File[$properties_file],
   }
 

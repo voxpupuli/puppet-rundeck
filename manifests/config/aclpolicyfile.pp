@@ -77,6 +77,5 @@ define rundeck::config::aclpolicyfile(
     group   => $group,
     mode    => '0640',
     content => template($template_file),
-    require => File[$properties_dir],
   }
 }
