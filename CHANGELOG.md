@@ -1,8 +1,32 @@
-# Change log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
-These should not impact the functionality of the module.
+These should not affect the functionality of the module.
+
+## [v4.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v4.1.0) (2017-09-17)
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v4.0.1...v4.1.0)
+
+**Implemented enhancements:**
+
+- Enable installation/configuration of Rundeck v2.8.x. [\#316](https://github.com/voxpupuli/puppet-rundeck/pull/316) ([dandunckelman](https://github.com/dandunckelman))
+
+**Fixed bugs:**
+
+- Fix acceptance tests and run in Travis. Resolve idempotency issue [\#335](https://github.com/voxpupuli/puppet-rundeck/pull/335) ([wyardley](https://github.com/wyardley))
+
+**Closed issues:**
+
+- Custom email templates [\#331](https://github.com/voxpupuli/puppet-rundeck/issues/331)
+- Add support for Rundeck v2.7.x [\#315](https://github.com/voxpupuli/puppet-rundeck/issues/315)
+
+**Merged pull requests:**
+
+- Drop support for RedHat 5 and Ubuntu 12, Update README and metadata. [\#338](https://github.com/voxpupuli/puppet-rundeck/pull/338) ([wyardley](https://github.com/wyardley))
+- Fix tests for file resources in defined type \(partially reverts \#336\) [\#337](https://github.com/voxpupuli/puppet-rundeck/pull/337) ([wyardley](https://github.com/wyardley))
+- Remove 'require' statements on file resources that aren't declared [\#336](https://github.com/voxpupuli/puppet-rundeck/pull/336) ([wyardley](https://github.com/wyardley))
+- Update for use with puppet5 [\#332](https://github.com/voxpupuli/puppet-rundeck/pull/332) ([attachmentgenie](https://github.com/attachmentgenie))
+- Add the rest of the options to the security hash for the rundeck config. [\#329](https://github.com/voxpupuli/puppet-rundeck/pull/329) ([jasonschwab](https://github.com/jasonschwab))
 
 ## [v4.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.1) (2017-07-04)
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v4.0.0...v4.0.1)
@@ -15,6 +39,10 @@ These should not impact the functionality of the module.
 **Closed issues:**
 
 - Rundeck service not starting [\#319](https://github.com/voxpupuli/puppet-rundeck/issues/319)
+
+**Merged pull requests:**
+
+- release 4.0.1 [\#324](https://github.com/voxpupuli/puppet-rundeck/pull/324) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v4.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.0) (2017-06-27)
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v3.3.0...v4.0.0)
@@ -131,10 +159,10 @@ These should not impact the functionality of the module.
 - Allow disabling download of debian package. [\#219](https://github.com/voxpupuli/puppet-rundeck/pull/219) ([aequitas](https://github.com/aequitas))
 - Automate configuration of SCM export properties in a project [\#218](https://github.com/voxpupuli/puppet-rundeck/pull/218) ([dalisch](https://github.com/dalisch))
 -  - Added ability to specify node executor settings [\#217](https://github.com/voxpupuli/puppet-rundeck/pull/217) ([DevOpsFu](https://github.com/DevOpsFu))
-- Amend default policy for full storage control [\#216](https://github.com/voxpupuli/puppet-rundeck/pull/216) ([zleswomp](https://github.com/zleswomp))
-- Documentation fixes [\#215](https://github.com/voxpupuli/puppet-rundeck/pull/215) ([zleswomp](https://github.com/zleswomp))
-- Add CentOS 7 to tested platforms [\#214](https://github.com/voxpupuli/puppet-rundeck/pull/214) ([zleswomp](https://github.com/zleswomp))
-- Add note and example about using an external MySQL DB [\#213](https://github.com/voxpupuli/puppet-rundeck/pull/213) ([zleswomp](https://github.com/zleswomp))
+- Amend default policy for full storage control [\#216](https://github.com/voxpupuli/puppet-rundeck/pull/216) ([prozach](https://github.com/prozach))
+- Documentation fixes [\#215](https://github.com/voxpupuli/puppet-rundeck/pull/215) ([prozach](https://github.com/prozach))
+- Add CentOS 7 to tested platforms [\#214](https://github.com/voxpupuli/puppet-rundeck/pull/214) ([prozach](https://github.com/prozach))
+- Add note and example about using an external MySQL DB [\#213](https://github.com/voxpupuli/puppet-rundeck/pull/213) ([prozach](https://github.com/prozach))
 - Fix audit loglevel 207 [\#212](https://github.com/voxpupuli/puppet-rundeck/pull/212) ([remixtj](https://github.com/remixtj))
 - Update \_auth\_file.erb \(fixes \#206\) [\#211](https://github.com/voxpupuli/puppet-rundeck/pull/211) ([remixtj](https://github.com/remixtj))
 - Add Rundeck GUI customization properties [\#210](https://github.com/voxpupuli/puppet-rundeck/pull/210) ([dalisch](https://github.com/dalisch))
