@@ -7,6 +7,13 @@ describe 'rundeck::config::resource_source', type: :define do
         facts
       end
 
+      let :pre_condition do
+        [
+          'include rundeck',
+          "rundeck::config::project { 'test': }"
+        ]
+      end
+
       describe "rundeck::config::resource_source definition with default parameters on #{os}" do
         let(:title) { 'source one' }
         let(:params) do
