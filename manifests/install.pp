@@ -46,12 +46,11 @@ class rundeck::install(
         }
       }
 
-      ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
-      ensure_resource('package', 'rundeck-config', {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
+      ensure_packages(['rundeck', 'rundeck-config'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
     }
     'Debian': {
       if $manage_repo == true {
-        include ::apt
+        include apt
         apt::source { 'bintray-rundeck':
           location => 'https://dl.bintray.com/rundeck/rundeck-deb',
           release  => '/',
@@ -63,7 +62,7 @@ class rundeck::install(
           before   => Package['rundeck'],
         }
       }
-      ensure_resource('package', 'rundeck', {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] } )
+      ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] } )
     }
     default: {
       err("The osfamily: ${::osfamily} is not supported")
@@ -123,6 +122,8 @@ class rundeck::install(
       mode    => '0600',
     }
   }
+
+  Package['rundeck'] -> File[$rundeck::service_logs_dir]
 
   file { $rundeck::service_logs_dir:
     ensure  => directory,

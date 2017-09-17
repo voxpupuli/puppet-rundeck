@@ -1,5 +1,4 @@
 # rubocop:disable RSpec/MultipleExpectations
-
 require 'spec_helper'
 
 describe 'rundeck' do
@@ -15,9 +14,8 @@ describe 'rundeck' do
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('rundeck::params') }
         it { is_expected.to contain_class('rundeck::install').that_comes_before('Class[rundeck::config]') }
-        it { is_expected.to contain_class('rundeck::config') }
-        it { is_expected.to contain_class('rundeck::service').that_comes_before('Class[rundeck]') }
-        it { is_expected.to contain_class('rundeck').that_requires('Class[rundeck::service]') }
+        it { is_expected.to contain_class('rundeck::config').that_notifies('Class[rundeck::service]') }
+        it { is_expected.to contain_class('rundeck::service') }
       end
 
       context 'non-platform-specific config parameters' do

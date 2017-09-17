@@ -61,7 +61,7 @@ define rundeck::config::project (
   $user                   = $rundeck::user,
 ) {
 
-  include ::rundeck
+  include rundeck
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $rundeck::framework_config, $framework_config)
 
