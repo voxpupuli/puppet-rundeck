@@ -24,8 +24,6 @@
 
 The rundeck puppet module for installing and managing [Rundeck](http://rundeck.org/)
 
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-rundeck.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-rundeck)
-
 ## Module Description
 
 This module provides a way to manage the installation and configuration of
@@ -445,11 +443,10 @@ class { 'rundeck':
 
 This module is tested on the following platforms:
 
-* CentOS 5
 * CentOS 6
 * CentOS 7
-* Ubuntu 12.04
 * Ubuntu 14.04
+* Ubuntu 16.04
 
 It is tested with the OSS version of Puppet only.
 
