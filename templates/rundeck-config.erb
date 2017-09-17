@@ -2,8 +2,24 @@ loglevel.default = "<%= @rd_loglevel %>"
 rdeck.base = "<%= @rdeck_base %>"
 rss.enabled = "<%= @rss_enabled %>"
 
+<%- if @security_config.key?('useHMacRequestTokens') -%>
 rundeck.security.useHMacRequestTokens = <%= @security_config['useHMacRequestTokens'] %>
+<%- end -%>
+<%- if @security_config.key?('apiCookieAccess') -%>
 rundeck.security.apiCookieAccess.enabled = <%= @security_config['apiCookieAccess'] %>
+<%- end -%>
+<%- if @security_config.key?('apiTokensDuration') -%>
+rundeck.api.tokens.duration.max = <%= @security_config['apiTokensDuration'] %>
+<%- end -%>
+<%- if @security_config.key?('csrfRefererFilterMethod') -%>
+rundeck.security.csrf.referer.filterMethod = <%= @security_config['csrfRefererFilterMethod'] %>
+<%- end -%>
+<%- if @security_config.key?('csrfRefererAllowApi') -%>
+rundeck.security.csrf.referer.allowApi = <%= @security_config['csrfRefererAllowApi'] %>
+<%- end -%>
+<%- if @security_config.key?('csrfRefererRequireHttps') -%>
+rundeck.security.csrf.referer.requireHttps = <%= @security_config['csrfRefererRequireHttps'] %>
+<%- end -%>
 
 dataSource {
   dbCreate = "<%= @database_config['dbCreate'] %>"
