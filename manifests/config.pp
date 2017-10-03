@@ -27,6 +27,7 @@ class rundeck::config(
   $key_storage_type             = $rundeck::key_storage_type,
   $keystore                     = $rundeck::keystore,
   $keystore_password            = $rundeck::keystore_password,
+  $log_properties_template      = $rundeck::log_properties_template,
   $mail_config                  = $rundeck::mail_config,
   $manage_default_admin_policy  = $rundeck::manage_default_admin_policy,
   $manage_default_api_policy    = $rundeck::manage_default_api_policy,
@@ -124,7 +125,7 @@ class rundeck::config(
   }
 
   file { "${properties_dir}/log4j.properties":
-    content => template('rundeck/log4j.properties.erb'),
+    content => template($log_properties_template),
     notify  => Service[$service_name],
     require => File[$properties_dir],
   }

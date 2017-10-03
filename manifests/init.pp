@@ -199,6 +199,7 @@ class rundeck (
   $key_storage_type             = $rundeck::params::key_storage_type,
   $keystore                     = $rundeck::params::keystore,
   $keystore_password            = $rundeck::params::keystore_password,
+  $log_properties_template      = $rundeck::params::log_properties_template,
   $mail_config                  = $rundeck::params::mail_config,
   $sshkey_manage                = $rundeck::params::sshkey_manage,
   $ssl_keyfile                  = $rundeck::params::ssl_keyfile,
