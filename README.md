@@ -172,9 +172,9 @@ Boolean value if set to true enables cluster mode
 
 The url used in sending email notifications.
 
-##### `dataSource_config`
+##### `database_config`
 
-A hash of the data Source configuration.
+A hash of the data base configuration. See [Configure a MySQL database](#configure-a-mysql-database) for an example.
 
 ##### `keystore`
 
@@ -387,7 +387,7 @@ To perform LDAP authentication and file authorization see example examples/ldap\
 To use an external MySQL database, the `database_config` hash must be set to
 override the default values which result in a local file based storage.  To
 enable `key` and `project` storage in the database, you must also set the two
-parameters associated parameters.
+associated parameters.
 
 ```puppet
 class { 'rundeck':
