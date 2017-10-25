@@ -48,17 +48,17 @@
 # }
 #
 define rundeck::config::project (
-  $file_copier_provider   = $rundeck::file_copier_provider,
-  $framework_config       = $rundeck::framework_config,
-  $group                  = $rundeck::group,
-  $node_executor_provider = $rundeck::node_executor_provider,
-  $node_executor_settings = {},
-  $projects_dir           = undef,
-  $resource_sources       = $rundeck::resource_sources,
-  $scm_import_properties  = {},
-  $scm_export_properties  = {},
-  $ssh_keypath            = undef,
-  $user                   = $rundeck::user,
+  String $file_copier_provider = $rundeck::file_copier_provider,
+  $framework_config            = $rundeck::framework_config,
+  $group                       = $rundeck::group,
+  $node_executor_provider      = $rundeck::node_executor_provider,
+  $node_executor_settings      = {},
+  $projects_dir                = undef,
+  $resource_sources            = $rundeck::resource_sources,
+  $scm_import_properties       = {},
+  $scm_export_properties       = {},
+  $ssh_keypath                 = undef,
+  $user                        = $rundeck::user,
 ) {
 
   include rundeck
@@ -76,7 +76,6 @@ define rundeck::config::project (
   }
 
   validate_absolute_path($_ssh_keypath)
-  validate_re($file_copier_provider, ['^jsch-scp$','^script-copy$','^stub$'])
   validate_hash($resource_sources)
   validate_hash($scm_import_properties)
   validate_absolute_path($_projects_dir)
