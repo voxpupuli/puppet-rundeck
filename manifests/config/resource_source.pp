@@ -64,27 +64,27 @@
 # }
 #
 define rundeck::config::resource_source(
-  $directory                          = $rundeck::params::default_resource_dir,
-  $include_server_node                = $rundeck::params::include_server_node,
-  $mapping_params                     = '',
-  $number                             = '1',
-  $project_name                       = undef,
-  $resource_format                    = $rundeck::params::resource_format,
-  $running_only                       = true,
-  $script_args                        = '',
-  $script_args_quoted                 = $rundeck::params::script_args_quoted,
-  $script_file                        = '',
-  $script_interpreter                 = $rundeck::params::script_interpreter,
-  $source_type                        = $rundeck::params::default_source_type,
-  $url                                = '',
-  $url_cache                          = $rundeck::params::url_cache,
-  $url_timeout                        = $rundeck::params::url_timeout,
-  $use_default_mapping                = true,
-  $puppet_enterprise_host             = '',
-  $puppet_enterprise_port             = '',
-  $puppet_enterprise_ssl_dir          = '',
-  $puppet_enterprise_mapping_file     = '',
-  $puppet_enterprise_metrics_interval = '',
+  Stdlib::Absolutepath $directory                                = $rundeck::params::default_resource_dir,
+  Boolean $include_server_node                                   = $rundeck::params::include_server_node,
+  String $mapping_params                                         = '',
+  Integer $number                                                = 1,
+  Optional[String] $project_name                                 = undef,
+  Enum['resourcexml', 'resourceyaml'] $resource_format           = $rundeck::params::resource_format,
+  Boolean $running_only                                          = true,
+  String $script_args                                            = '',
+  Boolean $script_args_quoted                                    = $rundeck::params::script_args_quoted,
+  Optional[Stdlib::Absolutepath] $script_file                    = undef,
+  String $script_interpreter                                     = $rundeck::params::script_interpreter,
+  Rundeck::Sourcetype $source_type                               = $rundeck::params::default_source_type,
+  String $url                                                    = '',
+  Boolean $url_cache                                             = $rundeck::params::url_cache,
+  Integer $url_timeout                                           = $rundeck::params::url_timeout,
+  Boolean $use_default_mapping                                   = true,
+  Optional[String] $puppet_enterprise_host                       = undef,
+  Optional[Integer[0,65535]] $puppet_enterprise_port             = undef,
+  Optional[Stdlib::Absolutepath] $puppet_enterprise_ssl_dir      = undef,
+  Optional[Stdlib::Absolutepath] $puppet_enterprise_mapping_file = undef,
+  Optional[Integer] $puppet_enterprise_metrics_interval          = undef,
 ) {
 
   include rundeck
@@ -92,20 +92,14 @@ define rundeck::config::resource_source(
   $framework_properties = deep_merge($rundeck::params::framework_config, $::rundeck::framework_config)
 
   $projects_dir = $framework_properties['framework.projects.dir']
-  $user = $::rundeck::user
-  $group = $::rundeck::group
+  $user = $rundeck::user
+  $group = $rundeck::group
 
   if $project_name == undef {
     fail('project_name must be specified')
   }
 
-  validate_string($project_name)
-  validate_integer($number)
-  validate_re($source_type, ['^file$', '^directory$', '^url$', '^script$', '^aws-ec2$', '^puppet-enterprise$'])
-  validate_bool($include_server_node)
   validate_absolute_path($projects_dir)
-  validate_re($user, '[a-zA-Z0-9]{3,}')
-  validate_re($group, '[a-zA-Z0-9]{3,}')
 
   ensure_resource('file', "${projects_dir}/${project_name}", {
     'ensure' => 'directory',
@@ -133,8 +127,6 @@ define rundeck::config::resource_source(
 
   case downcase($source_type) {
     'file': {
-      validate_re($resource_format, ['^resourcexml$','^resourceyaml$'])
-
       case $resource_format {
         'resourcexml': {
           $file_extension = 'xml'
@@ -195,9 +187,6 @@ define rundeck::config::resource_source(
       }
     }
     'url': {
-      validate_string($url)
-      validate_integer($url_timeout)
-      validate_bool($url_cache)
 
       ini_setting { "${name}::resources.source.${number}.config.url":
         ensure  => present,
@@ -227,7 +216,6 @@ define rundeck::config::resource_source(
       }
     }
     'directory': {
-      validate_absolute_path($directory)
 
       file { $directory:
         ensure => directory,
@@ -246,11 +234,6 @@ define rundeck::config::resource_source(
       }
     }
     'script': {
-      validate_re($resource_format, ['^resourcexml$','^resourceyaml$'])
-      validate_bool($script_args_quoted)
-      validate_string($script_interpreter)
-      validate_absolute_path($script_file)
-      validate_string($script_args)
 
       ini_setting { "${name}::resources.source.${number}.config.file":
         ensure  => present,
@@ -324,11 +307,7 @@ define rundeck::config::resource_source(
       }
     }
     'puppet-enterprise': {
-      validate_string($puppet_enterprise_host)
-      validate_integer($puppet_enterprise_port)
-
-      if ( $puppet_enterprise_mapping_file != '') {
-        validate_absolute_path($puppet_enterprise_mapping_file)
+      if ( $puppet_enterprise_mapping_file ) {
         ini_setting { "${name}::resources.source.${number}.config.PROPERTY_MAPPING_FILE":
           ensure  => present,
           path    => $properties_file,
@@ -346,8 +325,7 @@ define rundeck::config::resource_source(
         value   => $puppet_enterprise_host,
         require => File[$properties_file],
       }
-      if ( $puppet_enterprise_metrics_interval != '') {
-        validate_integer($puppet_enterprise_metrics_interval)
+      if ( $puppet_enterprise_metrics_interval ) {
         ini_setting { "${name}::resources.source.${number}.config.PROPERTY_METRICS_INTERVAL":
           ensure  => present,
           path    => $properties_file,
@@ -365,8 +343,7 @@ define rundeck::config::resource_source(
         value   => $puppet_enterprise_port,
         require => File[$properties_file],
       }
-      if ( $puppet_enterprise_ssl_dir != '') {
-        validate_absolute_path($puppet_enterprise_ssl_dir)
+      if ( $puppet_enterprise_ssl_dir ) {
         ini_setting { "${name}::resources.source.${number}.config.PROPERTY_PUPPETDB_SSL_DIR":
           ensure  => present,
           path    => $properties_file,

@@ -63,14 +63,12 @@
 # }
 #
 define rundeck::config::aclpolicyfile(
-  $acl_policies,
-  $group          = 'rundeck',
-  $owner          = 'rundeck',
-  $properties_dir = '/etc/rundeck',
-  $template_file  = "${module_name}/aclpolicy.erb",
+  Array $acl_policies,
+  String $group                        = 'rundeck',
+  String $owner                        = 'rundeck',
+  Stdlib::Absolutepath $properties_dir = '/etc/rundeck',
+  String $template_file                = "${module_name}/aclpolicy.erb",
 ) {
-
-  validate_array($acl_policies)
 
   file { "${properties_dir}/${name}.aclpolicy":
     owner   => $owner,

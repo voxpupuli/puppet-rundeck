@@ -48,15 +48,15 @@ describe 'rundeck' do
           {
             user: 'A1234',
             group: 'A1234',
-            user_id: '10000',
-            group_id: '10000'
+            user_id: 10_000,
+            group_id: 10_000
           }
         end
 
         it do
           is_expected.to contain_group('A1234').with(
             'ensure' => 'present',
-            'gid' => '10000'
+            'gid' => 10_000
           )
         end
 
