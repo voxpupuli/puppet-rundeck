@@ -195,6 +195,7 @@ class rundeck::params {
       'role_name_attribute'     => 'cn',
       'role_member_attribute'   => 'memberUid',
       'role_object_class'       => 'group',
+      'role_prefix'             => undef,
       'nested_groups'           => true,
     },
     'active_directory' => {
@@ -213,6 +214,7 @@ class rundeck::params {
       'role_name_attribute'     => 'cn',
       'role_member_attribute'   => 'member',
       'role_object_class'       => 'group',
+      'role_prefix'             => undef,
       'supplemental_roles'      => 'user',
       'nested_groups'           => true,
     },
