@@ -16,17 +16,31 @@ class rundeck::config::global::framework(
 
   $framework_config_base = merge($rundeck::params::framework_config, $rundeck::framework_config)
 
-  if $ssl_enabled and $ssl_port == '' {
+  if $ssl_enabled {
+    $framework_config_url_base = "https://${::fqdn}"
+  }
+  else {
+    $framework_config_url_base = "http://${::fqdn}"
+  }
+
+  if $framework_config_base['framework.server.port'] != $rundeck::params::framework_config['framework.server.port'] {
+    $framework_config_port = { 'framework.server.port' => $framework_config_base['framework.server.port'] }
+  }
+  elsif $ssl_enabled and $ssl_port == '' {
     $framework_config_port = { 'framework.server.port' => '4443' }
-    $framework_config_url = { 'framework.server.url' => "https://${::fqdn}:4443" }
   }
   elsif $ssl_enabled and $ssl_port != '' {
     $framework_config_port = { 'framework.server.port' => $ssl_port }
-    $framework_config_url = { 'framework.server.url' => "https://${::fqdn}:${ssl_port}" }
   }
   else {
     $framework_config_port = { 'framework.server.port' => '4440' }
-    $framework_config_url = { 'framework.server.url' => "http://${::fqdn}:4440" }
+  }
+
+  if $framework_config_base['framework.server.url'] != $rundeck::params::framework_config['framework.server.url'] {
+    $framework_config_url = { 'framework.server.url' => $framework_config_base['framework.server.url'] }
+  }
+  else {
+    $framework_config_url = { 'framework.server.url' => "${framework_config_url_base}:${$framework_config_port['framework.server.port']}" }
   }
 
   $properties_file = "${properties_dir}/framework.properties"
