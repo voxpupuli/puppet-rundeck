@@ -177,113 +177,73 @@
 #  $security_roles_array         = hiera('rundeck::config::global::web::security_roles_array', []),
 #
 class rundeck (
-  $acl_policies                 = $rundeck::params::acl_policies,
-  $acl_template                 = $rundeck::params::acl_template,
-  $api_policies                 = $rundeck::params::api_policies,
-  $api_template                 = $rundeck::params::api_template,
-  $auth_config                  = $rundeck::params::auth_config,
-  $auth_template                = $rundeck::params::auth_template,
-  $auth_types                   = $rundeck::params::auth_types,
-  $clustermode_enabled          = $rundeck::params::clustermode_enabled,
-  $database_config              = $rundeck::params::database_config,
-  $file_keystorage_dir          = $rundeck::params::file_keystorage_dir,
-  $file_keystorage_keys         = $rundeck::params::file_keystorage_keys,
-  $framework_config             = $rundeck::params::framework_config,
-  $grails_server_url            = $rundeck::params::grails_server_url,
-  $group                        = $rundeck::params::group,
-  $gui_config                   = $rundeck::params::gui_config,
-  $java_home                    = $rundeck::params::java_home,
-  $jvm_args                     = $rundeck::params::jvm_args,
-  $kerberos_realms              = $rundeck::params::kerberos_realms,
-  $key_password                 = $rundeck::params::key_password,
-  $key_storage_type             = $rundeck::params::key_storage_type,
-  $keystore                     = $rundeck::params::keystore,
-  $keystore_password            = $rundeck::params::keystore_password,
-  $log_properties_template      = $rundeck::params::log_properties_template,
-  $mail_config                  = $rundeck::params::mail_config,
-  $sshkey_manage                = $rundeck::params::sshkey_manage,
-  $ssl_keyfile                  = $rundeck::params::ssl_keyfile,
-  $ssl_certfile                 = $rundeck::params::ssl_certfile,
-  $manage_default_admin_policy  = $rundeck::params::manage_default_admin_policy,
-  $manage_default_api_policy    = $rundeck::params::manage_default_api_policy,
-  $manage_repo                  = $rundeck::params::manage_repo,
-  $package_ensure               = $rundeck::params::package_ensure,
-  $package_source               = $rundeck::params::package_source,
-  $preauthenticated_config      = $rundeck::params::preauthenticated_config,
-  $projects                     = $rundeck::params::projects,
-  $projects_description         = $rundeck::params::projects_default_desc,
-  $projects_organization        = $rundeck::params::projects_default_org,
-  $projects_storage_type        = $rundeck::params::projects_storage_type,
-  $quartz_job_threadcount       = $rundeck::params::quartz_job_threadcount,
-  $rd_loglevel                  = $rundeck::params::loglevel,
-  $rd_auditlevel                = $rundeck::params::loglevel,
-  $rdeck_config_template        = $rundeck::params::rdeck_config_template,
-  $rdeck_home                   = $rundeck::params::rdeck_home,
-  $rdeck_profile_template       = $rundeck::params::rdeck_profile_template,
-  $realm_template               = $rundeck::params::realm_template,
-  $rss_enabled                  = $rundeck::params::rss_enabled,
-  $security_config              = $rundeck::params::security_config,
-  $security_role                = $rundeck::params::security_role,
-  $server_web_context           = $rundeck::params::server_web_context,
-  $service_config               = $rundeck::params::service_config,
-  $service_logs_dir             = $rundeck::params::service_logs_dir,
-  $service_manage               = $rundeck::params::service_manage,
-  $service_name                 = $rundeck::params::service_name,
-  $service_script               = $rundeck::params::service_script,
-  $service_ensure               = $rundeck::params::service_ensure,
-  $session_timeout              = $rundeck::params::session_timeout,
-  $ssl_enabled                  = $rundeck::params::ssl_enabled,
-  $ssl_port                     = $rundeck::params::ssl_port,
-  $truststore                   = $rundeck::params::truststore,
-  $truststore_password          = $rundeck::params::truststore_password,
-  $user                         = $rundeck::params::user,
-  $user_id                      = $rundeck::params::user_id,
-  $group_id                     = $rundeck::params::group_id,
-  $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
-  $security_roles_array         = $rundeck::params::security_roles_array,
+  $acl_policies                                   = $rundeck::params::acl_policies,
+  $acl_template                                   = $rundeck::params::acl_template,
+  $api_policies                                   = $rundeck::params::api_policies,
+  $api_template                                   = $rundeck::params::api_template,
+  Hash $auth_config                               = $rundeck::params::auth_config,
+  $auth_template                                  = $rundeck::params::auth_template,
+  Array $auth_types                               = $rundeck::params::auth_types,
+  Boolean $clustermode_enabled                    = $rundeck::params::clustermode_enabled,
+  Hash $database_config                           = $rundeck::params::database_config,
+  Stdlib::Absolutepath $file_keystorage_dir       = $rundeck::params::file_keystorage_dir,
+  Hash $file_keystorage_keys                      = $rundeck::params::file_keystorage_keys,
+  Hash $framework_config                          = $rundeck::params::framework_config,
+  Stdlib::HTTPUrl $grails_server_url              = $rundeck::params::grails_server_url,
+  String $group                                   = $rundeck::params::group,
+  Hash $gui_config                                = $rundeck::params::gui_config,
+  Optional[Stdlib::Absolutepath] $java_home       = undef,
+  $jvm_args                                       = $rundeck::params::jvm_args,
+  Hash $kerberos_realms                           = $rundeck::params::kerberos_realms,
+  $key_password                                   = $rundeck::params::key_password,
+  Enum['db', 'file'] $key_storage_type            = $rundeck::params::key_storage_type,
+  Stdlib::Absolutepath $keystore                  = $rundeck::params::keystore,
+  String $keystore_password                       = $rundeck::params::keystore_password,
+  $log_properties_template                        = $rundeck::params::log_properties_template,
+  Hash $mail_config                               = $rundeck::params::mail_config,
+  Boolean $sshkey_manage                          = $rundeck::params::sshkey_manage,
+  Stdlib::Absolutepath $ssl_keyfile               = $rundeck::params::ssl_keyfile,
+  Stdlib::Absolutepath $ssl_certfile              = $rundeck::params::ssl_certfile,
+  Boolean $manage_default_admin_policy            = $rundeck::params::manage_default_admin_policy,
+  Boolean $manage_default_api_policy              = $rundeck::params::manage_default_api_policy,
+  Boolean $manage_repo                            = $rundeck::params::manage_repo,
+  String $package_ensure                          = $rundeck::params::package_ensure,
+  Stdlib::HTTPUrl $package_source                 = $rundeck::params::package_source,
+  Hash $preauthenticated_config                   = $rundeck::params::preauthenticated_config,
+  Hash $projects                                  = $rundeck::params::projects,
+  String $projects_description                    = $rundeck::params::projects_default_desc,
+  String $projects_organization                   = $rundeck::params::projects_default_org,
+  Enum['db', 'filesystem'] $projects_storage_type = $rundeck::params::projects_storage_type,
+  Integer $quartz_job_threadcount                 = $rundeck::params::quartz_job_threadcount,
+  Rundeck::Loglevel $rd_loglevel                  = $rundeck::params::loglevel,
+  Rundeck::Loglevel $rd_auditlevel                = $rundeck::params::loglevel,
+  $rdeck_config_template                          = $rundeck::params::rdeck_config_template,
+  Stdlib::Absolutepath $rdeck_home                = $rundeck::params::rdeck_home,
+  Optional[String] $rdeck_profile_template        = undef,
+  $realm_template                                 = $rundeck::params::realm_template,
+  Boolean $rss_enabled                            = $rundeck::params::rss_enabled,
+  $security_config                                = $rundeck::params::security_config,
+  $security_role                                  = $rundeck::params::security_role,
+  Optional[String] $server_web_context            = undef,
+  $service_config                                 = $rundeck::params::service_config,
+  Stdlib::Absolutepath $service_logs_dir          = $rundeck::params::service_logs_dir,
+  $service_manage                                 = $rundeck::params::service_manage,
+  String $service_name                            = $rundeck::params::service_name,
+  String $service_script                          = $rundeck::params::service_script,
+  String $service_ensure                          = $rundeck::params::service_ensure,
+  Integer $session_timeout                        = $rundeck::params::session_timeout,
+  Boolean $ssl_enabled                            = $rundeck::params::ssl_enabled,
+  Integer $ssl_port                               = $rundeck::params::ssl_port,
+  Stdlib::Absolutepath $truststore                = $rundeck::params::truststore,
+  String $truststore_password                     = $rundeck::params::truststore_password,
+  String $user                                    = $rundeck::params::user,
+  Optional[Integer] $user_id                      = undef,
+  Optional[Integer] $group_id                     = undef,
+  Boolean $security_roles_array_enabled           = $rundeck::params::security_roles_array_enabled,
+  Array $security_roles_array                     = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
 
-  validate_array($auth_types)
-  validate_hash($auth_config)
-  validate_bool($sshkey_manage)
-  validate_bool($ssl_enabled)
-  validate_hash($projects)
-  validate_string($projects_organization)
-  validate_string($projects_description)
-  validate_re($rd_loglevel, [ '^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$' ])
-  validate_re($rd_auditlevel, [ '^ALL$', '^DEBUG$', '^ERROR$', '^FATAL$', '^INFO$', '^OFF$', '^TRACE$', '^WARN$' ])
-  validate_re($projects_storage_type, [ '^db$', '^filesystem$' ])
-  validate_bool($rss_enabled)
-  validate_bool($clustermode_enabled)
-  validate_string($grails_server_url)
-  validate_hash($gui_config)
-  validate_hash($database_config)
-  validate_hash($kerberos_realms)
-  validate_absolute_path($keystore)
-  validate_absolute_path($ssl_certfile)
-  validate_absolute_path($ssl_keyfile)
-  validate_re($key_storage_type, [ '^db$', '^file$' ])
-  validate_string($keystore_password)
-  validate_string($key_password)
-  validate_absolute_path($truststore)
-  validate_string($truststore_password)
-  validate_string($service_name)
-  validate_string($package_ensure)
-  validate_hash($mail_config)
-  validate_hash($preauthenticated_config)
-  validate_integer($quartz_job_threadcount)
-  validate_string($user)
-  validate_string($group)
-  validate_string($server_web_context)
-  validate_absolute_path($rdeck_home)
   validate_rd_policy($acl_policies)
-  validate_hash($file_keystorage_keys)
-  validate_bool($manage_default_admin_policy)
-  validate_bool($manage_default_api_policy)
-  validate_bool($security_roles_array_enabled)
-  validate_array($security_roles_array)
-  validate_string($user_id)
-  validate_string($group_id)
 
   contain rundeck::install
   contain rundeck::config

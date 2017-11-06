@@ -235,7 +235,7 @@ class rundeck::params {
   $node_executor_provider = 'jsch-ssh'
 
   $url_cache = true
-  $url_timeout = '30'
+  $url_timeout = 30
 
   $resource_format = 'resourcexml'
   $include_server_node = false
@@ -247,8 +247,6 @@ class rundeck::params {
 
   $user = 'rundeck'
   $group = 'rundeck'
-  $user_id = ''
-  $group_id = ''
 
   $loglevel = 'INFO'
   $rss_enabled = false
@@ -289,15 +287,12 @@ class rundeck::params {
 
   $quartz_job_threadcount = 10
 
-  $server_web_context = undef
   $jvm_args = '-Xmx1024m -Xms256m -server'
-
-  $java_home = undef
 
   $sshkey_manage = true
 
   $ssl_enabled = false
-  $ssl_port = '4443'
+  $ssl_port = 4443
 
   $ssl_keyfile = '/etc/rundeck/ssl/rundeck.key'
   $ssl_certfile = '/etc/rundeck/ssl/rundeck.crt'
@@ -309,7 +304,6 @@ class rundeck::params {
   $session_timeout = 30
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
-  $rdeck_profile_template = undef
 
   $file_keystorage_keys = { }
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"

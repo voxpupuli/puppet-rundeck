@@ -27,7 +27,7 @@ describe 'rundeck' do
   end
 
   context 'with session_timeout param' do
-    let(:params) { { session_timeout: '60' } }
+    let(:params) { { session_timeout: 60 } }
 
     it 'generates augeas resource with specified session_timeout' do
       is_expected.to contain_augeas('rundeck/web.xml/session-config/session-timeout'). \

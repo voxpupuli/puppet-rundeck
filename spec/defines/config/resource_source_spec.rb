@@ -23,7 +23,7 @@ describe 'rundeck::config::resource_source', type: :define do
             'include_server_node' => false,
             'resource_format' => 'resourcexml',
             'url_cache' => true,
-            'url_timeout' => '50',
+            'url_timeout' => 50,
             'directory' => '/',
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash'
@@ -66,7 +66,7 @@ describe 'rundeck::config::resource_source', type: :define do
             'url' => 'http\://localhost\:9999',
             'include_server_node' => true,
             'url_cache' => true,
-            'url_timeout' => '50',
+            'url_timeout' => 50,
             'directory' => '/',
             'resource_format' => 'resourcexml',
             'script_args_quoted' => true,
@@ -102,7 +102,7 @@ describe 'rundeck::config::resource_source', type: :define do
             'include_server_node' => true,
             'resource_format' => 'resourcexml',
             'url_cache' => true,
-            'url_timeout' => '50',
+            'url_timeout' => 50,
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash'
 
@@ -138,7 +138,7 @@ describe 'rundeck::config::resource_source', type: :define do
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash',
             'url_cache' => true,
-            'url_timeout' => '30',
+            'url_timeout' => 30,
             'directory' => '/'
           }
         end
@@ -171,15 +171,15 @@ describe 'rundeck::config::resource_source', type: :define do
             'include_server_node' => false,
             'resource_format' => 'resourcexml',
             'url_cache' => true,
-            'url_timeout' => '50',
+            'url_timeout' => 50,
             'directory' => '/foo/bar/resources',
             'script_args_quoted' => true,
             'script_interpreter' => '/bin/bash',
 
             'source_type' => 'puppet-enterprise',
             'puppet_enterprise_host' => 'localhost',
-            'puppet_enterprise_port' => '8081',
-            'puppet_enterprise_metrics_interval' => '15',
+            'puppet_enterprise_port' => 8081,
+            'puppet_enterprise_metrics_interval' => 15,
             'puppet_enterprise_mapping_file' => '/var/local/resource-mapping.json',
             'puppet_enterprise_ssl_dir' => '/opt/rundeck/puppetmaster_ssl'
           }

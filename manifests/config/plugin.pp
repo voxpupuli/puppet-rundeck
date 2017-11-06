@@ -24,8 +24,8 @@
 # }
 #
 define rundeck::config::plugin(
-  $source,
-  $ensure   = 'present',
+  String $source,
+  Enum['present', 'absent'] $ensure = 'present',
 ) {
 
   include rundeck
@@ -36,12 +36,6 @@ define rundeck::config::plugin(
   $user = $rundeck::user
   $group = $rundeck::group
   $plugin_dir = $framework_config['framework.libext.dir']
-
-  validate_string($source)
-  validate_absolute_path($plugin_dir)
-  validate_re($user, '[a-zA-Z0-9]{3,}')
-  validate_re($group, '[a-zA-Z0-9]{3,}')
-  validate_re($ensure, ['^present$', '^absent$'])
 
   if $ensure == 'present' {
 

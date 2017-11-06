@@ -48,17 +48,17 @@
 # }
 #
 define rundeck::config::project (
-  String $file_copier_provider = $rundeck::file_copier_provider,
-  $framework_config            = $rundeck::framework_config,
-  $group                       = $rundeck::group,
-  $node_executor_provider      = $rundeck::node_executor_provider,
-  $node_executor_settings      = {},
-  $projects_dir                = undef,
-  $resource_sources            = $rundeck::resource_sources,
-  $scm_import_properties       = {},
-  $scm_export_properties       = {},
-  $ssh_keypath                 = undef,
-  $user                        = $rundeck::user,
+  String $file_copier_provider                 = $rundeck::file_copier_provider,
+  Hash $framework_config                       = $rundeck::framework_config,
+  String $group                                = $rundeck::group,
+  String $node_executor_provider               = $rundeck::node_executor_provider,
+  Hash $node_executor_settings                 = {},
+  Optional[Stdlib::Absolutepath] $projects_dir = undef,
+  Hash $resource_sources                       = $rundeck::resource_sources,
+  Hash $scm_import_properties                  = {},
+  Hash $scm_export_properties                  = {},
+  Optional[Stdlib::Absolutepath] $ssh_keypath  = undef,
+  String $user                                 = $rundeck::user,
 ) {
 
   include rundeck
@@ -74,13 +74,6 @@ define rundeck::config::project (
     undef   => $framework_properties['framework.projects.dir'],
     default => $projects_dir,
   }
-
-  validate_absolute_path($_ssh_keypath)
-  validate_hash($resource_sources)
-  validate_hash($scm_import_properties)
-  validate_absolute_path($_projects_dir)
-  validate_re($user, '[a-zA-Z0-9]{3,}')
-  validate_re($group, '[a-zA-Z0-9]{3,}')
 
   $project_dir = "${_projects_dir}/${name}"
   $properties_file = "${project_dir}/etc/project.properties"

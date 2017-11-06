@@ -62,7 +62,7 @@ describe 'rundeck' do
           let(:params) do
             {
               ssl_enabled: true,
-              ssl_port: '443'
+              ssl_port: 443
             }
           end
 
