@@ -106,6 +106,18 @@ describe 'rundeck' do
 
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with('content' => default_config) }
       end
+
+      describe "rundeck::config::global::rundeck_config class with execution mode parameter 'active' on #{os}" do
+        let(:params) { { execution_mode: 'active' } }
+
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.executionMode = "active"}) }
+      end
+
+      describe "rundeck::config::global::rundeck_config class with execution mode parameter 'passive' on #{os}" do
+        let(:params) { { execution_mode: 'passive' } }
+
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.executionMode = "passive"}) }
+      end
     end
   end
 end

@@ -8,6 +8,7 @@
 #
 class rundeck::config::global::rundeck_config(
   $clustermode_enabled     = $rundeck::config::clustermode_enabled,
+  $execution_mode          = $rundeck::config::execution_mode,
   $file_keystorage_dir     = $rundeck::config::file_keystorage_dir,
   $grails_server_url       = $rundeck::config::grails_server_url,
   $group                   = $rundeck::config::group,
