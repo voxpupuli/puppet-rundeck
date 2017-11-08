@@ -26,7 +26,7 @@
 #  Boolean value if set to true enables cluster mode
 #
 # [*grails_server_url*]
-#  The url used in sending email notifications.
+#  Sets `grails.serverURL` so that Rundeck knows its external address.
 #
 # [*ssl_keyfile*]
 #  Full path to the SSL private key to be used by Rundeck.
