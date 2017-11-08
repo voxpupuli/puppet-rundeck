@@ -6,13 +6,12 @@
 #
 # This private class is called from rundeck::config used to manage the framework properties of rundeck
 #
-class rundeck::config::global::framework(
-  $group            = $rundeck::config::group,
-  $properties_dir   = $rundeck::config::properties_dir,
-  $user             = $rundeck::config::user,
-  $ssl_enabled      = $rundeck::config::ssl_enabled,
-  $ssl_port         = $rundeck::config::ssl_port
-) {
+class rundeck::config::global::framework {
+  $group          = $rundeck::config::group
+  $properties_dir = $rundeck::config::properties_dir
+  $user           = $rundeck::config::user
+  $ssl_enabled    = $rundeck::config::ssl_enabled
+  $ssl_port       = $rundeck::config::ssl_port
 
   $framework_config_base = merge($rundeck::params::framework_config, $rundeck::framework_config)
 

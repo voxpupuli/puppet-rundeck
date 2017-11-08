@@ -6,14 +6,16 @@
 #
 # This private class is called from rundeck::config used to manage the default project properties
 #
-class rundeck::config::global::project(
-  $group                 = $rundeck::config::group,
-  $projects_description  = $rundeck::config::projects_default_desc,
-  $projects_dir          = $rundeck::config::projects_dir,
-  $projects_organization = $rundeck::config::projects_default_org,
-  $properties_dir        = $rundeck::config::properties_dir,
-  $user                  = $rundeck::config::user,
-) {
+class rundeck::config::global::project {
+
+  assert_private()
+
+  $group                 = $rundeck::config::group
+  $projects_description  = $rundeck::config::projects_description
+  $projects_dir          = $rundeck::config::projects_dir
+  $projects_organization = $rundeck::config::projects_organization
+  $properties_dir        = $rundeck::config::properties_dir
+  $user                  = $rundeck::config::user
 
   $properties_file = "${properties_dir}/project.properties"
 
