@@ -30,6 +30,9 @@ provider_url =
   roleNameAttribute="<%= @auth_config['active_directory']['role_name_attribute'] %>"
   roleMemberAttribute="<%= @auth_config['active_directory']['role_member_attribute'] %>"
   roleObjectClass="<%= @auth_config['active_directory']['role_object_class'] %>"
+  <%- if @auth_config['active_directory']['role_prefix'] -%>
+  rolePrefix="<%= @auth_config['active_directory']['role_prefix'] %>"
+  <%- end -%>
   <%- if @auth_config['active_directory']['supplemental_roles'] -%>
   supplementalRoles="<%= @auth_config['active_directory']['supplemental_roles'] %>"
   <%- end -%>

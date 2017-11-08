@@ -241,6 +241,44 @@ describe 'rundeck' do
           expect(jaas_auth).to include(login_module)
         end
       end
+
+      describe 'ldap with rolePrefix' do
+        let(:params) do
+          {
+            auth_types: %w[ldap],
+            auth_config: {
+              'ldap' => {
+                'url'         => 'localhost:389',
+                'role_prefix' => 'rundeck_'
+              }
+            }
+          }
+        end
+
+        it 'generates valid content for jaas-auth.conf' do
+          content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
+          expect(content).to include('rolePrefix="rundeck_"')
+        end
+      end
+
+      describe 'active_directory with rolePrefix' do
+        let(:params) do
+          {
+            auth_types: %w[active_directory],
+            auth_config: {
+              'active_directory' => {
+                'url'         => 'localhost:389',
+                'role_prefix' => 'rundeck_'
+              }
+            }
+          }
+        end
+
+        it 'generates valid content for jaas-auth.conf' do
+          content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
+          expect(content).to include('rolePrefix="rundeck_"')
+        end
+      end
     end
   end
 end
