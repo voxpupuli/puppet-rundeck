@@ -15,6 +15,7 @@ class rundeck::config(
   $auth_types                   = $rundeck::auth_types,
   $clustermode_enabled          = $rundeck::clustermode_enabled,
   $database_config              = $rundeck::database_config,
+  $execution_mode               = $rundeck::execution_mode,
   $file_keystorage_dir          = $rundeck::file_keystorage_dir,
   $file_keystorage_keys         = $rundeck::file_keystorage_keys,
   $grails_server_url            = $rundeck::grails_server_url,

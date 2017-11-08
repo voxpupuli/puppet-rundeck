@@ -58,6 +58,9 @@ grails.mail.default.from = "<%= @mail_config['defaults.from'] %>"
 <%- end -%>
 grails.serverURL = "<%= @grails_server_url %>"
 rundeck.clusterMode.enabled = "<%= @clustermode_enabled %>"
+<%- if @execution_mode -%>
+rundeck.executionMode = "<%= @execution_mode %>"
+<%- end -%>
 
 rundeck.projectsStorageType = "<%= @projects_storage_type %>"
 quartz.props.threadPool.threadCount = "<%= @quartz_job_threadcount %>"
