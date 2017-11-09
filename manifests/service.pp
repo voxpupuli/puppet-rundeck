@@ -12,22 +12,19 @@ class rundeck::service {
   assert_private()
 
   $service_config = $rundeck::service_config
-  $service_manage = $rundeck::service_manage
   $service_name   = $rundeck::service_name
   $service_script = $rundeck::service_script
   $service_ensure = $rundeck::service_ensure
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
-
-  if $service_manage {
+  if $service_config {
     file { '/etc/init/rundeckd.conf':
       ensure  => present,
       mode    => '0644',
       content => template($service_config),
     }
+  }
 
+  if $service_script {
     file { '/etc/init.d/rundeckd':
       ensure  => present,
       mode    => '0755',

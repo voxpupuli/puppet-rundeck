@@ -369,6 +369,14 @@ Boolean value. Quote the arguments of the script.
 
 The interpreter to use in executing the script. Defaults to: '/bin/bash'
 
+##### `service_config`
+
+(Optional) Template for rundeckd.conf
+
+##### `service_script`
+
+(Optional) Template to use for rundeckd init script.
+
 ##### `projects_dir`
 
 The directory where rundeck is configured to store project information.
