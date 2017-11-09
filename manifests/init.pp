@@ -25,6 +25,9 @@
 # [*clustermode_enabled*]
 #  Boolean value if set to true enables cluster mode
 #
+# [*execution_mode*]
+#  If set, allows setting the execution mode to 'active' or 'passive'.
+#
 # [*grails_server_url*]
 #  Sets `grails.serverURL` so that Rundeck knows its external address.
 #
