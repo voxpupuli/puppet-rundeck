@@ -458,5 +458,8 @@ It is tested with the OSS version of Puppet only.
 ## Development
 
 ### Contributing
+This module is maintained by [Vox Pupuli](https://voxpupuli.org/). Vox Pupuli
+welcomes new contributions to this module, especially those that include
+documentation and rspec tests. We are happy to provide guidance if necessary.
 
-Please read CONTRIBUTING.md for full details on contributing to this project.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for more details.
