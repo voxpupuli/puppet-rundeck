@@ -6,26 +6,23 @@
 #
 # This private class installs the rundeck package and it's dependencies
 #
-class rundeck::install(
-  $manage_repo        = $rundeck::manage_repo,
-  $package_ensure     = $rundeck::package_ensure,
-  $package_source     = $rundeck::package_source,
-  $rdeck_home         = $rundeck::rdeck_home
-) {
+class rundeck::install {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
+
+  $manage_repo    = $rundeck::manage_repo
+  $package_ensure = $rundeck::package_ensure
+  $package_source = $rundeck::package_source
+  $rdeck_home     = $rundeck::rdeck_home
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
-  $projects_dir = $framework_config['framework.projects.dir']
-  $plugin_dir = $framework_config['framework.libext.dir']
+  $projects_dir     = $framework_config['framework.projects.dir']
+  $plugin_dir       = $framework_config['framework.libext.dir']
 
-  $user = $rundeck::user
-  $group = $rundeck::group
+  $user     = $rundeck::user
+  $group    = $rundeck::group
   $user_id  = $rundeck::user_id
   $group_id = $rundeck::group_id
-
 
   File {
     owner  => $user,

@@ -7,13 +7,15 @@
 # This class is meant to be called from `rundeck`
 # It ensure the service is running
 #
-class rundeck::service(
-  $service_config = $rundeck::service_config,
-  $service_manage = $rundeck::service_manage,
-  $service_name   = $rundeck::service_name,
-  $service_script = $rundeck::service_script,
-  $service_ensure = $rundeck::service_ensure,
-) {
+class rundeck::service {
+
+  assert_private()
+
+  $service_config = $rundeck::service_config
+  $service_manage = $rundeck::service_manage
+  $service_name   = $rundeck::service_name
+  $service_script = $rundeck::service_script
+  $service_ensure = $rundeck::service_ensure
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
