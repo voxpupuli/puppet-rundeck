@@ -152,8 +152,6 @@ module PuppetX
               end
             end
           when 'storage'
-            p "LB: #{type}"
-            p "LB: #{property}"
             case property
             when 'name', 'path'
               actions.each do |action|
