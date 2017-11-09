@@ -176,6 +176,11 @@ The url used in sending email notifications.
 
 A hash of the data base configuration. See [Configure a MySQL database](#configure-a-mysql-database) for an example.
 
+##### `execution_mode`
+
+If set, allows setting the execution mode to 'active' or 'passive'.
+Defaults to undef.
+
 ##### `keystore`
 
 Full path to the java keystore to be used by Rundeck.
