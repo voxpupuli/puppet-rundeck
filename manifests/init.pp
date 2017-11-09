@@ -88,6 +88,14 @@
 # [*manage_default_api_policy*]
 #  Boolean value if set to true enables default api policy management
 #
+# [*manage_group*]
+#
+# Whether to manage `group` (and enforce `group_id` if set). Defaults to false.
+#
+# [*manage_user*]
+#
+# Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
+#
 # [*package_ensure*]
 #  Ensure the state of the rundeck package, either present, absent or a specific version
 #
@@ -209,7 +217,6 @@ class rundeck (
   Hash $file_keystorage_keys                          = $rundeck::params::file_keystorage_keys,
   Hash $framework_config                              = $rundeck::params::framework_config,
   Stdlib::HTTPUrl $grails_server_url                  = $rundeck::params::grails_server_url,
-  String $group                                       = $rundeck::params::group,
   Hash $gui_config                                    = $rundeck::params::gui_config,
   Optional[Stdlib::Absolutepath] $java_home           = undef,
   String $jvm_args                                    = $rundeck::params::jvm_args,
@@ -259,6 +266,9 @@ class rundeck (
   Stdlib::Absolutepath $truststore                    = $rundeck::params::truststore,
   String $truststore_password                         = $rundeck::params::truststore_password,
   String $user                                        = $rundeck::params::user,
+  String $group                                       = $rundeck::params::group,
+  Boolean $manage_user                                = $rundeck::params::manage_user,
+  Boolean $manage_group                               = $rundeck::params::manage_group,
   Optional[Integer] $user_id                          = undef,
   Optional[Integer] $group_id                         = undef,
   Boolean $security_roles_array_enabled               = $rundeck::params::security_roles_array_enabled,

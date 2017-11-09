@@ -249,6 +249,14 @@ Array value if you want to have more role in web.xml
 
 Whether to manage the bintray YUM/APT repository containing the Rundeck rpm/deb. Defaults to true. 
 
+##### `manage_group`
+
+Whether to manage `group` (and enforce `group_id` if set). Defaults to false.
+
+##### `manage_user`
+
+Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
+
 ##### `file_keystorage_dir`
 
 The location of stored data like public keys, private keys.

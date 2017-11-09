@@ -45,6 +45,7 @@ class rundeck::config {
   $rd_loglevel                  = $rundeck::rd_loglevel
   $rd_auditlevel                = $rundeck::rd_auditlevel
   $rdeck_config_template        = $rundeck::rdeck_config_template
+  $rdeck_home                   = $rundeck::rdeck_home
   $rdeck_profile_template       = $rundeck::rdeck_profile_template
   $realm_template               = $rundeck::realm_template
   $rss_enabled                  = $rundeck::rss_enabled
@@ -77,8 +78,27 @@ class rundeck::config {
   $rdeck_base     = $framework_config['rdeck.base']
   $projects_dir   = $framework_config['framework.projects.dir']
   $properties_dir = $framework_config['framework.etc.dir']
+  $plugin_dir     = $framework_config['framework.libext.dir']
 
-  #
+  File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
+
+  file { $rdeck_home:
+    ensure  => directory,
+  }
+
+  if $rundeck::sshkey_manage {
+    file { $framework_config['framework.ssh.keypath']:
+      mode    => '0600',
+    }
+  }
+
+  file { $rundeck::service_logs_dir:
+    ensure  => directory,
+  }
+
+  ensure_resource(file, $projects_dir, {'ensure' => 'directory'})
+  ensure_resource(file, $plugin_dir, {'ensure'   => 'directory'})
+
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that
   #

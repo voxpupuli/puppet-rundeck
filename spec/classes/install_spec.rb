@@ -10,13 +10,15 @@ describe 'rundeck' do
       describe "rundeck class without any parameters on #{os}" do
         let(:params) { {} }
 
-        plugin_dir = '/var/lib/rundeck/libext'
-
-        it { is_expected.to contain_file('/var/lib/rundeck').with('ensure' => 'directory') }
-
-        it { is_expected.to contain_file(plugin_dir).with('ensure' => 'directory') }
-
-        it { is_expected.to contain_user('rundeck').with('ensure' => 'present') }
+        it { is_expected.not_to contain_user('rundeck') }
+        it do
+          is_expected.to contain_file('/var/rundeck').with(
+            ensure: 'directory',
+            owner: 'rundeck',
+            group: 'rundeck',
+            recurse: true
+          )
+        end
 
         case facts[:os]['family']
         when 'RedHat'
@@ -36,6 +38,8 @@ describe 'rundeck' do
       describe 'different user and group' do
         let(:params) do
           {
+            manage_user: true,
+            manage_group: true,
             user: 'A1234',
             group: 'A1234'
           }
@@ -52,6 +56,8 @@ describe 'rundeck' do
       describe 'different user and group with ids' do
         let(:params) do
           {
+            manage_user: true,
+            manage_group: true,
             user: 'A1234',
             group: 'A1234',
             user_id: 10_000,
