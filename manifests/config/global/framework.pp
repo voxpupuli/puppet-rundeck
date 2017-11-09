@@ -24,10 +24,6 @@ class rundeck::config::global::framework(
     $framework_config_port = { 'framework.server.port' => $ssl_port }
     $framework_config_url = { 'framework.server.url' => "https://${::fqdn}:${ssl_port}" }
   }
-  else {
-    $framework_config_port = { 'framework.server.port' => '4440' }
-    $framework_config_url = { 'framework.server.url' => "http://${::fqdn}:4440" }
-  }
 
   $properties_file = "${properties_dir}/framework.properties"
 
