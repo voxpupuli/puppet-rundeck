@@ -2,7 +2,6 @@
 # Author: Zoltan Lanyi <zoltan.lanyi@gmail.com>
 # Date  : 03.06.2016
 # 
-
 define rundeck::config::securityroles {
 
   augeas { "rundeck/web.xml/security-role/role-name/${name}":
