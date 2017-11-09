@@ -4,12 +4,7 @@
 
 # == Class: rundeck
 #
-# This will install rundeck (http://rundeck.org/) and manage it's configration and plugins
-#
-# === Requirements/Dependencies
-#
-# Currently reequires the puppetlabs/stdlib module on the Puppet Forge in
-# order to validate much of the the provided configuration.
+# This will install rundeck (http://rundeck.org/) and manage its configration and plugins
 #
 # === Parameters
 #
