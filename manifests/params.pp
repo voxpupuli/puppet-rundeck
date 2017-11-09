@@ -26,8 +26,6 @@ class rundeck::params {
   }
 
   $service_manage = false
-  $service_config = ''
-  $service_script = ''
   $service_ensure = 'running'
 
   $rdeck_base = '/var/lib/rundeck'
