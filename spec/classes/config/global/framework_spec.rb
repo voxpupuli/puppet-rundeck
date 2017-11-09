@@ -57,8 +57,23 @@ describe 'rundeck' do
           end
         end
       end
-      context 'add port and url configuration' do
-        describe 'with ssl true' do
+      context 'setting framework.server.{port,url}' do
+        describe 'with non-default framework.server.hostname' do
+          let(:params) do
+            {
+              framework_config: {
+                'framework.server.hostname' => 'rundeck.example.com'
+              }
+            }
+          end
+
+          it do
+            is_expected.to contain_file('/etc/rundeck/framework.properties').with_content(
+              %r{framework\.server\.url = http://rundeck\.example\.com:4440}
+            )
+          end
+        end
+        describe 'ssl_enabled with non-default SSL port' do
           let(:params) do
             {
               ssl_enabled: true,
@@ -66,10 +81,27 @@ describe 'rundeck' do
             }
           end
 
-          it 'generates valid content for framework.properties framework.server.port = 443 and framework.server.url = https://foo.example.com:443' do
-            content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
-            expect(content).to include('framework.server.port = 443')
-            expect(content).to include('framework.server.url = https://foo.example.com:443')
+          it do
+            is_expected.to contain_file('/etc/rundeck/framework.properties'). \
+              with_content(%r{^framework\.server\.port = 443$}). \
+              with_content(%r{framework\.server\.url = https://foo\.example\.com:443})
+          end
+        end
+        describe 'ssl_enabled with non-default framework.server.hostname' do
+          let(:params) do
+            {
+              ssl_enabled: true,
+              ssl_port: 443,
+              framework_config: {
+                'framework.server.hostname' => 'rundeck.example.com'
+              }
+            }
+          end
+
+          it do
+            is_expected.to contain_file('/etc/rundeck/framework.properties'). \
+              with_content(%r{^framework\.server\.port = 443$}). \
+              with_content(%r{framework\.server\.url = https://rundeck\.example\.com:443})
           end
         end
       end
