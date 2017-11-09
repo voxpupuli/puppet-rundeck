@@ -13,26 +13,29 @@ class rundeck::config::global::framework {
   $ssl_enabled    = $rundeck::config::ssl_enabled
   $ssl_port       = $rundeck::config::ssl_port
 
-  $framework_config_base = merge($rundeck::params::framework_config, $rundeck::framework_config)
+  $_framework_config = merge($rundeck::params::framework_config, $rundeck::framework_config)
 
-  if $ssl_enabled and $ssl_port == '' {
-    $framework_config_port = { 'framework.server.port' => '4443' }
-    $framework_config_url = { 'framework.server.url' => "https://${::fqdn}:4443" }
-  }
-  elsif $ssl_enabled and $ssl_port != '' {
+  # Make sure that we use framework.server.hostname when using non-standard
+  # port, rather than hard-coding to fqdn
+  $rundeck_hostname = $_framework_config['framework.server.hostname']
+  $rundeck_port = $_framework_config['framework.server.port']
+
+  if $ssl_enabled {
     $framework_config_port = { 'framework.server.port' => $ssl_port }
-    $framework_config_url = { 'framework.server.url' => "https://${::fqdn}:${ssl_port}" }
-  }
-  else {
-    $framework_config_port = { 'framework.server.port' => '4440' }
-    $framework_config_url = { 'framework.server.url' => "http://${::fqdn}:4440" }
+    $framework_config_url = { 'framework.server.url' => "https://${rundeck_hostname}:${ssl_port}" }
+  } elsif $rundeck_hostname != $rundeck::params::framework_config['framework.server.hostname'] {
+    $framework_config_port = undef
+    $framework_config_url = { 'framework.server.url' => "http://${rundeck_hostname}:${rundeck_port}" }
+  } else {
+    $framework_config_port = undef
+    $framework_config_url = undef
   }
 
   $properties_file = "${properties_dir}/framework.properties"
 
   ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group } )
 
-  $framework_config = merge($framework_config_base, $framework_config_url, $framework_config_port)
+  $framework_config = merge($_framework_config, $framework_config_url, $framework_config_port)
 
   file { $properties_file:
     ensure  => present,
