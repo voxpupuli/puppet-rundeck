@@ -26,6 +26,26 @@
 # [*grails_server_url*]
 #  Sets `grails.serverURL` so that Rundeck knows its external address.
 #
+# [*repo_apt_key_id*]
+#
+# Key ID for the GPG key for the Debian package
+#
+# [*repo_apt_keyserver*]
+#
+# Keysever for the GPG key for the Debian package
+#
+# [*repo_apt_source*]
+#
+# Baseurl for the apt repo
+#
+# [*repo_yum_gpgkey*]
+#
+# URL or path for the GPG key for the rpm
+#
+# [*repo_yum_source*]
+#
+# Baseurl for the yum repo
+#
 # [*ssl_keyfile*]
 #  Full path to the SSL private key to be used by Rundeck.
 #
@@ -207,7 +227,6 @@ class rundeck (
   Boolean $manage_default_api_policy                  = $rundeck::params::manage_default_api_policy,
   Boolean $manage_repo                                = $rundeck::params::manage_repo,
   String $package_ensure                              = $rundeck::params::package_ensure,
-  Stdlib::HTTPUrl $package_source                     = $rundeck::params::package_source,
   Hash $preauthenticated_config                       = $rundeck::params::preauthenticated_config,
   Hash $projects                                      = $rundeck::params::projects,
   String $projects_description                        = $rundeck::params::projects_default_desc,
@@ -220,6 +239,11 @@ class rundeck (
   Stdlib::Absolutepath $rdeck_home                    = $rundeck::params::rdeck_home,
   Optional[String] $rdeck_profile_template            = undef,
   String $realm_template                              = $rundeck::params::realm_template,
+  Stdlib::HTTPUrl $repo_yum_source                    = $rundeck::params::repo_yum_source,
+  String $repo_yum_gpgkey                             = $rundeck::params::repo_yum_gpgkey,
+  Stdlib::HTTPUrl $repo_apt_source                    = $rundeck::params::repo_apt_source,
+  String $repo_apt_key_id                             = $rundeck::params::repo_apt_key_id,
+  String $repo_apt_keyserver                          = $rundeck::params::repo_apt_keyserver,
   Boolean $rss_enabled                                = $rundeck::params::rss_enabled,
   Hash $security_config                               = $rundeck::params::security_config,
   String $security_role                               = $rundeck::params::security_role,
@@ -228,7 +252,7 @@ class rundeck (
   Stdlib::Absolutepath $service_logs_dir              = $rundeck::params::service_logs_dir,
   String $service_name                                = $rundeck::params::service_name,
   Optional[String] $service_script                    = undef,
-  String $service_ensure                              = $rundeck::params::service_ensure,
+  Enum['stopped', 'running'] $service_ensure          = $rundeck::params::service_ensure,
   Integer $session_timeout                            = $rundeck::params::session_timeout,
   Boolean $ssl_enabled                                = $rundeck::params::ssl_enabled,
   Integer $ssl_port                                   = $rundeck::params::ssl_port,

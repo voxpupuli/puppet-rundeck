@@ -20,7 +20,13 @@ describe 'rundeck' do
 
         case facts[:os]['family']
         when 'RedHat'
-          it { is_expected.to contain_yumrepo('bintray-rundeck') }
+          it do
+            is_expected.to contain_yumrepo('bintray-rundeck').with(
+              baseurl: 'http://dl.bintray.com/rundeck/rundeck-rpm/',
+              gpgcheck: 1,
+              gpgkey: 'https://bintray.com/user/downloadSubjectPublicKey?username=rundeck'
+            ).that_comes_before('Package[rundeck]')
+          end
         when 'Debian'
           it { is_expected.to contain_apt__source('bintray-rundeck').with_location('https://dl.bintray.com/rundeck/rundeck-deb') }
           it { is_expected.to contain_package('rundeck').that_notifies('Class[rundeck::service]') }
