@@ -43,7 +43,6 @@ class rundeck::config::global::ssl {
     password     => $keystore_password,
     destkeypass  => $key_password,
     trustcacerts => true,
-    notify       => Service[$service_name],
   }
   -> java_ks { "rundeck:${properties_dir}/ssl/truststore":
     ensure       => present,
@@ -52,11 +51,6 @@ class rundeck::config::global::ssl {
     password     => $truststore_password,
     destkeypass  => $key_password,
     trustcacerts => true,
-    notify       => Service[$service_name],
-  }
-
-  Ini_setting {
-    notify => Service[$service_name],
   }
 
   file { $properties_file:
@@ -64,7 +58,6 @@ class rundeck::config::global::ssl {
     owner   => $user,
     group   => $group,
     mode    => '0640',
-    notify  => Service[$service_name],
     require => File[$properties_dir],
   }
 

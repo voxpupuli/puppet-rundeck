@@ -112,7 +112,6 @@ class rundeck::config {
     file { "${properties_dir}/realm.properties":
       content => template($realm_template),
       require => File[$properties_dir],
-      notify  => Service[$service_name],
     }
   }
 
@@ -149,7 +148,6 @@ class rundeck::config {
 
   file { "${properties_dir}/log4j.properties":
     content => template($log_properties_template),
-    notify  => Service[$service_name],
     require => File[$properties_dir],
   }
 
@@ -176,14 +174,12 @@ class rundeck::config {
   if ($rdeck_profile_template) {
     file { "${properties_dir}/profile":
       content => template($rdeck_profile_template),
-      notify  => Service[$service_name],
       require => File[$properties_dir],
     }
   }
 
   file { "${overrides_dir}/${service_name}":
     content => template('rundeck/profile_overrides.erb'),
-    notify  => Service[$service_name],
   }
 
   contain rundeck::config::global::framework
@@ -209,7 +205,6 @@ class rundeck::config {
     session_timeout              => $session_timeout,
     security_roles_array_enabled => $security_roles_array_enabled,
     security_roles_array         => $security_roles_array,
-    notify                       => Service[$service_name],
     require                      => Class['rundeck::install'],
   }
 
@@ -219,7 +214,6 @@ class rundeck::config {
       group   => $group,
       mode    => '0640',
       content => template('rundeck/krb5.conf.erb'),
-      notify  => Service[$service_name],
       require => File[$properties_dir],
     }
   }
