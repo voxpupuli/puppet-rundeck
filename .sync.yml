@@ -4,6 +4,7 @@
   docker_sets:
     - set: docker/ubuntu-16.04
     - set: docker/centos-7
+    - set: docker/debian-8
   addons:
     apt:
       packages:
