@@ -62,7 +62,7 @@
 #   ],
 # }
 #
-define rundeck::config::aclpolicyfile(
+define rundeck::config::aclpolicyfile (
   Array $acl_policies,
   String $group                        = 'rundeck',
   String $owner                        = 'rundeck',

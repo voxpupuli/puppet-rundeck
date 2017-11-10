@@ -46,17 +46,17 @@
 define rundeck::config::file_keystore (
   Enum['application/x-rundeck-data-password', 'application/pgp-keys', 'application/octet-stream'] $content_type,
   Enum['password', 'public', 'private'] $data_type,
-  $path,
-  $value,
-  $auth_created_username          = $rundeck::framework_config['framework.ssh.user'],
-  $auth_modified_username         = $rundeck::framework_config['framework.ssh.user'],
-  $content_creation_time          = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
-  String $content_mask            = 'content',
-  $content_modify_time            = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
-  Optional[Integer] $content_size = undef,
-  $file_keystorage_dir            = $rundeck::file_keystorage_dir,
-  $group                          = $rundeck::config::group,
-  $user                           = $rundeck::config::user,
+  String $path,
+  String $value,
+  String $auth_created_username             = $rundeck::framework_config['framework.ssh.user'],
+  String $auth_modified_username            = $rundeck::framework_config['framework.ssh.user'],
+  String $content_creation_time             = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
+  String $content_mask                      = 'content',
+  String $content_modify_time               = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
+  Optional[Integer] $content_size           = undef,
+  Stdlib::Absolutepath $file_keystorage_dir = $rundeck::file_keystorage_dir,
+  String $group                             = $rundeck::config::group,
+  String $user                              = $rundeck::config::user,
 ) {
 
   ensure_resource('file', [ $file_keystorage_dir ], { 'ensure' => 'directory' })
