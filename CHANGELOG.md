@@ -4,7 +4,52 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.0.0) (2017-11-10)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v4.1.0...v5.0.0)
+
+**Breaking changes:**
+
+- Use gpgkey for rpm \(\#205\), remove package\_source param, add new params for repos [\#358](https://github.com/voxpupuli/puppet-rundeck/pull/358) ([wyardley](https://github.com/wyardley))
+- Remove service\_manage, make service\_config and service\_script optional [\#355](https://github.com/voxpupuli/puppet-rundeck/pull/355) ([wyardley](https://github.com/wyardley))
+- Breaking: Don't manage user / group by default [\#351](https://github.com/voxpupuli/puppet-rundeck/pull/351) ([wyardley](https://github.com/wyardley))
+- Make private classes explicitly private, prevent setting params via rundeck::config [\#348](https://github.com/voxpupuli/puppet-rundeck/pull/348) ([wyardley](https://github.com/wyardley))
+- Breaking: Switch to Puppet Data Types, switch to integers [\#343](https://github.com/voxpupuli/puppet-rundeck/pull/343) ([wyardley](https://github.com/wyardley))
+
+**Implemented enhancements:**
+
+- Insecure downloading of packages [\#205](https://github.com/voxpupuli/puppet-rundeck/issues/205)
+- More intelligent, easier SSL setup [\#30](https://github.com/voxpupuli/puppet-rundeck/issues/30)
+- Add remaining Puppet data types [\#357](https://github.com/voxpupuli/puppet-rundeck/pull/357) ([wyardley](https://github.com/wyardley))
+- provide option for active/passive executionMode [\#346](https://github.com/voxpupuli/puppet-rundeck/pull/346) ([duffrecords](https://github.com/duffrecords))
+- add rolePrefix attribute to LDAP and Active Directory authentication [\#345](https://github.com/voxpupuli/puppet-rundeck/pull/345) ([duffrecords](https://github.com/duffrecords))
+- Add support to customize log4j.properties file [\#339](https://github.com/voxpupuli/puppet-rundeck/pull/339) ([idomingu](https://github.com/idomingu))
+
+**Fixed bugs:**
+
+- framework.server.port and url is not taking effect due to global config overwrite [\#303](https://github.com/voxpupuli/puppet-rundeck/issues/303)
+- Not working [\#300](https://github.com/voxpupuli/puppet-rundeck/issues/300)
+- Don't change framework.server.{port,url}, use framework.server.hostname rather than fqdn \(\#303\) [\#356](https://github.com/voxpupuli/puppet-rundeck/pull/356) ([wyardley](https://github.com/wyardley))
+
+**Closed issues:**
+
+- Update documentation:  dataSource\_config should be database\_config [\#340](https://github.com/voxpupuli/puppet-rundeck/issues/340)
+- SSL truststore path is incorrect [\#232](https://github.com/voxpupuli/puppet-rundeck/issues/232)
+- create\_resources requiring uniqueness for resource\_source names across projects [\#231](https://github.com/voxpupuli/puppet-rundeck/issues/231)
+
+**Merged pull requests:**
+
+- Create a simple project with default values in the acceptance test [\#359](https://github.com/voxpupuli/puppet-rundeck/pull/359) ([wyardley](https://github.com/wyardley))
+- remove unneeded 'p' statements [\#354](https://github.com/voxpupuli/puppet-rundeck/pull/354) ([wyardley](https://github.com/wyardley))
+- add docs for \#346 [\#353](https://github.com/voxpupuli/puppet-rundeck/pull/353) ([wyardley](https://github.com/wyardley))
+- Docs fixes [\#352](https://github.com/voxpupuli/puppet-rundeck/pull/352) ([wyardley](https://github.com/wyardley))
+- update docs for grails\_server\_url [\#347](https://github.com/voxpupuli/puppet-rundeck/pull/347) ([wyardley](https://github.com/wyardley))
+- changed requirements for puppet-archive to allow version 2.x [\#344](https://github.com/voxpupuli/puppet-rundeck/pull/344) ([clxnetom](https://github.com/clxnetom))
+- Allow all strings for file\_copier\_provider [\#342](https://github.com/voxpupuli/puppet-rundeck/pull/342) ([alexjfisher](https://github.com/alexjfisher))
+- Fix `database\_config` parameter documentation [\#341](https://github.com/voxpupuli/puppet-rundeck/pull/341) ([alexjfisher](https://github.com/alexjfisher))
+
 ## [v4.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v4.1.0) (2017-09-17)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v4.0.1...v4.1.0)
 
 **Implemented enhancements:**
@@ -27,8 +72,11 @@ These should not affect the functionality of the module.
 - Remove 'require' statements on file resources that aren't declared [\#336](https://github.com/voxpupuli/puppet-rundeck/pull/336) ([wyardley](https://github.com/wyardley))
 - Update for use with puppet5 [\#332](https://github.com/voxpupuli/puppet-rundeck/pull/332) ([attachmentgenie](https://github.com/attachmentgenie))
 - Add the rest of the options to the security hash for the rundeck config. [\#329](https://github.com/voxpupuli/puppet-rundeck/pull/329) ([jasonschwab](https://github.com/jasonschwab))
+- Release 4.1.0 [\#327](https://github.com/voxpupuli/puppet-rundeck/pull/327) ([bastelfreak](https://github.com/bastelfreak))
+- release 4.0.1 [\#324](https://github.com/voxpupuli/puppet-rundeck/pull/324) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v4.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.1) (2017-07-04)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v4.0.0...v4.0.1)
 
 **Fixed bugs:**
@@ -42,9 +90,10 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 4.0.1 [\#324](https://github.com/voxpupuli/puppet-rundeck/pull/324) ([bastelfreak](https://github.com/bastelfreak))
+- release 4.0.0 [\#321](https://github.com/voxpupuli/puppet-rundeck/pull/321) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v4.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.0) (2017-06-27)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v3.3.0...v4.0.0)
 
 **Fixed bugs:**
@@ -58,11 +107,12 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 4.0.0 [\#321](https://github.com/voxpupuli/puppet-rundeck/pull/321) ([bastelfreak](https://github.com/bastelfreak))
 - Set debian apt\_repo as default debian installation method [\#308](https://github.com/voxpupuli/puppet-rundeck/pull/308) ([cy4n](https://github.com/cy4n))
 - Update readme apt install [\#307](https://github.com/voxpupuli/puppet-rundeck/pull/307) ([cy4n](https://github.com/cy4n))
+- release 3.3.0 [\#305](https://github.com/voxpupuli/puppet-rundeck/pull/305) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v3.3.0](https://github.com/voxpupuli/puppet-rundeck/tree/v3.3.0) (2017-01-12)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v3.2.0...v3.3.0)
 
 **Closed issues:**
@@ -75,7 +125,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 3.3.0 [\#305](https://github.com/voxpupuli/puppet-rundeck/pull/305) ([bastelfreak](https://github.com/bastelfreak))
 - added userPasswordAttribute to ldap config, like AD config [\#299](https://github.com/voxpupuli/puppet-rundeck/pull/299) ([sjsmit](https://github.com/sjsmit))
 - Set minimum version dependencies \(for Puppet 4\) [\#298](https://github.com/voxpupuli/puppet-rundeck/pull/298) ([juniorsysadmin](https://github.com/juniorsysadmin))
 - Set puppet minimum version\_requirement to 3.8.7 [\#295](https://github.com/voxpupuli/puppet-rundeck/pull/295) ([juniorsysadmin](https://github.com/juniorsysadmin))
@@ -86,10 +135,12 @@ These should not affect the functionality of the module.
 - Revert "Add missing node resource properties to acltemplate" [\#274](https://github.com/voxpupuli/puppet-rundeck/pull/274) ([bastelfreak](https://github.com/bastelfreak))
 - Add missing node resource properties to acltemplate [\#273](https://github.com/voxpupuli/puppet-rundeck/pull/273) ([cy4n](https://github.com/cy4n))
 - This adds a boolean class parameter to the rundeck class to allow people [\#271](https://github.com/voxpupuli/puppet-rundeck/pull/271) ([dustinak](https://github.com/dustinak))
+- Modulesync 0.12.8 & Release 3.2.0 [\#270](https://github.com/voxpupuli/puppet-rundeck/pull/270) ([bastelfreak](https://github.com/bastelfreak))
 - Fix issue \#268. [\#269](https://github.com/voxpupuli/puppet-rundeck/pull/269) ([jairojunior](https://github.com/jairojunior))
 - add: tags to fix aclpolicy [\#265](https://github.com/voxpupuli/puppet-rundeck/pull/265) ([zlanyi](https://github.com/zlanyi))
 
 ## [v3.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v3.2.0) (2016-10-05)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v3.1.0...v3.2.0)
 
 **Closed issues:**
@@ -100,7 +151,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Modulesync 0.12.8 & Release 3.2.0 [\#270](https://github.com/voxpupuli/puppet-rundeck/pull/270) ([bastelfreak](https://github.com/bastelfreak))
 - Update puppet/archive dependency [\#267](https://github.com/voxpupuli/puppet-rundeck/pull/267) ([alexjfisher](https://github.com/alexjfisher))
 - this change allow puppet/archive to live together with camptocamp/archive [\#264](https://github.com/voxpupuli/puppet-rundeck/pull/264) ([lzecca78](https://github.com/lzecca78))
 - Add missing 'rd\_auditlevel' parameter to config.pp [\#262](https://github.com/voxpupuli/puppet-rundeck/pull/262) ([tomtheun](https://github.com/tomtheun))
@@ -109,6 +159,7 @@ These should not affect the functionality of the module.
 - feature: set user and group id because of NFS Share [\#254](https://github.com/voxpupuli/puppet-rundeck/pull/254) ([zlanyi](https://github.com/zlanyi))
 
 ## [v3.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v3.1.0) (2016-07-11)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v3.0.0...v3.1.0)
 
 **Closed issues:**
@@ -128,6 +179,7 @@ These should not affect the functionality of the module.
 - fixed management of $file\_keystore\_dir [\#239](https://github.com/voxpupuli/puppet-rundeck/pull/239) ([dalisch](https://github.com/dalisch))
 
 ## [v3.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v3.0.0) (2016-05-30)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v2.3.0...v3.0.0)
 
 **Merged pull requests:**
@@ -135,6 +187,7 @@ These should not affect the functionality of the module.
 - modulesync 0.7.0 + release 3.0.0 [\#237](https://github.com/voxpupuli/puppet-rundeck/pull/237) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.3.0](https://github.com/voxpupuli/puppet-rundeck/tree/v2.3.0) (2016-05-27)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v2.2.0...v2.3.0)
 
 **Closed issues:**
@@ -184,6 +237,7 @@ These should not affect the functionality of the module.
 - Add ability to specify different project and key storage types [\#167](https://github.com/voxpupuli/puppet-rundeck/pull/167) ([jyaworski](https://github.com/jyaworski))
 
 ## [v2.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v2.2.0) (2016-02-19)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v2.1.0...v2.2.0)
 
 **Merged pull requests:**
@@ -193,6 +247,7 @@ These should not affect the functionality of the module.
 - adding required .gitignore entries [\#178](https://github.com/voxpupuli/puppet-rundeck/pull/178) ([liamjbennett](https://github.com/liamjbennett))
 
 ## [v2.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v2.1.0) (2016-02-19)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v2.0.0...v2.1.0)
 
 **Implemented enhancements:**
@@ -255,6 +310,7 @@ These should not affect the functionality of the module.
 - \(\#108\) Add support for customizing rundeck-config [\#109](https://github.com/voxpupuli/puppet-rundeck/pull/109) ([patcadelina](https://github.com/patcadelina))
 
 ## [v2.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v2.0.0) (2015-09-11)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v1.2.0...v2.0.0)
 
 **Implemented enhancements:**
@@ -303,8 +359,12 @@ These should not affect the functionality of the module.
 - Option 2 - removing the management of the java jre [\#88](https://github.com/voxpupuli/puppet-rundeck/pull/88) ([liamjbennett](https://github.com/liamjbennett))
 - bugfix/\#81 - service need be restarted if config is changed. [\#81](https://github.com/voxpupuli/puppet-rundeck/pull/81) ([ozbillwang](https://github.com/ozbillwang))
 - Enhanced acl policy files with rundeck::config::aclpolicyfile [\#76](https://github.com/voxpupuli/puppet-rundeck/pull/76) ([grafjo](https://github.com/grafjo))
+- Allow an "url" parameter for LDAP connection \(issue \#61\) [\#64](https://github.com/voxpupuli/puppet-rundeck/pull/64) ([wcooley](https://github.com/wcooley))
+- Resource source refactor [\#34](https://github.com/voxpupuli/puppet-rundeck/pull/34) ([smithtrevor](https://github.com/smithtrevor))
+- Plugin refactor [\#31](https://github.com/voxpupuli/puppet-rundeck/pull/31) ([smithtrevor](https://github.com/smithtrevor))
 
 ## [v1.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v1.2.0) (2015-05-22)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v1.1.0...v1.2.0)
 
 **Closed issues:**
@@ -326,7 +386,6 @@ These should not affect the functionality of the module.
 - Fix \#73 - Wrong user & group variables for project dir in resource\_source [\#74](https://github.com/voxpupuli/puppet-rundeck/pull/74) ([wcooley](https://github.com/wcooley))
 - bugfix/\#43 - rundeck service is not restarted after upgraded in CentOS [\#69](https://github.com/voxpupuli/puppet-rundeck/pull/69) ([ozbillwang](https://github.com/ozbillwang))
 - Enable "roleUsernameMemberAttribute" for LDAP auth \(issue \#62\) [\#65](https://github.com/voxpupuli/puppet-rundeck/pull/65) ([wcooley](https://github.com/wcooley))
-- Allow an "url" parameter for LDAP connection \(issue \#61\) [\#64](https://github.com/voxpupuli/puppet-rundeck/pull/64) ([wcooley](https://github.com/wcooley))
 - Add context for merging potentially conflicting LDAP tests \(issues \#61 & \#62\) [\#63](https://github.com/voxpupuli/puppet-rundeck/pull/63) ([wcooley](https://github.com/wcooley))
 - Add support for setting jvm\_args \(issue \#59\) [\#60](https://github.com/voxpupuli/puppet-rundeck/pull/60) ([wcooley](https://github.com/wcooley))
 - Fix clipped log format without newline \(issue \#57\) [\#58](https://github.com/voxpupuli/puppet-rundeck/pull/58) ([wcooley](https://github.com/wcooley))
@@ -343,6 +402,7 @@ These should not affect the functionality of the module.
 - Syntax problem mixed public and private classes [\#35](https://github.com/voxpupuli/puppet-rundeck/pull/35) ([robertdebock](https://github.com/robertdebock))
 
 ## [v1.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v1.1.0) (2015-03-24)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v1.0.0...v1.1.0)
 
 **Implemented enhancements:**
@@ -361,9 +421,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Resource source refactor [\#34](https://github.com/voxpupuli/puppet-rundeck/pull/34) ([smithtrevor](https://github.com/smithtrevor))
 - Add a jre\_manage parameter [\#32](https://github.com/voxpupuli/puppet-rundeck/pull/32) ([beezly](https://github.com/beezly))
-- Plugin refactor [\#31](https://github.com/voxpupuli/puppet-rundeck/pull/31) ([smithtrevor](https://github.com/smithtrevor))
 - Ad auth [\#29](https://github.com/voxpupuli/puppet-rundeck/pull/29) ([smithtrevor](https://github.com/smithtrevor))
 - \#27 Add support for cluster mode [\#28](https://github.com/voxpupuli/puppet-rundeck/pull/28) ([danifr](https://github.com/danifr))
 - Project refactor [\#26](https://github.com/voxpupuli/puppet-rundeck/pull/26) ([smithtrevor](https://github.com/smithtrevor))
@@ -375,6 +433,7 @@ These should not affect the functionality of the module.
 - Fix rundeck-config.groovy [\#17](https://github.com/voxpupuli/puppet-rundeck/pull/17) ([taylorleese](https://github.com/taylorleese))
 
 ## [v1.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v1.0.0) (2014-10-13)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v0.2.0...v1.0.0)
 
 **Closed issues:**
@@ -393,9 +452,13 @@ These should not affect the functionality of the module.
 - Implement installing as a package repo for redhat [\#2](https://github.com/voxpupuli/puppet-rundeck/pull/2) ([benh57](https://github.com/benh57))
 
 ## [v0.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v0.2.0) (2014-04-03)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v0.1.0...v0.2.0)
 
 ## [v0.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v0.1.0) (2014-03-28)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/1c144cf5aa72713c7cb1e374355ed1301a50a5c1...v0.1.0)
+
 
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
