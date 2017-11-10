@@ -250,6 +250,9 @@ class rundeck::params {
   $script_args_quoted = true
   $script_interpreter = '/bin/bash'
 
+  $manage_user = false
+  $manage_group = false
+
   $user = 'rundeck'
   $group = 'rundeck'
 

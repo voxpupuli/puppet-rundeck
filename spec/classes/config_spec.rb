@@ -13,6 +13,8 @@ describe 'rundeck' do
       end
 
       describe "rundeck::config class without any parameters on #{os}" do
+        it { is_expected.to contain_file('/var/lib/rundeck').with('ensure' => 'directory') }
+        it { is_expected.to contain_file('/var/lib/rundeck/libext').with('ensure' => 'directory') }
         it { is_expected.to contain_class('rundeck::config::global::framework') }
         it { is_expected.to contain_class('rundeck::config::global::project') }
         it { is_expected.to contain_class('rundeck::config::global::rundeck_config') }

@@ -45,6 +45,7 @@ class rundeck::config {
   $rd_loglevel                  = $rundeck::rd_loglevel
   $rd_auditlevel                = $rundeck::rd_auditlevel
   $rdeck_config_template        = $rundeck::rdeck_config_template
+  $rdeck_home                   = $rundeck::rdeck_home
   $rdeck_profile_template       = $rundeck::rdeck_profile_template
   $realm_template               = $rundeck::realm_template
   $rss_enabled                  = $rundeck::rss_enabled
@@ -77,8 +78,27 @@ class rundeck::config {
   $rdeck_base     = $framework_config['rdeck.base']
   $projects_dir   = $framework_config['framework.projects.dir']
   $properties_dir = $framework_config['framework.etc.dir']
+  $plugin_dir     = $framework_config['framework.libext.dir']
 
-  #
+  File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
+
+  file { $rdeck_home:
+    ensure  => directory,
+  }
+
+  if $rundeck::sshkey_manage {
+    file { $framework_config['framework.ssh.keypath']:
+      mode    => '0600',
+    }
+  }
+
+  file { $rundeck::service_logs_dir:
+    ensure  => directory,
+  }
+
+  ensure_resource(file, $projects_dir, {'ensure' => 'directory'})
+  ensure_resource(file, $plugin_dir, {'ensure'   => 'directory'})
+
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that
   #
@@ -92,7 +112,6 @@ class rundeck::config {
     file { "${properties_dir}/realm.properties":
       content => template($realm_template),
       require => File[$properties_dir],
-      notify  => Service[$service_name],
     }
   }
 
@@ -129,7 +148,6 @@ class rundeck::config {
 
   file { "${properties_dir}/log4j.properties":
     content => template($log_properties_template),
-    notify  => Service[$service_name],
     require => File[$properties_dir],
   }
 
@@ -156,14 +174,12 @@ class rundeck::config {
   if ($rdeck_profile_template) {
     file { "${properties_dir}/profile":
       content => template($rdeck_profile_template),
-      notify  => Service[$service_name],
       require => File[$properties_dir],
     }
   }
 
   file { "${overrides_dir}/${service_name}":
     content => template('rundeck/profile_overrides.erb'),
-    notify  => Service[$service_name],
   }
 
   contain rundeck::config::global::framework
@@ -189,7 +205,6 @@ class rundeck::config {
     session_timeout              => $session_timeout,
     security_roles_array_enabled => $security_roles_array_enabled,
     security_roles_array         => $security_roles_array,
-    notify                       => Service[$service_name],
     require                      => Class['rundeck::install'],
   }
 
@@ -199,7 +214,6 @@ class rundeck::config {
       group   => $group,
       mode    => '0640',
       content => template('rundeck/krb5.conf.erb'),
-      notify  => Service[$service_name],
       require => File[$properties_dir],
     }
   }
