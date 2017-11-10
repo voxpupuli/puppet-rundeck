@@ -160,6 +160,26 @@ The log4j logging level to be set for the Rundeck application.
 
 Allows you to use your own profile template instead of the default from the package maintainer
 
+##### `repo_apt_key_id`
+
+Key ID for the GPG key for the Debian package
+
+##### `repo_apt_keyserver`
+
+Keysever for the GPG key for the Debian package
+
+##### `repo_apt_source`
+
+Baseurl for the apt repo
+
+##### `repo_yum_gpgkey`
+
+URL or path for the GPG key for the rpm
+
+##### `repo_yum_source`
+
+Baseurl for the yum repo
+
 ##### `rss_enabled`
 
 Boolean value if set to true enables RSS feeds that are public (non-authenticated)

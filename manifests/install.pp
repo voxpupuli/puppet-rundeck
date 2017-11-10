@@ -10,10 +10,14 @@ class rundeck::install {
 
   assert_private()
 
-  $manage_repo    = $rundeck::manage_repo
-  $package_ensure = $rundeck::package_ensure
-  $package_source = $rundeck::package_source
-  $rdeck_home     = $rundeck::rdeck_home
+  $manage_repo        = $rundeck::manage_repo
+  $package_ensure     = $rundeck::package_ensure
+  $repo_yum_source    = $rundeck::repo_yum_source
+  $repo_yum_gpgkey    = $rundeck::repo_yum_gpgkey
+  $repo_apt_source    = $rundeck::repo_apt_source
+  $repo_apt_key_id    = $rundeck::repo_apt_key_id
+  $repo_apt_keyserver = $rundeck::repo_apt_keyserver
+  $rdeck_home         = $rundeck::rdeck_home
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
   $projects_dir     = $framework_config['framework.projects.dir']
@@ -32,12 +36,13 @@ class rundeck::install {
 
   case $::osfamily {
     'RedHat': {
-      if $manage_repo == true {
+      if $manage_repo {
         yumrepo { 'bintray-rundeck':
-          baseurl  => 'http://dl.bintray.com/rundeck/rundeck-rpm/',
+          baseurl  => $repo_yum_source,
           descr    => 'bintray rundeck repo',
           enabled  => '1',
-          gpgcheck => '0',
+          gpgcheck => '1',
+          gpgkey   => $repo_yum_gpgkey,
           priority => '1',
           before   => Package['rundeck'],
         }
@@ -46,15 +51,15 @@ class rundeck::install {
       ensure_packages(['rundeck', 'rundeck-config'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
     }
     'Debian': {
-      if $manage_repo == true {
+      if $manage_repo {
         include apt
         apt::source { 'bintray-rundeck':
-          location => 'https://dl.bintray.com/rundeck/rundeck-deb',
+          location => $repo_apt_source,
           release  => '/',
           repos    => '',
           key      => {
-            id     => '8756C4F765C9AC3CB6B85D62379CE192D401AB61',
-            server => 'keyserver.ubuntu.com',
+            id     => $repo_apt_key_id,
+            server => $repo_apt_keyserver,
           },
           before   => Package['rundeck'],
         }
