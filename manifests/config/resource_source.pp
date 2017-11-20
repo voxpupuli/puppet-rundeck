@@ -99,7 +99,7 @@ define rundeck::config::resource_source(
     fail('project_name must be specified')
   }
 
-  validate_absolute_path($projects_dir)
+  assert_type(Stdlib::Absolutepath, $projects_dir)
 
   ensure_resource('file', "${projects_dir}/${project_name}", {
     'ensure' => 'directory',
