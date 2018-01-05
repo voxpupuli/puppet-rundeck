@@ -12,6 +12,15 @@
 # [*directory*]
 #   When the directory source_type is specified this is the path to that directory.
 #
+# [*endpoint_url*]
+#   The API AWS endpoint.
+#
+# [*filter_tag*]
+#   String value for using tags.
+#
+# [*http_proxy_port*]
+#   An integer value that defines the http proxy port.
+#
 # [*include_server_node*]
 #   Boolean value to decide whether or not to include the server node in your list of avaliable nodes.
 #
@@ -23,6 +32,9 @@
 #
 # [*projects_dir*]
 #   The directory where rundeck is configured to store project information.
+#
+# [*refresh_interval*]
+#   How often the data will be updated.
 #
 # [*resource_format*]
 #   The format of the resource that will procesed, either resourcexml or resourceyaml.
@@ -80,6 +92,10 @@ define rundeck::config::resource_source(
   Boolean $url_cache                                             = $rundeck::params::url_cache,
   Integer $url_timeout                                           = $rundeck::params::url_timeout,
   Boolean $use_default_mapping                                   = true,
+  Optional[String] $endpoint_url                                 = undef,
+  String $filter_tag                                             = '',
+  Integer $http_proxy_port                                       = $rundeck::params::default_http_proxy_port,
+  Integer $refresh_interval                                      = $rundeck::params::default_refresh_interval,
   Optional[String] $puppet_enterprise_host                       = undef,
   Optional[Integer[0,65535]] $puppet_enterprise_port             = undef,
   Optional[Stdlib::Absolutepath] $puppet_enterprise_ssl_dir      = undef,
@@ -303,6 +319,38 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.runningOnly",
         value   => bool2str($running_only),
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.endpoint":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.endpoint",
+        value   => $endpoint_url,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.filter":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.filter",
+        value   => $filter_tag,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.httpProxyPort":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.httpProxyPort",
+        value   => $http_proxy_port,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.refreshInterval":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.refreshInterval",
+        value   => $refresh_interval,
         require => File[$properties_file],
       }
     }
