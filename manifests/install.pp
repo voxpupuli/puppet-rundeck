@@ -63,7 +63,7 @@ class rundeck::install {
           gpgcheck => '1',
           gpgkey   => $repo_yum_gpgkey,
           priority => '1',
-          before   => Package['rundeck'],
+          before   => Package['rundeck', 'rundeck-config'],
         }
       }
 
