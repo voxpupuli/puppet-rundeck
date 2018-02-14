@@ -69,7 +69,7 @@ The template used for apitoken acl policy. Default is rundeck/aclpolicy.erb.
 
 The path to the configuration directory where the properties file are stored.
 
-##### `log_dir`
+##### `service_logs_dir`
 
 The path to the directory to store logs.
 
