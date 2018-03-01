@@ -10,7 +10,7 @@ describe 'rundeck' do
         'rundeck.storage.converter."1".path'                 => 'keys',
         'rundeck.storage.converter."1".config.encryptorType' => 'basic',
         'rundeck.storage.converter."1".config.password'      => 'sekrit',
-        'rundeck.storage.converter."1".config.provider'      => 'BC',
+        'rundeck.storage.converter."1".config.provider'      => 'BC'
       }
 
       let(:facts) do
