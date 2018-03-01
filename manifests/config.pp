@@ -74,6 +74,7 @@ class rundeck::config {
   $user                               = $rundeck::user
   $security_roles_array_enabled       = $rundeck::security_roles_array_enabled
   $security_roles_array               = $rundeck::security_roles_array
+  $storage_converter                  = $rundeck::storage_converter
 
   File {
     owner  => $user,

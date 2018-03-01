@@ -103,3 +103,7 @@ rundeck.security.authorization.preauthenticated.redirectUrl = "<%= @preauthentic
 <%- @gui_config.sort.each do |k,v| -%>
 <%= k %> = "<%= v %>"
 <%- end -%>
+
+<%- @storage_converter.sort.each do |k,v| -%>
+<%= k %> = "<%= v %>"
+<%- end -%>
