@@ -16,6 +16,7 @@ class rundeck::config::global::rundeck_config {
   $grails_server_url       = $rundeck::config::grails_server_url
   $group                   = $rundeck::config::group
   $gui_config              = $rundeck::config::gui_config
+  $storage_converter       = $rundeck::config::storage_converter
   $key_storage_type        = $rundeck::config::key_storage_type
   $mail_config             = $rundeck::config::mail_config
   $preauthenticated_config = $rundeck::config::preauthenticated_config

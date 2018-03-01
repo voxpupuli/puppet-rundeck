@@ -24,6 +24,7 @@ class rundeck::config {
   $grails_server_url            = $rundeck::grails_server_url
   $group                        = $rundeck::group
   $gui_config                   = $rundeck::gui_config
+  $storage_converter            = $rundeck::storage_converter
   $java_home                    = $rundeck::java_home
   $jvm_args                     = $rundeck::jvm_args
   $kerberos_realms              = $rundeck::kerberos_realms

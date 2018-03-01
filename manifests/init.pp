@@ -58,6 +58,9 @@
 # [*gui_config*]
 #  Hash of properties for customizing the [Rundeck GUI](http://rundeck.org/docs/administration/gui-customization.html)
 #
+# [*storage_converter*]
+#  Hash of properties to apply a [storage converter plugin](http://rundeck.org/2.5.0/plugins-user-guide/storage-plugins.html#storage-converter)
+#
 # [*java_home*]
 #  Set the home directory of java.
 #
@@ -218,6 +221,7 @@ class rundeck (
   Hash $framework_config                              = $rundeck::params::framework_config,
   Stdlib::HTTPUrl $grails_server_url                  = $rundeck::params::grails_server_url,
   Hash $gui_config                                    = $rundeck::params::gui_config,
+  Hash $storage_converter                             = $rundeck::params::storage_converter,
   Optional[Stdlib::Absolutepath] $java_home           = undef,
   String $jvm_args                                    = $rundeck::params::jvm_args,
   Hash $kerberos_realms                               = $rundeck::params::kerberos_realms,
