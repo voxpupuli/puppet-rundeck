@@ -29,14 +29,13 @@ describe 'rundeck' do
         }
       end
 
-      # content and meta data for passwords
       it 'generates storage_converter content for rundeck-config.groovy' do
         content = catalogue.resource('file', '/etc/rundeck/rundeck-config.groovy')[:content]
+        expect(content).to include('rundeck.storage.converter."1".type = "jasypt-encryption"')
+        expect(content).to include('rundeck.storage.converter."1".path = "keys"')
         expect(content).to include('rundeck.storage.converter."1".config.encryptorType = "basic"')
         expect(content).to include('rundeck.storage.converter."1".config.password = "sekrit"')
         expect(content).to include('rundeck.storage.converter."1".config.provider = "BC"')
-        expect(content).to include('rundeck.storage.converter."1".path = "keys"')
-        expect(content).to include('rundeck.storage.converter."1".type = "jasypt-encryption"')
       end
     end
   end
