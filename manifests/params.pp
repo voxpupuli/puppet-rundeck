@@ -67,7 +67,7 @@ class rundeck::params {
   $auth_users = {}
   $auth_template = 'rundeck/jaas-auth.conf.erb'
 
-  $log_properties_template = 'rundeck/log4j.properties.erb'
+  $log_properties_template = hiera('rundeck::params::log_properties_template','rundeck/log4j.properties.erb')
 
   $acl_template = 'rundeck/aclpolicy.erb'
   $api_template = 'rundeck/aclpolicy.erb'
