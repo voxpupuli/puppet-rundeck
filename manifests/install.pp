@@ -71,7 +71,7 @@ class rundeck::install {
     }
     'Debian': {
       if $manage_repo {
-        include apt
+        # include apt
         apt::source { 'bintray-rundeck':
           location => $repo_apt_source,
           release  => '/',
