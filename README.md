@@ -257,6 +257,10 @@ Whether to manage `group` (and enforce `group_id` if set). Defaults to false.
 
 Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
 
+##### `manage_home`
+
+Whether to create the `rundeck_home` directory. Defaults to true.
+
 ##### `file_keystorage_dir`
 
 The location of stored data like public keys, private keys.

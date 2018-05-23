@@ -74,6 +74,19 @@ describe 'rundeck' do
           expect(content).to include("RDECK_JVM_SETTINGS=\"#{jvm_args}\"")
         end
       end
+
+      describe 'rundeck::config with manage_home=false with external homedir file resource' do
+        let(:pre_condition) { 'File{"/var/lib/rundeck": ensure => directory }' }
+        let(:params) { { manage_home: false } }
+
+        it { is_expected.to contain_file('/var/lib/rundeck').that_comes_before('File[/var/lib/rundeck/.ssh/id_rsa]') }
+      end
+
+      describe 'rundeck::config with manage_home=false but no external homedir file resource' do
+        let(:params) { { manage_home: false } }
+
+        it { is_expected.to raise_error(Puppet::PreformattedError, %r{when rundeck::manage_home = false a file definition for the home directory must be included outside of this module.}) }
+      end
     end
   end
 end
