@@ -28,6 +28,7 @@ class rundeck::install {
     group { $group:
       ensure => present,
       gid    => $group_id,
+      system => true,
     }
 
     if $group != 'rundeck' {
@@ -43,6 +44,7 @@ class rundeck::install {
       groups => [$group],
       uid    => $user_id,
       gid    => $group_id,
+      system => true,
       before => File['/var/rundeck'],
     }
 
