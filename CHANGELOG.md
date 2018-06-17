@@ -4,7 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v5.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.1.0) (2018-02-14)
+## [v5.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.2.0) (2018-06-17)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.1.0...v5.2.0)
+
+**Implemented enhancements:**
+
+- Creating the home dir is now optional [\#379](https://github.com/voxpupuli/puppet-rundeck/pull/379) ([houtmanj](https://github.com/houtmanj))
+- feat\(rundeck\): add missing key from resources\_source [\#367](https://github.com/voxpupuli/puppet-rundeck/pull/367) ([Hoshiyo](https://github.com/Hoshiyo))
+
+**Closed issues:**
+
+- Rundeck user/group should be a system user/group [\#380](https://github.com/voxpupuli/puppet-rundeck/issues/380)
+
+**Merged pull requests:**
+
+- Make rundeck user/group system user/group [\#381](https://github.com/voxpupuli/puppet-rundeck/pull/381) ([philippeganz](https://github.com/philippeganz))
+- drop EOL OSs; fix puppet version range [\#378](https://github.com/voxpupuli/puppet-rundeck/pull/378) ([bastelfreak](https://github.com/bastelfreak))
+- Rely on beaker-hostgenerator for docker nodesets [\#376](https://github.com/voxpupuli/puppet-rundeck/pull/376) ([ekohl](https://github.com/ekohl))
+- fix log\_dir in readme [\#371](https://github.com/voxpupuli/puppet-rundeck/pull/371) ([vaboston](https://github.com/vaboston))
+
+## [v5.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.1.0) (2018-02-13)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.0.0...v5.1.0)
 
@@ -25,7 +45,6 @@ These should not affect the functionality of the module.
 
 - replace validate\_string with assert\_type [\#365](https://github.com/voxpupuli/puppet-rundeck/pull/365) ([bastelfreak](https://github.com/bastelfreak))
 - Bump stdlib to 4.21.0 [\#363](https://github.com/voxpupuli/puppet-rundeck/pull/363) ([juniorsysadmin](https://github.com/juniorsysadmin))
-- Release version 5.0.0 [\#361](https://github.com/voxpupuli/puppet-rundeck/pull/361) ([wyardley](https://github.com/wyardley))
 
 ## [v5.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.0.0) (2017-11-10)
 
@@ -96,7 +115,6 @@ These should not affect the functionality of the module.
 - Update for use with puppet5 [\#332](https://github.com/voxpupuli/puppet-rundeck/pull/332) ([attachmentgenie](https://github.com/attachmentgenie))
 - Add the rest of the options to the security hash for the rundeck config. [\#329](https://github.com/voxpupuli/puppet-rundeck/pull/329) ([jasonschwab](https://github.com/jasonschwab))
 - Release 4.1.0 [\#327](https://github.com/voxpupuli/puppet-rundeck/pull/327) ([bastelfreak](https://github.com/bastelfreak))
-- release 4.0.1 [\#324](https://github.com/voxpupuli/puppet-rundeck/pull/324) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v4.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.1) (2017-07-04)
 
@@ -110,10 +128,6 @@ These should not affect the functionality of the module.
 **Closed issues:**
 
 - Rundeck service not starting [\#319](https://github.com/voxpupuli/puppet-rundeck/issues/319)
-
-**Merged pull requests:**
-
-- release 4.0.0 [\#321](https://github.com/voxpupuli/puppet-rundeck/pull/321) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v4.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v4.0.0) (2017-06-27)
 
@@ -132,7 +146,6 @@ These should not affect the functionality of the module.
 
 - Set debian apt\_repo as default debian installation method [\#308](https://github.com/voxpupuli/puppet-rundeck/pull/308) ([cy4n](https://github.com/cy4n))
 - Update readme apt install [\#307](https://github.com/voxpupuli/puppet-rundeck/pull/307) ([cy4n](https://github.com/cy4n))
-- release 3.3.0 [\#305](https://github.com/voxpupuli/puppet-rundeck/pull/305) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v3.3.0](https://github.com/voxpupuli/puppet-rundeck/tree/v3.3.0) (2017-01-12)
 
@@ -158,7 +171,6 @@ These should not affect the functionality of the module.
 - Revert "Add missing node resource properties to acltemplate" [\#274](https://github.com/voxpupuli/puppet-rundeck/pull/274) ([bastelfreak](https://github.com/bastelfreak))
 - Add missing node resource properties to acltemplate [\#273](https://github.com/voxpupuli/puppet-rundeck/pull/273) ([cy4n](https://github.com/cy4n))
 - This adds a boolean class parameter to the rundeck class to allow people [\#271](https://github.com/voxpupuli/puppet-rundeck/pull/271) ([dustinak](https://github.com/dustinak))
-- Modulesync 0.12.8 & Release 3.2.0 [\#270](https://github.com/voxpupuli/puppet-rundeck/pull/270) ([bastelfreak](https://github.com/bastelfreak))
 - Fix issue \#268. [\#269](https://github.com/voxpupuli/puppet-rundeck/pull/269) ([jairojunior](https://github.com/jairojunior))
 - add: tags to fix aclpolicy [\#265](https://github.com/voxpupuli/puppet-rundeck/pull/265) ([zlanyi](https://github.com/zlanyi))
 
@@ -174,6 +186,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
+- Modulesync 0.12.8 & Release 3.2.0 [\#270](https://github.com/voxpupuli/puppet-rundeck/pull/270) ([bastelfreak](https://github.com/bastelfreak))
 - Update puppet/archive dependency [\#267](https://github.com/voxpupuli/puppet-rundeck/pull/267) ([alexjfisher](https://github.com/alexjfisher))
 - this change allow puppet/archive to live together with camptocamp/archive [\#264](https://github.com/voxpupuli/puppet-rundeck/pull/264) ([lzecca78](https://github.com/lzecca78))
 - Add missing 'rd\_auditlevel' parameter to config.pp [\#262](https://github.com/voxpupuli/puppet-rundeck/pull/262) ([tomtheun](https://github.com/tomtheun))
@@ -268,6 +281,16 @@ These should not affect the functionality of the module.
 - fixing spec tests [\#180](https://github.com/voxpupuli/puppet-rundeck/pull/180) ([liamjbennett](https://github.com/liamjbennett))
 - updating changelog for version 2.2.0 [\#179](https://github.com/voxpupuli/puppet-rundeck/pull/179) ([liamjbennett](https://github.com/liamjbennett))
 - adding required .gitignore entries [\#178](https://github.com/voxpupuli/puppet-rundeck/pull/178) ([liamjbennett](https://github.com/liamjbennett))
+- added provisioning of file-based keystores via hiera [\#172](https://github.com/voxpupuli/puppet-rundeck/pull/172) ([dalisch](https://github.com/dalisch))
+- Fixes GH-157 [\#171](https://github.com/voxpupuli/puppet-rundeck/pull/171) ([jyaworski](https://github.com/jyaworski))
+- fix typo: voxpupuliy -\> voxpupuli [\#170](https://github.com/voxpupuli/puppet-rundeck/pull/170) ([bastelfreak](https://github.com/bastelfreak))
+- Rename to voxpupuli [\#169](https://github.com/voxpupuli/puppet-rundeck/pull/169) ([petems](https://github.com/petems))
+- Move to rundeck\_version as a fact [\#165](https://github.com/voxpupuli/puppet-rundeck/pull/165) ([jyaworski](https://github.com/jyaworski))
+- value field in ini\_setting is now always a string [\#164](https://github.com/voxpupuli/puppet-rundeck/pull/164) ([bovy89](https://github.com/bovy89))
+- should contain JettyCachingLdapLoginModule and be sufficient [\#163](https://github.com/voxpupuli/puppet-rundeck/pull/163) ([dalisch](https://github.com/dalisch))
+- disable H2 database logging in log4j.properties [\#161](https://github.com/voxpupuli/puppet-rundeck/pull/161) ([dalisch](https://github.com/dalisch))
+- Make ssh\_keypath and projects\_dir parameters of the project defined type [\#153](https://github.com/voxpupuli/puppet-rundeck/pull/153) ([jyaworski](https://github.com/jyaworski))
+- Implement \#137, adding the rundeck\_server parameter [\#148](https://github.com/voxpupuli/puppet-rundeck/pull/148) ([jyaworski](https://github.com/jyaworski))
 
 ## [v2.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v2.1.0) (2016-02-19)
 
@@ -302,18 +325,8 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- added provisioning of file-based keystores via hiera [\#172](https://github.com/voxpupuli/puppet-rundeck/pull/172) ([dalisch](https://github.com/dalisch))
-- Fixes GH-157 [\#171](https://github.com/voxpupuli/puppet-rundeck/pull/171) ([jyaworski](https://github.com/jyaworski))
-- fix typo: voxpupuliy -\> voxpupuli [\#170](https://github.com/voxpupuli/puppet-rundeck/pull/170) ([bastelfreak](https://github.com/bastelfreak))
-- Rename to voxpupuli [\#169](https://github.com/voxpupuli/puppet-rundeck/pull/169) ([petems](https://github.com/petems))
-- Move to rundeck\_version as a fact [\#165](https://github.com/voxpupuli/puppet-rundeck/pull/165) ([jyaworski](https://github.com/jyaworski))
-- value field in ini\_setting is now always a string [\#164](https://github.com/voxpupuli/puppet-rundeck/pull/164) ([bovy89](https://github.com/bovy89))
-- should contain JettyCachingLdapLoginModule and be sufficient [\#163](https://github.com/voxpupuli/puppet-rundeck/pull/163) ([dalisch](https://github.com/dalisch))
-- disable H2 database logging in log4j.properties [\#161](https://github.com/voxpupuli/puppet-rundeck/pull/161) ([dalisch](https://github.com/dalisch))
-- Make ssh\_keypath and projects\_dir parameters of the project defined type [\#153](https://github.com/voxpupuli/puppet-rundeck/pull/153) ([jyaworski](https://github.com/jyaworski))
 - updating metadata and changelog for 2.1.0 release [\#152](https://github.com/voxpupuli/puppet-rundeck/pull/152) ([liamjbennett](https://github.com/liamjbennett))
 - Updating module\_sync exceptions for rubocop in files directory. [\#151](https://github.com/voxpupuli/puppet-rundeck/pull/151) ([liamjbennett](https://github.com/liamjbennett))
-- Implement \#137, adding the rundeck\_server parameter [\#148](https://github.com/voxpupuli/puppet-rundeck/pull/148) ([jyaworski](https://github.com/jyaworski))
 - Fixing the autoload of the rundeck\_acl function. [\#146](https://github.com/voxpupuli/puppet-rundeck/pull/146) ([liamjbennett](https://github.com/liamjbennett))
 - key storage non-default dir path support [\#145](https://github.com/voxpupuli/puppet-rundeck/pull/145) ([rooty0](https://github.com/rooty0))
 - add gui session timeout support [\#144](https://github.com/voxpupuli/puppet-rundeck/pull/144) ([rooty0](https://github.com/rooty0))
