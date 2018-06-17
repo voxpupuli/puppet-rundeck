@@ -98,7 +98,6 @@ define rundeck::config::project (
     content => template('rundeck/scm-import.properties.erb'),
     owner   => $user,
     group   => $group,
-    replace => false,
   }
 
   file { $scm_export_properties_file:
@@ -107,7 +106,6 @@ define rundeck::config::project (
     owner   => $user,
     group   => $group,
     require => File["${project_dir}/etc"],
-    replace => false,
   }
 
   file { "${project_dir}/var":

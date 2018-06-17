@@ -246,6 +246,8 @@ class rundeck::params {
   $include_server_node = false
   $default_source_type = 'file'
   $default_resource_dir = '/'
+  $default_http_proxy_port = 80
+  $default_refresh_interval = 30
 
   $script_args_quoted = true
   $script_interpreter = '/bin/bash'
