@@ -35,6 +35,7 @@ class rundeck::params {
 
   $rdeck_base = '/var/lib/rundeck'
   $rdeck_home = '/var/lib/rundeck'
+  $manage_home = true
   $service_logs_dir = '/var/log/rundeck'
 
   $rdeck_uuid = $facts['serialnumber'] ? {

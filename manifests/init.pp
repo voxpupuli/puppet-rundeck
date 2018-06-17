@@ -244,6 +244,7 @@ class rundeck (
   Rundeck::Loglevel $rd_auditlevel                    = $rundeck::params::loglevel,
   String $rdeck_config_template                       = $rundeck::params::rdeck_config_template,
   Stdlib::Absolutepath $rdeck_home                    = $rundeck::params::rdeck_home,
+  Boolean $manage_home                                = $rundeck::params::manage_home,
   Optional[String] $rdeck_profile_template            = undef,
   String $realm_template                              = $rundeck::params::realm_template,
   Stdlib::HTTPUrl $repo_yum_source                    = $rundeck::params::repo_yum_source,

@@ -46,6 +46,7 @@ class rundeck::config {
   $rd_auditlevel                = $rundeck::rd_auditlevel
   $rdeck_config_template        = $rundeck::rdeck_config_template
   $rdeck_home                   = $rundeck::rdeck_home
+  $manage_home                  = $rundeck::manage_home
   $rdeck_profile_template       = $rundeck::rdeck_profile_template
   $realm_template               = $rundeck::realm_template
   $rss_enabled                  = $rundeck::rss_enabled
@@ -82,8 +83,12 @@ class rundeck::config {
 
   File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
 
-  file { $rdeck_home:
-    ensure  => directory,
+  if $manage_home {
+    file{ $rdeck_home:
+      ensure  => directory,
+    }
+  } elsif ! defined_with_params(File[$rdeck_home], {'ensure' => 'directory' }) {
+    fail('when rundeck::manage_home = false a file definition for the home directory must be included outside of this module.')
   }
 
   if $rundeck::sshkey_manage {
@@ -91,6 +96,7 @@ class rundeck::config {
       mode    => '0600',
     }
   }
+
 
   file { $rundeck::service_logs_dir:
     ensure  => directory,
