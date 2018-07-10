@@ -182,7 +182,7 @@ describe 'rundeck::config::resource_source', type: :define do
             'puppet_enterprise_metrics_interval' => 15,
             'puppet_enterprise_mapping_file' => '/var/local/resource-mapping.json',
             'puppet_enterprise_ssl_dir' => '/opt/rundeck/puppetmaster_ssl',
-            'puppet_enterprise_certificate_name' => 'snakeoil.localdomain',
+            'puppet_enterprise_certificate_name' => 'localhost.localdomain',
             'puppet_enterprise_node_query' => '["=", ["fact", "osfamily"], "RedHat"]',
             'puppet_enterprise_default_node_tag' => 'default_tag',
             'puppet_enterprise_tag_source' => 'source_tag'
@@ -196,7 +196,7 @@ describe 'rundeck::config::resource_source', type: :define do
           'resources.source.1.config.PROPERTY_METRICS_INTERVAL' => '15',
           'resources.source.1.config.PROPERTY_MAPPING_FILE' => '/var/local/resource-mapping.json',
           'resources.source.1.config.PROPERTY_PUPPETDB_SSL_DIR' => '/opt/rundeck/puppetmaster_ssl',
-          'puppet_enterprise_certificate_name' => 'snakeoil.localdomain',
+          'puppet_enterprise_certificate_name' => 'localhost.localdomain',
           'puppet_enterprise_node_query' => '["=", ["fact", "osfamily"], "RedHat"]',
           'puppet_enterprise_default_node_tag' => 'default_tag',
           'puppet_enterprise_tag_source' => 'source_tag'
