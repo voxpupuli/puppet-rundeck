@@ -196,10 +196,10 @@ describe 'rundeck::config::resource_source', type: :define do
           'resources.source.1.config.PROPERTY_METRICS_INTERVAL' => '15',
           'resources.source.1.config.PROPERTY_MAPPING_FILE' => '/var/local/resource-mapping.json',
           'resources.source.1.config.PROPERTY_PUPPETDB_SSL_DIR' => '/opt/rundeck/puppetmaster_ssl',
-          'puppet_enterprise_certificate_name' => 'localhost.localdomain',
-          'puppet_enterprise_node_query' => '["=", ["fact", "osfamily"], "RedHat"]',
-          'puppet_enterprise_default_node_tag' => 'default_tag',
-          'puppet_enterprise_tag_source' => 'source_tag'
+          'resources.source.1.config.PROPERTY_PUPPETDB_CERTIFICATE_NAME' => 'localhost.localdomain',
+          'resources.source.1.config.PROPERTY_NODE_QUERY' => '["=", ["fact", "osfamily"], "RedHat"]',
+          'resources.source.1.config.PROPERTY_DEFAULT_NODE_TAG' => 'default_tag',
+          'resources.source.1.config.PROPERTY_TAGS_SOURCE' => 'source_tag'
         }
 
         puppet_enterprise_details.each do |key, value|
