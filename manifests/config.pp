@@ -38,8 +38,8 @@ class rundeck::config {
   $overrides_dir                = $rundeck::overrides_dir
   $preauthenticated_config      = $rundeck::preauthenticated_config
   $projects                     = $rundeck::projects
-  $projects_description         = $rundeck::projects_default_desc
-  $projects_organization        = $rundeck::projects_default_org
+  $projects_description         = $rundeck::projects_description
+  $projects_organization        = $rundeck::projects_organization
   $projects_storage_type        = $rundeck::projects_storage_type
   $quartz_job_threadcount       = $rundeck::quartz_job_threadcount
   $rd_loglevel                  = $rundeck::rd_loglevel
