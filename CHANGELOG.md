@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.3.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.3.0) (2018-07-15)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.2.0...v5.3.0)
+
+**Implemented enhancements:**
+
+- allow more parameters to be managed for puppetenterprise [\#383](https://github.com/voxpupuli/puppet-rundeck/pull/383) ([smasa90](https://github.com/smasa90))
+
+**Fixed bugs:**
+
+- Fix default project attribute names [\#384](https://github.com/voxpupuli/puppet-rundeck/pull/384) ([jescholl](https://github.com/jescholl))
+
 ## [v5.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.2.0) (2018-06-17)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.1.0...v5.2.0)
