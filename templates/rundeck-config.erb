@@ -77,10 +77,18 @@ rundeck.storage.provider."1".path = "/"
 rundeck.security.authorization.preauthenticated.enabled = "<%= @preauthenticated_config['enabled']%>"
 rundeck.security.authorization.preauthenticated.attributeName = "<%= @preauthenticated_config['attributeName']%>"
 rundeck.security.authorization.preauthenticated.delimiter = "<%= @preauthenticated_config['delimiter']%>"
+<%- if @preauthenticated_config['userNameHeader'] -%>
 rundeck.security.authorization.preauthenticated.userNameHeader = "<%= @preauthenticated_config['userNameHeader']%>"
+<%- end -%>
+<%- if @preauthenticated_config['userRolesHeader'] -%>
 rundeck.security.authorization.preauthenticated.userRolesHeader = "<%= @preauthenticated_config['userRolesHeader']%>"
+<%- end -%>
+<%- if @preauthenticated_config['redirectLogout'] -%>
 rundeck.security.authorization.preauthenticated.redirectLogout = "<%= @preauthenticated_config['redirectLogout']%>"
+<%- end -%>
+<%- if @preauthenticated_config['redirectUrl'] -%>
 rundeck.security.authorization.preauthenticated.redirectUrl = "<%= @preauthenticated_config['redirectUrl']%>"
+<%- end -%>
 
 <%- @gui_config.sort.each do |k,v| -%>
 <%= k %> = "<%= v %>"
