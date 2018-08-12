@@ -7,14 +7,16 @@ describe 'rundeck class' do
       class { 'java':
         distribution => 'jre'
       }
-      class { 'rundeck': }
+      class { 'rundeck':
+        package_ensure => '2.9.4'
+      }
 
       Class['java'] -> Class['rundeck']
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      apply_manifest(pp, catch_failures: true, debug: true)
+      apply_manifest(pp, catch_changes: true, debug: true)
     end
 
     describe package('rundeck') do
@@ -30,6 +32,7 @@ describe 'rundeck class' do
     it 'applies successfully' do
       pp = <<-EOS
       class { 'rundeck':
+        package_ensure => '2.9.4',
         projects => {
           'Wizzle' => {},
         }
