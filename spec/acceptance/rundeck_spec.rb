@@ -7,7 +7,9 @@ describe 'rundeck class' do
       class { 'java':
         distribution => 'jre'
       }
-      class { 'rundeck': }
+      class { 'rundeck':
+        package_ensure => '2.9.4'
+      }
 
       Class['java'] -> Class['rundeck']
       EOS
@@ -30,6 +32,7 @@ describe 'rundeck class' do
     it 'applies successfully' do
       pp = <<-EOS
       class { 'rundeck':
+        package_ensure => '2.9.4',
         projects => {
           'Wizzle' => {},
         }
