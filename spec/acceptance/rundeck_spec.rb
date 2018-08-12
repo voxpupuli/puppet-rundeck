@@ -13,8 +13,8 @@ describe 'rundeck class' do
       EOS
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      apply_manifest(pp, catch_failures: true, debug: true)
+      apply_manifest(pp, catch_changes: true, debug: true)
     end
 
     describe package('rundeck') do
