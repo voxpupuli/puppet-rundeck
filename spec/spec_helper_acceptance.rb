@@ -10,8 +10,8 @@ install_module
 install_module_dependencies
 
 # Install additional modules for soft deps
-install_module_from_forge('puppetlabs-java', '>= 2.1.0 < 3.0.0')
-install_module_from_forge('puppetlabs-apt', '>= 4.1.0 < 5.0.0')
+install_module_from_forge('puppetlabs-java', '>= 2.1.0 < 4.0.0')
+install_module_from_forge('puppetlabs-apt', '>= 4.1.0 < 6.0.0')
 
 RSpec.configure do |c|
   c.formatter = :documentation
