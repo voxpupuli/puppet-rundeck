@@ -9,7 +9,7 @@
 #
 class rundeck::params {
   $package_name = 'rundeck'
-  $package_ensure = '2.11.5'
+  $package_ensure = 'installed'
   $service_name = 'rundeckd'
   $manage_repo = true
   $repo_yum_source = 'http://dl.bintray.com/rundeck/rundeck-rpm/'
