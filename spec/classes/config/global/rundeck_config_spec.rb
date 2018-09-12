@@ -80,7 +80,7 @@ describe 'rundeck' do
           rdeck.base = "/var/lib/rundeck"
           rss.enabled = "false"
           rundeck.log4j.config.file = "/etc/rundeck/log4j.properties"
-          
+
           rundeck.security.useHMacRequestTokens = true
           rundeck.security.apiCookieAccess.enabled = true
 
