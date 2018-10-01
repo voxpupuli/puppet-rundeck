@@ -9,6 +9,7 @@ describe 'rundeck::config::securityroles', type: :define do
         let(:title) { 'source one' }
         let(:params) do
           {
+            'package_ensure'               => '2.11.5',
             'security_roles_array_enabled' => true
           }
         end
