@@ -41,7 +41,7 @@ class rundeck::params {
   $rdeck_uuid = $facts['serialnumber'] ? {
     '0'     => fqdn_uuid($::fqdn),
     undef   => fqdn_uuid($::fqdn),
-    default => $facts['serialnumber'],
+    default => fqdn_uuid(String($facts['serialnumber'])),
   }
 
   $framework_config = {
