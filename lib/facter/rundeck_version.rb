@@ -6,11 +6,21 @@
 #
 # Caveats: not well tested
 #
-Facter.add(:rundeck_version) do
-  setcode do
-    if Facter::Util::Resolution.which('rd-acl')
-      rd_acl_help = Facter::Util::Resolution.exec('rd-acl -h')
-      %r{^\[RUNDECK version ([\w\.]+) \(([\w]+)\)\]}.match(rd_acl_help)[1]
+if Facter::Util::Resolution.which('rd-acl')
+  rd_acl_help = Facter::Util::Resolution.exec('rd-acl -h')
+  pattern = %r{^\[RUNDECK version (?<rd_ver>[\w\.]+)\-?(?<rd_commitid>[\w]*) \(([\w]+)\)\]}
+
+  pattern.match( rd_acl_help ) { |m|
+    Facter.add( "rundeck_version" ) do
+      setcode do
+        m[:rd_ver]
+      end
     end
-  end
+    Facter.add( "rundeck_commitid" ) do
+      setcode do
+        m[:rd_commitid]
+      end
+    end
+  }
+
 end
