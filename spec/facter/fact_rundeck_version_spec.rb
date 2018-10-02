@@ -5,10 +5,8 @@ describe Facter::Util::Fact do
 
   context 'no rundeck installed | no rd-acl in path' do
     before { allow(Facter::Util::Resolution).to receive('which').with('rd-acl') { false } }
-    it do
-      expect(Facter.fact('rundeck_version')).to eq(nil)
-      expect(Facter.fact('rundeck_commitid')).to eq(nil)
-    end
+    it { expect(Facter.fact('rundeck_version')).to eq(nil) }
+    it { expect(Facter.fact('rundeck_commitid')).to eq(nil) }
   end
 
   context 'rundeck installed | rd-acl in path with current output format' do
@@ -19,10 +17,8 @@ describe Facter::Util::Fact do
       end
     end
 
-    it do
-      expect(Facter.fact('rundeck_version').value).to eq('3.0.6')
-      expect(Facter.fact('rundeck_commitid').value).to eq('20180917')
-    end
+    it { expect(Facter.fact('rundeck_version').value).to eq('3.0.6') }
+    it { expect(Facter.fact('rundeck_commitid').value).to eq('20180917') }
   end
 
   context 'rundeck installed | rd-acl in path with old output format' do
@@ -32,11 +28,8 @@ describe Facter::Util::Fact do
         '[RUNDECK version 2.0.0 (0)]'
       end
     end
-    
-    it do
-      expect(Facter.fact('rundeck_version').value).to eq('2.0.0')
-      expect(Facter.fact('rundeck_commitid').value).to eq('')
-    end
-  end
 
+    it { expect(Facter.fact('rundeck_version').value).to eq('2.0.0') }
+    it { expect(Facter.fact('rundeck_commitid').value).to eq('') }
+  end
 end
