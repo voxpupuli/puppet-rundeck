@@ -1,11 +1,8 @@
-# Fact: rundeck_version
+# Facts: rundeck_version, rundeck_commitid
 #
-# Purpose: Retrieve rundeck version if installed
+# Purpose: Retrieve rundeck version and commitid if installed
 #
-# Resolution:
-#
-# Caveats: not well tested
-#
+
 if Facter::Util::Resolution.which('rd-acl')
   rd_acl_help = Facter::Util::Resolution.exec('rd-acl -h')
   pattern = %r{^\[RUNDECK version (?<rd_ver>[\w\.]+)\-?(?<rd_commitid>[\w]*) \(([\w]+)\)\]}
