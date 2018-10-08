@@ -38,12 +38,6 @@ class rundeck::params {
   $manage_home = true
   $service_logs_dir = '/var/log/rundeck'
 
-  $rdeck_uuid = $facts['serialnumber'] ? {
-    '0'     => fqdn_uuid($::fqdn),
-    undef   => fqdn_uuid($::fqdn),
-    default => fqdn_uuid(String($facts['serialnumber'])),
-  }
-
   $framework_config = {
     'framework.server.name'     => $::fqdn,
     'framework.server.hostname' => $::fqdn,
@@ -61,7 +55,7 @@ class rundeck::params {
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
     'framework.ssh.user'        => 'rundeck',
     'framework.ssh.timeout'     => '0',
-    'rundeck.server.uuid'       => $rdeck_uuid,
+    'rundeck.server.uuid'       => fqdn_uuid($::fqdn),
   }
 
   $auth_types = ['file']
