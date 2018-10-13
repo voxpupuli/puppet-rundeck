@@ -6,5 +6,3 @@ fixtures:
     dirtree: "https://github.com/puppetlabs/pltraining-dirtree.git"
     java_ks: "https://github.com/puppetlabs/puppetlabs-java_ks.git"
     apt: "https://github.com/puppetlabs/puppetlabs-apt.git"
-  symlinks:
-    rundeck: "#{source_dir}"
