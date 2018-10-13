@@ -6,3 +6,6 @@ fixtures:
     dirtree: "https://github.com/puppetlabs/pltraining-dirtree.git"
     java_ks: "https://github.com/puppetlabs/puppetlabs-java_ks.git"
     apt: "https://github.com/puppetlabs/puppetlabs-apt.git"
+    yumrepo_core:
+      repo: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git
+      puppet_version: ">= 6.0.0"
