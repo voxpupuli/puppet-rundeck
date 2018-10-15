@@ -18,7 +18,7 @@ class rundeck::params {
   $repo_apt_key_id = '8756C4F765C9AC3CB6B85D62379CE192D401AB61'
   $repo_apt_keyserver = 'keyserver.ubuntu.com'
 
-  case $::osfamily {
+  case $facts['osfamily'] {
     'Debian': {
       $overrides_dir = '/etc/default'
     }
@@ -39,10 +39,10 @@ class rundeck::params {
   $service_logs_dir = '/var/log/rundeck'
 
   $framework_config = {
-    'framework.server.name'     => $::fqdn,
-    'framework.server.hostname' => $::fqdn,
+    'framework.server.name'     => $facts['fqdn'],
+    'framework.server.hostname' => $facts['fqdn'],
     'framework.server.port'     => '4440',
-    'framework.server.url'      => "http://${::fqdn}:4440",
+    'framework.server.url'      => "http://${facts['fqdn']}:4440",
     'framework.server.username' => 'admin',
     'framework.server.password' => 'admin',
     'rdeck.base'                => '/var/lib/rundeck',
@@ -55,7 +55,7 @@ class rundeck::params {
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
     'framework.ssh.user'        => 'rundeck',
     'framework.ssh.timeout'     => '0',
-    'rundeck.server.uuid'       => fqdn_uuid($::fqdn),
+    'rundeck.server.uuid'       => fqdn_uuid($facts['fqdn']),
   }
 
   $auth_types = ['file']
@@ -258,7 +258,7 @@ class rundeck::params {
 
   $clustermode_enabled = false
 
-  $grails_server_url = "http://${::fqdn}:4440"
+  $grails_server_url = "http://${facts['fqdn']}:4440"
 
   $database_config = {
     'type'            => 'h2',

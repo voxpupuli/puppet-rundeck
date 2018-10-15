@@ -55,7 +55,7 @@ class rundeck::install {
     }
   }
 
-  case $::osfamily {
+  case $facts['osfamily'] {
     'RedHat': {
       if $manage_repo {
         yumrepo { 'bintray-rundeck':
