@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.4.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.4.0) (2018-10-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.3.1...v5.4.0)
+
+**Implemented enhancements:**
+
+- Add support for rundeck 3.x [\#400](https://github.com/voxpupuli/puppet-rundeck/pull/400) ([smasa90](https://github.com/smasa90))
+
+**Fixed bugs:**
+
+- Fix PR \#392 + added rundeck\_commitid fact [\#402](https://github.com/voxpupuli/puppet-rundeck/pull/402) ([smasa90](https://github.com/smasa90))
+
+**Merged pull requests:**
+
+- modulesync 2.2.0 and allow puppet 6.x [\#403](https://github.com/voxpupuli/puppet-rundeck/pull/403) ([bastelfreak](https://github.com/bastelfreak))
+- allow puppetlabs/stdlib 5.x and puppetlabs/apt 5.x [\#397](https://github.com/voxpupuli/puppet-rundeck/pull/397) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v5.3.1](https://github.com/voxpupuli/puppet-rundeck/tree/v5.3.1) (2018-08-20)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.3.0...v5.3.1)
