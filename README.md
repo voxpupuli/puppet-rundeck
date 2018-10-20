@@ -105,8 +105,8 @@ How to: eg: environments/role/manifests/rundeck.pp
 
 class role::rundeck (
 ...
-  $ssl_keyfile                        = hiera('rundeck::config::ssl_keyfile', "/etc/rundeck/ssl/$fqdn.key"),
-  $ssl_certfile                       = hiera('rundeck::config::ssl_certfile', "/etc/rundeck/ssl/$fqdn.crt"),
+  $ssl_keyfile                        = hiera('rundeck::config::ssl_keyfile', "/etc/rundeck/ssl/${facts['fqdn']}.key"),
+  $ssl_certfile                       = hiera('rundeck::config::ssl_certfile', "/etc/rundeck/ssl/${facts['fqdn']}.crt"),
 ..
 ){
 ...
