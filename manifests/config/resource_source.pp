@@ -9,6 +9,8 @@
 #
 # === Parameters
 #
+# [*assume_role_arn*]
+#   When using the aws-ec2 source_type, this specifies the assume role ARN parameter.
 # [*directory*]
 #   When the directory source_type is specified this is the path to that directory.
 #
@@ -93,6 +95,7 @@ define rundeck::config::resource_source(
   Integer $url_timeout                                           = $rundeck::params::url_timeout,
   Boolean $use_default_mapping                                   = true,
   Optional[String] $endpoint_url                                 = undef,
+  Optional[String[1]] $assume_role_arn                           = undef,
   String $filter_tag                                             = '',
   Integer $http_proxy_port                                       = $rundeck::params::default_http_proxy_port,
   Integer $refresh_interval                                      = $rundeck::params::default_refresh_interval,
@@ -331,6 +334,14 @@ define rundeck::config::resource_source(
         section => '',
         setting => "resources.source.${number}.config.endpoint",
         value   => $endpoint_url,
+        require => File[$properties_file],
+      }
+      ini_setting { "${name}::resources.source.${number}.config.assumeRoleArn":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.assumeRoleArn",
+        value   => $assume_role_arn,
         require => File[$properties_file],
       }
       ini_setting { "${name}::resources.source.${number}.config.filter":
