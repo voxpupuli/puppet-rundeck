@@ -263,7 +263,7 @@ class rundeck (
   Enum['stopped', 'running'] $service_ensure          = $rundeck::params::service_ensure,
   Integer $session_timeout                            = $rundeck::params::session_timeout,
   Boolean $ssl_enabled                                = $rundeck::params::ssl_enabled,
-  Integer $ssl_port                                   = $rundeck::params::ssl_port,
+  Stdlib::Port $ssl_port                              = $rundeck::params::ssl_port,
   Stdlib::Absolutepath $truststore                    = $rundeck::params::truststore,
   String $truststore_password                         = $rundeck::params::truststore_password,
   String $user                                        = $rundeck::params::user,
