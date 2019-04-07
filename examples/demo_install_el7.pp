@@ -12,9 +12,9 @@
 # - Login with admin/admin
 #
 
-include ::java
-include ::rundeck
-include ::firewalld
+include java
+include rundeck
+include firewalld
 
 firewalld_port { 'Rundeck HTTP port':
   ensure   => present,

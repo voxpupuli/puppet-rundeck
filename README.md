@@ -247,7 +247,7 @@ Array value if you want to have more role in web.xml
 
 ##### `manage_repo`
 
-Whether to manage the bintray YUM/APT repository containing the Rundeck rpm/deb. Defaults to true. 
+Whether to manage the bintray YUM/APT repository containing the Rundeck rpm/deb. Defaults to true.
 
 ##### `manage_group`
 

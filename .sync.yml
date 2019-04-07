@@ -12,6 +12,3 @@
   AllCops:
     Exclude:
       - files/**/* 
-spec/spec_helper.rb:
-  mock_with: ':rspec'
-
