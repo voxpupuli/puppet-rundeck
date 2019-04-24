@@ -10,7 +10,7 @@ rundeck.security.useHMacRequestTokens = <%= @security_config['useHMacRequestToke
 rundeck.security.apiCookieAccess.enabled = <%= @security_config['apiCookieAccess'] %>
 <%- end -%>
 <%- if @security_config.key?('apiTokensDuration') -%>
-rundeck.api.tokens.duration.max = <%= @security_config['apiTokensDuration'] %>
+rundeck.api.tokens.duration.max = "<%= @security_config['apiTokensDuration'] %>"
 <%- end -%>
 <%- if @security_config.key?('csrfRefererFilterMethod') -%>
 rundeck.security.csrf.referer.filterMethod = <%= @security_config['csrfRefererFilterMethod'] %>
