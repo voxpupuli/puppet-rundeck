@@ -25,6 +25,11 @@ provider_url =
   userRdnAttribute="<%= @auth_config['active_directory']['user_rdn_attribute'] %>"
   userIdAttribute="<%= @auth_config['active_directory']['user_id_attribute'] %>"
   userPasswordAttribute="<%= @auth_config['active_directory']['user_password_attribute'] %>"
+  <%- if @auth_config['active_directory']['sync_ldap_attributes'] -%>
+  userFirstNameAttribute="<%= @auth_config['active_directory']['sync_first_name_attribute'] %>"
+  userLastNameAttribute="<%= @auth_config['active_directory']['sync_last_name_attribute'] %>"
+  userEmailAttribute="<%= @auth_config['active_directory']['sync_email_attribute'] %>"
+  <%- end -%>
   userObjectClass="<%= @auth_config['active_directory']['user_object_class'] %>"
   roleBaseDn="<%= @auth_config['active_directory']['role_base_dn'] %>"
   roleNameAttribute="<%= @auth_config['active_directory']['role_name_attribute'] %>"
