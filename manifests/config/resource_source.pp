@@ -112,7 +112,7 @@ define rundeck::config::resource_source(
 
   include rundeck
 
-  $framework_properties = deep_merge($rundeck::params::framework_config, $::rundeck::framework_config)
+  $framework_properties = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
 
   $projects_dir = $framework_properties['framework.projects.dir']
   $user = $rundeck::user
