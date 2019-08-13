@@ -65,11 +65,11 @@ class rundeck::install {
           gpgcheck => '1',
           gpgkey   => $repo_yum_gpgkey,
           priority => '1',
-          before   => Package['rundeck', 'rundeck-config'],
+          before   => Package['rundeck'],
         }
       }
 
-      ensure_packages(['rundeck', 'rundeck-config'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
+      ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'] } )
     }
     'Debian': {
       if $manage_repo {
