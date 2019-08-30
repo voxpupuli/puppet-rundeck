@@ -10,8 +10,8 @@ describe 'rundeck' do
     }
   end
 
-  context 'rundeck version prior 3.x with empty params' do
-    let(:params) { { package_ensure: '2.11.5' } }
+  context 'rundeck with empty params' do
+    let(:params) { { package_ensure: 'latest' } }
 
     it 'generates augeas resource with default security_role' do
       is_expected.to contain_augeas('rundeck/web.xml/security-role/role-name'). \
@@ -19,8 +19,8 @@ describe 'rundeck' do
     end
   end
 
-  context 'rundeck version prior 3.x with security_role param' do
-    let(:params) { { package_ensure: '2.11.5', security_role: 'superduper' } }
+  context 'rundeck with security_role param' do
+    let(:params) { { package_ensure: 'latest', security_role: 'superduper' } }
 
     it 'generates augeas resource with specified security_role' do
       is_expected.to contain_augeas('rundeck/web.xml/security-role/role-name'). \
@@ -28,8 +28,8 @@ describe 'rundeck' do
     end
   end
 
-  context 'rundeck version prior 3.x with session_timeout param' do
-    let(:params) { { package_ensure: '2.11.5', session_timeout: 60 } }
+  context 'rundeck with session_timeout param' do
+    let(:params) { { package_ensure: 'latest', session_timeout: 60 } }
 
     it 'generates augeas resource with specified session_timeout' do
       is_expected.to contain_augeas('rundeck/web.xml/session-config/session-timeout'). \
