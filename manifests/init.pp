@@ -272,6 +272,7 @@ class rundeck (
   Boolean $manage_group                               = $rundeck::params::manage_group,
   Optional[Integer] $user_id                          = undef,
   Optional[Integer] $group_id                         = undef,
+  String $file_default_mode                           = $rundeck::params::file_default_mode,
   Boolean $security_roles_array_enabled               = $rundeck::params::security_roles_array_enabled,
   Array $security_roles_array                         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
