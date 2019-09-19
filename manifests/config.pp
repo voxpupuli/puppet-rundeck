@@ -19,6 +19,7 @@ class rundeck::config {
   $clustermode_enabled          = $rundeck::clustermode_enabled
   $database_config              = $rundeck::database_config
   $execution_mode               = $rundeck::execution_mode
+  $file_default_mode            = $rundeck::file_default_mode
   $file_keystorage_dir          = $rundeck::file_keystorage_dir
   $file_keystorage_keys         = $rundeck::file_keystorage_keys
   $grails_server_url            = $rundeck::grails_server_url
@@ -70,7 +71,7 @@ class rundeck::config {
   File {
     owner  => $user,
     group  => $group,
-    mode   => '0640',
+    mode   => $file_default_mode,
   }
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)

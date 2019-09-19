@@ -8,7 +8,7 @@ describe 'rundeck class' do
         distribution => 'jre'
       }
       class { 'rundeck':
-        package_ensure => '2.11.5'
+        package_ensure => 'latest'
       }
 
       Class['java'] -> Class['rundeck']

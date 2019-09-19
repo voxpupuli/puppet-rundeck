@@ -260,6 +260,7 @@ class rundeck::params {
 
   $user = 'rundeck'
   $group = 'rundeck'
+  $file_default_mode = '0640'
 
   $loglevel = 'INFO'
   $rss_enabled = false

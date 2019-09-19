@@ -24,6 +24,40 @@
 
 The rundeck puppet module for installing and managing [Rundeck](http://rundeck.org/)
 
+
+### Supported Versions of Rundeck
+
+| Rundeck Version  | Rundeck Puppet module versions |
+| ---------------- | -------------------------------|
+| 2.x - 3.0.X      | v5.4.0 and older               |
+| 3.1 - up         | future v6.0                    |
+
+Since [Rundeck v3.1](https://docs.rundeck.com/docs/upgrading/upgrade-to-rundeck-3.1.html),
+it is not required the installtion of `rundeck-config` package for RHEL based distributions anymore.
+
+Rundeck Team decided to mark this package _obsolete_, making it difficult to maintain
+backwards compatibility with releases older than 3.1.
+
+Trying to install any version prior to 3.1.0 will throw the following error message:
+```
+Resolving Dependencies
+--> Running transaction check
+---> Package rundeck.noarch 0:2.11.5-1.56.GA will be installed
+--> Processing Dependency: rundeck-config for package: rundeck-2.11.5-1.56.GA.noarch
+Package rundeck-config is obsoleted by rundeck, but obsoleting package does not provide for requirements
+...
+```
+
+If you need to downgrade and/or install a specific version of Rundeck older than 3.1.0, you can still use this module
+to do it (v5.4.0 and prior), although you would need to [manually install the packages](https://github.com/rundeck/rundeck/issues/5168) disabling yum's obsoletes processing logic when performing updates.
+
+Ex:
+```
+yum reinstall --setopt=obsoletes=0 rundeck-config-3.0.24.20190719-1.201907192053 rundeck-3.0.24.20190719-1.201907192053
+```
+
+The latest version of this puppet module only supports Rundeck 3.1 and up.
+
 ## Module Description
 
 This module provides a way to manage the installation and configuration of
