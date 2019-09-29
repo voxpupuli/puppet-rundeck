@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v6.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v6.0.0) (2019-09-29)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.4.0...v6.0.0)
+
+**Breaking changes:**
+
+- Rundeck 3.1 does not require rundeck-config package anymore [\#422](https://github.com/voxpupuli/puppet-rundeck/pull/422) ([danifr](https://github.com/danifr))
+- modulesync 2.7.0 and drop puppet 4 [\#412](https://github.com/voxpupuli/puppet-rundeck/pull/412) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Support inifile 2.0.0 or above [\#387](https://github.com/voxpupuli/puppet-rundeck/issues/387)
+- Add assume\_role\_arn for aws-ec2 resource source [\#410](https://github.com/voxpupuli/puppet-rundeck/pull/410) ([jarro2783](https://github.com/jarro2783))
+- Turn serialnumber into UUID [\#401](https://github.com/voxpupuli/puppet-rundeck/pull/401) ([jescholl](https://github.com/jescholl))
+
+**Fixed bugs:**
+
+- Support for Rundeck 3.1 [\#419](https://github.com/voxpupuli/puppet-rundeck/issues/419)
+- groupdel: cannot remove the primary group of user 'rundeck' [\#199](https://github.com/voxpupuli/puppet-rundeck/issues/199)
+
+**Merged pull requests:**
+
+- Token duration must be a string [\#424](https://github.com/voxpupuli/puppet-rundeck/pull/424) ([danifr](https://github.com/danifr))
+- Allow setting different default file mode [\#421](https://github.com/voxpupuli/puppet-rundeck/pull/421) ([philippeganz](https://github.com/philippeganz))
+- modulesync 2.8.0 [\#417](https://github.com/voxpupuli/puppet-rundeck/pull/417) ([bastelfreak](https://github.com/bastelfreak))
+- Allow `puppetlabs/stdlib` 6.x and `puppet/archive` 4.x [\#415](https://github.com/voxpupuli/puppet-rundeck/pull/415) ([alexjfisher](https://github.com/alexjfisher))
+- Allow puppetlabs/inifile 3.x [\#414](https://github.com/voxpupuli/puppet-rundeck/pull/414) ([dhoppe](https://github.com/dhoppe))
+- Update minimum stdlib version and use Stdlib::Port; require stdlib 4.25.0 instead of 4.21.0 [\#411](https://github.com/voxpupuli/puppet-rundeck/pull/411) ([alexjfisher](https://github.com/alexjfisher))
+
 ## [v5.4.0](https://github.com/voxpupuli/puppet-rundeck/tree/v5.4.0) (2018-10-18)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v5.3.1...v5.4.0)

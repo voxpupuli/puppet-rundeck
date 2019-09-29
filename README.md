@@ -30,7 +30,7 @@ The rundeck puppet module for installing and managing [Rundeck](http://rundeck.o
 | Rundeck Version  | Rundeck Puppet module versions |
 | ---------------- | -------------------------------|
 | 2.x - 3.0.X      | v5.4.0 and older               |
-| 3.1 - up         | future v6.0                    |
+| 3.1 - up         | v6.0.0 and newer               |
 
 Since [Rundeck v3.1](https://docs.rundeck.com/docs/upgrading/upgrade-to-rundeck-3.1.html),
 it is not required the installtion of `rundeck-config` package for RHEL based distributions anymore.
