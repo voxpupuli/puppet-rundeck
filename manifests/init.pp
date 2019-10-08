@@ -20,6 +20,9 @@
 # [*clustermode_enabled*]
 #  Boolean value if set to true enables cluster mode
 #
+# [*webhooks_enabled*]
+#  Boolean value if set to true enable webhooks functionality
+#
 # [*execution_mode*]
 #  If set, allows setting the execution mode to 'active' or 'passive'.
 #
@@ -211,6 +214,7 @@ class rundeck (
   String $auth_template                               = $rundeck::params::auth_template,
   Array $auth_types                                   = $rundeck::params::auth_types,
   Boolean $clustermode_enabled                        = $rundeck::params::clustermode_enabled,
+  Boolean $webhooks_enabled                           = $rundeck::params::webhooks_enabled,
   Hash $database_config                               = $rundeck::params::database_config,
   Optional[Enum['active', 'passive']] $execution_mode = undef,
   Stdlib::Absolutepath $file_keystorage_dir           = $rundeck::params::file_keystorage_dir,

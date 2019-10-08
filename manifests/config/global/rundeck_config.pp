@@ -26,6 +26,7 @@ class rundeck::config::global::rundeck_config {
   $rdeck_base              = $rundeck::config::rdeck_base
   $rdeck_config_template   = $rundeck::config::rdeck_config_template
   $rss_enabled             = $rundeck::config::rss_enabled
+  $webhooks_enabled        = $rundeck::config::webhooks_enabled
   $security_config         = $rundeck::config::security_config
   $user                    = $rundeck::config::user
 

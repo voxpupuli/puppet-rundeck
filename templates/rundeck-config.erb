@@ -62,6 +62,9 @@ rundeck.clusterMode.enabled = "<%= @clustermode_enabled %>"
 <%- if @execution_mode -%>
 rundeck.executionMode = "<%= @execution_mode %>"
 <%- end -%>
+<%- if @webhooks_enabled -%>
+rundeck.feature.webhooks.enabled= "<%= @webhooks_enabled %>"
+<%- end -%>
 
 rundeck.projectsStorageType = "<%= @projects_storage_type %>"
 quartz.props.threadPool.threadCount = "<%= @quartz_job_threadcount %>"

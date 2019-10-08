@@ -52,6 +52,7 @@ class rundeck::config {
   $rdeck_profile_template       = $rundeck::rdeck_profile_template
   $realm_template               = $rundeck::realm_template
   $rss_enabled                  = $rundeck::rss_enabled
+  $webhooks_enabled             = $rundeck::webhooks_enabled
   $security_config              = $rundeck::security_config
   $security_role                = $rundeck::security_role
   $server_web_context           = $rundeck::server_web_context

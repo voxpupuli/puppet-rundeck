@@ -259,6 +259,8 @@ class rundeck::params {
 
   $clustermode_enabled = false
 
+  $webhooks_enabled = false
+
   $grails_server_url = "http://${facts['fqdn']}:4440"
 
   $database_config = {
