@@ -284,6 +284,7 @@ class rundeck::params {
 
   $resource_sources = {}
   $gui_config = {}
+  $storage_converter = {}
 
   $preauthenticated_config = {
     'enabled'         => false,
