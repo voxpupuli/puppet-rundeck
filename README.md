@@ -295,9 +295,42 @@ Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
 
 Whether to create the `rundeck_home` directory. Defaults to true.
 
+##### `keystorage_type`
+
+Which keystorage type should be used:
+
+* file - Default file based keystorage
+* db - Use DB as keystorage
+* vault - Use Hashicorp Vault
+  - An additional [Rundeck Vault plugin](https://github.com/rundeck-plugins/vault-storage/) is required.
+
 ##### `file_keystorage_dir`
 
 The location of stored data like public keys, private keys.
+
+##### `vault_keystorage_prefix`
+
+The prefix for the Hashicorp Vault keys. See [here](https://github.com/rundeck-plugins/vault-storage) for more information.
+
+##### `vault_keystorage_url`
+
+The URL for the Hashicorp Vault service
+
+##### `vault_keystorage_approle_approleid`
+
+The AppRole ID for the Hashicorp Vault access
+
+##### `vault_keystorage_approle_secretid`
+
+The Secret ID for the Hashicorp Vault access. Please note, that the Vault plugin isn't able to refresh the SecretID while running. You have to add a Cron job, to restart Rundeck. See [here](https://github.com/rundeck-plugins/vault-storage/issues/15#issuecomment-512815828) for more information.
+
+##### `vault_keystorage_approle_authmount`
+
+The AppRole Authmount for the Hashicorp Vault access
+
+##### `vault_keystorage_authbackend`
+
+The AuthBackend for the Hashicorp Vault, which should used
 
 #### Define: `rundeck::config::aclpolicyfile`
 

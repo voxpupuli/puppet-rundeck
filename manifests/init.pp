@@ -71,7 +71,7 @@
 #  The default key password.
 #
 # [*key_storage_type*]
-#  Type used to store secrets. Must be 'file' or 'db'
+#  Type used to store secrets. Must be 'file', 'db' or 'vault'
 #
 # [*keystore*]
 #  Full path to the java keystore to be used by Rundeck.
@@ -222,8 +222,14 @@ class rundeck (
   String $jvm_args                                    = $rundeck::params::jvm_args,
   Hash $kerberos_realms                               = $rundeck::params::kerberos_realms,
   String $key_password                                = $rundeck::params::key_password,
-  Enum['db', 'file'] $key_storage_type                = $rundeck::params::key_storage_type,
+  Enum['db', 'file', 'vault'] $key_storage_type       = $rundeck::params::key_storage_type,
   Stdlib::Absolutepath $keystore                      = $rundeck::params::keystore,
+  String $vault_keystorage_prefix                     = $rundeck::params::vault_keystorage_prefix,
+  String $vault_keystorage_url                        = $rundeck::params::vault_keystorage_url,
+  String $vault_keystorage_approle_approleid          = $rundeck::params::keystorage_approle_approleid,
+  String $vault_keystorage_approle_secretid           = $rundeck::params::keystorage_approle_secretid,
+  String $vault_keystorage_approle_authmount          = $rundeck::params::vault_keystorage_approle_authmount,
+  String $vault_keystorage_authbackend                = $rundeck::params::vault_keystorage_authbackend,
   String $keystore_password                           = $rundeck::params::keystore_password,
   String $log_properties_template                     = $rundeck::params::log_properties_template,
   Hash $mail_config                                   = $rundeck::params::mail_config,
