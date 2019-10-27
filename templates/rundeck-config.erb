@@ -69,6 +69,18 @@ quartz.props.threadPool.threadCount = "<%= @quartz_job_threadcount %>"
 <%- if @key_storage_type == 'file' -%>
 rundeck.storage.provider."1".type = "file"
 rundeck.storage.provider."1".config.baseDir = "<%= @file_keystorage_dir %>"
+<%- elsif @key_storage_type == 'vault' -%>
+rundeck.storage.provider."1".type = "vault-storage"
+rundeck.storage.provider."1".path = "keys"
+rundeck.storage.provider."1".config.prefix = "<%= @vault_keystorage_prefix %>"
+rundeck.storage.provider."1".config.address = "<%= @vault_keystorage_url %>"
+rundeck.storage.provider."1".config.storageBehaviour = "rundeck"
+rundeck.storage.provider."1".config.secretBackend = "kv"
+rundeck.storage.provider."1".config.approleId = "<%= @vault_keystorage_approle_approleid %>"
+rundeck.storage.provider."1".config.approleSecretId = "<%= @vault_keystorage_approle_secretid %>"
+rundeck.storage.provider."1".config.approleAuthMount = "<%= @vault_keystorage_approle_authmount %>"
+rundeck.storage.provider."1".config.authBackend = "<%= @vault_keystorage_authbackend %>"
+rundeck.storage.provider."1".removePathPrefix = true
 <%- else -%>
 rundeck.storage.provider."1".type = "db"
 <%- end -%>
