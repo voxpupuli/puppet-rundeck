@@ -21,6 +21,9 @@ rundeck.security.csrf.referer.allowApi = <%= @security_config['csrfRefererAllowA
 <%- if @security_config.key?('csrfRefererRequireHttps') -%>
 rundeck.security.csrf.referer.requireHttps = <%= @security_config['csrfRefererRequireHttps'] %>
 <%- end -%>
+<%- if @auth_config['ldap']['sync_ldap_attributes'] or @auth_config['active_directory']['sync_ldap_attributes'] -%>
+rundeck.security.syncLdapUser=true
+<%- end -%>
 
 dataSource {
   dbCreate = "<%= @database_config['dbCreate'] %>"

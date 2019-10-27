@@ -28,6 +28,7 @@ class rundeck::config::global::rundeck_config {
   $rss_enabled             = $rundeck::config::rss_enabled
   $security_config         = $rundeck::config::security_config
   $user                    = $rundeck::config::user
+  $auth_config             = $rundeck::config::auth_config
 
   $properties_file = "${properties_dir}/rundeck-config.groovy"
 

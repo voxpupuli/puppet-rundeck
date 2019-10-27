@@ -27,6 +27,11 @@ provider_url =
   userRdnAttribute="<%= @auth_config['ldap']['user_rdn_attribute'] %>"
   userIdAttribute="<%= @auth_config['ldap']['user_id_attribute'] %>"
   userPasswordAttribute="<%= @auth_config['ldap']['user_password_attribute'] %>"
+<%- if @auth_config['ldap']['sync_ldap_attributes'] -%>
+  userFirstNameAttribute="<%= @auth_config['ldap']['sync_first_name_attribute'] %>"
+  userLastNameAttribute="<%= @auth_config['ldap']['sync_last_name_attribute'] %>"
+  userEmailAttribute="<%= @auth_config['ldap']['sync_email_attribute'] %>"
+<%- end -%>
   userObjectClass="<%= @auth_config['ldap']['user_object_class'] %>"
 <%- if @auth_config['ldap']['role_prefix'] -%>
   rolePrefix="<%= @auth_config['ldap']['role_prefix'] %>"
