@@ -224,7 +224,7 @@ class rundeck (
   String $key_password                                          = $rundeck::params::key_password,
   Enum['db', 'file', 'vault'] $key_storage_type                 = $rundeck::params::key_storage_type,
   Stdlib::Absolutepath $keystore                                = $rundeck::params::keystore,
-  Optional[Stdlib::HTTPSUrl $vault_keystorage_url]              = undef,
+  Optional[Stdlib::HTTPSUrl] $vault_keystorage_url              = undef,
   Optional[String[1]] $vault_keystorage_prefix                  = undef,
   Optional[String[1]] $vault_keystorage_approle_approleid       = undef,
   Optional[String[1]] $vault_keystorage_approle_secretid        = undef,
