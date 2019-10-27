@@ -316,13 +316,6 @@ class rundeck::params {
   $file_keystorage_keys = { }
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"
 
-  $vault_keystorage_prefix = undef
-  $vault_keystorage_url = undef
-  $vault_keystorage_approle_approleid = undef
-  $vault_keystorage_approle_secretid = undef
-  $vault_keystorage_approle_authmount = undef
-  $vault_keystorage_authbackend  = undef
-
   $manage_default_admin_policy = true
   $manage_default_api_policy   = true
 
