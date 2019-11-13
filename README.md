@@ -560,9 +560,9 @@ class { 'rundeck':
 
 This module is tested on the following platforms:
 
+* Debian 8
 * CentOS 6
 * CentOS 7
-* Ubuntu 14.04
 * Ubuntu 16.04
 
 It is tested with the OSS version of Puppet only.
