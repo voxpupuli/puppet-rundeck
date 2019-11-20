@@ -64,7 +64,7 @@ rundeck.executionMode = "<%= @execution_mode %>"
 <%- end -%>
 
 rundeck.projectsStorageType = "<%= @projects_storage_type %>"
-quartz.props.threadPool.threadCount = "<%= @quartz_job_threadcount %>"
+quartz.threadPool.threadCount = "<%= @quartz_job_threadcount %>"
 
 <%- if @key_storage_type == 'file' -%>
 rundeck.storage.provider."1".type = "file"
