@@ -123,6 +123,21 @@ describe 'rundeck' do
 
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.executionMode = "passive"}) }
       end
+
+      describe "rundeck::config::global::rundeck_config class with key storage encryption on #{os}" do
+        storage_encrypt_config_hash = {
+          'type'                  => 'thetype',
+          'path'                  => '/storagepath',
+          'config.encryptionType' => 'basic',
+          'config.password'       => 'verysecure'
+        }
+        let(:params) { { storage_encrypt_config: storage_encrypt_config_hash } }
+
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.type = "thetype"}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.path = "/storagepath"}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.config\.encryptionType = "basic"}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.config\.password = "verysecure"}) }
+      end
     end
   end
 end

@@ -68,6 +68,7 @@ class rundeck::config {
   $ssl_port                           = $rundeck::ssl_port
   $ssl_keyfile                        = $rundeck::ssl_keyfile
   $ssl_certfile                       = $rundeck::ssl_certfile
+  $storage_encrypt_config             = $rundeck::storage_encrypt_config
   $truststore                         = $rundeck::truststore
   $truststore_password                = $rundeck::truststore_password
   $user                               = $rundeck::user

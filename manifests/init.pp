@@ -202,6 +202,15 @@
 #  $security_roles_array_enabled = hiera('rundeck::config::global::web::security_roles_array_enabled', true),
 #  $security_roles_array         = hiera('rundeck::config::global::web::security_roles_array', []),
 #
+# [*storage_encrypt_config*]
+# Hash containing the necessary values to configure a plugin for
+# key storage encryption. Example:
+# rundeck::config::storage_encrypt_config:
+#   type: 'jasypt-encryption'
+#   path: 'keys'
+#   config.encryptionType: 'basic'
+#   config.password: 'verysecure'
+#
 class rundeck (
   Array[Hash] $acl_policies                                     = $rundeck::params::acl_policies,
   String $acl_template                                          = $rundeck::params::acl_template,
@@ -281,6 +290,7 @@ class rundeck (
   String $file_default_mode                                     = $rundeck::params::file_default_mode,
   Boolean $security_roles_array_enabled                         = $rundeck::params::security_roles_array_enabled,
   Array $security_roles_array                                   = $rundeck::params::security_roles_array,
+  Hash[String,String] $storage_encrypt_config                   = {},
 ) inherits rundeck::params {
 
   validate_rd_policy($acl_policies)

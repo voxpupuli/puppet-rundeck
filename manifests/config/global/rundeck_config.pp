@@ -33,6 +33,7 @@ class rundeck::config::global::rundeck_config {
   $rdeck_config_template                = $rundeck::config::rdeck_config_template
   $rss_enabled                          = $rundeck::config::rss_enabled
   $security_config                      = $rundeck::config::security_config
+  $storage_encrypt_config               = $rundeck::config::storage_encrypt_config
   $user                                 = $rundeck::config::user
 
   $properties_file = "${properties_dir}/rundeck-config.groovy"
