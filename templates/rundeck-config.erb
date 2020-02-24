@@ -85,6 +85,12 @@ rundeck.storage.provider."1".removePathPrefix = true
 rundeck.storage.provider."1".type = "db"
 <%- end -%>
 rundeck.storage.provider."1".path = "/"
+<%- if !@storage_encrypt_config.empty? -%>
+
+  <%- @storage_encrypt_config.sort.each do |k,v| -%>
+rundeck.storage.converter."1".<%= k %> = "<%= v %>"
+  <%- end -%>
+<%- end -%>
 
 rundeck.security.authorization.preauthenticated.enabled = "<%= @preauthenticated_config['enabled']%>"
 rundeck.security.authorization.preauthenticated.attributeName = "<%= @preauthenticated_config['attributeName']%>"

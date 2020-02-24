@@ -279,6 +279,11 @@ Boolean value if set to true enables security_roles_array.
 
 Array value if you want to have more role in web.xml
 
+##### `storage_encrypt_config`
+
+Hash containing the necessary values to configure a plugin for key storage
+encryption.
+
 ##### `manage_repo`
 
 Whether to manage the bintray YUM/APT repository containing the Rundeck rpm/deb. Defaults to true.
