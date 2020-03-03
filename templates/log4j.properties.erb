@@ -79,25 +79,39 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=%-5p %c{1}: %m%n
 
 #
-# cmd-logger - DailyRollingFileAppender
+# cmd-logger
 #
 # Output of the RunDeck command line utilities
 #
+<%- if @rd_compress_log -%>
+log4j.appender.cmd-logger=org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.cmd-logger.rollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.cmd-logger.rollingPolicy.ActiveFileName=<%= @service_logs_dir %>/command.log
+log4j.appender.cmd-logger.rollingPolicy.FileNamePattern=<%= @service_logs_dir %>/command.%d{yyyy-MM-dd}.log.gz
+<%- else -%>
 log4j.appender.cmd-logger=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.cmd-logger.file=<%= @service_logs_dir %>/command.log
 log4j.appender.cmd-logger.datePattern='.'yyyy-MM-dd
+<%- end -%>
 log4j.appender.cmd-logger.append=true
 log4j.appender.cmd-logger.layout=org.apache.log4j.PatternLayout
 log4j.appender.cmd-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m%n
 
 #
-# server-logger - DailyRollingFileAppender
+# server-logger
 #
 # Captures all output from the rundeckd server.
 #
+<%- if @rd_compress_log -%>
+log4j.appender.server-logger=org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.server-logger.rollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.server-logger.rollingPolicy.ActiveFileName=<%= @service_logs_dir %>/rundeck.log
+log4j.appender.server-logger.rollingPolicy.FileNamePattern=<%= @service_logs_dir %>/rundeck.%d{yyyy-MM-dd}.log.gz
+<%- else -%>
 log4j.appender.server-logger=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.server-logger.file=<%= @service_logs_dir %>/rundeck.log
 log4j.appender.server-logger.datePattern='.'yyyy-MM-dd
+<%- end -%>
 log4j.appender.server-logger.append=true
 log4j.appender.server-logger.layout=org.apache.log4j.PatternLayout
 log4j.appender.server-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m%n
@@ -107,8 +121,15 @@ log4j.appender.server-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c -
 #
 # Captures all audit events.
 #
+<%- if @rd_compress_log -%>
+log4j.appender.audit=org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.audit.rollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.audit.rollingPolicy.ActiveFileName=<%= @service_logs_dir %>/rundeck.audit.log
+log4j.appender.audit.rollingPolicy.FileNamePattern=<%= @service_logs_dir %>/rundeck.audit.%d{yyyy-MM-dd}.log.gz
+<%- else -%>
 log4j.appender.audit=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.audit.file=<%= @service_logs_dir %>/rundeck.audit.log
+<%- end -%>
 log4j.appender.audit.append=true
 log4j.appender.audit.layout=org.apache.log4j.PatternLayout
 log4j.appender.audit.layout.ConversionPattern=%d{ISO8601} - %m%n
@@ -118,8 +139,15 @@ log4j.appender.audit.layout.ConversionPattern=%d{ISO8601} - %m%n
 #
 # Logs remote HTTP requests for Options JSON data
 #
+<%- if @rd_compress_log -%>
+log4j.appender.options=org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.options.rollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.options.rollingPolicy.ActiveFileName=<%= @service_logs_dir %>/rundeck.options.log
+log4j.appender.options.rollingPolicy.FileNamePattern=<%= @service_logs_dir %>/rundeck.options.%d{yyyy-MM-dd}.log.gz
+<%- else -%>
 log4j.appender.options=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.options.file=<%= @service_logs_dir %>/rundeck.options.log
+<%- end -%>
 log4j.appender.options.append=true
 log4j.appender.options.layout=org.apache.log4j.PatternLayout
 log4j.appender.options.layout.ConversionPattern=[%d{ISO8601}] %X{httpStatusCode} %X{contentLength}B %X{durationTime}ms %X{lastModifiedDateTime} [%X{jobName}] %X{url} %X{contentSHA1}%n
@@ -129,8 +157,15 @@ log4j.appender.options.layout.ConversionPattern=[%d{ISO8601}] %X{httpStatusCode}
 #
 # Logs all Job definition changes
 #
+<%- if @rd_compress_log -%>
+log4j.appender.jobchanges=org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.jobchanges.rollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.jobchanges.rollingPolicy.ActiveFileName=<%= @service_logs_dir %>/rundeck.jobs.log
+log4j.appender.jobchanges.rollingPolicy.FileNamePattern=<%= @service_logs_dir %>/rundeck.jobs.%d{yyyy-MM-dd}.log.gz
+<%- else -%>
 log4j.appender.jobchanges=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.jobchanges.file=<%= @service_logs_dir %>/rundeck.jobs.log
+<%- end -%>
 log4j.appender.jobchanges.append=true
 log4j.appender.jobchanges.layout=org.apache.log4j.PatternLayout
 log4j.appender.jobchanges.layout.ConversionPattern=[%d{ISO8601}] %X{user} %X{change} [%X{id}] %X{project} "%X{groupPath}/%X{jobName}" (%X{method})%n
@@ -140,8 +175,15 @@ log4j.appender.jobchanges.layout.ConversionPattern=[%d{ISO8601}] %X{user} %X{cha
 #
 # Logs all API requests
 #
+<%- if @rd_compress_log -%>
+log4j.appender.apirequests=org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.apirequests.rollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.apirequests.rollingPolicy.ActiveFileName=<%= @service_logs_dir %>/rundeck.api.log
+log4j.appender.apirequests.rollingPolicy.FileNamePattern=<%= @service_logs_dir %>/rundeck.api.%d{yyyy-MM-dd}.log.gz
+<%- else -%>
 log4j.appender.apirequests=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.apirequests.file=<%= @service_logs_dir %>/rundeck.api.log
+<%- end -%>
 log4j.appender.apirequests.append=true
 log4j.appender.apirequests.layout=org.apache.log4j.PatternLayout
 log4j.appender.apirequests.layout.ConversionPattern=[%d{ISO8601}] %X{remoteHost} %X{secure} %X{remoteUser} %X{authToken} %X{duration} %X{project} "%X{method} %X{uri}" (%X{userAgent})%n
@@ -151,8 +193,15 @@ log4j.appender.apirequests.layout.ConversionPattern=[%d{ISO8601}] %X{remoteHost}
 #
 # Logs all Web requests
 #
+<%- if @rd_compress_log -%>
+log4j.appender.access=org.apache.log4j.rolling.RollingFileAppender
+log4j.appender.access.rollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+log4j.appender.access.rollingPolicy.ActiveFileName=<%= @service_logs_dir %>/rundeck.access.log
+log4j.appender.access.rollingPolicy.FileNamePattern=<%= @service_logs_dir %>/rundeck.access.%d{yyyy-MM-dd}.log.gz
+<%- else -%>
 log4j.appender.access=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.access.file=<%= @service_logs_dir %>/rundeck.access.log
+<%- end -%>
 log4j.appender.access.append=true
 log4j.appender.access.layout=org.apache.log4j.PatternLayout
 log4j.appender.access.layout.ConversionPattern=[%d{ISO8601}] "%X{method} %X{uri}" %X{remoteHost} %X{secure} %X{remoteUser} %X{authToken} %X{duration} %X{project} [%X{contentType}] (%X{userAgent})%n

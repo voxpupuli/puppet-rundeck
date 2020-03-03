@@ -126,6 +126,9 @@
 # [*rd_auditlevel*]
 #  The log4j logging level to be set for the Rundeck application.
 #
+# [*rd_compress_log*]
+#   Compress Rundeck log files or not. Defauts: false
+#
 # [*rdeck_base*]
 #  The installation directory for rundeck.
 #
@@ -257,6 +260,7 @@ class rundeck (
   Integer $quartz_job_threadcount                               = $rundeck::params::quartz_job_threadcount,
   Rundeck::Loglevel $rd_loglevel                                = $rundeck::params::loglevel,
   Rundeck::Loglevel $rd_auditlevel                              = $rundeck::params::loglevel,
+  Boolean $rd_compress_log                                      = $rundeck::params::compress_log,
   String $rdeck_config_template                                 = $rundeck::params::rdeck_config_template,
   Stdlib::Absolutepath $rdeck_home                              = $rundeck::params::rdeck_home,
   Boolean $manage_home                                          = $rundeck::params::manage_home,
