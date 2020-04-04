@@ -55,7 +55,7 @@ class rundeck::install {
     }
   }
 
-  case $facts['osfamily'] {
+  case $facts['os']['family'] {
     'RedHat': {
       if $manage_repo {
         yumrepo { 'bintray-rundeck':
@@ -88,7 +88,7 @@ class rundeck::install {
       ensure_packages(['rundeck'], {'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] } )
     }
     default: {
-      err("The osfamily: ${::osfamily} is not supported")
+      err("The osfamily: ${facts['os']['family']} is not supported")
     }
   }
 
