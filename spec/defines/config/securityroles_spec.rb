@@ -1,25 +1,21 @@
 require 'spec_helper'
 
 describe 'rundeck::config::securityroles', type: :define do
-  context 'supported operating systems' do
-    %w[Debian RedHat].each do |osfamily|
-      describe "rundeck::config::securityroles definition with array parameters on #{osfamily}" do
-        lsbdistid = 'debian' if osfamily.eql?('Debian')
+  on_supported_os.each do |os, os_facts|
+    context "on #{os}" do
+      let(:facts) do
+        os_facts.merge(
+          serialnumber: 0,
+          rundeck_version: ''
+        )
+      end
 
+      describe 'with array parameters' do
         let(:title) { 'source one' }
         let(:params) do
           {
             'package_ensure'               => 'latest',
             'security_roles_array_enabled' => true
-          }
-        end
-        let(:facts) do
-          {
-            osfamily: osfamily,
-            lsbdistid: lsbdistid,
-            serialnumber: 0,
-            rundeck_version: '',
-            puppetversion: Puppet.version
           }
         end
 
