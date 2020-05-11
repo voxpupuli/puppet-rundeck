@@ -1,20 +1,15 @@
 require 'spec_helper'
 
 describe 'rundeck' do
-  context 'supported operating systems' do
-    %w[Debian RedHat].each do |osfamily|
+  on_supported_os.each do |os, os_facts|
+    context "on #{os}" do
       let(:params) do
         {
           ssl_enabled: true
         }
       end
       let(:facts) do
-        {
-          osfamily: osfamily,
-          serialnumber: 0,
-          rundeck_version: '',
-          puppetversion: Puppet.version
-        }
+        os_facts
       end
 
       ssl_details = {

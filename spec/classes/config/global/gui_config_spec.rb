@@ -1,40 +1,27 @@
-# rubocop:disable RSpec/MultipleExpectations
-
 require 'spec_helper'
 
 describe 'rundeck' do
-  context 'supported operating systems' do
-    %w[Debian RedHat].each do |osfamily|
-      gui_config_hash = {
-        'rundeck.gui.title'         => 'Test title',
-        'rundeck.gui.brand.html'    => '<b>App</b>',
-        'rundeck.gui.logo'          => 'test-logo.png',
-        'rundeck.gui.login.welcome' => 'Weclome to Rundeck'
-      }
-
-      let(:facts) do
-        {
-          osfamily: osfamily,
-          fqdn: 'test.domain.com',
-          serialnumber: 0,
-          rundeck_version: '',
-          puppetversion: Puppet.version
-        }
-      end
-
+  on_supported_os.each do |os, os_facts|
+    context "on #{os}" do
+      let(:facts) { os_facts }
       let(:params) do
         {
-          gui_config: gui_config_hash
+          gui_config: {
+            'rundeck.gui.title'         => 'Test title',
+            'rundeck.gui.brand.html'    => '<b>App</b>',
+            'rundeck.gui.logo'          => 'test-logo.png',
+            'rundeck.gui.login.welcome' => 'Weclome to Rundeck'
+          }
         }
       end
 
       # content and meta data for passwords
       it 'generates gui_config content for rundeck-config.groovy' do
-        content = catalogue.resource('file', '/etc/rundeck/rundeck-config.groovy')[:content]
-        expect(content).to include('rundeck.gui.title = "Test title"')
-        expect(content).to include('rundeck.gui.brand.html = "<b>App</b>"')
-        expect(content).to include('rundeck.gui.logo = "test-logo.png"')
-        expect(content).to include('rundeck.gui.login.welcome = "Weclome to Rundeck"')
+        is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').
+          with_content(%r{rundeck.gui.title = "Test title"}).
+          with_content(%r{rundeck.gui.brand.html = "<b>App</b>"}).
+          with_content(%r{rundeck.gui.logo = "test-logo.png"}).
+          with_content(%r{rundeck.gui.login.welcome = "Weclome to Rundeck"})
       end
     end
   end
