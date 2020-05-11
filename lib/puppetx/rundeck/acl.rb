@@ -10,19 +10,6 @@ module PuppetX
           raise(Puppet::ParseError, "The policy is invalid - #{msg}")
         end
 
-        def validate_description(description)
-          raise_err('description is not a String') unless description.is_a? String
-        end
-
-        def validate_context(context)
-          raise_err('context is not a Hash') unless context.is_a? Hash
-          raise_err('context is empty') if context.empty?
-          raise_err('context can only contain project or application') unless context.keys.length == 1
-          type = context.keys[0]
-          raise_err("context:#{type} is not a String") unless context[type].is_a? String
-          raise_err('context can only be project or application') unless %w[application project].include? type
-        end
-
         def validate_rule_action(type, type_section, scope)
           action_found = false
           actions = []
@@ -162,74 +149,22 @@ module PuppetX
         end
 
         def validate_matching(type, type_section)
-          matching_found = false
-          raise_err("for:#{type} is empty") if type_section.empty?
-          type_section.each do |e|
-            if e.is_a? Hash
-              e.each do |k, _v|
-                matching_found = true if k.eql?('match') || k.eql?('equals') || k.eql?('contains')
-              end
-            else
-              raise_err("for:#{type} entry is not a Hash")
-            end
-          end
-          raise_err("for:#{type} does not contain a matching statement of [match,equals,contains]") unless matching_found
-        end
-
-        def validate_for(for_section, context)
-          if !for_section.is_a? Hash
-            raise_err('for is not a Hash')
-          elsif for_section.empty?
-            raise_err('for is empty')
-          else
-            scope = context.keys[0]
-            if scope.eql?('project')
-              resource_types = %w[job node adhoc project resource]
-            elsif scope.eql?('application')
-              resource_types = %w[resource project storage]
-            else
-              raise_err("unknown scope: #{scope}")
-            end
-
-            for_section.each do |k, _v|
-              raise_err("for section must only contain #{resource_types.inspect.tr!('"', "'")}") unless resource_types.include?(k)
-            end
-            resource_types.each do |type|
-              next unless for_section.key?(type)
-              if !for_section[type].is_a? Array
-                raise_err("for:#{type} is not an Array")
-              elsif for_section[type].empty?
-                raise_err("for:#{type} is empty")
-              else
-                validate_rule_action(type, for_section[type], scope)
-                validate_matching(type, for_section[type]) unless for_section[type].eql?('adhoc')
-              end
-            end
+          unless (%w[match equals contains] & type_section.keys).length >= 1
+            raise_err("for:#{type} does not contain a matching statement of [match,equals,contains]")
           end
         end
 
-        def validate_by(by_section)
-          raise_err('by is not an Array') unless by_section.is_a? Array
-          raise_err('by is empty') if by_section.empty?
-          by_section.each do |item|
-            raise_err("by:#{item} is not a Hash") unless item.is_a? Hash
-            raise_err('by is empty') if item.empty?
-            item.each do |k, _v|
-              raise_err('by section must only contain [username,group]') unless %w[username group].include?(k)
-            end
-            %w[username group].each do |type|
-              raise_err("by:#{type} is not a String or an Array") if item.key?(type) && !item[type].is_a?(String) && !item[type].is_a?(Array)
-            end
+        def validate_for(for_section)
+          for_section.each do |type, value|
+            validate_rule_action(type, value, scope)
+            validate_matching(type, value) unless value.eql?('adhoc')
           end
         end
       end
 
       def validate_acl(hash)
         rv = RundeckValidator.new
-        rv.validate_description(hash['description'])
-        rv.validate_context(hash['context'])
-        rv.validate_for(hash['for'], hash['context'])
-        rv.validate_by(hash['by'])
+        rv.validate_for(hash['for'])
       end
       module_function :validate_acl
     end

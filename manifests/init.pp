@@ -212,7 +212,7 @@
 #   config.password: 'verysecure'
 #
 class rundeck (
-  Array[Hash] $acl_policies                                     = $rundeck::params::acl_policies,
+  Array[Rundeck::Aclpolicy] $acl_policies                       = $rundeck::params::acl_policies,
   String $acl_template                                          = $rundeck::params::acl_template,
   Array[Hash] $api_policies                                     = $rundeck::params::api_policies,
   String $api_template                                          = $rundeck::params::api_template,
