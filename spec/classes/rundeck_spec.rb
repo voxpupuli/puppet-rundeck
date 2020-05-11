@@ -65,7 +65,8 @@ describe 'rundeck' do
 
         describe 'uuid setting' do
           let :facts do
-            facts.merge(fqdn: 'rundeck.example.com') # uuid is ac7c2cbd-14fa-5ba3-b3f2-d436e9b8a3b0
+            # uuid is ac7c2cbd-14fa-5ba3-b3f2-d436e9b8a3b0
+            override_facts(super(), networking: { fqdn: 'rundeck.example.com' })
           end
 
           it { is_expected.to contain_file('/etc/rundeck/framework.properties') }
