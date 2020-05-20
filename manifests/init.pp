@@ -122,6 +122,9 @@
 #
 # [*rd_loglevel*]
 #  The log4j logging level to be set for the Rundeck application.
+# 
+# [*rd_log4j_rotatedaily*]
+#  Enable log4j daily logrotation. Log files are rotated daily and saved as xxx.log.yyyy-MM-dd. 
 #
 # [*rd_auditlevel*]
 #  The log4j logging level to be set for the Rundeck application.
@@ -248,6 +251,7 @@ class rundeck (
   Integer $quartz_job_threadcount                               = $rundeck::params::quartz_job_threadcount,
   Rundeck::Loglevel $rd_loglevel                                = $rundeck::params::loglevel,
   Rundeck::Loglevel $rd_auditlevel                              = $rundeck::params::loglevel,
+  Boolean $rd_log4j_rotatedaily                                 = $rundeck::params::rd_log4j_rotatedaily,
   String $rdeck_config_template                                 = $rundeck::params::rdeck_config_template,
   Stdlib::Absolutepath $rdeck_home                              = $rundeck::params::rdeck_home,
   Boolean $manage_home                                          = $rundeck::params::manage_home,

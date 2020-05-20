@@ -52,6 +52,7 @@ class rundeck::config {
   $quartz_job_threadcount             = $rundeck::quartz_job_threadcount
   $rd_loglevel                        = $rundeck::rd_loglevel
   $rd_auditlevel                      = $rundeck::rd_auditlevel
+  $rd_log4j_rotatedaily               = $rundeck::rd_log4j_rotatedaily
   $rdeck_config_template              = $rundeck::rdeck_config_template
   $rdeck_home                         = $rundeck::rdeck_home
   $manage_home                        = $rundeck::manage_home

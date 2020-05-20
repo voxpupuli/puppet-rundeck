@@ -255,6 +255,7 @@ class rundeck::params {
   $file_default_mode = '0640'
 
   $loglevel = 'INFO'
+  $rd_log4j_rotatedaily = true
   $rss_enabled = false
 
   $clustermode_enabled = false

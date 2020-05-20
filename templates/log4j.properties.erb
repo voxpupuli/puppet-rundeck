@@ -83,9 +83,11 @@ log4j.appender.stdout.layout.ConversionPattern=%-5p %c{1}: %m%n
 #
 # Output of the RunDeck command line utilities
 #
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.cmd-logger=org.apache.log4j.DailyRollingFileAppender
-log4j.appender.cmd-logger.file=<%= @service_logs_dir %>/command.log
 log4j.appender.cmd-logger.datePattern='.'yyyy-MM-dd
+<% end -%>
+log4j.appender.cmd-logger.file=<%= @service_logs_dir %>/command.log
 log4j.appender.cmd-logger.append=true
 log4j.appender.cmd-logger.layout=org.apache.log4j.PatternLayout
 log4j.appender.cmd-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m%n
@@ -95,9 +97,12 @@ log4j.appender.cmd-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m
 #
 # Captures all output from the rundeckd server.
 #
+
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.server-logger=org.apache.log4j.DailyRollingFileAppender
-log4j.appender.server-logger.file=<%= @service_logs_dir %>/rundeck.log
 log4j.appender.server-logger.datePattern='.'yyyy-MM-dd
+<% end -%>
+log4j.appender.server-logger.file=<%= @service_logs_dir %>/rundeck.log
 log4j.appender.server-logger.append=true
 log4j.appender.server-logger.layout=org.apache.log4j.PatternLayout
 log4j.appender.server-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m%n
