@@ -112,6 +112,7 @@ log4j.appender.server-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c -
 #
 # Captures all audit events.
 #
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.audit=org.apache.log4j.DailyRollingFileAppender
 log4j.appender.audit.file=<%= @service_logs_dir %>/rundeck.audit.log
 log4j.appender.audit.append=true
@@ -123,7 +124,9 @@ log4j.appender.audit.layout.ConversionPattern=%d{ISO8601} - %m%n
 #
 # Logs remote HTTP requests for Options JSON data
 #
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.options=org.apache.log4j.DailyRollingFileAppender
+<% end -%>
 log4j.appender.options.file=<%= @service_logs_dir %>/rundeck.options.log
 log4j.appender.options.append=true
 log4j.appender.options.layout=org.apache.log4j.PatternLayout
@@ -134,7 +137,9 @@ log4j.appender.options.layout.ConversionPattern=[%d{ISO8601}] %X{httpStatusCode}
 #
 # Logs all Job definition changes
 #
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.jobchanges=org.apache.log4j.DailyRollingFileAppender
+<% end -%>
 log4j.appender.jobchanges.file=<%= @service_logs_dir %>/rundeck.jobs.log
 log4j.appender.jobchanges.append=true
 log4j.appender.jobchanges.layout=org.apache.log4j.PatternLayout
@@ -145,7 +150,9 @@ log4j.appender.jobchanges.layout.ConversionPattern=[%d{ISO8601}] %X{user} %X{cha
 #
 # Logs all API requests
 #
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.apirequests=org.apache.log4j.DailyRollingFileAppender
+<% end -%>
 log4j.appender.apirequests.file=<%= @service_logs_dir %>/rundeck.api.log
 log4j.appender.apirequests.append=true
 log4j.appender.apirequests.layout=org.apache.log4j.PatternLayout
@@ -156,7 +163,9 @@ log4j.appender.apirequests.layout.ConversionPattern=[%d{ISO8601}] %X{remoteHost}
 #
 # Logs all Web requests
 #
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.access=org.apache.log4j.DailyRollingFileAppender
+<% end -%>
 log4j.appender.access.file=<%= @service_logs_dir %>/rundeck.access.log
 log4j.appender.access.append=true
 log4j.appender.access.layout=org.apache.log4j.PatternLayout
