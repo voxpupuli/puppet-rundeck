@@ -192,7 +192,7 @@ The log4j logging level to be set for the Rundeck application.
 
 ##### `rd_log4j_rotatedaily`
 
-Enable log4j daily logrotation. Log files are rotated daily and saved as xxx.log.yyyy-MM-dd. 
+Enable log4j daily logrotation. Log files are rotated daily and saved as xxx.log.yyyy-MM-dd.
 
 ##### `rdeck_profile_template` (**Requires Rundeck v2.8.x**)
 
