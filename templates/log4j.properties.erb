@@ -114,6 +114,7 @@ log4j.appender.server-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c -
 #
 <% if @rd_log4j_rotatedaily -%>
 log4j.appender.audit=org.apache.log4j.DailyRollingFileAppender
+<% end -%>
 log4j.appender.audit.file=<%= @service_logs_dir %>/rundeck.audit.log
 log4j.appender.audit.append=true
 log4j.appender.audit.layout=org.apache.log4j.PatternLayout

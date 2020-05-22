@@ -251,7 +251,7 @@ class rundeck (
   Integer $quartz_job_threadcount                               = $rundeck::params::quartz_job_threadcount,
   Rundeck::Loglevel $rd_loglevel                                = $rundeck::params::loglevel,
   Rundeck::Loglevel $rd_auditlevel                              = $rundeck::params::loglevel,
-  Boolean $rd_log4j_rotatedaily                                 = $rundeck::params::rd_log4j_rotatedaily,
+  Boolean $rd_log4j_rotatedaily                                 = true,
   String $rdeck_config_template                                 = $rundeck::params::rdeck_config_template,
   Stdlib::Absolutepath $rdeck_home                              = $rundeck::params::rdeck_home,
   Boolean $manage_home                                          = $rundeck::params::manage_home,
