@@ -75,20 +75,20 @@ class rundeck::params {
       },
       'for' => {
         'resource' => [
-          {'allow' => '*'},
+          { 'allow' => '*' },
         ],
         'adhoc' => [
-          {'allow' => '*'},
+          { 'allow' => '*' },
         ],
         'job' => [
-          {'allow' => '*'},
+          { 'allow' => '*' },
         ],
         'node' => [
-          {'allow' => '*'},
+          { 'allow' => '*' },
         ],
       },
       'by' => [{
-        'group' => ['admin']
+          'group' => ['admin']
       }]
     },
     {
@@ -98,17 +98,17 @@ class rundeck::params {
       },
       'for' => {
         'resource' => [
-          {'allow' => '*'},
+          { 'allow' => '*' },
         ],
         'project' => [
-          {'allow' => '*'},
+          { 'allow' => '*' },
         ],
         'storage' => [
-          {'allow' => '*'},
+          { 'allow' => '*' },
         ],
       },
       'by' => [{
-        'group' => ['admin']
+          'group' => ['admin']
       }]
     }
   ]
@@ -121,22 +121,22 @@ class rundeck::params {
       },
       'for' => {
         'resource' => [
-          { 'equals' => {'kind' => 'job'}, 'allow' => ['create','delete'] },
-          { 'equals' => {'kind' => 'node'}, 'allow' => ['read','create','update','refresh'] },
-          { 'equals' => {'kind' => 'event'}, 'allow' => ['read','create'] }
+          { 'equals' => { 'kind' => 'job' }, 'allow' => ['create','delete'] },
+          { 'equals' => { 'kind' => 'node' }, 'allow' => ['read','create','update','refresh'] },
+          { 'equals' => { 'kind' => 'event' }, 'allow' => ['read','create'] }
         ],
         'adhoc' => [
-          {'allow' => ['read','run','kill']}
+          { 'allow' => ['read','run','kill'] }
         ],
         'job' => [
-          {'allow' => ['create','read','update','delete','run','kill']}
+          { 'allow' => ['create','read','update','delete','run','kill'] }
         ],
         'node' => [
-          {'allow' => ['read','run']}
+          { 'allow' => ['read','run'] }
         ],
       },
       'by' => [{
-        'group' => ['api_token_group']
+          'group' => ['api_token_group']
       }]
     },
     {
@@ -146,17 +146,17 @@ class rundeck::params {
       },
       'for' => {
         'resource' => [
-          { 'equals' => {'kind' => 'system'}, 'allow' => ['read'] }
+          { 'equals' => { 'kind' => 'system' }, 'allow' => ['read'] }
         ],
         'project' => [
-          { 'match' => {'name' => '.*'}, 'allow' => ['read'] }
+          { 'match' => { 'name' => '.*' }, 'allow' => ['read'] }
         ],
         'storage' => [
-          { 'match' => {'path' => '(keys|keys/.*)'}, 'allow' => '*' },
+          { 'match' => { 'path' => '(keys|keys/.*)' }, 'allow' => '*' },
         ],
       },
       'by' => [{
-        'group' => ['api_token_group']
+          'group' => ['api_token_group']
       }]
     }
   ]
@@ -313,7 +313,7 @@ class rundeck::params {
 
   $rdeck_config_template = 'rundeck/rundeck-config.erb'
 
-  $file_keystorage_keys = { }
+  $file_keystorage_keys = {}
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"
 
   $manage_default_admin_policy = true
@@ -321,5 +321,4 @@ class rundeck::params {
 
   $security_roles_array_enabled = false
   $security_roles_array         = []
-
 }

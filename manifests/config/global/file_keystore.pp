@@ -39,7 +39,6 @@
 #    The default base directory for file-based key storage
 #
 class rundeck::config::global::file_keystore {
-
   assert_private()
 
   $file_keystorage_dir = $rundeck::file_keystorage_dir
@@ -47,5 +46,5 @@ class rundeck::config::global::file_keystore {
   $keys                = $rundeck::config::file_keystorage_keys
   $user                = $rundeck::config::user
 
-  create_resources(rundeck::config::file_keystore, $keys, {'user' => $user, 'group' => $group})
+  create_resources(rundeck::config::file_keystore, $keys, { 'user' => $user, 'group' => $group })
 }

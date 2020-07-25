@@ -7,7 +7,6 @@
 # This private class is called from rundeck::config used to manage the default project properties
 #
 class rundeck::config::global::project {
-
   assert_private()
 
   $group                 = $rundeck::config::group
@@ -19,10 +18,10 @@ class rundeck::config::global::project {
 
   $properties_file = "${properties_dir}/project.properties"
 
-  ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
+  ensure_resource('file', $properties_dir, { 'ensure' => 'directory', 'owner' => $user, 'group' => $group })
 
   file { $properties_file:
-    ensure  => present,
+    ensure  => file,
     owner   => $user,
     group   => $group,
     mode    => '0640',

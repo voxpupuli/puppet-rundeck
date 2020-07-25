@@ -33,17 +33,16 @@ class rundeck::config::global::framework {
 
   $properties_file = "${properties_dir}/framework.properties"
 
-  ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group } )
+  ensure_resource('file', $properties_dir, { 'ensure' => 'directory', 'owner' => $user, 'group' => $group })
 
   $framework_config = merge($_framework_config, $framework_config_url, $framework_config_port)
 
   file { $properties_file:
-    ensure  => present,
+    ensure  => file,
     content => template('rundeck/framework.properties.erb'),
     owner   => $user,
     group   => $group,
     mode    => '0640',
     require => File[$properties_dir],
   }
-
 }

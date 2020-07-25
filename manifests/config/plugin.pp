@@ -23,11 +23,10 @@
 #  source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
 # }
 #
-define rundeck::config::plugin(
+define rundeck::config::plugin (
   String $source,
   Enum['present', 'absent'] $ensure = 'present',
 ) {
-
   include rundeck
   include archive
 
@@ -38,7 +37,6 @@ define rundeck::config::plugin(
   $plugin_dir = $framework_config['framework.libext.dir']
 
   if $ensure == 'present' {
-
     archive { "download plugin ${name}":
       ensure  => present,
       source  => $source,
@@ -52,14 +50,10 @@ define rundeck::config::plugin(
       owner => $user,
       group => $group,
     }
-
   }
   elsif $ensure == 'absent' {
-
     file { "${plugin_dir}/${name}":
       ensure => 'absent',
     }
-
   }
-
 }

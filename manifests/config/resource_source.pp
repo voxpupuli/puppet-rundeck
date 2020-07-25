@@ -77,7 +77,7 @@
 #   resource_format     => 'resourceyaml',
 # }
 #
-define rundeck::config::resource_source(
+define rundeck::config::resource_source (
   Stdlib::Absolutepath $directory                                = $rundeck::params::default_resource_dir,
   Boolean $include_server_node                                   = $rundeck::params::include_server_node,
   String $mapping_params                                         = '',
@@ -109,7 +109,6 @@ define rundeck::config::resource_source(
   Optional[String] $puppet_enterprise_default_node_tag           = undef,
   Optional[String] $puppet_enterprise_tag_source                 = undef,
 ) {
-
   include rundeck
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
@@ -125,16 +124,16 @@ define rundeck::config::resource_source(
   assert_type(Stdlib::Absolutepath, $projects_dir)
 
   ensure_resource('file', "${projects_dir}/${project_name}", {
-    'ensure' => 'directory',
-    'owner'  => $user,
-    'group'  => $group
-  } )
+      'ensure' => 'directory',
+      'owner'  => $user,
+      'group'  => $group
+  })
   ensure_resource('file', "${projects_dir}/${project_name}/etc", {
-    'ensure'  => 'directory',
-    'owner'   => $user,
-    'group'   => $group,
-    'require' => File["${projects_dir}/${project_name}"]
-  } )
+      'ensure'  => 'directory',
+      'owner'   => $user,
+      'group'   => $group,
+      'require' => File["${projects_dir}/${project_name}"]
+  })
 
   $properties_dir  = "${projects_dir}/${project_name}/etc"
   $properties_file = "${properties_dir}/project.properties"
@@ -210,7 +209,6 @@ define rundeck::config::resource_source(
       }
     }
     'url': {
-
       ini_setting { "${name}::resources.source.${number}.config.url":
         ensure  => present,
         path    => $properties_file,
@@ -239,7 +237,6 @@ define rundeck::config::resource_source(
       }
     }
     'directory': {
-
       file { $directory:
         ensure => directory,
         owner  => $user,
@@ -257,7 +254,6 @@ define rundeck::config::resource_source(
       }
     }
     'script': {
-
       ini_setting { "${name}::resources.source.${number}.config.file":
         ensure  => present,
         path    => $properties_file,
