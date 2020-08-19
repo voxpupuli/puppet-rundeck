@@ -12,7 +12,3 @@
     apt:
       packages:
         - libaugeas-dev
-.rubocop.yml:
-  AllCops:
-    Exclude:
-      - files/**/*
