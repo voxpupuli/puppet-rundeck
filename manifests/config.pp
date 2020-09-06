@@ -7,7 +7,6 @@
 # This private class is called from `rundeck` to manage the configuration
 #
 class rundeck::config {
-
   assert_private()
 
   $acl_policies                       = $rundeck::acl_policies
@@ -93,10 +92,10 @@ class rundeck::config {
   File[$rdeck_home] ~> File[$framework_config['framework.ssh.keypath']]
 
   if $manage_home {
-    file{ $rdeck_home:
+    file { $rdeck_home:
       ensure  => directory,
     }
-  } elsif ! defined_with_params(File[$rdeck_home], {'ensure' => 'directory' }) {
+  } elsif ! defined_with_params(File[$rdeck_home], { 'ensure' => 'directory' }) {
     fail('when rundeck::manage_home = false a file definition for the home directory must be included outside of this module.')
   }
 
@@ -106,13 +105,12 @@ class rundeck::config {
     }
   }
 
-
   file { $rundeck::service_logs_dir:
     ensure  => directory,
   }
 
-  ensure_resource(file, $projects_dir, {'ensure' => 'directory'})
-  ensure_resource(file, $plugin_dir, {'ensure'   => 'directory'})
+  ensure_resource(file, $projects_dir, { 'ensure' => 'directory' })
+  ensure_resource(file, $plugin_dir, { 'ensure'   => 'directory' })
 
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that

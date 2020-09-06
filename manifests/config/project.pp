@@ -60,7 +60,6 @@ define rundeck::config::project (
   Optional[Stdlib::Absolutepath] $ssh_keypath  = undef,
   String $user                                 = $rundeck::user,
 ) {
-
   include rundeck
 
   $framework_properties = deep_merge($rundeck::params::framework_config, $rundeck::framework_config, $framework_config)
@@ -94,14 +93,14 @@ define rundeck::config::project (
   }
 
   file { $scm_import_properties_file:
-    ensure  => present,
+    ensure  => file,
     content => template('rundeck/scm-import.properties.erb'),
     owner   => $user,
     group   => $group,
   }
 
   file { $scm_export_properties_file:
-    ensure  => present,
+    ensure  => file,
     content => template('rundeck/scm-export.properties.erb'),
     owner   => $user,
     group   => $group,
@@ -152,7 +151,6 @@ define rundeck::config::project (
   $resource_source_defaults = {
     project_name => $name,
   }
-
 
   create_resources(rundeck::config::resource_source, $resource_sources, $resource_source_defaults)
 

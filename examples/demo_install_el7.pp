@@ -24,4 +24,3 @@ firewalld_port { 'Rundeck HTTP port':
 }
 
 Class['java'] -> Class['rundeck']
-

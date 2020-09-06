@@ -7,7 +7,6 @@
 # This private class is called from rundeck::config used to manage the rundeck-config properties
 #
 class rundeck::config::global::rundeck_config {
-
   assert_private()
 
   $clustermode_enabled                  = $rundeck::config::clustermode_enabled
@@ -38,7 +37,7 @@ class rundeck::config::global::rundeck_config {
 
   $properties_file = "${properties_dir}/rundeck-config.groovy"
 
-  ensure_resource('file', $properties_dir, {'ensure' => 'directory', 'owner' => $user, 'group' => $group} )
+  ensure_resource('file', $properties_dir, { 'ensure' => 'directory', 'owner' => $user, 'group' => $group })
 
   $database_config = merge($rundeck::params::database_config, $rundeck::config::database_config)
 
@@ -47,7 +46,7 @@ class rundeck::config::global::rundeck_config {
   }
 
   file { $properties_file:
-    ensure  => present,
+    ensure  => file,
     content => template($rdeck_config_template),
     owner   => $user,
     group   => $group,

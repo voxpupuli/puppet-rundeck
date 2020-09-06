@@ -29,7 +29,6 @@ class rundeck::config::global::web (
   $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
   $security_roles_array         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
-
   if $security_roles_array_enabled {
     rundeck::config::securityroles { $security_roles_array: }
   }
@@ -37,28 +36,28 @@ class rundeck::config::global::web (
     augeas { 'rundeck/web.xml/security-role/role-name':
       lens    => 'Xml.lns',
       incl    => $rundeck::params::web_xml,
-      changes => [ "set web-app/security-role/role-name/#text '${security_role}'" ],
+      changes => ["set web-app/security-role/role-name/#text '${security_role}'"],
     }
   }
 
   augeas { 'rundeck/web.xml/session-config/session-timeout':
     lens    => 'Xml.lns',
     incl    => $rundeck::params::web_xml,
-    changes => [ "set web-app/session-config/session-timeout/#text '${session_timeout}'" ],
+    changes => ["set web-app/session-config/session-timeout/#text '${session_timeout}'"],
   }
 
   if $rundeck::preauthenticated_config['enabled'] {
     augeas { 'rundeck/web.xml/security-constraint/auth-constraint':
       lens    => 'Xml.lns',
       incl    => $rundeck::params::web_xml,
-      changes => [ 'rm web-app/security-constraint/auth-constraint' ],
+      changes => ['rm web-app/security-constraint/auth-constraint'],
     }
   }
   else {
     augeas { 'rundeck/web.xml/security-constraint/auth-constraint/role-name':
       lens    => 'Xml.lns',
       incl    => $rundeck::params::web_xml,
-      changes => [ "set web-app/security-constraint[last()+1]/auth-constraint/role-name/#text '*'" ],
+      changes => ["set web-app/security-constraint[last()+1]/auth-constraint/role-name/#text '*'"],
       onlyif  => 'match web-app/security-constraint/auth-constraint/role-name size == 0',
     }
   }

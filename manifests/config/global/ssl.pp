@@ -7,7 +7,6 @@
 # This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled
 #
 class rundeck::config::global::ssl {
-
   assert_private()
 
   $group               = $rundeck::config::group
@@ -25,16 +24,16 @@ class rundeck::config::global::ssl {
   $properties_file = "${properties_dir}/ssl/ssl.properties"
 
   ensure_resource('file', $properties_dir, {
-    'ensure' => 'directory',
-    'owner'  => $user,
-    'group'  => $group
-  } )
+      'ensure' => 'directory',
+      'owner'  => $user,
+      'group'  => $group
+  })
   ensure_resource('file', "${properties_dir}/ssl", {
-    'ensure'  => 'directory',
-    'owner'   => $user,
-    'group'   => $group,
-    'require' => File[$properties_dir]
-    } )
+      'ensure'  => 'directory',
+      'owner'   => $user,
+      'group'   => $group,
+      'require' => File[$properties_dir]
+  })
 
   java_ks { "rundeck:${properties_dir}/ssl/keystore":
     ensure       => present,
@@ -54,7 +53,7 @@ class rundeck::config::global::ssl {
   }
 
   file { $properties_file:
-    ensure  => present,
+    ensure  => file,
     owner   => $user,
     group   => $group,
     mode    => '0640',

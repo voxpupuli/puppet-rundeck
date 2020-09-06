@@ -58,8 +58,7 @@ define rundeck::config::file_keystore (
   String $group                             = $rundeck::config::group,
   String $user                              = $rundeck::config::user,
 ) {
-
-  ensure_resource('file', [ $file_keystorage_dir ], { 'ensure' => 'directory' })
+  ensure_resource('file', [$file_keystorage_dir], { 'ensure' => 'directory' })
 
   if !$content_size {
     $content_size_value = size($value)
@@ -79,7 +78,7 @@ define rundeck::config::file_keystore (
     group  => $group,
   }
 
-  ensure_resource('file', [$meta_dirtree, $key_dirtree], {'ensure' => 'directory'})
+  ensure_resource('file', [$meta_dirtree, $key_dirtree], { 'ensure' => 'directory' })
 
   file { "${key_fqpath}/${name}.${data_type}":
     content => $value,

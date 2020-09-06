@@ -8,7 +8,6 @@
 # It ensure the service is running
 #
 class rundeck::service {
-
   assert_private()
 
   $service_config = $rundeck::service_config
@@ -18,7 +17,7 @@ class rundeck::service {
 
   if $service_config {
     file { '/etc/init/rundeckd.conf':
-      ensure  => present,
+      ensure  => file,
       mode    => '0644',
       content => template($service_config),
     }
@@ -26,7 +25,7 @@ class rundeck::service {
 
   if $service_script {
     file { '/etc/init.d/rundeckd':
-      ensure  => present,
+      ensure  => file,
       mode    => '0755',
       content => template($service_script),
     }
