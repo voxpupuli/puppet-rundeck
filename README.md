@@ -190,6 +190,10 @@ The maximum number of threads used by Rundeck for concurrent jobs by default is 
 
 The log4j logging level to be set for the Rundeck application.
 
+##### `rd_log4j_rotatedaily`
+
+Enable log4j daily logrotation. Log files are rotated daily and saved as xxx.log.yyyy-MM-dd.
+
 ##### `rdeck_profile_template` (**Requires Rundeck v2.8.x**)
 
 Allows you to use your own profile template instead of the default from the package maintainer

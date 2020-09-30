@@ -83,9 +83,11 @@ log4j.appender.stdout.layout.ConversionPattern=%-5p %c{1}: %m%n
 #
 # Output of the RunDeck command line utilities
 #
-log4j.appender.cmd-logger=org.apache.log4j.DailyRollingFileAppender
-log4j.appender.cmd-logger.file=<%= @service_logs_dir %>/command.log
+log4j.appender.cmd-logger=org.apache.log4j.<% if @rd_log4j_rotatedaily %>DailyRolling<% end %>FileAppender
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.cmd-logger.datePattern='.'yyyy-MM-dd
+<% end -%>
+log4j.appender.cmd-logger.file=<%= @service_logs_dir %>/command.log
 log4j.appender.cmd-logger.append=true
 log4j.appender.cmd-logger.layout=org.apache.log4j.PatternLayout
 log4j.appender.cmd-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m%n
@@ -95,9 +97,12 @@ log4j.appender.cmd-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m
 #
 # Captures all output from the rundeckd server.
 #
-log4j.appender.server-logger=org.apache.log4j.DailyRollingFileAppender
-log4j.appender.server-logger.file=<%= @service_logs_dir %>/rundeck.log
+
+log4j.appender.server-logger=org.apache.log4j.<% if @rd_log4j_rotatedaily %>DailyRolling<% end %>FileAppender
+<% if @rd_log4j_rotatedaily -%>
 log4j.appender.server-logger.datePattern='.'yyyy-MM-dd
+<% end -%>
+log4j.appender.server-logger.file=<%= @service_logs_dir %>/rundeck.log
 log4j.appender.server-logger.append=true
 log4j.appender.server-logger.layout=org.apache.log4j.PatternLayout
 log4j.appender.server-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c - %m%n
@@ -107,7 +112,7 @@ log4j.appender.server-logger.layout.ConversionPattern=%d{ISO8601} [%t] %-5p %c -
 #
 # Captures all audit events.
 #
-log4j.appender.audit=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.audit=org.apache.log4j.<% if @rd_log4j_rotatedaily %>DailyRolling<% end %>FileAppender
 log4j.appender.audit.file=<%= @service_logs_dir %>/rundeck.audit.log
 log4j.appender.audit.append=true
 log4j.appender.audit.layout=org.apache.log4j.PatternLayout
@@ -118,7 +123,7 @@ log4j.appender.audit.layout.ConversionPattern=%d{ISO8601} - %m%n
 #
 # Logs remote HTTP requests for Options JSON data
 #
-log4j.appender.options=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.options=org.apache.log4j.<% if @rd_log4j_rotatedaily %>DailyRolling<% end %>FileAppender
 log4j.appender.options.file=<%= @service_logs_dir %>/rundeck.options.log
 log4j.appender.options.append=true
 log4j.appender.options.layout=org.apache.log4j.PatternLayout
@@ -129,7 +134,7 @@ log4j.appender.options.layout.ConversionPattern=[%d{ISO8601}] %X{httpStatusCode}
 #
 # Logs all Job definition changes
 #
-log4j.appender.jobchanges=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.jobchanges=org.apache.log4j.<% if @rd_log4j_rotatedaily %>DailyRolling<% end %>FileAppender
 log4j.appender.jobchanges.file=<%= @service_logs_dir %>/rundeck.jobs.log
 log4j.appender.jobchanges.append=true
 log4j.appender.jobchanges.layout=org.apache.log4j.PatternLayout
@@ -140,7 +145,7 @@ log4j.appender.jobchanges.layout.ConversionPattern=[%d{ISO8601}] %X{user} %X{cha
 #
 # Logs all API requests
 #
-log4j.appender.apirequests=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.apirequests=org.apache.log4j.<% if @rd_log4j_rotatedaily %>DailyRolling<% end %>FileAppender
 log4j.appender.apirequests.file=<%= @service_logs_dir %>/rundeck.api.log
 log4j.appender.apirequests.append=true
 log4j.appender.apirequests.layout=org.apache.log4j.PatternLayout
@@ -151,7 +156,7 @@ log4j.appender.apirequests.layout.ConversionPattern=[%d{ISO8601}] %X{remoteHost}
 #
 # Logs all Web requests
 #
-log4j.appender.access=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.access=org.apache.log4j.<% if @rd_log4j_rotatedaily %>DailyRolling<% end %>FileAppender
 log4j.appender.access.file=<%= @service_logs_dir %>/rundeck.access.log
 log4j.appender.access.append=true
 log4j.appender.access.layout=org.apache.log4j.PatternLayout
