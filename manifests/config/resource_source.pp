@@ -83,7 +83,7 @@ define rundeck::config::resource_source (
   String $mapping_params                                         = '',
   Integer $number                                                = 1,
   Optional[String] $project_name                                 = undef,
-  Enum['resourcexml', 'resourceyaml'] $resource_format           = $rundeck::params::resource_format,
+  Enum['resourcexml', 'resourceyaml', 'resourcejson'] $resource_format = $rundeck::params::resource_format,
   Boolean $running_only                                          = true,
   String $script_args                                            = '',
   Boolean $script_args_quoted                                    = $rundeck::params::script_args_quoted,
@@ -150,6 +150,9 @@ define rundeck::config::resource_source (
   case downcase($source_type) {
     'file': {
       case $resource_format {
+        'resourcejson': {
+          $file_extension = 'json'
+        }
         'resourcexml': {
           $file_extension = 'xml'
         }
