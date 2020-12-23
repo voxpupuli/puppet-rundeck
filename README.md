@@ -86,6 +86,14 @@ of rundeck on your system
 
 Ensure the state of the rundeck package, either present, absent or a specific version
 
+##### `cli_package_ensure`
+
+Ensure the state of the rundeck-cli package, either present, absent or a specific version
+
+##### `jobs`
+
+Hash of Rundeck jobs to import
+
 ##### `auth_types`
 
 The method used to authenticate to Rundeck. Options: file, ldap,
@@ -224,7 +232,7 @@ Boolean value if set to true enables cluster mode
 
 ##### `grails_server_url`
 
-The url used in sending email notifications.
+The external url used to access Rundeck
 
 ##### `database_config`
 
@@ -299,6 +307,15 @@ Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
 ##### `manage_home`
 
 Whether to create the `rundeck_home` directory. Defaults to true.
+
+##### `cli_server_url`
+
+The url that the Rundeck cli should use to connect to Rundeck. Defaults to the value of grails_server_url.
+
+##### `manage_cli_config`
+
+Whether to create the .rd/rd.conf file in the Rundeck user's home. Defaults to false.
+If set to true, admin credentials from auth_config will be used.
 
 ##### `keystorage_type`
 
