@@ -227,6 +227,7 @@ class rundeck::params {
     'apiCookieAccess'      => true,
   }
 
+  $plugins = {}
   $projects = {}
   $projects_default_org = ''
   $projects_default_desc = ''
@@ -243,6 +244,7 @@ class rundeck::params {
   $default_resource_dir = '/'
   $default_http_proxy_port = 80
   $default_refresh_interval = 30
+  $default_page_results = 100
 
   $script_args_quoted = true
   $script_interpreter = '/bin/bash'

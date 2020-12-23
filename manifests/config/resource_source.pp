@@ -99,6 +99,7 @@ define rundeck::config::resource_source (
   String $filter_tag                                             = '',
   Stdlib::Port $http_proxy_port                                  = $rundeck::params::default_http_proxy_port,
   Integer $refresh_interval                                      = $rundeck::params::default_refresh_interval,
+  Integer $page_results                                          = $rundeck::params::default_page_results,
   Optional[String] $puppet_enterprise_host                       = undef,
   Optional[Stdlib::Port] $puppet_enterprise_port                 = undef,
   Optional[Stdlib::Absolutepath] $puppet_enterprise_ssl_dir      = undef,
@@ -324,21 +325,27 @@ define rundeck::config::resource_source (
         value   => bool2str($running_only),
         require => File[$properties_file],
       }
-      ini_setting { "${name}::resources.source.${number}.config.endpoint":
-        ensure  => present,
-        path    => $properties_file,
-        section => '',
-        setting => "resources.source.${number}.config.endpoint",
-        value   => $endpoint_url,
-        require => File[$properties_file],
+      # endpoint is an optional field that must be omitted if empty
+      if ($endpoint_url) {
+        ini_setting { "${name}::resources.source.${number}.config.endpoint":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.endpoint",
+          value   => $endpoint_url,
+          require => File[$properties_file],
+        }
       }
-      ini_setting { "${name}::resources.source.${number}.config.assumeRoleArn":
-        ensure  => present,
-        path    => $properties_file,
-        section => '',
-        setting => "resources.source.${number}.config.assumeRoleArn",
-        value   => $assume_role_arn,
-        require => File[$properties_file],
+      # assumeRoleArn is an optional field that must be omitted if empty
+      if ($assume_role_arn) {
+        ini_setting { "${name}::resources.source.${number}.config.assumeRoleArn":
+          ensure  => present,
+          path    => $properties_file,
+          section => '',
+          setting => "resources.source.${number}.config.assumeRoleArn",
+          value   => $assume_role_arn,
+          require => File[$properties_file],
+        }
       }
       ini_setting { "${name}::resources.source.${number}.config.filter":
         ensure  => present,
@@ -362,6 +369,15 @@ define rundeck::config::resource_source (
         section => '',
         setting => "resources.source.${number}.config.refreshInterval",
         value   => $refresh_interval,
+        require => File[$properties_file],
+      }
+      # pageResults is a required field and must be numeric
+      ini_setting { "${name}::resources.source.${number}.config.pageResults":
+        ensure  => present,
+        path    => $properties_file,
+        section => '',
+        setting => "resources.source.${number}.config.pageResults",
+        value   => $page_results,
         require => File[$properties_file],
       }
     }
