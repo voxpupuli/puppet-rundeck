@@ -21,6 +21,7 @@ for:
   <%- end -%>
   <%- end -%>
 <%- end -%>
+<%- if policy.key?('by') -%>
 by:
 <%- policy['by'].each do |by| -%>
 <%-   if !by['group'].nil? && by['group'] != :undef -%>
@@ -35,6 +36,24 @@ by:
     - '<%= username %>'
   <%- end -%>
 <%-   end -%>
+<%- end -%>
+<%- end -%>
+<%- if policy.key?('notBy') -%>
+notBy:
+<%- policy['notBy'].each do |notBy| -%>
+<%-   if !notBy['group'].nil? && notBy['group'] != :undef -%>
+  group:
+  <%- notBy['group'].each do |group| -%>
+    - '<%= group %>'
+  <%- end -%>
+<%-   end -%>
+<%-   if !notBy['username'].nil? && notBy['username'] != :undef -%>
+  username:
+  <%- notBy['username'].each do |username| -%>
+    - '<%= username %>'
+  <%- end -%>
+<%-   end -%>
+<%- end -%>
 <%- end -%>
 <%- if index != (@acl_policies.length-1) -%>
 

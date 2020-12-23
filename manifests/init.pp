@@ -150,6 +150,13 @@
 # [*server_web_context*]
 #  Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
 #
+# [*server_web_context33*]
+#  Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
+#  Syntax for Rundeck 3.3+
+#
+# [*server_address*]
+#  The listen address for the Rundeck service.
+#
 # [*service_logs_dir*]
 #  The path to the directory to store logs.
 #
@@ -249,6 +256,7 @@ class rundeck (
   Boolean $manage_default_api_policy                            = $rundeck::params::manage_default_api_policy,
   Boolean $manage_repo                                          = $rundeck::params::manage_repo,
   String $package_ensure                                        = $rundeck::params::package_ensure,
+  Hash $plugins                                                 = $rundeck::params::plugins,
   Hash $preauthenticated_config                                 = $rundeck::params::preauthenticated_config,
   Hash $projects                                                = $rundeck::params::projects,
   String $projects_description                                  = $rundeck::params::projects_default_desc,
@@ -271,6 +279,8 @@ class rundeck (
   Hash $security_config                                         = $rundeck::params::security_config,
   String $security_role                                         = $rundeck::params::security_role,
   Optional[String] $server_web_context                          = undef,
+  Optional[String] $server_web_context33                        = undef,
+  Optional[String] $server_address                              = undef,
   Optional[String] $service_config                              = undef,
   Stdlib::Absolutepath $service_logs_dir                        = $rundeck::params::service_logs_dir,
   String $service_name                                          = $rundeck::params::service_name,

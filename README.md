@@ -122,6 +122,16 @@ The installation directory for Rundeck.
 ##### `server_web_context`
 
 Web context path to use, such as "/rundeck". `http://host.domain:port/server_web_context`
+( Use this for Rundeck versions < 3.3 )
+
+##### `server_web_context33`
+
+Web context path to use, such as "/rundeck". `http://host.domain:port/server_web_context`
+( Use this for Rundeck versions >= 3.3 )
+
+##### `server_address`
+
+The listen address for the Rundeck service.
 
 ##### `ssl_enabled`
 
@@ -299,6 +309,10 @@ Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
 ##### `manage_home`
 
 Whether to create the `rundeck_home` directory. Defaults to true.
+
+##### `auth_config`
+
+A dictionary of various auth-related configuration, including the default admin password, ldap, and pam settings.
 
 ##### `keystorage_type`
 

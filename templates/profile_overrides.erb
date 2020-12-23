@@ -11,8 +11,16 @@ RDECK_JVM_SETTINGS="<%= @jvm_args %>"
 RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.web.context=<%= @server_web_context %>"
 <%- end -%>
 
+<%- if @server_web_context33 -%>
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.servlet.context-path=<%= @server_web_context33 %>"
+<%- end -%>
+
 <%- if !(@kerberos_realms.empty?) -%>
 RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Djava.security.krb5.conf=$RDECK_CONFIG/krb5.conf"
+<%- end -%>
+
+<%- if @server_address -%>
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.address=<%= @server_address %>"
 <%- end -%>
 
 <% if @java_home %>
