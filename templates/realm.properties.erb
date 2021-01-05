@@ -26,15 +26,19 @@
 <%- if @auth_config['file']['auth_users'] -%>
   <%- if @auth_config['file']['auth_users'].kind_of?(Array) -%>
     <%- @auth_config['file']['auth_users'].each do |x| -%>
-<%= x['username'] -%>:<%= x.fetch('password', '-') -%>
-      <%- if x['roles'] -%>
-        <%- x['roles'].each do |v| -%>,<%= v -%><%- end %>
+      <%- if x['username'] and x['password'] -%>
+        <%= x['username'] -%>:<%= x.fetch('password', '-') -%>
+        <%- if x['roles'] -%>
+          <%- x['roles'].each do |v| -%>,<%= v -%><%- end %>
+        <%- end -%>
       <%- end -%>
     <%- end -%>
   <%- else -%>
-<%= @auth_config['file']['auth_users']['username'] -%>:<%= @auth_config['file']['auth_users']['password'] -%>
-    <%- if @auth_config['file']['auth_users']['roles'] -%>
-      <%- @auth_config['file']['auth_users']['roles'].each do |v| -%>,<%= v -%><%- end %>
+    <%- if @auth_config['file']['auth_users']['username'] and @auth_config['file']['auth_users']['password'] -%>
+      <%= @auth_config['file']['auth_users']['username'] -%>:<%= @auth_config['file']['auth_users']['password'] -%>
+      <%- if @auth_config['file']['auth_users']['roles'] -%>
+        <%- @auth_config['file']['auth_users']['roles'].each do |v| -%>,<%= v -%><%- end %>
+      <%- end -%>
     <%- end -%>
   <%- end -%>
 <%- end %>
