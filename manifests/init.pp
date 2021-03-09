@@ -138,6 +138,9 @@
 # [*rdeck_profile_template*]
 #  Allows you to use your own profile template instead of the default from the package maintainer
 #
+# [*rdeck_override_template*]
+#  Allows you to use your own override template instead of the default from the package maintainer
+#
 # [*rss_enabled*]
 #  Boolean value if set to true enables RSS feeds that are public (non-authenticated)
 #
@@ -261,6 +264,7 @@ class rundeck (
   Stdlib::Absolutepath $rdeck_home                              = $rundeck::params::rdeck_home,
   Boolean $manage_home                                          = $rundeck::params::manage_home,
   Optional[String] $rdeck_profile_template                      = undef,
+  String $rdeck_override_template                               = 'rundeck/profile_overrides.erb',
   String $realm_template                                        = $rundeck::params::realm_template,
   Stdlib::HTTPUrl $repo_yum_source                              = $rundeck::params::repo_yum_source,
   String $repo_yum_gpgkey                                       = $rundeck::params::repo_yum_gpgkey,

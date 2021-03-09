@@ -55,6 +55,7 @@ class rundeck::config {
   $rdeck_home                         = $rundeck::rdeck_home
   $manage_home                        = $rundeck::manage_home
   $rdeck_profile_template             = $rundeck::rdeck_profile_template
+  $rdeck_override_template            = $rundeck::rdeck_override_template
   $realm_template                     = $rundeck::realm_template
   $rss_enabled                        = $rundeck::rss_enabled
   $security_config                    = $rundeck::security_config
@@ -191,8 +192,10 @@ class rundeck::config {
     }
   }
 
-  file { "${overrides_dir}/${service_name}":
-    content => template('rundeck/profile_overrides.erb'),
+  if ($rdeck_override_template) {
+    file { "${overrides_dir}/${service_name}":
+      content => template($rdeck_override_template),
+    }
   }
 
   contain rundeck::config::global::framework
