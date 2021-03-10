@@ -138,6 +138,15 @@ describe 'rundeck' do
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.config\.encryptionType = "basic"}) }
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.config\.password = "verysecure"}) }
       end
+
+      describe "rundeck::config::global::rundeck_config class without username and roles headers on #{os}" do
+        preauthenticated_config_hash = {
+        }
+        let(:params) { { preauthenticated_config: preauthenticated_config_hash } }
+
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.authorization\.preauthenticated\.userNameHeader.*}) }
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.authorization\.preauthenticated\.userRolesHeader.*}) }
+      end
     end
   end
 end
