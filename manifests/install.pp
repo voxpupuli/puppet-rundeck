@@ -10,6 +10,7 @@ class rundeck::install {
   assert_private()
 
   $manage_repo        = $rundeck::manage_repo
+  $package_name       = $rundeck::package_name
   $package_ensure     = $rundeck::package_ensure
   $repo_yum_source    = $rundeck::repo_yum_source
   $repo_yum_gpgkey    = $rundeck::repo_yum_gpgkey
@@ -68,7 +69,7 @@ class rundeck::install {
         }
       }
 
-      ensure_packages(['rundeck'], { 'ensure' => $package_ensure, notify => Class['rundeck::service'] })
+      ensure_packages([$package_name], { 'ensure' => $package_ensure, notify => Class['rundeck::service'] })
     }
     'Debian': {
       if $manage_repo {
@@ -84,7 +85,7 @@ class rundeck::install {
           before   => Package['rundeck'],
         }
       }
-      ensure_packages(['rundeck'], { 'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] })
+      ensure_packages([$package_name], { 'ensure' => $package_ensure, notify => Class['rundeck::service'], require => Class['apt::update'] })
     }
     default: {
       err("The osfamily: ${facts['os']['family']} is not supported")
