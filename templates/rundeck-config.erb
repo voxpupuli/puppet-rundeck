@@ -81,6 +81,7 @@ rundeck.storage.provider."1".config.approleSecretId = "<%= @vault_keystorage_app
 rundeck.storage.provider."1".config.approleAuthMount = "<%= @vault_keystorage_approle_authmount %>"
 rundeck.storage.provider."1".config.authBackend = "<%= @vault_keystorage_authbackend %>"
 rundeck.storage.provider."1".removePathPrefix = true
+rundeck.storage.provider."1".config.engineVersion = 2
 <%- else -%>
 rundeck.storage.provider."1".type = "db"
 <%- end -%>
