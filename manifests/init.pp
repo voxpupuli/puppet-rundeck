@@ -96,6 +96,10 @@
 #
 # Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
 #
+# [*package_name*]
+#
+# Specify package name
+#
 # [*package_ensure*]
 #  Ensure the state of the rundeck package, either present, absent or a specific version
 #
@@ -251,6 +255,7 @@ class rundeck (
   Boolean $manage_default_admin_policy                          = $rundeck::params::manage_default_admin_policy,
   Boolean $manage_default_api_policy                            = $rundeck::params::manage_default_api_policy,
   Boolean $manage_repo                                          = $rundeck::params::manage_repo,
+  String $package_name                                          = $rundeck::params::package_name,
   String $package_ensure                                        = $rundeck::params::package_ensure,
   Hash $preauthenticated_config                                 = $rundeck::params::preauthenticated_config,
   Hash $projects                                                = $rundeck::params::projects,
