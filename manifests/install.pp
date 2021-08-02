@@ -57,14 +57,15 @@ class rundeck::install {
   case $facts['os']['family'] {
     'RedHat': {
       if $manage_repo {
-        yumrepo { 'bintray-rundeck':
-          baseurl  => $repo_yum_source,
-          descr    => 'bintray rundeck repo',
-          enabled  => '1',
-          gpgcheck => '1',
-          gpgkey   => $repo_yum_gpgkey,
-          priority => '1',
-          before   => Package['rundeck'],
+        yumrepo { 'rundeck':
+          baseurl       => $repo_yum_source,
+          descr         => 'rundeck repo',
+          enabled       => '1',
+          gpgcheck      => '0',
+          gpgkey        => $repo_yum_gpgkey,
+          repo_gpgcheck => '1',
+          priority      => '1',
+          before        => Package['rundeck'],
         }
       }
 
@@ -73,12 +74,13 @@ class rundeck::install {
     'Debian': {
       if $manage_repo {
         include apt
-        apt::source { 'bintray-rundeck':
+        apt::source { 'rundeck':
           location => $repo_apt_source,
-          release  => '/',
-          repos    => '',
+          release  => 'any',
+          repos    => 'main',
           key      => {
             id     => $repo_apt_key_id,
+            source => $rundeck::repo_apt_gpgkey,
             server => $repo_apt_keyserver,
           },
           before   => Package['rundeck'],
