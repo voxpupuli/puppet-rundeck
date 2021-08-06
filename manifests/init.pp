@@ -30,6 +30,10 @@
 #
 # Key ID for the GPG key for the Debian package
 #
+# [*repo_apt_gpgkey*]
+#
+# Location where the GPG key can be found
+#
 # [*repo_apt_keyserver*]
 #
 # Keysever for the GPG key for the Debian package
@@ -270,6 +274,7 @@ class rundeck (
   String $repo_yum_gpgkey                                       = $rundeck::params::repo_yum_gpgkey,
   Stdlib::HTTPUrl $repo_apt_source                              = $rundeck::params::repo_apt_source,
   String $repo_apt_key_id                                       = $rundeck::params::repo_apt_key_id,
+  Stdlib::Httpsurl $repo_apt_gpgkey                             = $rundeck::params::repo_apt_gpgkey,
   String $repo_apt_keyserver                                    = $rundeck::params::repo_apt_keyserver,
   Boolean $rss_enabled                                          = $rundeck::params::rss_enabled,
   Hash $security_config                                         = $rundeck::params::security_config,

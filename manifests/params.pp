@@ -12,10 +12,11 @@ class rundeck::params {
   $package_ensure = 'installed'
   $service_name = 'rundeckd'
   $manage_repo = true
-  $repo_yum_source = 'http://dl.bintray.com/rundeck/rundeck-rpm/'
-  $repo_yum_gpgkey = 'https://bintray.com/user/downloadSubjectPublicKey?username=rundeck'
-  $repo_apt_source = 'https://dl.bintray.com/rundeck/rundeck-deb'
-  $repo_apt_key_id = '8756C4F765C9AC3CB6B85D62379CE192D401AB61'
+  $repo_yum_source = 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch'
+  $repo_yum_gpgkey = 'https://packagecloud.io/pagerduty/rundeck/gpgkey'
+  $repo_apt_source = 'https://packagecloud.io/pagerduty/rundeck/any'
+  $repo_apt_key_id = '0DDD2FA79B15D736ECEA32B89B5206167C5C34C0'
+  $repo_apt_gpgkey = 'https://packagecloud.io/pagerduty/rundeck/gpgkey'
   $repo_apt_keyserver = 'keyserver.ubuntu.com'
 
   case $facts['os']['family'] {
