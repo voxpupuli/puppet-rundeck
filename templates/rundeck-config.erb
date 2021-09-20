@@ -92,7 +92,7 @@ rundeck.storage.converter."1".<%= k %> = "<%= v %>"
   <%- end -%>
 <%- end -%>
 
-<%- @preauthenticated_config.sort.each do |k,v| -%>
+<%- @preauthenticated_config.each do |k,v| -%>
 rundeck.security.authorization.preauthenticated.<%= k %> = "<%= v %>"
 <%- end -%>
 
