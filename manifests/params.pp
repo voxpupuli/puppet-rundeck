@@ -63,6 +63,7 @@ class rundeck::params {
   $auth_users = {}
   $auth_template = 'rundeck/jaas-auth.conf.erb'
 
+  $log4j_version = '1'
   $log_properties_template = 'rundeck/log4j.properties.erb'
 
   $acl_template = 'rundeck/aclpolicy.erb'

@@ -1,7 +1,11 @@
 loglevel.default = "<%= @rd_loglevel %>"
 rdeck.base = "<%= @rdeck_base %>"
 rss.enabled = "<%= @rss_enabled %>"
+<%- if @log4j_version == '2'-%>
+log4j.configurationFile = "<%= @properties_dir %>/log4j2.properties"
+<%- else -%>
 rundeck.log4j.config.file = "<%= @properties_dir %>/log4j.properties"
+<%- end -%>
 
 <%- if @security_config.key?('useHMacRequestTokens') -%>
 rundeck.security.useHMacRequestTokens = <%= @security_config['useHMacRequestTokens'] %>

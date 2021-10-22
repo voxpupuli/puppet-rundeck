@@ -124,6 +124,12 @@ describe 'rundeck' do
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.executionMode = "passive"}) }
       end
 
+      describe "rundeck::config::global::rundeck_config class with log4j_version '2' on #{os}" do
+        let(:params) { { log4j_version: '2' } }
+
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{log4j\.configurationFile = "/etc/rundeck/log4j2.properties"}) }
+      end
+
       describe "rundeck::config::global::rundeck_config class with key storage encryption on #{os}" do
         storage_encrypt_config_hash = {
           'type'                  => 'thetype',
