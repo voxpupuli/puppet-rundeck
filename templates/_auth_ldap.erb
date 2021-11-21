@@ -14,9 +14,7 @@ provider_url =
   providerUrl="<%= provider_url %>"
   authenticationMethod="simple"
   forceBindingLogin="<%= @auth_config['ldap']['force_binding'] %>"
-<%- if !@auth_config['ldap']['force_binding_use_root'].nil? && @auth_config['ldap']['force_binding_use_root'] != :undef -%>
   forceBindingLoginUseRootContextForRoles="<%= @auth_config['ldap']['force_binding_use_root'] %>"
-<%- end -%>
 <%- if !@auth_config['ldap']['bind_dn'].nil? && @auth_config['ldap']['bind_dn'] != :undef -%>
   bindDn="<%= @auth_config['ldap']['bind_dn']%>"
 <%- end -%>

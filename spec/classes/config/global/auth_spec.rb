@@ -136,6 +136,33 @@ describe 'rundeck' do
         end
       end
 
+      describe 'ldap force_binding_use_root' do
+        context 'by default' do
+          let(:params) do
+            {
+              auth_types: %w[ldap],
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(%r{forceBindingLoginUseRootContextForRoles="false"}) }
+        end
+
+        context 'when set' do
+          let(:params) do
+            {
+              auth_types: %w[ldap],
+              auth_config: {
+                'ldap' => {
+                  'force_binding_use_root' => true,
+                }
+              }
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(%r{forceBindingLoginUseRootContextForRoles="true"}) }
+        end
+      end
+
       describe 'with multiauth active_directory and file auth users array' do
         let(:params) do
           {
