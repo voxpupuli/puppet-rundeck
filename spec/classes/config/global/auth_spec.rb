@@ -163,6 +163,96 @@ describe 'rundeck' do
         end
       end
 
+      describe 'when ldap and set bind_dn' do
+        let(:params) do
+          {
+            auth_types: %w[ldap],
+            auth_config: { 'ldap' => { 'bind_dn' => 'toto' } }
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(
+            %r{bindDn="toto"}
+          )
+        end
+      end
+
+      describe 'when ldap and set bind_password' do
+        let(:params) do
+          {
+            auth_types: %w[ldap],
+            auth_config: { 'ldap' => { 'bind_password' => 'toto' } }
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(
+            %r{bindPassword="toto"}
+          )
+        end
+      end
+
+      describe 'when pam and clear_pass' do
+        let(:params) do
+          {
+            auth_types: %w[pam],
+            auth_config: { 'pam' => { 'clear_pass' => 'toto' } }
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(
+            %r{clearPass="toto"}
+          )
+        end
+      end
+
+      describe 'when pam and try_first_pass' do
+        let(:params) do
+          {
+            auth_types: %w[pam],
+            auth_config: { 'pam' => { 'try_first_pass' => 'toto' } }
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(
+            %r{tryFirstPass="toto"}
+          )
+        end
+      end
+
+      describe 'when pam and use_first_pass' do
+        let(:params) do
+          {
+            auth_types: %w[pam],
+            auth_config: { 'pam' => { 'use_first_pass' => 'toto' } }
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(
+            %r{useFirstPass="toto"}
+          )
+        end
+      end
+
+      describe 'when pam and use_unix_groups' do
+        let(:params) do
+          {
+            auth_types: %w[pam],
+            auth_config: { 'pam' => { 'use_unix_groups' => 'toto' } }
+          }
+        end
+
+        it do
+          is_expected.to contain_file('/etc/rundeck/jaas-auth.conf').with_content(
+            %r{useUnixGroups="toto"}
+          )
+        end
+      end
+
       describe 'with multiauth active_directory and file auth users array' do
         let(:params) do
           {

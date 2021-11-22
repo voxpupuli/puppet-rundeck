@@ -11,7 +11,7 @@ org.rundeck.jaas.jetty.JettyPamLoginModule requisite
 <%- if !@auth_config['pam']['use_first_pass'].nil? && @auth_config['pam']['use_first_pass'] != :undef -%>
   useFirstPass="<%= @auth_config['pam']['use_first_pass'] %>"
 <%- end -%>
-<%- if !@auth_config['pam']['use_unix_groups'] && @auth_config['pam']['use_unix_groups'] != :undef -%>
+<%- if !@auth_config['pam']['use_unix_groups'].nil? && @auth_config['pam']['use_unix_groups'] != :undef -%>
   useUnixGroups="<%= @auth_config['pam']['use_unix_groups'] %>"
 <%- end -%>
   storePass="<%= @auth_config['pam']['store_pass'] %>";
