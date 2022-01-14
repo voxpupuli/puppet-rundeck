@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck::config::resource_source', type: :define do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -42,9 +44,9 @@ describe 'rundeck::config::resource_source', type: :define do
         file_details.each do |key, value|
           it do
             is_expected.to contain_ini_setting("source one::#{key}").with(
-              'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
+              'path' => '/var/lib/rundeck/projects/test/etc/project.properties',
               'setting' => key,
-              'value'   => value
+              'value' => value
             )
           end
         end
@@ -84,9 +86,9 @@ describe 'rundeck::config::resource_source', type: :define do
         url_details.each do |key, value|
           it do
             is_expected.to contain_ini_setting("source one::#{key}").with(
-              'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
+              'path' => '/var/lib/rundeck/projects/test/etc/project.properties',
               'setting' => key,
-              'value'   => value
+              'value' => value
             )
           end
         end
@@ -117,9 +119,9 @@ describe 'rundeck::config::resource_source', type: :define do
         directory_details.each do |key, value|
           it do
             is_expected.to contain_ini_setting("source one::#{key}").with(
-              'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
+              'path' => '/var/lib/rundeck/projects/test/etc/project.properties',
               'setting' => key,
-              'value'   => value
+              'value' => value
             )
           end
         end
@@ -155,9 +157,9 @@ describe 'rundeck::config::resource_source', type: :define do
         script_details.each do |key, value|
           it do
             is_expected.to contain_ini_setting("source one::#{key}").with(
-              'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
+              'path' => '/var/lib/rundeck/projects/test/etc/project.properties',
               'setting' => key,
-              'value'   => value
+              'value' => value
             )
           end
         end
@@ -205,9 +207,9 @@ describe 'rundeck::config::resource_source', type: :define do
         puppet_enterprise_details.each do |key, value|
           it do
             is_expected.to contain_ini_setting("source one::#{key}").with(
-              'path'    => '/var/lib/rundeck/projects/test/etc/project.properties',
+              'path' => '/var/lib/rundeck/projects/test/etc/project.properties',
               'setting' => key,
-              'value'   => value
+              'value' => value
             )
           end
         end

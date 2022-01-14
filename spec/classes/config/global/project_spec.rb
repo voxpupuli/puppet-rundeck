@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -23,9 +25,9 @@ describe 'rundeck' do
         project_details.each do |key, value|
           it do
             is_expected.to contain_ini_setting(key).with(
-              'path'    => '/etc/rundeck/project.properties',
+              'path' => '/etc/rundeck/project.properties',
               'setting' => key,
-              'value'   => value
+              'value' => value
             )
           end
         end

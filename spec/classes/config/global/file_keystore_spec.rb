@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -13,15 +15,15 @@ describe 'rundeck' do
             file_keystorage_dir: '/var/lib/rundeck/var/storage',
             file_keystorage_keys: {
               'password_key' => {
-                'value'        => 'gobbledygook',
-                'path'         => 'foo/bar',
-                'data_type'    => 'password',
+                'value' => 'gobbledygook',
+                'path' => 'foo/bar',
+                'data_type' => 'password',
                 'content_type' => 'application/x-rundeck-data-password'
               },
               'public_key' => {
-                'value'        => 'ssh-rsa AAAAB3rhwL1EoAIuI3hw9wZL146zjPZ6FIqgZKvO24fpZENYnNfmHn5AuOGBXYGTjeVPMzwV7o0mt3iRWk8J9Ujqvzp45IHfEAE7SO2frEIbfALdcwcNggSReQa0du4nd user@localhost',
-                'path'         => 'foo/bar',
-                'data_type'    => 'public',
+                'value' => 'ssh-rsa AAAAB3rhwL1EoAIuI3hw9wZL146zjPZ6FIqgZKvO24fpZENYnNfmHn5AuOGBXYGTjeVPMzwV7o0mt3iRWk8J9Ujqvzp45IHfEAE7SO2frEIbfALdcwcNggSReQa0du4nd user@localhost',
+                'path' => 'foo/bar',
+                'data_type' => 'public',
                 'content_type' => 'application/pgp-keys'
               }
             }

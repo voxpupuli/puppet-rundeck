@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module PuppetX
   # Module to capture all untility extensions for the Rundeck puppet module
@@ -33,7 +34,7 @@ module PuppetX
           type_section.each do |e|
             raise_err("for:#{type} entry is not a Hash") unless e.is_a? Hash
           end
-          type_section.each do |e|
+          type_section.each do |e| # rubocop:disable Style/CombinableLoops
             e.each do |k, v|
               if k.eql?('allow') || k.eql?('deny')
                 action_found = true
@@ -73,9 +74,10 @@ module PuppetX
               end
             end
             raise_err("for:#{type} does not contain a rule action of [allow,deny]") unless action_found
-            if scope.eql?('project')
+            case scope
+            when 'project'
               validate_proj_actions(type, actions, property, value) if property.to_s != '' || type.eql?('adhoc') || type.eql?('node')
-            elsif scope.eql?('application')
+            when 'application'
               validate_app_actions(type, actions, property, value)
             end
           end
@@ -84,8 +86,8 @@ module PuppetX
         def validate_proj_actions(type, actions, property, value = '')
           project_actions = {
             'resource' => {
-              'job'   => %w[create delete],
-              'node'  => %w[read create update refresh],
+              'job' => %w[create delete],
+              'node' => %w[read create update refresh],
               'event' => %w[read create]
             },
             'adhoc' => %w[read run runAs kill killAs],
@@ -101,9 +103,7 @@ module PuppetX
             case property
             when 'job', 'node', 'event'
               actions.each do |action|
-                unless project_actions[type][property].include?(action)
-                  raise_err("for:resource kind:#{property} can only contain actions #{project_actions[type][property]}")
-                end
+                raise_err("for:resource kind:#{property} can only contain actions #{project_actions[type][property]}") unless project_actions[type][property].include?(action)
               end
             end
           when 'adhoc', 'node'
@@ -126,9 +126,9 @@ module PuppetX
           app_actions = {
             'resource' => {
               'project' => ['create'],
-              'system'  => ['read'],
-              'user'    => ['admin'],
-              'job'     => ['admin']
+              'system' => ['read'],
+              'user' => ['admin'],
+              'job' => ['admin']
             },
             'project' => { 'name' => %w[read configure delete import export delete_execution admin] },
             'storage' => {
@@ -183,9 +183,10 @@ module PuppetX
             raise_err('for is empty')
           else
             scope = context.keys[0]
-            if scope.eql?('project')
+            case scope
+            when 'project'
               resource_types = %w[job node adhoc project resource]
-            elsif scope.eql?('application')
+            when 'application'
               resource_types = %w[resource project storage]
             else
               raise_err("unknown scope: #{scope}")
@@ -196,6 +197,7 @@ module PuppetX
             end
             resource_types.each do |type|
               next unless for_section.key?(type)
+
               if !for_section[type].is_a? Array
                 raise_err("for:#{type} is not an Array")
               elsif for_section[type].empty?

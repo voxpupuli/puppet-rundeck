@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
@@ -28,7 +30,7 @@ describe 'rundeck' do
           is_expected.to contain_ini_setting(key).with(
             'path' => '/etc/rundeck/ssl/ssl.properties',
             'setting' => key,
-            'value'   => value
+            'value' => value
           )
         end
       end

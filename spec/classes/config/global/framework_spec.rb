@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -55,6 +57,7 @@ describe 'rundeck' do
           end
         end
       end
+
       context 'setting framework.server.{port,url}' do
         describe 'with non-default framework.server.hostname' do
           let(:params) do
@@ -71,6 +74,7 @@ describe 'rundeck' do
             )
           end
         end
+
         describe 'ssl_enabled with non-default SSL port' do
           let(:params) do
             {
@@ -85,6 +89,7 @@ describe 'rundeck' do
               with_content(%r{framework\.server\.url = https://foo\.example\.com:443})
           end
         end
+
         describe 'ssl_enabled with non-default framework.server.hostname' do
           let(:params) do
             {

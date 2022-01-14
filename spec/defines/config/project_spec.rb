@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck::config::project', type: :define do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -15,7 +17,7 @@ describe 'rundeck::config::project', type: :define do
           {
             framework_config: {
               'framework.projects.dir' => projects_dir,
-              'framework.ssh.keypath'  => '/var/lib/rundeck/.ssh/id_rsa'
+              'framework.ssh.keypath' => '/var/lib/rundeck/.ssh/id_rsa'
             },
             file_copier_provider: 'jsch-scp',
             resource_sources: {},
@@ -42,9 +44,9 @@ describe 'rundeck::config::project', type: :define do
         project_details.each do |key, value|
           it do
             is_expected.to contain_ini_setting("test::#{key}").with(
-              'path'    => '/var/rundeck/projects/test/etc/project.properties',
+              'path' => '/var/rundeck/projects/test/etc/project.properties',
               'setting' => key,
-              'value'   => value
+              'value' => value
             )
           end
         end

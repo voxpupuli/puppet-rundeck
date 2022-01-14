@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'validate_rd_policy' do
@@ -43,19 +45,19 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'  => {}).and_raise_error(Puppet::ParseError, 'The policy is invalid - context is empty')
+                                         'context' => {}).and_raise_error(Puppet::ParseError, 'The policy is invalid - context is empty')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'  => '').and_raise_error(Puppet::ParseError, 'The policy is invalid - context is not a Hash')
+                                         'context' => '').and_raise_error(Puppet::ParseError, 'The policy is invalid - context is not a Hash')
         end
       end
 
       context 'context:project' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'  => {
+                                         'context' => {
                                            'fubar' => ''
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - context can only be project or application')
         end
