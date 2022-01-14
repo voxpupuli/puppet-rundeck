@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       overrides = '/etc/default/rundeckd'
       overrides = '/etc/sysconfig/rundeckd' if %w[RedHat Amazon].include? facts[:os]['family']
 
@@ -20,6 +22,7 @@ describe 'rundeck' do
         it { is_expected.to contain_file('/etc/rundeck').with('ensure' => 'directory') }
 
         it { is_expected.to contain_file('/etc/rundeck/jaas-auth.conf') }
+
         it 'generates valid content for jaas-auth.conf' do
           content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
           expect(content).to include('PropertyFileLoginModule')
@@ -27,12 +30,14 @@ describe 'rundeck' do
         end
 
         it { is_expected.to contain_file('/etc/rundeck/realm.properties') }
+
         it 'generates valid content for realm.properties' do
           content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
           expect(content).to include('admin:admin,user,admin,architect,deploy,build')
         end
 
         it { is_expected.to contain_file('/etc/rundeck/log4j.properties') }
+
         it 'generates valid content for log4j.propertiess' do
           content = catalogue.resource('file', '/etc/rundeck/log4j.properties')[:content]
           expect(content).to include('log4j.appender.server-logger.file=/var/log/rundeck/rundeck.log')
@@ -67,6 +72,7 @@ describe 'rundeck' do
         let(:params) { { rdeck_override_template: template } }
 
         it { is_expected.to contain_file(overrides) }
+
         it 'uses the content for the profile overrides template' do
           content = catalogue.resource('file', overrides)[:content]
           expect(content).to include('test override template')
@@ -78,6 +84,7 @@ describe 'rundeck' do
         let(:params) { { jvm_args: jvm_args } }
 
         it { is_expected.to contain_file(overrides) }
+
         it 'generates valid content for the profile overrides file' do
           content = catalogue.resource('file', overrides)[:content]
           expect(content).to include("RDECK_JVM_SETTINGS=\"#{jvm_args}\"")

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -11,6 +13,7 @@ describe 'rundeck' do
         let(:params) { {} }
 
         it { is_expected.not_to contain_user('rundeck') }
+
         it do
           is_expected.to contain_file('/var/rundeck').with(
             ensure: 'directory',
@@ -36,6 +39,7 @@ describe 'rundeck' do
           it { is_expected.to contain_package('rundeck').that_requires('Class[apt::update]') }
         end
       end
+
       describe 'different user and group' do
         let(:params) do
           {
@@ -54,6 +58,7 @@ describe 'rundeck' do
 
         it { is_expected.to contain_user('rundeck').with('ensure' => 'absent') }
       end
+
       describe 'different user and group with ids' do
         let(:params) do
           {

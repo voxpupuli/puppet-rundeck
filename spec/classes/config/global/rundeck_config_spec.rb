@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -126,10 +128,10 @@ describe 'rundeck' do
 
       describe "rundeck::config::global::rundeck_config class with key storage encryption on #{os}" do
         storage_encrypt_config_hash = {
-          'type'                  => 'thetype',
-          'path'                  => '/storagepath',
+          'type' => 'thetype',
+          'path' => '/storagepath',
           'config.encryptionType' => 'basic',
-          'config.password'       => 'verysecure'
+          'config.password' => 'verysecure'
         }
         let(:params) { { storage_encrypt_config: storage_encrypt_config_hash } }
 

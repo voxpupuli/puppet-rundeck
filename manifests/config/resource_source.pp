@@ -80,23 +80,23 @@
 define rundeck::config::resource_source (
   Stdlib::Absolutepath $directory                                = $rundeck::params::default_resource_dir,
   Boolean $include_server_node                                   = $rundeck::params::include_server_node,
-  String $mapping_params                                         = '',
+  String $mapping_params                                         = '', # lint:ignore:params_empty_string_assignment
   Integer $number                                                = 1,
   Optional[String] $project_name                                 = undef,
   Enum['resourcexml', 'resourceyaml'] $resource_format           = $rundeck::params::resource_format,
   Boolean $running_only                                          = true,
-  String $script_args                                            = '',
+  String $script_args                                            = '', # lint:ignore:params_empty_string_assignment
   Boolean $script_args_quoted                                    = $rundeck::params::script_args_quoted,
   Optional[Stdlib::Absolutepath] $script_file                    = undef,
   String $script_interpreter                                     = $rundeck::params::script_interpreter,
   Rundeck::Sourcetype $source_type                               = $rundeck::params::default_source_type,
-  String $url                                                    = '',
+  String $url                                                    = '', # lint:ignore:params_empty_string_assignment
   Boolean $url_cache                                             = $rundeck::params::url_cache,
   Integer $url_timeout                                           = $rundeck::params::url_timeout,
   Boolean $use_default_mapping                                   = true,
   Optional[String] $endpoint_url                                 = undef,
   Optional[String[1]] $assume_role_arn                           = undef,
-  String $filter_tag                                             = '',
+  String $filter_tag                                             = '', # lint:ignore:params_empty_string_assignment
   Stdlib::Port $http_proxy_port                                  = $rundeck::params::default_http_proxy_port,
   Integer $refresh_interval                                      = $rundeck::params::default_refresh_interval,
   Optional[String] $puppet_enterprise_host                       = undef,

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck::config::plugin', type: :define do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -27,9 +29,9 @@ describe 'rundeck::config::plugin', type: :define do
 
         it do
           is_expected.to contain_file("#{plugin_dir}/#{name}").with(
-            'mode'   => '0644',
-            'owner'  => 'rundeck',
-            'group'  => 'rundeck'
+            'mode' => '0644',
+            'owner' => 'rundeck',
+            'group' => 'rundeck'
           )
         end
       end

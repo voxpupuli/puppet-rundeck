@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -33,6 +35,7 @@ describe 'rundeck' do
           end
 
           it { is_expected.to contain_file('/etc/rundeck/jaas-auth.conf') }
+
           it 'generates valid content for jaas-auth.conf' do
             content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
             expect(content).to include('roleUsernameMemberAttribute="memberUid"')
@@ -45,16 +48,17 @@ describe 'rundeck' do
             {
               auth_types: ['ldap'],
               auth_config: {
-                'ldap'     => {
-                  'url'    => 'ldaps://myrealldap.example.com',
+                'ldap' => {
+                  'url' => 'ldaps://myrealldap.example.com',
                   'server' => 'fakeldap',
-                  'port'   => '983'
+                  'port' => '983'
                 }
               }
             }
           end
 
           it { is_expected.to contain_file('/etc/rundeck/jaas-auth.conf') }
+
           it 'generates valid content for jaas-auth.conf' do
             content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
             expect(content).to include('providerUrl="ldaps://myrealldap.example.com"')
@@ -69,6 +73,7 @@ describe 'rundeck' do
           end
 
           it { is_expected.to contain_file('/etc/rundeck/framework.properties') }
+
           it 'uses fqdn fact for \'rundeck.server.uuid\'' do
             content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
             expect(content).to include('rundeck.server.uuid = ac7c2cbd-14fa-5ba3-b3f2-d436e9b8a3b0')

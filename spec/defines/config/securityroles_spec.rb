@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck::config::securityroles', type: :define do
@@ -14,7 +16,7 @@ describe 'rundeck::config::securityroles', type: :define do
         let(:title) { 'source one' }
         let(:params) do
           {
-            'package_ensure'               => 'latest',
+            'package_ensure' => 'latest',
             'security_roles_array_enabled' => true
           }
         end
@@ -23,7 +25,7 @@ describe 'rundeck::config::securityroles', type: :define do
 
         security_roles_array.each do |roles|
           it "augeas with param: #{roles}" do
-            contain_augeas('rundeck/web.xml/security-role/role-name') .with_changes(["set web-app/security-role/role-name/#text '#{roles}'"])
+            contain_augeas('rundeck/web.xml/security-role/role-name').with_changes(["set web-app/security-role/role-name/#text '#{roles}'"])
           end
         end
       end

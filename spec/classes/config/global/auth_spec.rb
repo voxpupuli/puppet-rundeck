@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
   let(:login_module) { 'org.eclipse.jetty.jaas.spi.PropertyFileLoginModule sufficient' }
 
   on_supported_os.each do |os, facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         facts
       end
@@ -57,12 +59,12 @@ describe 'rundeck' do
                   {
                     'username' => 'testuser',
                     'password' => 'password',
-                    'roles'    => %w[user deploy]
+                    'roles' => %w[user deploy]
                   },
                   {
                     'username' => 'anotheruser',
                     'password' => 'anotherpassword',
-                    'roles'    => ['user']
+                    'roles' => ['user']
                   }
                 ]
               }
@@ -93,34 +95,34 @@ describe 'rundeck' do
                   {
                     'username' => 'testuser',
                     'password' => 'password',
-                    'roles'    => %w[user deploy]
+                    'roles' => %w[user deploy]
                   },
                   {
                     'username' => 'anotheruser',
                     'password' => 'anotherpassword',
-                    'roles'    => ['user']
+                    'roles' => ['user']
                   }
                 ]
               },
 
               'ldap' => {
-                'debug'                   => 'true',
-                'url'                     => 'localhost:389',
-                'force_binding'           => 'true',
-                'force_binding_use_root'  => 'true',
-                'bind_dn'                 => 'test_rundeck',
-                'bind_password'           => 'abc123',
-                'user_base_dn'            => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
-                'user_rdn_attribute'      => 'sAMAccountName',
-                'user_id_attribute'       => 'sAMAccountName',
+                'debug' => 'true',
+                'url' => 'localhost:389',
+                'force_binding' => 'true',
+                'force_binding_use_root' => 'true',
+                'bind_dn' => 'test_rundeck',
+                'bind_password' => 'abc123',
+                'user_base_dn' => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
+                'user_rdn_attribute' => 'sAMAccountName',
+                'user_id_attribute' => 'sAMAccountName',
                 'user_password_attribute' => 'unicodePwd',
-                'user_object_class'       => 'user',
-                'role_base_dn'            => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
-                'role_name_attribute'     => 'cn',
-                'role_member_attribute'   => 'member',
-                'role_object_class'       => 'group',
-                'supplemental_roles'      => 'user',
-                'nested_groups'           => 'true'
+                'user_object_class' => 'user',
+                'role_base_dn' => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
+                'role_name_attribute' => 'cn',
+                'role_member_attribute' => 'member',
+                'role_object_class' => 'group',
+                'supplemental_roles' => 'user',
+                'nested_groups' => 'true'
               }
             }
           }
@@ -144,34 +146,34 @@ describe 'rundeck' do
                   {
                     'username' => 'testuser',
                     'password' => 'password',
-                    'roles'    => %w[user deploy]
+                    'roles' => %w[user deploy]
                   },
                   {
                     'username' => 'anotheruser',
                     'password' => 'anotherpassword',
-                    'roles'    => ['user']
+                    'roles' => ['user']
                   }
                 ]
               },
 
               'active_directory' => {
-                'debug'                   => 'true',
-                'url'                     => 'localhost:389',
-                'force_binding'           => 'true',
-                'force_binding_use_root'  => 'true',
-                'bind_dn'                 => 'test_rundeck',
-                'bind_password'           => 'abc123',
-                'user_base_dn'            => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
-                'user_rdn_attribute'      => 'sAMAccountName',
-                'user_id_attribute'       => 'sAMAccountName',
+                'debug' => 'true',
+                'url' => 'localhost:389',
+                'force_binding' => 'true',
+                'force_binding_use_root' => 'true',
+                'bind_dn' => 'test_rundeck',
+                'bind_password' => 'abc123',
+                'user_base_dn' => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
+                'user_rdn_attribute' => 'sAMAccountName',
+                'user_id_attribute' => 'sAMAccountName',
                 'user_password_attribute' => 'unicodePwd',
-                'user_object_class'       => 'user',
-                'role_base_dn'            => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
-                'role_name_attribute'     => 'cn',
-                'role_member_attribute'   => 'member',
-                'role_object_class'       => 'group',
-                'supplemental_roles'      => 'user',
-                'nested_groups'           => 'true'
+                'user_object_class' => 'user',
+                'role_base_dn' => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
+                'role_name_attribute' => 'cn',
+                'role_member_attribute' => 'member',
+                'role_object_class' => 'group',
+                'supplemental_roles' => 'user',
+                'nested_groups' => 'true'
               }
             }
           }
@@ -221,7 +223,7 @@ describe 'rundeck' do
                 'auth_users' => {
                   'username' => 'testuser',
                   'password' => 'password',
-                  'roles'    => %w[user deploy]
+                  'roles' => %w[user deploy]
                 }
               }
             }
@@ -246,7 +248,7 @@ describe 'rundeck' do
             auth_types: %w[ldap],
             auth_config: {
               'ldap' => {
-                'url'         => 'localhost:389',
+                'url' => 'localhost:389',
                 'role_prefix' => 'rundeck_'
               }
             }
@@ -265,7 +267,7 @@ describe 'rundeck' do
             auth_types: %w[active_directory],
             auth_config: {
               'active_directory' => {
-                'url'         => 'localhost:389',
+                'url' => 'localhost:389',
                 'role_prefix' => 'rundeck_'
               }
             }

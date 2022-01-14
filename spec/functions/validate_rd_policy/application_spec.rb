@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'validate_rd_policy' do
@@ -43,26 +45,26 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {}).and_raise_error(Puppet::ParseError, 'The policy is invalid - context is empty')
+                                         'context' => {}).and_raise_error(Puppet::ParseError, 'The policy is invalid - context is empty')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => '').and_raise_error(Puppet::ParseError, 'The policy is invalid - context is not a Hash')
+                                         'context' => '').and_raise_error(Puppet::ParseError, 'The policy is invalid - context is not a Hash')
         end
       end
 
       context 'context:application' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'fubar' => ''
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - context can only be project or application')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => {}
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - context:application is not a String')
         end
@@ -71,7 +73,7 @@ describe 'validate_rd_policy' do
       context 'for' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => '').and_raise_error(Puppet::ParseError, 'The policy is invalid - for is not a Hash')
@@ -79,7 +81,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {}).and_raise_error(Puppet::ParseError, 'The policy is invalid - for is empty')
@@ -87,7 +89,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -99,7 +101,7 @@ describe 'validate_rd_policy' do
       context 'for:resource' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -109,7 +111,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -119,7 +121,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -129,7 +131,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -139,7 +141,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -154,7 +156,7 @@ describe 'validate_rd_policy' do
       context 'for:resource rules' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -168,7 +170,7 @@ describe 'validate_rd_policy' do
       context 'for:resource matching' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -182,7 +184,7 @@ describe 'validate_rd_policy' do
       context 'for:resource kind:project' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -197,7 +199,7 @@ describe 'validate_rd_policy' do
       context 'for:resource kind:system' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -212,7 +214,7 @@ describe 'validate_rd_policy' do
       context 'for:resource kind:user' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -226,7 +228,7 @@ describe 'validate_rd_policy' do
       context 'for:resource kind:job' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -240,7 +242,7 @@ describe 'validate_rd_policy' do
       context 'for:project' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -250,7 +252,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -260,7 +262,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -270,7 +272,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -280,7 +282,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -295,7 +297,7 @@ describe 'validate_rd_policy' do
       context 'for:project rules' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -309,7 +311,7 @@ describe 'validate_rd_policy' do
       context 'for:project matching' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -323,7 +325,7 @@ describe 'validate_rd_policy' do
       context 'for:project property:name' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -338,7 +340,7 @@ describe 'validate_rd_policy' do
       context 'for:storage' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -348,7 +350,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -358,7 +360,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -368,7 +370,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -378,7 +380,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -393,7 +395,7 @@ describe 'validate_rd_policy' do
       context 'for:storage rules' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -407,7 +409,7 @@ describe 'validate_rd_policy' do
       context 'for:storage matching' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -421,7 +423,7 @@ describe 'validate_rd_policy' do
       context 'for:storage property:name' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -436,7 +438,7 @@ describe 'validate_rd_policy' do
       context 'for:storage property:path' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -451,7 +453,7 @@ describe 'validate_rd_policy' do
       context 'by' do
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -464,7 +466,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -477,7 +479,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -490,7 +492,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {
@@ -503,7 +505,7 @@ describe 'validate_rd_policy' do
 
         it do
           is_expected.to run.with_params('description' => 'test',
-                                         'context'     => {
+                                         'context' => {
                                            'application' => 'rundeck'
                                          },
                                          'for' => {

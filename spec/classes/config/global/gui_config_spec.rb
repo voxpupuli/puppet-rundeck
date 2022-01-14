@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rundeck' do
@@ -7,9 +9,9 @@ describe 'rundeck' do
       let(:params) do
         {
           gui_config: {
-            'rundeck.gui.title'         => 'Test title',
-            'rundeck.gui.brand.html'    => '<b>App</b>',
-            'rundeck.gui.logo'          => 'test-logo.png',
+            'rundeck.gui.title' => 'Test title',
+            'rundeck.gui.brand.html' => '<b>App</b>',
+            'rundeck.gui.logo' => 'test-logo.png',
             'rundeck.gui.login.welcome' => 'Weclome to Rundeck'
           }
         }
