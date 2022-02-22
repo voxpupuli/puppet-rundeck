@@ -31,6 +31,9 @@ dataSource {
   password = "<%= @database_config['password'] %>"
   dialect = "<%= @database_config['dialect'] %>"
   <%- end -%>
+  properties {
+    maxActive = 100
+  }
 }
 
 <%- if !@mail_config.empty? && @mail_config.keys != ['defaults.from'] %>
