@@ -32,7 +32,7 @@ dataSource {
   dialect = "<%= @database_config['dialect'] %>"
   <%- end -%>
   properties {
-    maxActive = 100
+    maxActive = "<%= @database_config['maxactive'] %>"
   }
 }
 

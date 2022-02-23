@@ -271,6 +271,7 @@ class rundeck::params {
     'password'        => '',
     'dialect'         => '',
     'enable_h2_logs'  => 'on',
+    'maxactive'       => '50',
   }
 
   $kerberos_realms = {}
