@@ -63,6 +63,7 @@ class rundeck::config {
   $server_web_context                 = $rundeck::server_web_context
   $service_logs_dir                   = $rundeck::service_logs_dir
   $service_name                       = $rundeck::service_name
+  $service_restart                    = $rundeck::service_restart
   $session_timeout                    = $rundeck::session_timeout
   $ssl_enabled                        = $rundeck::ssl_enabled
   $ssl_port                           = $rundeck::ssl_port
