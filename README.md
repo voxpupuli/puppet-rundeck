@@ -259,6 +259,10 @@ The password for the given truststore.
 
 The name of the rundeck service.
 
+##### `service_restart`
+
+The restart of the rundeck service (default to true).
+
 ##### `mail_config`
 
 A hash of the notification email configuraton.

@@ -45,6 +45,10 @@ class rundeck::config::global::rundeck_config {
     ensure => absent,
   }
 
+  $_service_notify = $rundeck::config::service_restart ? {
+    false => undef,
+    default => Service[$rundeck::config::service_name]
+  }
   file { $properties_file:
     ensure  => file,
     content => template($rdeck_config_template),
@@ -52,6 +56,6 @@ class rundeck::config::global::rundeck_config {
     group   => $group,
     mode    => '0640',
     require => File[$properties_dir],
-    notify  => Service[$rundeck::params::service_name],
+    notify  => $_service_notify,
   }
 }

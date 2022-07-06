@@ -163,6 +163,9 @@
 # [*service_name*]
 #  The name of the rundeck service.
 #
+# [*service_restart*]
+#  The restart of the rundeck service (default to true)
+#
 #  [*service_ensure*]
 #  State of the rundeck service (defaults to 'running')
 #
@@ -283,6 +286,7 @@ class rundeck (
   Optional[String] $service_config                              = undef,
   Stdlib::Absolutepath $service_logs_dir                        = $rundeck::params::service_logs_dir,
   String $service_name                                          = $rundeck::params::service_name,
+  Boolean $service_restart                                      = true,
   Optional[String] $service_script                              = undef,
   Enum['stopped', 'running'] $service_ensure                    = $rundeck::params::service_ensure,
   Integer $session_timeout                                      = $rundeck::params::session_timeout,
