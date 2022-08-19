@@ -313,5 +313,7 @@ class rundeck (
 
   Class['rundeck::install']
   -> Class['rundeck::config']
-  ~> Class['rundeck::service']
+
+  if $service_restart { Class['rundeck::config'] ~> Class['rundeck::service'] }
+  else { Class['rundeck::config'] -> Class['rundeck::service'] }
 }
