@@ -118,9 +118,6 @@
 # [*projects_storage_type*]
 #  The storage type for any projects. Must be 'filesystem' or 'db'
 #
-# [*properties_dir*]
-#  The path to the configuration directory where the properties file are stored.
-#
 # [*quartz_job_threadcount*]
 #  The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
 #
@@ -129,9 +126,6 @@
 #
 # [*rd_auditlevel*]
 #  The log4j logging level to be set for the Rundeck application.
-#
-# [*rdeck_base*]
-#  The installation directory for rundeck.
 #
 # [*rdeck_config_template*]
 #  Allows you to override the rundeck-config template
