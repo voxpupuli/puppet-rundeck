@@ -20,10 +20,10 @@ describe 'rundeck' do
       # content and meta data for passwords
       it 'generates gui_config content for rundeck-config.groovy' do
         is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').
-          with_content(%r{rundeck.gui.title = "Test title"}).
-          with_content(%r{rundeck.gui.brand.html = "<b>App</b>"}).
-          with_content(%r{rundeck.gui.logo = "test-logo.png"}).
-          with_content(%r{rundeck.gui.login.welcome = "Weclome to Rundeck"})
+          with_content(sensitive(%r{rundeck.gui.title = "Test title"})).
+          with_content(sensitive(%r{rundeck.gui.brand.html = "<b>App</b>"})).
+          with_content(sensitive(%r{rundeck.gui.logo = "test-logo.png"})).
+          with_content(sensitive(%r{rundeck.gui.login.welcome = "Weclome to Rundeck"}))
       end
     end
   end

@@ -16,7 +16,7 @@ describe 'rundeck' do
         }
         let(:params) { { security_config: security_hash } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.useHMacRequestTokens = #{value}}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.useHMacRequestTokens = #{value}})) }
       end
 
       describe "rundeck::config::global::rundeck_config class with use api cookie access parameter on #{os}" do
@@ -26,7 +26,7 @@ describe 'rundeck' do
         }
         let(:params) { { security_config: security_hash } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.apiCookieAccess\.enabled = #{value}}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.apiCookieAccess\.enabled = #{value}})) }
       end
 
       describe "rundeck::config::global::rundeck_config class with api tokens duration parameter on #{os}" do
@@ -36,7 +36,7 @@ describe 'rundeck' do
         }
         let(:params) { { security_config: security_hash } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.api\.tokens\.duration\.max = "#{duration}"}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.api\.tokens\.duration\.max = "#{duration}"})) }
       end
 
       describe "rundeck::config::global::rundeck_config class with csrf referrer filter method parameter on #{os}" do
@@ -46,7 +46,7 @@ describe 'rundeck' do
         }
         let(:params) { { security_config: security_hash } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.csrf\.referer\.filterMethod = #{value}}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.csrf\.referer\.filterMethod = #{value}})) }
       end
 
       describe "rundeck::config::global::rundeck_config class with csrf referrer require https parameter on #{os}" do
@@ -56,7 +56,7 @@ describe 'rundeck' do
         }
         let(:params) { { security_config: security_hash } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.csrf\.referer\.requireHttps = #{value}}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.csrf\.referer\.requireHttps = #{value}})) }
       end
 
       describe "rundeck::config::global::rundeck_config class with no security parameters on #{os}" do
@@ -66,12 +66,12 @@ describe 'rundeck' do
         security_hash = {}
         let(:params) { { security_config: security_hash } }
 
-        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.useHMacRequestTokens = #{bool_value}}) }
-        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.apiCookieAccess\.enabled = #{bool_value}}) }
-        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.api\.tokens\.duration\.max = "#{duration}"}) }
-        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.csrf\.referer\.filterMethod = #{filter_method_parameter}}) }
-        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.csrf\.referer\.allowApi = #{bool_value}}) }
-        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.csrf\.referer\.requireHttps = #{bool_value}}) }
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.useHMacRequestTokens = #{bool_value}})) }
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.apiCookieAccess\.enabled = #{bool_value}})) }
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.api\.tokens\.duration\.max = "#{duration}"})) }
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.csrf\.referer\.filterMethod = #{filter_method_parameter}})) }
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.csrf\.referer\.allowApi = #{bool_value}})) }
+        it { is_expected.not_to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.security\.csrf\.referer\.requireHttps = #{bool_value}})) }
       end
 
       describe "rundeck::config::global::rundeck_config class without any parameters on #{os}" do
@@ -111,19 +111,19 @@ describe 'rundeck' do
 
         CONFIG
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with('content' => default_config) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with('content' => sensitive(default_config)) }
       end
 
       describe "rundeck::config::global::rundeck_config class with execution mode parameter 'active' on #{os}" do
         let(:params) { { execution_mode: 'active' } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.executionMode = "active"}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.executionMode = "active"})) }
       end
 
       describe "rundeck::config::global::rundeck_config class with execution mode parameter 'passive' on #{os}" do
         let(:params) { { execution_mode: 'passive' } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.executionMode = "passive"}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.executionMode = "passive"})) }
       end
 
       describe "rundeck::config::global::rundeck_config class with key storage encryption on #{os}" do
@@ -135,10 +135,10 @@ describe 'rundeck' do
         }
         let(:params) { { storage_encrypt_config: storage_encrypt_config_hash } }
 
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.type = "thetype"}) }
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.path = "/storagepath"}) }
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.config\.encryptionType = "basic"}) }
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.storage\.converter\."1"\.config\.password = "verysecure"}) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.storage\.converter\."1"\.type = "thetype"})) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.storage\.converter\."1"\.path = "/storagepath"})) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.storage\.converter\."1"\.config\.encryptionType = "basic"})) }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(sensitive(%r{rundeck\.storage\.converter\."1"\.config\.password = "verysecure"})) }
       end
     end
   end
