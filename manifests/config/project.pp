@@ -94,14 +94,14 @@ define rundeck::config::project (
 
   file { $scm_import_properties_file:
     ensure  => file,
-    content => template('rundeck/scm-import.properties.erb'),
+    content => epp('rundeck/keyval.epp', { 'kvlist' => $scm_import_properties }),
     owner   => $user,
     group   => $group,
   }
 
   file { $scm_export_properties_file:
     ensure  => file,
-    content => template('rundeck/scm-export.properties.erb'),
+    content => epp('rundeck/keyval.epp', { 'kvlist' => $scm_export_properties }),
     owner   => $user,
     group   => $group,
     require => File["${project_dir}/etc"],

@@ -1,0 +1,4 @@
+<%- | Hash $kvlist = {} | -%>
+<% $kvlist.keys.sort.each | $k | { -%>
+<%= $k %> = <%= $kvlist[$k] %>
+<% } -%>
