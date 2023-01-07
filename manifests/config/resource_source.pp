@@ -32,9 +32,6 @@
 # [*project_name*]
 #   The name of the project for which this resource in intended to be a part.
 #
-# [*projects_dir*]
-#   The directory where rundeck is configured to store project information.
-#
 # [*refresh_interval*]
 #   How often the data will be updated.
 #
