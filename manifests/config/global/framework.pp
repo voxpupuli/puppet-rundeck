@@ -39,7 +39,7 @@ class rundeck::config::global::framework {
 
   file { $properties_file:
     ensure  => file,
-    content => template('rundeck/framework.properties.erb'),
+    content => epp('rundeck/keyval.epp', { 'kvlist' => $framework_config }),
     owner   => $user,
     group   => $group,
     mode    => '0640',
