@@ -20,6 +20,9 @@
 # [*clustermode_enabled*]
 #  Boolean value if set to true enables cluster mode
 #
+# [*custom_config*]
+#  Hash of properties for customizing the rundeck-config file
+#
 # [*execution_mode*]
 #  If set, allows setting the execution mode to 'active' or 'passive'.
 #
@@ -75,7 +78,7 @@
 #  The default key password.
 #
 # [*key_storage_type*]
-#  Type used to store secrets. Must be 'file', 'db' or 'vault'
+#  Type used to store secrets. Must be 'cyberark', 'file', 'db', thycotic or 'vault'
 #
 # [*keystore*]
 #  Full path to the java keystore to be used by Rundeck.
@@ -135,6 +138,12 @@
 #
 # [*rdeck_config_template*]
 #  Allows you to override the rundeck-config template
+#
+# [*rdeck_config_template_type*]
+#  Format rdeck_config_template between epp and erb
+#
+# [*rdeck_config_type*]
+#  String value : set to groovy manage rundeck-config.groovy file or set to properties manage rundeck-config.properties file
 #
 # [*rdeck_home*]
 #  directory under which the projects directories live.
@@ -230,18 +239,19 @@ class rundeck (
   String $auth_template                                         = $rundeck::params::auth_template,
   Array $auth_types                                             = $rundeck::params::auth_types,
   Boolean $clustermode_enabled                                  = $rundeck::params::clustermode_enabled,
+  Hash $custom_config                                           = {},
   Hash $database_config                                         = $rundeck::params::database_config,
   Optional[Enum['active', 'passive']] $execution_mode           = undef,
   Stdlib::Absolutepath $file_keystorage_dir                     = $rundeck::params::file_keystorage_dir,
   Hash $file_keystorage_keys                                    = $rundeck::params::file_keystorage_keys,
   Hash $framework_config                                        = $rundeck::params::framework_config,
   Stdlib::HTTPUrl $grails_server_url                            = $rundeck::params::grails_server_url,
-  Hash $gui_config                                              = $rundeck::params::gui_config,
+  Hash $gui_config                                              = {},
   Optional[Stdlib::Absolutepath] $java_home                     = undef,
   String $jvm_args                                              = $rundeck::params::jvm_args,
   Hash $kerberos_realms                                         = $rundeck::params::kerberos_realms,
   String $key_password                                          = $rundeck::params::key_password,
-  Enum['db', 'file', 'vault'] $key_storage_type                 = $rundeck::params::key_storage_type,
+  Rundeck::KeyStorageType $key_storage_type                     = $rundeck::params::key_storage_type,
   Stdlib::Absolutepath $keystore                                = $rundeck::params::keystore,
   Optional[Stdlib::HTTPSUrl] $vault_keystorage_url              = undef,
   Optional[String[1]] $vault_keystorage_prefix                  = undef,
@@ -267,7 +277,9 @@ class rundeck (
   Integer $quartz_job_threadcount                               = $rundeck::params::quartz_job_threadcount,
   Rundeck::Loglevel $rd_loglevel                                = $rundeck::params::loglevel,
   Rundeck::Loglevel $rd_auditlevel                              = $rundeck::params::loglevel,
-  String $rdeck_config_template                                 = $rundeck::params::rdeck_config_template,
+  String $rdeck_config_template                                 = 'rundeck/rundeck-config.groovy.erb',
+  Enum['erb', 'epp'] $rdeck_config_template_type                = 'erb',
+  Enum['groovy','properties'] $rdeck_config_type                = 'groovy',
   Stdlib::Absolutepath $rdeck_home                              = $rundeck::params::rdeck_home,
   Boolean $manage_home                                          = $rundeck::params::manage_home,
   Optional[String] $rdeck_profile_template                      = undef,

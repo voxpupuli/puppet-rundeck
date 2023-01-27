@@ -109,6 +109,7 @@ describe 'rundeck' do
           rundeck.security.authorization.preauthenticated.redirectLogout = "false"
           rundeck.security.authorization.preauthenticated.redirectUrl = "/oauth2/sign_in"
 
+
         CONFIG
 
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with('content' => default_config) }

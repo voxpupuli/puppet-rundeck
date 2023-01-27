@@ -284,7 +284,6 @@ class rundeck::params {
   $truststore_password = 'adminadmin'
 
   $resource_sources = {}
-  $gui_config = {}
 
   $preauthenticated_config = {
     'enabled'         => false,
@@ -311,8 +310,6 @@ class rundeck::params {
   $web_xml = "${rdeck_base}/exp/webapp/WEB-INF/web.xml"
   $security_role = 'user'
   $session_timeout = 30
-
-  $rdeck_config_template = 'rundeck/rundeck-config.erb'
 
   $file_keystorage_keys = {}
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"

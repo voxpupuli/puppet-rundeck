@@ -81,8 +81,10 @@ rundeck.storage.provider."1".config.approleSecretId = "<%= @vault_keystorage_app
 rundeck.storage.provider."1".config.approleAuthMount = "<%= @vault_keystorage_approle_authmount %>"
 rundeck.storage.provider."1".config.authBackend = "<%= @vault_keystorage_authbackend %>"
 rundeck.storage.provider."1".removePathPrefix = true
-<%- else -%>
+<%- elsif @key_storage_type == 'db' -%>
 rundeck.storage.provider."1".type = "db"
+<%- else -%>
+rundeck.storage.provider."1".type = "<%= @key_storage_type %>-storage"
 <%- end -%>
 rundeck.storage.provider."1".path = "/"
 <%- if !@storage_encrypt_config.empty? -%>
@@ -97,5 +99,9 @@ rundeck.security.authorization.preauthenticated.<%= k %> = "<%= v %>"
 <%- end -%>
 
 <%- @gui_config.sort.each do |k,v| -%>
+<%= k %> = "<%= v %>"
+<%- end -%>
+
+<%- @custom_config.sort.each do |k,v| -%>
 <%= k %> = "<%= v %>"
 <%- end -%>

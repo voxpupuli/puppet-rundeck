@@ -1,0 +1,116 @@
+#loglevel.default is the default log level for jobs: ERROR,WARN,INFO,VERBOSE,DEBUG
+loglevel.default=<%= $rundeck::config::global::rundeck_config::rd_loglevel %>
+rdeck.base=<%= $rundeck::config::global::rundeck_config::rdeck_base %>
+log4j.configurationFile=<%= $rundeck::config::global::rundeck_config::properties_dir %>/log4j2.properties
+
+#rss.enabled if set to true enables RSS feeds that are public (non-authenticated)
+rss.enabled=<%= $rundeck::config::global::rundeck_config::rss_enabled %>
+
+grails.serverURL=<%= $rundeck::config::global::rundeck_config::grails_server_url %>
+
+rundeck.clusterMode.enabled=<%= $rundeck::config::global::rundeck_config::clustermode_enabled %>
+<%- if $rundeck::config::global::rundeck_config::execution_mode { -%>
+rundeck.executionMode=<%= $rundeck::config::global::rundeck_config::execution_mode %>
+<%- } -%>
+quartz.threadPool.threadCount=<%= $rundeck::config::global::rundeck_config::quartz_job_threadcount %>
+
+# Datasource
+dataSource.dbCreate=<%= $rundeck::config::global::rundeck_config::database_config['dbCreate'] %>
+dataSource.url=<%= $rundeck::config::global::rundeck_config::database_config['url'] %>
+<%- if $rundeck::config::global::rundeck_config::database_config['type'] != 'h2' { -%>
+dataSource.driverClassName=<%= $rundeck::config::global::rundeck_config::database_config['driverClassName'] %>
+dataSource.username=<%= $rundeck::config::global::rundeck_config::database_config['username'] %>
+dataSource.password=<%= $rundeck::config::global::rundeck_config::database_config['password'] %>
+dataSource.dialect=<%= $rundeck::config::global::rundeck_config::database_config['dialect'] %>
+<%- } -%>
+
+# Security
+<%- if $rundeck::config::global::rundeck_config::security_config['useHMacRequestTokens'] { -%>
+rundeck.security.useHMacRequestTokens=<%= $rundeck::config::global::rundeck_config::security_config['useHMacRequestTokens'] %>
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::security_config['apiCookieAccess'] { -%>
+rundeck.security.apiCookieAccess.enabled=<%= $rundeck::config::global::rundeck_config::security_config['apiCookieAccess'] %>
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::security_config['apiTokensDuration'] { -%>
+rundeck.api.tokens.duration.max=<%= $rundeck::config::global::rundeck_config::security_config['apiTokensDuration'] %>
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::security_config['csrfRefererFilterMethod'] { -%>
+rundeck.security.csrf.referer.filterMethod=<%= $rundeck::config::global::rundeck_config::security_config['csrfRefererFilterMethod'] %>
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::security_config['csrfRefererAllowApi'] { -%>
+rundeck.security.csrf.referer.allowApi=<%= $rundeck::config::global::rundeck_config::security_config['csrfRefererAllowApi'] %>
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::security_config['csrfRefererRequireHttps'] { -%>
+rundeck.security.csrf.referer.requireHttps=<%= $rundeck::config::global::rundeck_config::security_config['csrfRefererRequireHttps'] %>
+<%- } -%>
+
+# Encryption for key storage
+<%- if $rundeck::config::global::rundeck_config::key_storage_type == 'file' { -%>
+rundeck.storage.provider.1.type=file
+rundeck.storage.provider.1.config.baseDir=<%= $rundeck::config::global::rundeck_config::file_keystorage_dir %>
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::key_storage_type in ['cyberark', 'thycotic', 'vault'] { -%>
+rundeck.storage.provider.1.type=<%= $rundeck::config::global::rundeck_config::key_storage_type %>-storage
+rundeck.storage.provider.1.path=keys
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::key_storage_type == 'vault' { -%>
+rundeck.storage.provider.1.config.prefix=<%= $rundeck::config::global::rundeck_config::vault_keystorage_prefix %>
+rundeck.storage.provider.1.config.address=<%= $rundeck::config::global::rundeck_config::vault_keystorage_url %>
+rundeck.storage.provider.1.config.storageBehaviour=rundeck
+rundeck.storage.provider.1.config.secretBackend=kv
+rundeck.storage.provider.1.config.approleId=<%= $rundeck::config::global::rundeck_config::vault_keystorage_approle_approleid %>
+rundeck.storage.provider.1.config.approleSecretId=<%= $rundeck::config::global::rundeck_config::vault_keystorage_approle_secretid %>
+rundeck.storage.provider.1.config.approleAuthMount=<%= $rundeck::config::global::rundeck_config::vault_keystorage_approle_authmount %>
+rundeck.storage.provider.1.config.authBackend=<%= $rundeck::config::global::rundeck_config::vault_keystorage_authbackend %>
+rundeck.storage.provider.1.removePathPrefix=true
+<%- } -%>
+<%- if $rundeck::config::global::rundeck_config::key_storage_type == 'db' { -%>
+rundeck.storage.provider.1.type=db
+rundeck.storage.provider.1.path=keys
+<%- } -%>
+
+<%- $rundeck::config::global::rundeck_config::storage_encrypt_config.each | $k, $v | { -%>
+rundeck.storage.converter.1.<%= $k %>=<%= $v %>
+<%- } -%>
+
+# Encryption for project config storage
+rundeck.projectsStorageType=<%= $rundeck::config::global::rundeck_config::projects_storage_type %>
+
+<%- $rundeck::config::global::rundeck_config::preauthenticated_config.each | $k, $v | { -%>
+rundeck.security.authorization.preauthenticated.<%= $k %>=<%= $v %>
+<%- } -%>
+
+<%- if $rundeck::config::global::rundeck_config::mail_config { -%>
+# Mail
+  <%- if $rundeck::config::global::rundeck_config::mail_config['defaults.from'] { -%>
+grails.mail.default.from=<%= $rundeck::config::global::rundeck_config::mail_config['defaults.from'] %>
+  <%- } else { -%>
+    <%- if $rundeck::config::global::rundeck_config::mail_config['host'] { -%>
+grails.mail.host=<%= $rundeck::config::global::rundeck_config::mail_config['host'] %>
+    <%- } -%>
+    <%- if $rundeck::config::global::rundeck_config::mail_config['username'] { -%>
+grails.mail.username=<%= $rundeck::config::global::rundeck_config::mail_config['username'] %>
+    <%- } -%>
+    <%- if $rundeck::config::global::rundeck_config::mail_config['port'] { -%>
+grails.mail.port=<%= $rundeck::config::global::rundeck_config::mail_config['port'] %>
+    <%- } -%>
+    <%- if $rundeck::config::global::rundeck_config::mail_config['password'] { -%>
+grails.mail.password=<%= $rundeck::config::global::rundeck_config::mail_config['password'] %>
+    <%- } -%>
+    <%- if $rundeck::config::global::rundeck_config::mail_config['props'] { -%>
+      <% $rundeck::config::global::rundeck_config::mail_config['props'].each | $k, $v | { -%>
+grails.mail.props.<%= $k %>=<%= $v %>
+      <% } %>
+    <%- } -%>
+  <%- } -%>
+<%- } -%>
+
+# Gui config
+<%- $rundeck::config::global::rundeck_config::gui_config.each | $k, $v | { -%>
+<%= $k %>=<%= $v %>
+<%- } -%>
+
+# Custom config
+<%- $rundeck::config::global::rundeck_config::custom_config.each | $k, $v | { -%>
+<%= $k %>=<%= $v %>
+<%- } -%>

@@ -10,6 +10,7 @@ class rundeck::config::global::rundeck_config {
   assert_private()
 
   $clustermode_enabled                  = $rundeck::config::clustermode_enabled
+  $custom_config                        = $rundeck::config::custom_config
   $execution_mode                       = $rundeck::config::execution_mode
   $file_keystorage_dir                  = $rundeck::config::file_keystorage_dir
   $vault_keystorage_prefix              = $rundeck::config::vault_keystorage_prefix
@@ -30,19 +31,30 @@ class rundeck::config::global::rundeck_config {
   $rd_loglevel                          = $rundeck::config::rd_loglevel
   $rdeck_base                           = $rundeck::config::rdeck_base
   $rdeck_config_template                = $rundeck::config::rdeck_config_template
+  $rdeck_config_template_type           = $rundeck::config::rdeck_config_template_type
+  $rdeck_config_type                    = $rundeck::config::rdeck_config_type
   $rss_enabled                          = $rundeck::config::rss_enabled
   $security_config                      = $rundeck::config::security_config
   $storage_encrypt_config               = $rundeck::config::storage_encrypt_config
   $user                                 = $rundeck::config::user
 
-  $properties_file = "${properties_dir}/rundeck-config.groovy"
-
   ensure_resource('file', $properties_dir, { 'ensure' => 'directory', 'owner' => $user, 'group' => $group })
 
   $database_config = merge($rundeck::params::database_config, $rundeck::config::database_config)
 
-  file { "${properties_dir}/rundeck-config.properties":
-    ensure => absent,
+  case $rdeck_config_type {
+    'groovy': {
+      $properties_file = "${properties_dir}/rundeck-config.groovy"
+      file { "${properties_dir}/rundeck-config.properties":
+        ensure => absent,
+      }
+    }
+    default: {
+      $properties_file = "${properties_dir}/rundeck-config.properties"
+      file { "${properties_dir}/rundeck-config.groovy":
+        ensure => absent,
+      }
+    }
   }
 
   $_service_notify = $rundeck::config::service_restart ? {
@@ -51,7 +63,7 @@ class rundeck::config::global::rundeck_config {
   }
   file { $properties_file:
     ensure  => file,
-    content => template($rdeck_config_template),
+    content => ($rdeck_config_template_type ? { 'epp' => epp($rdeck_config_template), default => template($rdeck_config_template), }),
     owner   => $user,
     group   => $group,
     mode    => '0640',

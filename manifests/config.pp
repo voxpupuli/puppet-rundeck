@@ -16,6 +16,7 @@ class rundeck::config {
   $auth_template                      = $rundeck::auth_template
   $auth_types                         = $rundeck::auth_types
   $clustermode_enabled                = $rundeck::clustermode_enabled
+  $custom_config                      = $rundeck::custom_config
   $database_config                    = $rundeck::database_config
   $execution_mode                     = $rundeck::execution_mode
   $file_default_mode                  = $rundeck::file_default_mode
@@ -52,6 +53,8 @@ class rundeck::config {
   $rd_loglevel                        = $rundeck::rd_loglevel
   $rd_auditlevel                      = $rundeck::rd_auditlevel
   $rdeck_config_template              = $rundeck::rdeck_config_template
+  $rdeck_config_template_type         = $rundeck::rdeck_config_template_type
+  $rdeck_config_type                  = $rundeck::rdeck_config_type
   $rdeck_home                         = $rundeck::rdeck_home
   $manage_home                        = $rundeck::manage_home
   $rdeck_profile_template             = $rundeck::rdeck_profile_template
