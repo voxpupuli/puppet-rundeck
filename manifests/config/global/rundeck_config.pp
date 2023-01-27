@@ -22,6 +22,7 @@ class rundeck::config::global::rundeck_config {
   $group                                = $rundeck::config::group
   $gui_config                           = $rundeck::config::gui_config
   $key_storage_type                     = $rundeck::config::key_storage_type
+  $log4j_version                        = $rundeck::config::log4j_version
   $mail_config                          = $rundeck::config::mail_config
   $preauthenticated_config              = $rundeck::config::preauthenticated_config
   $projects_storage_type                = $rundeck::config::projects_storage_type

@@ -37,6 +37,7 @@ class rundeck::config {
   $key_storage_type                   = $rundeck::key_storage_type
   $keystore                           = $rundeck::keystore
   $keystore_password                  = $rundeck::keystore_password
+  $log4j_version                      = $rundeck::log4j_version
   $log_properties_template            = $rundeck::log_properties_template
   $mail_config                        = $rundeck::mail_config
   $manage_default_admin_policy        = $rundeck::manage_default_admin_policy
@@ -161,9 +162,23 @@ class rundeck::config {
     require => File[$properties_dir],
   }
 
-  file { "${properties_dir}/log4j.properties":
-    content => template($log_properties_template),
-    require => File[$properties_dir],
+  case $log4j_version {
+    '2': {
+      file { "${properties_dir}/log4j2.properties":
+        content => epp($log_properties_template),
+        require => File[$properties_dir],
+      }
+      file { "${properties_dir}/log4j.properties":
+        ensure  => absent,
+        require => File[$properties_dir],
+      }
+    }
+    default: {
+      file { "${properties_dir}/log4j.properties":
+        content => epp($log_properties_template),
+        require => File[$properties_dir],
+      }
+    }
   }
 
   if $manage_default_admin_policy {

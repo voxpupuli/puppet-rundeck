@@ -38,7 +38,7 @@ describe 'rundeck' do
 
         it { is_expected.to contain_file('/etc/rundeck/log4j.properties') }
 
-        it 'generates valid content for log4j.propertiess' do
+        it 'generates valid content for log4j.properties' do
           content = catalogue.resource('file', '/etc/rundeck/log4j.properties')[:content]
           expect(content).to include('log4j.appender.server-logger.file=/var/log/rundeck/rundeck.log')
         end
@@ -58,6 +58,22 @@ describe 'rundeck' do
 
         it { is_expected.to contain_rundeck__config__aclpolicyfile('admin') }
         it { is_expected.to contain_rundeck__config__aclpolicyfile('apitoken') }
+      end
+
+      describe 'rundeck::config with log4j2' do
+        let(:params) do
+          {
+            log4j_version: '2',
+            log_properties_template: 'rundeck/log4j2.properties.epp'
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/rundeck/log4j2.properties') }
+
+        it 'generates valid content for log4j2.properties' do
+          content = catalogue.resource('file', '/etc/rundeck/log4j2.properties')[:content]
+          expect(content).to include('appender.rundeck.fileName = ${baseDir}/rundeck.log')
+        end
       end
 
       describe 'rundeck::config with rdeck_profile_template set' do

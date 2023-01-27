@@ -83,6 +83,9 @@
 # [*keystore_password*]
 #  The password for the given keystore.
 #
+# [*log4j_version*]
+#  Version log4j
+#
 # [*mail_config*]
 #  A hash of the notification email configuraton.
 #
@@ -250,6 +253,7 @@ class rundeck (
   Optional[String[1]] $vault_keystorage_approle_authmount       = undef,
   Optional[String[1]] $vault_keystorage_authbackend             = undef,
   String $keystore_password                                     = $rundeck::params::keystore_password,
+  Enum['1', '2'] $log4j_version                                 = '1',
   String $log_properties_template                               = $rundeck::params::log_properties_template,
   Hash $mail_config                                             = $rundeck::params::mail_config,
   Boolean $sshkey_manage                                        = $rundeck::params::sshkey_manage,
