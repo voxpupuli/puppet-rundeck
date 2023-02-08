@@ -178,5 +178,5 @@ define rundeck::config::project (
     require => File[$properties_file],
   }
 
-  create_ini_settings($node_executor_settings, $node_executor_settings_defaults)
+  inifile::create_ini_settings($node_executor_settings, $node_executor_settings_defaults)
 }
