@@ -51,7 +51,7 @@
     },
     {
       "name": "puppetlabs/inifile",
-      "version_requirement": ">= 1.4.1 < 6.0.0"
+      "version_requirement": ">= 4.1.0 < 6.0.0"
     },
     {
       "name": "puppetlabs/java_ks",
