@@ -203,7 +203,7 @@ class rundeck::params {
       'force_binding'           => true,
       'force_binding_use_root'  => true,
       'bind_dn'                 => undef,
-      'bind_password'           => undef,
+      'bind_password'           => Sensitive(undef),
       'user_base_dn'            => undef,
       'user_rdn_attribute'      => 'sAMAccountName',
       'user_id_attribute'       => 'sAMAccountName',
@@ -268,7 +268,7 @@ class rundeck::params {
     'url'             => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true',
     'driverClassName' => '',
     'username'        => '',
-    'password'        => '',
+    'password'        => Sensitive(''),
     'dialect'         => '',
     'enable_h2_logs'  => 'on',
   }
