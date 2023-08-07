@@ -51,7 +51,9 @@ class rundeck::config::global::rundeck_config {
   }
   file { $properties_file:
     ensure  => file,
-    content => template($rdeck_config_template),
+    content => epp($rdeck_config_template, {
+        database_config  => $database_config,
+    }),
     owner   => $user,
     group   => $group,
     mode    => '0640',
