@@ -87,8 +87,8 @@ rundeck.storage.provider."1".type = "db"
 rundeck.storage.provider."1".path = "/"
 <%- if !$rundeck::config::global::rundeck_config::storage_encrypt_config.empty { -%>
 
-  <%- $rundeck::config::global::rundeck_config::storage_encrypt_config.each |$k,$v| { -%>
-rundeck.storage.converter."1".<%= $k %> = "<%= $v %>"
+  <%- $rundeck::config::global::rundeck_config::storage_encrypt_config.keys.sort.each |$k| { -%>
+rundeck.storage.converter."1".<%= $k %> = "<%= $rundeck::config::global::rundeck_config::storage_encrypt_config[$k] %>"
   <%- } -%>
 <%- } -%>
 
@@ -96,6 +96,6 @@ rundeck.storage.converter."1".<%= $k %> = "<%= $v %>"
 rundeck.security.authorization.preauthenticated.<%= $k %> = "<%= $v %>"
 <%- } -%>
 
-<%- $rundeck::config::global::rundeck_config::gui_config.each |$k,$v| {-%>
-<%= $k %> = "<%= $v %>"
+<%- $rundeck::config::global::rundeck_config::gui_config.keys.sort.each |$k| {-%>
+<%= $k %> = "<%= $rundeck::config::global::rundeck_config::gui_config[$k] %>"
 <%- } -%>
