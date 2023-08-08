@@ -61,7 +61,7 @@ class rundeck::params {
 
   $auth_types = ['file']
   $auth_users = {}
-  $auth_template = 'rundeck/jaas-auth.conf.erb'
+  $auth_template = 'rundeck/jaas-auth.conf.epp'
 
   $log_properties_template = 'rundeck/log4j.properties.erb'
 
@@ -203,7 +203,7 @@ class rundeck::params {
       'force_binding'           => true,
       'force_binding_use_root'  => true,
       'bind_dn'                 => undef,
-      'bind_password'           => Sensitive(undef),
+      'bind_password'           => undef,
       'user_base_dn'            => undef,
       'user_rdn_attribute'      => 'sAMAccountName',
       'user_id_attribute'       => 'sAMAccountName',

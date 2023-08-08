@@ -157,7 +157,7 @@ class rundeck::config {
     $ldap_login_module = 'JettyCombinedLdapLoginModule'
   }
   file { "${properties_dir}/jaas-auth.conf":
-    content => template($auth_template),
+    content => epp($auth_template),
     require => File[$properties_dir],
   }
 
