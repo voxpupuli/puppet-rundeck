@@ -11,7 +11,7 @@ com.dtolabs.rundeck.jetty.jaas.<%= $rundeck::config::ldap_login_module %> <%= $r
 <%- if $rundeck::config::auth_config['ldap']['force_binding_use_root'] != undef {-%>
   forceBindingLoginUseRootContextForRoles="<%= $rundeck::config::auth_config['ldap']['force_binding_use_root'] %>"
 <%- } -%>
-<%- if $rundeck::config::auth_config['ldap']['bind_dn'] != undef {-%>
+<%- if $rundeck::config::auth_config['ldap']['bind_dn'] {-%>
   bindDn="<%= $rundeck::config::auth_config['ldap']['bind_dn']%>"
 <%- } -%>
 <%- if $rundeck::config::auth_config['ldap']['bind_password'] != undef {-%>
