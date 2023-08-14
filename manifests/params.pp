@@ -61,7 +61,7 @@ class rundeck::params {
 
   $auth_types = ['file']
   $auth_users = {}
-  $auth_template = 'rundeck/jaas-auth.conf.erb'
+  $auth_template = 'rundeck/jaas-auth.conf.epp'
 
   $log_properties_template = 'rundeck/log4j.properties.erb'
 
@@ -268,7 +268,7 @@ class rundeck::params {
     'url'             => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true',
     'driverClassName' => '',
     'username'        => '',
-    'password'        => '',
+    'password'        => Sensitive(''),
     'dialect'         => '',
     'enable_h2_logs'  => 'on',
   }
@@ -312,7 +312,7 @@ class rundeck::params {
   $security_role = 'user'
   $session_timeout = 30
 
-  $rdeck_config_template = 'rundeck/rundeck-config.erb'
+  $rdeck_config_template = 'rundeck/rundeck-config.epp'
 
   $file_keystorage_keys = {}
   $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"

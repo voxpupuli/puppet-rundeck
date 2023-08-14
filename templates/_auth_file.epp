@@ -1,0 +1,3 @@
+org.eclipse.jetty.jaas.spi.PropertyFileLoginModule sufficient
+  debug="true"
+  file="<%= $rundeck::config::auth_config['file']['file'] %>";
