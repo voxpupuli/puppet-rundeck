@@ -4,7 +4,33 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v7.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v7.0.0) (2022-01-14)
+## [v8.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v8.0.0) (2023-08-14)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v7.0.0...v8.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#499](https://github.com/voxpupuli/puppet-rundeck/pull/499) ([bastelfreak](https://github.com/bastelfreak))
+- Inisettings resolve deprecation: use namespaced `create_ini_settings` function [\#497](https://github.com/voxpupuli/puppet-rundeck/pull/497) ([atsonkov](https://github.com/atsonkov))
+
+**Implemented enhancements:**
+
+- Add Ubuntu 20.04/22.04 support [\#507](https://github.com/voxpupuli/puppet-rundeck/pull/507) ([bastelfreak](https://github.com/bastelfreak))
+- Add Debian 11 support [\#506](https://github.com/voxpupuli/puppet-rundeck/pull/506) ([bastelfreak](https://github.com/bastelfreak))
+- Add EL9 support [\#505](https://github.com/voxpupuli/puppet-rundeck/pull/505) ([bastelfreak](https://github.com/bastelfreak))
+- Add OracleLinux/Rocky/AlmaLinux 8 support [\#504](https://github.com/voxpupuli/puppet-rundeck/pull/504) ([bastelfreak](https://github.com/bastelfreak))
+- Add sensitive support for db password and ldap password [\#503](https://github.com/voxpupuli/puppet-rundeck/pull/503) ([nosrio](https://github.com/nosrio))
+- Add Puppet 8 support [\#502](https://github.com/voxpupuli/puppet-rundeck/pull/502) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Allow 9.x [\#501](https://github.com/voxpupuli/puppet-rundeck/pull/501) ([bastelfreak](https://github.com/bastelfreak))
+- add choice to restart service when properties file change [\#486](https://github.com/voxpupuli/puppet-rundeck/pull/486) ([phaedriel](https://github.com/phaedriel))
+
+**Closed issues:**
+
+- RSpec error if used with inifile \>= 4.2.0 [\#496](https://github.com/voxpupuli/puppet-rundeck/issues/496)
+- Add sensitive option for database\_config [\#482](https://github.com/voxpupuli/puppet-rundeck/issues/482)
+- Module doesn't support apt-key through proxy [\#471](https://github.com/voxpupuli/puppet-rundeck/issues/471)
+
+## [v7.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v7.0.0) (2022-01-16)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v6.0.0...v7.0.0)
 
@@ -31,7 +57,7 @@ recent rundeck versions didn't work properly on CentOS 6. This release does not 
 
 **Closed issues:**
 
-- Depracate Bintray and use the newer repositories [\#473](https://github.com/voxpupuli/puppet-rundeck/issues/473)
+- Deprecate Bintray and use the newer repositories [\#473](https://github.com/voxpupuli/puppet-rundeck/issues/473)
 - Support for Rundeck \>3.3.10 [\#469](https://github.com/voxpupuli/puppet-rundeck/issues/469)
 - a colon is added to realm.properties file even when auth\_users hash is empty [\#459](https://github.com/voxpupuli/puppet-rundeck/issues/459)
 - Incorrect configuration key for threadcount [\#435](https://github.com/voxpupuli/puppet-rundeck/issues/435)
@@ -545,7 +571,7 @@ recent rundeck versions didn't work properly on CentOS 6. This release does not 
 - Fix minor README formatting issues [\#47](https://github.com/voxpupuli/puppet-rundeck/pull/47) ([wcooley](https://github.com/wcooley))
 - This should work on any OS. [\#42](https://github.com/voxpupuli/puppet-rundeck/pull/42) ([robertdebock](https://github.com/robertdebock))
 - Add option to configure API acls [\#38](https://github.com/voxpupuli/puppet-rundeck/pull/38) ([ak0ska](https://github.com/ak0ska))
-- Multiple auth users [\#37](https://github.com/voxpupuli/puppet-rundeck/pull/37) ([rkcpi](https://github.com/rkcpi))
+- Multiple auth users [\#37](https://github.com/voxpupuli/puppet-rundeck/pull/37) ([sandra-thieme](https://github.com/sandra-thieme))
 - Syntax problem mixed public and private classes [\#35](https://github.com/voxpupuli/puppet-rundeck/pull/35) ([robertdebock](https://github.com/robertdebock))
 
 ## [v1.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v1.1.0) (2015-03-24)
