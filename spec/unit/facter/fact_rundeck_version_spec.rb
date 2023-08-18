@@ -8,8 +8,8 @@ describe Facter::Util::Fact do
   context 'no rundeck installed | no rd-acl in path' do
     before { allow(Facter::Util::Resolution).to receive('which').with('rd-acl').and_return(false) }
 
-    it { expect(Facter.fact('rundeck_version')).to eq(nil) }
-    it { expect(Facter.fact('rundeck_commitid')).to eq(nil) }
+    it { expect(Facter.fact('rundeck_version')).to be_nil }
+    it { expect(Facter.fact('rundeck_commitid')).to be_nil }
   end
 
   context 'rundeck installed | rd-acl in path with current output format' do

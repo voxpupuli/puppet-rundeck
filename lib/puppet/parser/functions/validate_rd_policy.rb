@@ -6,9 +6,7 @@ require File.expand_path('../../../puppetx/rundeck/acl', __dir__)
 # Usage:
 # Example:
 # Parser
-Puppet::Parser::Functions.newfunction(:validate_rd_policy, doc: <<-'ENDHEREDOC') do |args|
-ENDHEREDOC
-
+Puppet::Parser::Functions.newfunction(:validate_rd_policy, doc: '') do |args|
   raise Puppet::ParseError, "validate_rd_policy(): wrong number of arguments (#{args.length}; must be 1)" unless args.length == 1
 
   args.each do |arg|

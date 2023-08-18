@@ -13,8 +13,7 @@ describe 'rundeck' do
 
       describe 'with empty params' do
         let(:params) do
-          {
-          }
+          {}
         end
 
         it 'generates valid content for realm.properties' do
