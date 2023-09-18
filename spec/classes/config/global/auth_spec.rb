@@ -158,12 +158,12 @@ describe 'rundeck' do
                 'role_member_attribute' => 'member',
                 'role_object_class' => 'group',
                 'supplemental_roles' => 'user',
-                'nested_groups' => 'true'
+                'nested_groups' => 'true',
                 'sync_first_name_attribute' => 'givenName',
                 'sync_last_name_attribute' => 'sn',
                 'sync_email_attribute' => 'mail'
               }
-            }
+            },
             security_config: {
               'syncLdapUser' => true
             }
@@ -256,7 +256,7 @@ describe 'rundeck' do
                 'sync_last_name_attribute' => 'sn',
                 'sync_email_attribute' => 'mail'
               }
-            }
+            },
             security_config: {
               'syncLdapUser' => true
             }
