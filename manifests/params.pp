@@ -196,6 +196,9 @@ class rundeck::params {
       'role_object_class'       => 'group',
       'role_prefix'             => undef,
       'nested_groups'           => true,
+      'sync_first_name_attribute' => 'givenName',
+      'sync_last_name_attribute'  => 'sn',
+      'sync_email_attribute'      => 'mail',
     },
     'active_directory' => {
       'server'                  => undef,
@@ -216,6 +219,9 @@ class rundeck::params {
       'role_prefix'             => undef,
       'supplemental_roles'      => 'user',
       'nested_groups'           => true,
+      'sync_first_name_attribute' => 'givenName',
+      'sync_last_name_attribute'  => 'sn',
+      'sync_email_attribute'      => 'mail',
     },
   }
 

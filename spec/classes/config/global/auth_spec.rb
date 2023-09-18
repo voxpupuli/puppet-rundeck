@@ -136,6 +136,48 @@ describe 'rundeck' do
         end
       end
 
+      describe 'with ldap using ldap_sync' do
+        let(:params) do
+          {
+            auth_types: %w[ldap],
+            auth_config: {
+              'ldap' => {
+                'debug' => 'true',
+                'url' => 'localhost:389',
+                'force_binding' => 'true',
+                'force_binding_use_root' => 'true',
+                'bind_dn' => 'test_rundeck',
+                'bind_password' => 'abc123',
+                'user_base_dn' => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
+                'user_rdn_attribute' => 'sAMAccountName',
+                'user_id_attribute' => 'sAMAccountName',
+                'user_password_attribute' => 'unicodePwd',
+                'user_object_class' => 'user',
+                'role_base_dn' => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
+                'role_name_attribute' => 'cn',
+                'role_member_attribute' => 'member',
+                'role_object_class' => 'group',
+                'supplemental_roles' => 'user',
+                'nested_groups' => 'true'
+                'sync_first_name_attribute' => 'givenName',
+                'sync_last_name_attribute' => 'sn',
+                'sync_email_attribute' => 'mail'
+              }
+            }
+            security_config: {
+              'syncLdapUser' => true
+            }
+          }
+        end
+
+        it 'generates valid content for jaas-auth.conf' do
+          content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
+          expect(content).to include('userFirstNameAttribute=givenName')
+          expect(content).to include('userLastNameAttribute=sn')
+          expect(content).to include('userEmailAttribute=mail')
+        end
+      end
+
       describe 'with multiauth active_directory and file auth users array' do
         let(:params) do
           {
@@ -184,6 +226,48 @@ describe 'rundeck' do
           expect(content).to include('admin:admin,user,admin,architect,deploy,build')
           expect(content).to include('testuser:password,user,deploy')
           expect(content).to include('anotheruser:anotherpassword,user')
+        end
+      end
+
+      describe 'with active_directory using ldap_sync' do
+        let(:params) do
+          {
+            auth_types: %w[active_directory],
+            auth_config: {
+              'active_directory' => {
+                'debug' => 'true',
+                'url' => 'localhost:389',
+                'force_binding' => 'true',
+                'force_binding_use_root' => 'true',
+                'bind_dn' => 'test_rundeck',
+                'bind_password' => 'abc123',
+                'user_base_dn' => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
+                'user_rdn_attribute' => 'sAMAccountName',
+                'user_id_attribute' => 'sAMAccountName',
+                'user_password_attribute' => 'unicodePwd',
+                'user_object_class' => 'user',
+                'role_base_dn' => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
+                'role_name_attribute' => 'cn',
+                'role_member_attribute' => 'member',
+                'role_object_class' => 'group',
+                'supplemental_roles' => 'user',
+                'nested_groups' => 'true',
+                'sync_first_name_attribute' => 'givenName',
+                'sync_last_name_attribute' => 'sn',
+                'sync_email_attribute' => 'mail'
+              }
+            }
+            security_config: {
+              'syncLdapUser' => true
+            }
+          }
+        end
+
+        it 'generates valid content for jaas-auth.conf' do
+          content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
+          expect(content).to include('userFirstNameAttribute=givenName')
+          expect(content).to include('userLastNameAttribute=sn')
+          expect(content).to include('userEmailAttribute=mail')
         end
       end
 
