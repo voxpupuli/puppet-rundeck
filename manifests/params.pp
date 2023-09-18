@@ -265,7 +265,7 @@ class rundeck::params {
   $database_config = {
     'type'            => 'h2',
     'dbCreate'        => 'update',
-    'url'             => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true',
+    'url'             => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb',
     'driverClassName' => '',
     'username'        => '',
     'password'        => Sensitive(''),

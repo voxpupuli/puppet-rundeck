@@ -21,6 +21,11 @@ com.dtolabs.rundeck.jetty.jaas.<%= $rundeck::config::ldap_login_module %> <%= $r
   userRdnAttribute="<%= $rundeck::config::auth_config['ldap']['user_rdn_attribute'] %>"
   userIdAttribute="<%= $rundeck::config::auth_config['ldap']['user_id_attribute'] %>"
   userPasswordAttribute="<%= $rundeck::config::auth_config['ldap']['user_password_attribute'] %>"
+<%- if $rundeck::config::security_config['syncLdapUser'] == true {-%>
+  userFirstNameAttribute="<%= $rundeck::config::auth_config['ldap']['sync_first_name_attribute'] %>"
+  userLastNameAttribute="<%= $rundeck::config::auth_config['ldap']['sync_last_name_attribute'] %>"
+  userEmailAttribute="<%= $rundeck::config::auth_config['ldap']['sync_email_attribute'] %>"
+<%- } -%>
   userObjectClass="<%= $rundeck::config::auth_config['ldap']['user_object_class'] %>"
 <%- if $rundeck::config::auth_config['ldap']['role_prefix'] {-%>
   rolePrefix="<%= $rundeck::config::auth_config['ldap']['role_prefix'] %>"
