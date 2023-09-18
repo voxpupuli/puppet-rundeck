@@ -172,9 +172,9 @@ describe 'rundeck' do
 
         it 'generates valid content for jaas-auth.conf' do
           content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(content).to include('userFirstNameAttribute=givenName')
-          expect(content).to include('userLastNameAttribute=sn')
-          expect(content).to include('userEmailAttribute=mail')
+          expect(content).to include('userFirstNameAttribute="givenName"')
+          expect(content).to include('userLastNameAttribute="sn"')
+          expect(content).to include('userEmailAttribute="mail"')
         end
       end
 
@@ -265,9 +265,9 @@ describe 'rundeck' do
 
         it 'generates valid content for jaas-auth.conf' do
           content = catalogue.resource('file', '/etc/rundeck/jaas-auth.conf')[:content]
-          expect(content).to include('userFirstNameAttribute=givenName')
-          expect(content).to include('userLastNameAttribute=sn')
-          expect(content).to include('userEmailAttribute=mail')
+          expect(content).to include('userFirstNameAttribute="givenName"')
+          expect(content).to include('userLastNameAttribute="sn"')
+          expect(content).to include('userEmailAttribute="mail"')
         end
       end
 
