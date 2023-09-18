@@ -59,6 +59,16 @@ describe 'rundeck' do
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.csrf\.referer\.requireHttps = #{value}}) }
       end
 
+      describe "rundeck::config::global::rundeck_config class with sync ldap user parameter on #{os}" do
+      value = true
+      security_hash = {
+        'syncLdapUser' => value
+      }
+      let(:params) { { security_config: security_hash } }
+
+      it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').with_content(%r{rundeck\.security\.syncLdapUser = #{value}}) }
+    end
+
       describe "rundeck::config::global::rundeck_config class with no security parameters on #{os}" do
         bool_value = true
         filter_method_parameter = 'NONE'
