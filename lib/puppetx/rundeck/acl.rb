@@ -39,7 +39,7 @@ module PuppetX
               if k.eql?('allow') || k.eql?('deny')
                 action_found = true
                 actions = v
-              elsif %w[match equals contains].include?(k)
+              elsif %w[match equals contains subset].include?(k)
                 case type
                 when 'resource'
                   property = v['kind']
