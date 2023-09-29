@@ -88,7 +88,7 @@ describe 'rundeck' do
 
           dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true"
+            url = "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb"
           }
 
           grails.serverURL = "http://foo.example.com:4440"
