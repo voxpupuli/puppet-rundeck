@@ -72,8 +72,8 @@ class rundeck::install {
       ensure_packages(['rundeck'], { 'ensure' => $package_ensure, notify => Class['rundeck::service'] })
     }
     'Debian': {
-      include apt
       if $manage_repo {
+        include apt
         apt::source { 'rundeck':
           location => $repo_apt_source,
           release  => 'any',
