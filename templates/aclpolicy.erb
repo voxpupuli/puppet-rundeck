@@ -10,11 +10,10 @@ for:
   <%- rules.each do |type, action| -%>
   <%- if %w( allow deny ).include?(type) -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>: <%- if action.is_a? String -%>'<%= action %>'<%-else-%><%= action %><%-end%>
-  <%- elsif %w( match equals contains ).include?(type) -%>
+  <%- elsif %w( match equals contains subset ).include?(type) -%>
     <% if first_key -%>-<%- else %> <% end -%> <%= type %>:
     <%- action.each do |k,v| -%>
-      <%- if %w( kind path name nodename group tags rundeck_server ).include?(k) -%><%='  '%><%- else -%><%-end-%>
-      <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
+        <%= k %>: <%- if v.is_a? String -%>'<%= v %>'<%-else-%><%= v %><%-end%>
     <%- end -%>
   <%- end -%>
   <%- first_key = false -%>

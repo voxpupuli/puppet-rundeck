@@ -29,7 +29,21 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         ]
       },
       'by' => [
-        { 'groups' => ['admin'] }
+        { 'group' => ['admin'] }
+      ]
+    },
+    {
+      'description' => 'System-level read access to a specific project',
+      'context' => {
+        'application' => 'rundeck'
+      },
+      'for' => {
+        'project' => [
+          { 'equals' => { 'name' => 'project' }, 'allow' => ['read'] }
+        ]
+      },
+      'by' => [
+        { 'group' => ['admin'] }
       ]
     }
   ]

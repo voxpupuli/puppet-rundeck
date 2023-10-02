@@ -1,0 +1,44 @@
+#
+# This file defines users passwords and roles for a HashUserRealm
+#
+# The format is
+#  <username>: <password>[,<rolename> ...]
+#
+# Passwords may be clear text, obfuscated or checksummed.  The class
+# org.mortbay.util.Password should be used to generate obfuscated
+# passwords or password checksums
+#
+# If DIGEST Authentication is used, the password must be in a recoverable
+# format, either plain text or OBF:.
+#
+#jetty: MD5:164c88b302622e17050af52c89945d44,user
+#admin: CRYPT:ad1ks..kc.1Ug,server-administrator,content-administrator,admin
+#other: OBF:1xmk1w261u9r1w1c1xmq
+#plain: plain
+#user: password
+# This entry is for digest auth.  The credential is a MD5 hash of username:realmname:password
+#digest: MD5:6e120743ad67abfbc385bc2bb754e297
+#.fetch('password', '-') -%> #['password'] -%> #lookup($x['password'],'-')
+#
+# This sets the default user accounts for the Rundeck app
+#
+<%= $rundeck::config::auth_config['file']['admin_user'] %>:<%= $rundeck::config::auth_config['file']['admin_password'] %>,user,admin,architect,deploy,build
+<%- if $rundeck::config::auth_config['file']['auth_users'] { -%>
+  <%- if is_array($rundeck::config::auth_config['file']['auth_users']) { -%> 
+    <%- $rundeck::config::auth_config['file']['auth_users'].each |$x| { -%>
+      <%- if $x['username'] { -%>
+        <%= $x['username'] -%>:<%= get('x.password', '-')  -%>
+        <%- if $x['roles'] {-%>
+          <%- $x['roles'].each |$v| {-%>,<%= $v -%><%- } %>
+        <%- } -%>
+      <%- } -%>
+    <%- } -%>
+  <%- } else { -%>
+    <%- if $rundeck::config::auth_config['file']['auth_users']['username'] and $rundeck::config::auth_config['file']['auth_users']['password'] { -%>
+      <%= $rundeck::config::auth_config['file']['auth_users']['username'] -%>:<%= $rundeck::config::auth_config['file']['auth_users']['password'] -%>
+      <%- if $rundeck::config::auth_config['file']['auth_users']['roles'] { -%>
+        <%- $rundeck::config::auth_config['file']['auth_users']['roles'].each |$v| {-%>,<%=$v -%><%- } %>
+      <%- } -%>
+    <%- } -%>
+  <%- } -%>
+<%- } %>
