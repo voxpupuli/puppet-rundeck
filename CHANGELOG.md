@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v8.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v8.0.1) (2023-10-03)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v8.0.0...v8.0.1)
+
+**Fixed bugs:**
+
+- Fix ACLs rendering when using attributes as filters [\#513](https://github.com/voxpupuli/puppet-rundeck/pull/513) ([nosrio](https://github.com/nosrio))
+
+**Closed issues:**
+
+- Incorrect example in comments for acl policy file [\#391](https://github.com/voxpupuli/puppet-rundeck/issues/391)
+
 ## [v8.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v8.0.0) (2023-08-14)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v7.0.0...v8.0.0)
