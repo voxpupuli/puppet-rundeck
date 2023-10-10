@@ -21,7 +21,7 @@ rundeck.security.csrf.referer.allowApi = <%= $rundeck::config::global::rundeck_c
 <%- if 'csrfRefererRequireHttps' in $rundeck::config::global::rundeck_config::security_config.keys { -%>
 rundeck.security.csrf.referer.requireHttps = <%= $rundeck::config::global::rundeck_config::security_config['csrfRefererRequireHttps'] %>
 <%- } -%>
-<%- if 'syncLdapUser' in $rundeck::config::global::rundeck_config::security_config.keys { -%>
+<%- if $rundeck::config::global::rundeck_config::security_config['syncLdapUser'] { -%>
 rundeck.security.syncLdapUser = <%= $rundeck::config::global::rundeck_config::security_config['syncLdapUser'] %>
 <%- } -%>
 
