@@ -39,8 +39,8 @@
 #         { 'type'  => 'node', 'rules' => [{ 'name' => 'allow','rule' => '*' }] }
 #       ],
 #       'by' => {
-#         'groups'    => ['admin'],
-#         'usernames' => undef
+#         'group'    => ['admin'],
+#         'username' => undef
 #       }
 #     },
 #     {
@@ -55,8 +55,8 @@
 #         { 'type'  => 'storage', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
 #       ],
 #       'by' => {
-#         'groups'    => ['admin'],
-#         'usernames' => undef
+#         'group'    => ['admin'],
+#         'username' => undef
 #       }
 #     }
 #   ],

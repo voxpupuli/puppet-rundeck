@@ -1,6 +1,6 @@
 {
   "name": "puppet-rundeck",
-  "version": "7.0.1-rc0",
+  "version": "8.0.2-rc0",
   "author": "Vox Pupuli",
   "license": "MIT",
   "summary": "Module for managing the installatation and configuration of the rundeck orchestration tool",
@@ -17,33 +17,59 @@
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "7",
-        "8"
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "OracleLinux",
+      "operatingsystemrelease": [
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": [
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "7",
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "10"
+        "10",
+        "11"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "18.04"
+        "18.04",
+        "20.04",
+        "22.04"
       ]
     }
   ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.25.0 < 9.0.0"
+      "version_requirement": ">= 4.25.0 < 10.0.0"
     },
     {
       "name": "pltraining/dirtree",
@@ -51,7 +77,7 @@
     },
     {
       "name": "puppetlabs/inifile",
-      "version_requirement": ">= 1.4.1 < 6.0.0"
+      "version_requirement": ">= 4.1.0 < 6.0.0"
     },
     {
       "name": "puppetlabs/java_ks",
@@ -65,7 +91,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.1.0 < 8.0.0"
+      "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ]
 }

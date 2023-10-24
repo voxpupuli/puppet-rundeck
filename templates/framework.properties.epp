@@ -1,0 +1,3 @@
+<%- $rundeck::config::global::framework::framework_config.keys.sort.each |$k| { -%>
+<%= $k %> = <%= $rundeck::config::global::framework::framework_config[$k] %>
+<%- } -%>
