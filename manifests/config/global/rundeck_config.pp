@@ -8,16 +8,10 @@ class rundeck::config::global::rundeck_config {
   $clustermode_enabled                  = $rundeck::config::clustermode_enabled
   $execution_mode                       = $rundeck::config::execution_mode
   $file_keystorage_dir                  = $rundeck::config::file_keystorage_dir
-  $vault_keystorage_prefix              = $rundeck::config::vault_keystorage_prefix
-  $vault_keystorage_url                 = $rundeck::config::vault_keystorage_url
-  $vault_keystorage_approle_approleid   = $rundeck::config::vault_keystorage_approle_approleid
-  $vault_keystorage_approle_secretid    = $rundeck::config::vault_keystorage_approle_secretid
-  $vault_keystorage_approle_authmount   = $rundeck::config::vault_keystorage_approle_authmount
-  $vault_keystorage_authbackend         = $rundeck::config::vault_keystorage_authbackend
   $grails_server_url                    = $rundeck::config::grails_server_url
   $group                                = $rundeck::config::group
   $gui_config                           = $rundeck::config::gui_config
-  $key_storage_type                     = $rundeck::config::key_storage_type
+  $key_storage_config                   = $rundeck::config::key_storage_config
   $mail_config                          = $rundeck::config::mail_config
   $preauthenticated_config              = $rundeck::config::preauthenticated_config
   $projects_storage_type                = $rundeck::config::projects_storage_type

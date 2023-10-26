@@ -87,7 +87,12 @@ associated parameters.
 
 ```puppet
 class { 'rundeck':
-  key_storage_type      => 'db',
+  key_storage_config => [
+    {
+      'type' => 'db',
+      'path' => '/',
+    },
+  ],
   projects_storage_type => 'db',
   database_config       => {
     'type'            => 'mysql',

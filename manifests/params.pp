@@ -275,8 +275,19 @@ class rundeck::params {
 
   $kerberos_realms = {}
 
+  $file_keystorage_keys = {}
+  $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"
+
   $keystore = '/etc/rundeck/ssl/keystore'
-  $key_storage_type = 'file'
+  $key_storage_config = [
+    {
+      'type'   => 'file',
+      'path'   => '/',
+      'config' => {
+        'baseDir' => $file_keystorage_dir,
+      },
+    },
+  ]
   $projects_storage_type = 'filesystem'
   $keystore_password = 'adminadmin'
   $key_password = 'adminadmin'
@@ -313,9 +324,6 @@ class rundeck::params {
   $session_timeout = 30
 
   $rdeck_config_template = 'rundeck/rundeck-config.epp'
-
-  $file_keystorage_keys = {}
-  $file_keystorage_dir = "${framework_config['framework.var.dir']}/storage"
 
   $manage_default_admin_policy = true
   $manage_default_api_policy   = true
