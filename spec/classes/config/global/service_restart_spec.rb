@@ -11,8 +11,7 @@ describe 'rundeck' do
 
       describe 'with empty params' do
         let(:params) do
-          {
-          }
+          {}
         end
 
         it { is_expected.to contain_file('/etc/rundeck/rundeck-config.groovy').that_notifies('Service[rundeckd]') }

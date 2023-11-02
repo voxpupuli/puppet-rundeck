@@ -27,7 +27,7 @@ describe 'rundeck' do
         when 'RedHat'
           it do
             is_expected.to contain_yumrepo('rundeck').with(
-              baseurl: "https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/\$basearch",
+              baseurl: 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
               gpgcheck: 0,
               repo_gpgcheck: 1,
               gpgkey: 'https://packagecloud.io/pagerduty/rundeck/gpgkey'
