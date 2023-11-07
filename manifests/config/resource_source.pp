@@ -1,113 +1,107 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Define rundeck::config::resource_source
+# @summary This define will create a resource source that gathers node information.
 #
-# This definition is called from rundeck::config::project and is used to
-# create a resource sources that gather node information.
+# @example Basic usage.
+#   rundeck::config::resource_source { 'myresource':
+#     project_name        => 'myproject',
+#     number              => '1',
+#     source_type         => 'file',
+#     include_server_node => false,
+#     resource_format     => 'resourceyaml',
+#   }
 #
-# === Parameters
-#
-# [*assume_role_arn*]
-#   When using the aws-ec2 source_type, this specifies the assume role ARN parameter.
-# [*directory*]
+# @param directory
 #   When the directory source_type is specified this is the path to that directory.
-#
-# [*endpoint_url*]
-#   The API AWS endpoint.
-#
-# [*filter_tag*]
-#   String value for using tags.
-#
-# [*http_proxy_port*]
-#   An integer value that defines the http proxy port.
-#
-# [*include_server_node*]
+# @param include_server_node
 #   Boolean value to decide whether or not to include the server node in your list of avaliable nodes.
-#
-# [*number*]
+# @param mapping_params
+#   When using the aws-ec2 source_type,this specifies node attributes that will be set
+#   and what their values will be set to using a "selector" on properties of the EC2 Instance object.
+# @param number
 #   The sequential number of the resource within the project.
-#
-# [*project_name*]
+# @param project_name
 #   The name of the project for which this resource in intended to be a part.
-#
-# [*projects_dir*]
-#   The directory where rundeck is configured to store project information.
-#
-# [*refresh_interval*]
-#   How often the data will be updated.
-#
-# [*resource_format*]
+# @param resource_format
 #   The format of the resource that will procesed, either resourcexml or resourceyaml.
-#
-# [*script_args*]
+# @param running_only
+#   Boolean to retrieve only running AWS EC2 instances.
+# @param script_args
 #   A string of the full arguments to pass the the specified script.
-#
-# [*script_args_quoted*]
+# @param script_args_quoted
 #   Boolean value. Quote the arguments of the script.
-#
-# [*script_file*]
+# @param script_file
 #   When the script source_type is specified this is the path that that script.
-#
-# [*script_interpreter*]
+# @param script_interpreter
 #   The interpreter to use in executing the script. Defaults to: '/bin/bash'
-#
-# [*source_type*]
+# @param source_type
 #   The source type where resources will come from: file, directory, url or script.
-#
-# [*url*]
+# @param url
 #   When the url source_type is specified this is the path to that url.
-#
-# [*url_cache*]
+# @param url_cache
 #   Boolean value. Keep a local cache of the resources pulled from the url.
-#
-# [*url_timeout*]
+# @param url_timeout
 #   An integer value in seconds that rundeck will wait for resources from the url before timing out.
-#
-# === Examples
-#
-# Manage a file resource:
-#
-# rundeck::config::resource_source { 'resource':
-#   project_name        => 'myproject',
-#   number              => '1',
-#   source_type         => 'file',
-#   include_server_node => false,
-#   resource_format     => 'resourceyaml',
-# }
+# @param use_default_mapping
+#   When using the aws-ec2 source_type,this specifies wheter to use the default mapping or not.
+# @param endpoint_url
+#   The API AWS endpoint.
+# @param assume_role_arn
+#   When using the aws-ec2 source_type, this specifies the assume role ARN parameter.
+# @param filter_tag
+#   String value for using tags.
+# @param http_proxy_port
+#   An integer value that defines the http proxy port.
+# @param refresh_interval
+#   How often the data will be updated.
+# @param puppet_enterprise_host
+#   The Puppet Enterprise host.
+# @param puppet_enterprise_port
+#   The Puppet Enterprise port.
+# @param puppet_enterprise_ssl_dir
+#   The Puppet Enterprise ssl directory.
+# @param puppet_enterprise_certificate_name
+#   The Puppet Enterprise certificate name.
+# @param puppet_enterprise_mapping_file
+#   The Puppet Enterprise mapping file.
+# @param puppet_enterprise_metrics_interval
+#   The Puppet Enterprise metrics interval.
+# @param puppet_enterprise_node_query
+#   The Puppet Enterprise node query.
+# @param puppet_enterprise_default_node_tag
+#   The Puppet Enterprise default node tag.
+# @param puppet_enterprise_tag_source
+#   The Puppet Enterprise tag source.
 #
 define rundeck::config::resource_source (
-  Stdlib::Absolutepath $directory                                = $rundeck::params::default_resource_dir,
-  Boolean $include_server_node                                   = $rundeck::params::include_server_node,
-  String $mapping_params                                         = '', # lint:ignore:params_empty_string_assignment
-  Integer $number                                                = 1,
-  Optional[String] $project_name                                 = undef,
-  Enum['resourcexml', 'resourceyaml'] $resource_format           = $rundeck::params::resource_format,
-  Boolean $running_only                                          = true,
-  String $script_args                                            = '', # lint:ignore:params_empty_string_assignment
-  Boolean $script_args_quoted                                    = $rundeck::params::script_args_quoted,
-  Optional[Stdlib::Absolutepath] $script_file                    = undef,
-  String $script_interpreter                                     = $rundeck::params::script_interpreter,
-  Rundeck::Sourcetype $source_type                               = $rundeck::params::default_source_type,
-  String $url                                                    = '', # lint:ignore:params_empty_string_assignment
-  Boolean $url_cache                                             = $rundeck::params::url_cache,
-  Integer $url_timeout                                           = $rundeck::params::url_timeout,
-  Boolean $use_default_mapping                                   = true,
-  Optional[String] $endpoint_url                                 = undef,
-  Optional[String[1]] $assume_role_arn                           = undef,
-  String $filter_tag                                             = '', # lint:ignore:params_empty_string_assignment
-  Stdlib::Port $http_proxy_port                                  = $rundeck::params::default_http_proxy_port,
-  Integer $refresh_interval                                      = $rundeck::params::default_refresh_interval,
-  Optional[String] $puppet_enterprise_host                       = undef,
-  Optional[Stdlib::Port] $puppet_enterprise_port                 = undef,
-  Optional[Stdlib::Absolutepath] $puppet_enterprise_ssl_dir      = undef,
-  Optional[String] $puppet_enterprise_certificate_name           = undef,
-  Optional[Stdlib::Absolutepath] $puppet_enterprise_mapping_file = undef,
-  Optional[Integer] $puppet_enterprise_metrics_interval          = undef,
-  Optional[String] $puppet_enterprise_node_query                 = undef,
-  Optional[String] $puppet_enterprise_default_node_tag           = undef,
-  Optional[String] $puppet_enterprise_tag_source                 = undef,
+  Stdlib::Absolutepath                $directory                          = $rundeck::params::default_resource_dir,
+  Boolean                             $include_server_node                = $rundeck::params::include_server_node,
+  String                              $mapping_params                     = '', # lint:ignore:params_empty_string_assignment
+  Integer                             $number                             = 1,
+  Optional[String]                    $project_name                       = undef,
+  Enum['resourcexml', 'resourceyaml'] $resource_format                    = $rundeck::params::resource_format,
+  Boolean                             $running_only                       = true,
+  String                              $script_args                        = '', # lint:ignore:params_empty_string_assignment
+  Boolean                             $script_args_quoted                 = $rundeck::params::script_args_quoted,
+  Optional[Stdlib::Absolutepath]      $script_file                        = undef,
+  String                              $script_interpreter                 = $rundeck::params::script_interpreter,
+  Rundeck::Sourcetype                 $source_type                        = $rundeck::params::default_source_type,
+  String                              $url                                = '', # lint:ignore:params_empty_string_assignment
+  Boolean                             $url_cache                          = $rundeck::params::url_cache,
+  Integer                             $url_timeout                        = $rundeck::params::url_timeout,
+  Boolean                             $use_default_mapping                = true,
+  Optional[String]                    $endpoint_url                       = undef,
+  Optional[String[1]]                 $assume_role_arn                    = undef,
+  String                              $filter_tag                         = '', # lint:ignore:params_empty_string_assignment
+  Stdlib::Port                        $http_proxy_port                    = $rundeck::params::default_http_proxy_port,
+  Integer                             $refresh_interval                   = $rundeck::params::default_refresh_interval,
+  Optional[String]                    $puppet_enterprise_host             = undef,
+  Optional[Stdlib::Port]              $puppet_enterprise_port             = undef,
+  Optional[Stdlib::Absolutepath]      $puppet_enterprise_ssl_dir          = undef,
+  Optional[String]                    $puppet_enterprise_certificate_name = undef,
+  Optional[Stdlib::Absolutepath]      $puppet_enterprise_mapping_file     = undef,
+  Optional[Integer]                   $puppet_enterprise_metrics_interval = undef,
+  Optional[String]                    $puppet_enterprise_node_query       = undef,
+  Optional[String]                    $puppet_enterprise_default_node_tag = undef,
+  Optional[String]                    $puppet_enterprise_tag_source       = undef,
 ) {
   include rundeck
 
