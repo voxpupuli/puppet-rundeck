@@ -1,11 +1,6 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class rundeck::service
+# @api private
 #
-# This class is meant to be called from `rundeck`
-# It ensure the service is running
+# @summary This class is meant to be called from `rundeck` and ensures the service is running.
 #
 class rundeck::service {
   assert_private()
