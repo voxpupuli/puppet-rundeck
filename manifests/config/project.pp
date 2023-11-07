@@ -1,64 +1,49 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
+# @summary This define can be used to configure rundeck projects.
 #
-# == Define rundeck::config::project
+# @example Basic usage.
+#   rundeck::config::project { 'test project':
+#     ssh_keypath            => '/var/lib/rundeck/.ssh/id_rsa',
+#     file_copier_provider   => 'jsch-scp',
+#     node_executor_provider => 'jsch-ssh',
+#     resource_sources       => $resource_hash,
+#     scm_import_properties  => $scm_import_properties_hash,
+#   }
 #
-# This definition is used to configure rundeck projects
-#
-# === Parameters
-#
-# [*file_copier_provider*]
-#  The type of proivder that will be used for copying files to each of the nodes
-#
-# [*framework_config*]
-#  Rundeck config
-#
-# [*group*]
-#  Rundeck group
-#
-# [*node_executor_provider*]
-#  The type of provider that will be used to gather node resources
-#
-# [*projects_dir*]
-#  The directory where rundeck is configured to store project information
-#
-# [*resource_sources*]
-#  A hash of rundeck::config::resource_source that will be used to specify the node resources for this project
-#
-# [*scm_import_properties*]
-#  A hash of name value pairs representing properties for the scm-import.properties file
-#
-# [*ssh_keypath*]
-#  The path to the ssh key that will be used by the ssh/scp providers
-#
-# [*user*]
-#  Rundeck user
-#
-# === Examples
-#
-# Create and manage a rundeck project:
-#
-# rundeck::config::project { 'test project':
-#  ssh_keypath            => '/var/lib/rundeck/.ssh/id_rsa',
-#  file_copier_provider   => 'jsch-scp',
-#  node_executor_provider => 'jsch-ssh',
-#  resource_sources       => $resource_hash,
-#  scm_import_properties  => $scm_import_properties_hash
-# }
+# @param file_copier_provider
+#   The type of proivder that will be used for copying files to each of the nodes
+# @param framework_config
+#   Rundeck framework config
+# @param group
+#   Rundeck group
+# @param user
+#   Rundeck user
+# @param node_executor_provider
+#   The type of provider that will be used to gather node resources
+# @param node_executor_settings
+#   Node executor settings
+# @param projects_dir
+#   The directory where rundeck is configured to store project information
+# @param resource_sources
+#   A hash of rundeck::config::resource_source that will be used to specify the node resources for this project
+# @param scm_import_properties
+#   A hash of name value pairs representing properties for the scm-import.properties file
+# @param scm_export_properties
+#   A hash of name value pairs representing properties for the scm-export.properties file
+# @param ssh_keypath
+#   The path to the ssh key that will be used by the ssh/scp providers
 #
 define rundeck::config::project (
-  String $file_copier_provider                 = $rundeck::file_copier_provider,
-  Hash $framework_config                       = $rundeck::framework_config,
-  String $group                                = $rundeck::group,
-  String $node_executor_provider               = $rundeck::node_executor_provider,
-  Hash $node_executor_settings                 = {},
-  Optional[Stdlib::Absolutepath] $projects_dir = undef,
-  Hash $resource_sources                       = $rundeck::resource_sources,
-  Hash $scm_import_properties                  = {},
-  Hash $scm_export_properties                  = {},
-  Optional[Stdlib::Absolutepath] $ssh_keypath  = undef,
-  String $user                                 = $rundeck::user,
+  String                         $file_copier_provider   = $rundeck::file_copier_provider,
+  Hash                           $framework_config       = $rundeck::framework_config,
+  String                         $group                  = $rundeck::group,
+  String                         $user                   = $rundeck::user,
+  String                         $node_executor_provider = $rundeck::node_executor_provider,
+  Hash                           $node_executor_settings = {},
+  Optional[Stdlib::Absolutepath] $projects_dir           = undef,
+  Hash                           $resource_sources       = $rundeck::resource_sources,
+  Hash                           $scm_import_properties  = {},
+  Hash                           $scm_export_properties  = {},
+  Optional[Stdlib::Absolutepath] $ssh_keypath            = undef,
 ) {
   include rundeck
 
