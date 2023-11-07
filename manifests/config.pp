@@ -1,10 +1,6 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class rundeck::config
+# @api private
 #
-# This private class is called from `rundeck` to manage the configuration
+# @summary This private class is called from `rundeck` to manage the configuration.
 #
 class rundeck::config {
   assert_private()
