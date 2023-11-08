@@ -1,6 +1,6 @@
 # Rundeck module for Puppet
 
-[![Build Status](https://app.travis-ci.com/voxpupuli/puppet-rundeck.svg?branch=master)](https://app.travis-ci.com/voxpupuli/puppet-rundeck)
+[![Build Status](https://github.com/voxpupuli/puppet-rundeck/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-rundeck/actions?query=workflow%3ACI)
 [![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-rundeck/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-rundeck)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/rundeck.svg)](https://forge.puppetlabs.com/puppet/rundeck)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/rundeck.svg)](https://forge.puppetlabs.com/puppet/rundeck)
