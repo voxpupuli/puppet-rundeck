@@ -1,10 +1,6 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class rundeck::config::global::ssl
+# @api private
 #
-# This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled
+# @summary This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled.
 #
 class rundeck::config::global::ssl {
   assert_private()

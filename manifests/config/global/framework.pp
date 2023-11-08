@@ -1,10 +1,6 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class rundeck::config::global::framework
+# @api private
 #
-# This private class is called from rundeck::config used to manage the framework properties of rundeck
+# @summary This private class is called from rundeck::config used to manage the framework properties of rundeck.
 #
 class rundeck::config::global::framework {
   $group          = $rundeck::config::group

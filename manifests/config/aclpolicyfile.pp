@@ -1,73 +1,61 @@
-# Author::    Johannes Graf (mailto:graf@synyx.de)
-# Copyright:: Copyright (c) 2015 synyx GmbH & Co. KG
-# License::   MIT
-
-# == Define rundeck::config::aclpolicyfile
+# @summary This define will create a custom acl policy file.
 #
-# Use this define to create a custom acl policy file
-#
-# === Parameters
-#
-# [*acl_policies*]
-#  An array containing acl policies. See rundeck::params::acl_policies / rundeck::params::api_policies as an example.
-#
-# [*group*]
-#  The group permission that rundeck is installed as.
-#
-# [*owner*]
-#  The user that rundeck is installed as.
-#
-# [*properties_dir*]
-#  The rundeck configuration directory.
-#
-# === Examples
-#
-# Create the admin.aclpolicy file:
-#
-# rundeck::config::aclpolicyfile { 'myPolicyFile':
-#   acl_policies => [
-#     {
-#       'description' => 'Admin, all access',
-#       'context' => {
-#         'type' => 'project',
-#         'rule' => '.*'
+# @example Admin access.
+#   rundeck::config::aclpolicyfile { 'myPolicyFile':
+#     acl_policies => [
+#       {
+#         'description'    => 'Admin, all access',
+#         'context'        => {
+#           'type' => 'project',
+#           'rule' => '.*',
+#         },
+#         'resource_types' => [
+#           { 'type'  => 'resource', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
+#           { 'type'  => 'adhoc', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
+#           { 'type'  => 'job', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
+#           { 'type'  => 'node', 'rules' => [{ 'name' => 'allow','rule' => '*' }] }
+#         ],
+#         'by'             => {
+#           'group'    => ['admin'],
+#           'username' => undef,
+#         }
 #       },
-#       'resource_types' => [
-#         { 'type'  => 'resource', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#         { 'type'  => 'adhoc', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#         { 'type'  => 'job', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#         { 'type'  => 'node', 'rules' => [{ 'name' => 'allow','rule' => '*' }] }
-#       ],
-#       'by' => {
-#         'group'    => ['admin'],
-#         'username' => undef
+#       {
+#         'description'    => 'Admin, all access',
+#         'context'        => {
+#           'type' => 'application',
+#           'rule' => 'rundeck',
+#         },
+#         'resource_types' => [
+#           { 'type'  => 'resource', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
+#           { 'type'  => 'project', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
+#           { 'type'  => 'storage', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
+#         ],
+#         'by'             => {
+#           'group'    => ['admin'],
+#           'username' => undef,
+#         }
 #       }
-#     },
-#     {
-#       'description' => 'Admin, all access',
-#       'context' => {
-#         'type' => 'application',
-#         'rule' => 'rundeck'
-#       },
-#       'resource_types' => [
-#         { 'type'  => 'resource', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#         { 'type'  => 'project', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#         { 'type'  => 'storage', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#       ],
-#       'by' => {
-#         'group'    => ['admin'],
-#         'username' => undef
-#       }
-#     }
-#   ],
-# }
+#     ],
+#   }
+#
+# @param acl_policies
+#   An array of hashes containing acl policies. See example.
+# @param group
+#   The group permission that rundeck is installed as.
+# @param owner
+#   The user that rundeck is installed as.
+# @param properties_dir
+#   The rundeck configuration directory.
+# @param template_file
+#   The template used for acl policy. Default is rundeck/aclpolicy.erb
 #
 define rundeck::config::aclpolicyfile (
-  Array $acl_policies,
-  String $group                        = 'rundeck',
-  String $owner                        = 'rundeck',
+  Array                $acl_policies,
+  String               $group          = 'rundeck',
+  String               $owner          = 'rundeck',
   Stdlib::Absolutepath $properties_dir = '/etc/rundeck',
-  String $template_file                = "${module_name}/aclpolicy.erb",
+  String               $template_file  = "${module_name}/aclpolicy.erb",
 ) {
   file { "${properties_dir}/${name}.aclpolicy":
     owner   => $owner,

@@ -1,10 +1,6 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
+# @api private
 #
-# == Class rundeck::install
-#
-# This private class installs the rundeck package and its dependencies
+# @summary This private class installs the rundeck package and its dependencies.
 #
 class rundeck::install {
   assert_private()

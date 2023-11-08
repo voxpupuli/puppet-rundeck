@@ -1,33 +1,23 @@
-# Author::    Wil Cooley <wcooley(at)nakedape.cc>
-# License::   MIT
+# @summary This class will manage the application's web.xml.
 #
-# == Class: rundeck::config::global::web
-#
-# Manage the application's +web.xml+.
-#
-# Currently only manages the +<security-role>+ required for any user to login and session timout:
+# Currently only manages the <security-role> required for any user to login and session timout:
 # http://rundeck.org/docs/administration/authenticating-users.html#security-role
 # http://rundeck.org/docs/administration/configuration-file-reference.html#session-timeout
 #
-# === Parameters
-#
-# [*security_role*]
+# @param security_role
 #   Name of role that is required for all users to be allowed access.
-#
-# [*session_timeout*]
+# @param session_timeout
 #   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
-#
-# [*security_roles_array_enabled*]
-# Boolen value if you want to have more roles in web.xml
-#
-# [*security_roles_array*]
-# Array value if you set the value 'security_roles_array_enabled' to true.
+# @param security_roles_array_enabled
+#   Boolen value if you want to have more roles in web.xml
+# @param security_roles_array
+#   Array value if you set the value 'security_roles_array_enabled' to true.
 #
 class rundeck::config::global::web (
-  String[1] $security_role = $rundeck::params::security_role,
-  Integer[0] $session_timeout = $rundeck::params::session_timeout,
-  Boolean $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
-  Array $security_roles_array = $rundeck::params::security_roles_array,
+  String[1]  $security_role                = $rundeck::params::security_role,
+  Integer[0] $session_timeout              = $rundeck::params::session_timeout,
+  Boolean    $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
+  Array      $security_roles_array         = $rundeck::params::security_roles_array,
 ) inherits rundeck::params {
   if $security_roles_array_enabled {
     rundeck::config::securityroles { $security_roles_array: }

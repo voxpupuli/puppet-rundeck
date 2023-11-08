@@ -1,10 +1,6 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class rundeck::config::global::project
+# @api private
 #
-# This private class is called from rundeck::config used to manage the default project properties
+# @summary This private class is called from rundeck::config used to manage the default project properties.
 #
 class rundeck::config::global::project {
   assert_private()

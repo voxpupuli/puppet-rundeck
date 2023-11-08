@@ -1,30 +1,17 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Define rundeck::config::plugin
+# @summary This define will install a rundeck plugin.
 #
-# This definition is used to install jars for rundeck's plugins
+# @example Basic usage.
+#   rundeck::config::plugin { 'rundeck-hipchat-plugin-1.0.0.jar':
+#     source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar',
+#   }
 #
-# === Parameters
-#
-# [*ensure*]
+# @param ensure
 #   Set present or absent to add or remove the plugin
-#
-# [*source*]
-#   The http source or local path from which to get the jar plugin.
-#
-# === Examples
-#
-# Install a custom plugin:
-#
-# rundeck::config::plugin { 'hipchat-plugin':
-#  name   => 'rundeck-hipchat-plugin-1.0.0.jar',
-#  source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
-# }
+# @param source
+#   The http source or local path from which to get the plugin.
 #
 define rundeck::config::plugin (
-  String $source,
+  String                    $source,
   Enum['present', 'absent'] $ensure = 'present',
 ) {
   include rundeck
