@@ -38,24 +38,12 @@
 #   A hash of mappings between Kerberos domain DNS names and realm names
 # @param key_password
 #   The default key password.
-# @param key_storage_type
-#   Type used to store secrets. Must be 'file', 'db' or 'vault'
+# @param key_storage_config
+#   An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
 # @param keystore
 #   Full path to the java keystore to be used by Rundeck.
 # @param keystore_password
 #   The password for the given keystore.
-# @param vault_keystorage_url
-#   A url to a HashiCorp vault instance.
-# @param vault_keystorage_prefix
-#   HashiCorp vault kv path prefix.
-# @param vault_keystorage_approle_approleid
-#   HashiCorp vault approle role id.
-# @param vault_keystorage_approle_secretid
-#   HashiCorp vault approle secret id.
-# @param vault_keystorage_approle_authmount
-#   HashiCorp vault auth sys mount.
-# @param vault_keystorage_authbackend
-#   HashiCorp vault authentication backend.
 # @param log_properties_template
 #   The template used for log properties. Default is rundeck/log4j.properties.erb.
 # @param mail_config
@@ -186,15 +174,9 @@ class rundeck (
   String                              $jvm_args                           = $rundeck::params::jvm_args,
   Hash                                $kerberos_realms                    = $rundeck::params::kerberos_realms,
   String                              $key_password                       = $rundeck::params::key_password,
-  Enum['db', 'file', 'vault']         $key_storage_type                   = $rundeck::params::key_storage_type,
+  Array[Hash]                         $key_storage_config                 = $rundeck::params::key_storage_config,
   Stdlib::Absolutepath                $keystore                           = $rundeck::params::keystore,
   String                              $keystore_password                  = $rundeck::params::keystore_password,
-  Optional[Stdlib::HTTPSUrl]          $vault_keystorage_url               = undef,
-  Optional[String[1]]                 $vault_keystorage_prefix            = undef,
-  Optional[String[1]]                 $vault_keystorage_approle_approleid = undef,
-  Optional[String[1]]                 $vault_keystorage_approle_secretid  = undef,
-  Optional[String[1]]                 $vault_keystorage_approle_authmount = undef,
-  Optional[String[1]]                 $vault_keystorage_authbackend       = undef,
   String                              $log_properties_template            = $rundeck::params::log_properties_template,
   Hash                                $mail_config                        = $rundeck::params::mail_config,
   Boolean                             $sshkey_manage                      = $rundeck::params::sshkey_manage,
