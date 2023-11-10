@@ -98,8 +98,9 @@ describe 'rundeck' do
           quartz.threadPool.threadCount = "10"
 
           rundeck.storage.provider."1".type = "file"
-          rundeck.storage.provider."1".config.baseDir = "/var/lib/rundeck/var/storage"
           rundeck.storage.provider."1".path = "/"
+          rundeck.storage.provider."1".config.baseDir = "/var/lib/rundeck/var/storage"
+
 
           rundeck.security.authorization.preauthenticated.enabled = "false"
           rundeck.security.authorization.preauthenticated.attributeName = "REMOTE_USER_GROUPS"

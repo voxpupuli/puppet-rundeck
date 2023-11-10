@@ -70,15 +70,9 @@ The following parameters are available in the `rundeck` class:
 * [`jvm_args`](#-rundeck--jvm_args)
 * [`kerberos_realms`](#-rundeck--kerberos_realms)
 * [`key_password`](#-rundeck--key_password)
-* [`key_storage_type`](#-rundeck--key_storage_type)
+* [`key_storage_config`](#-rundeck--key_storage_config)
 * [`keystore`](#-rundeck--keystore)
 * [`keystore_password`](#-rundeck--keystore_password)
-* [`vault_keystorage_url`](#-rundeck--vault_keystorage_url)
-* [`vault_keystorage_prefix`](#-rundeck--vault_keystorage_prefix)
-* [`vault_keystorage_approle_approleid`](#-rundeck--vault_keystorage_approle_approleid)
-* [`vault_keystorage_approle_secretid`](#-rundeck--vault_keystorage_approle_secretid)
-* [`vault_keystorage_approle_authmount`](#-rundeck--vault_keystorage_approle_authmount)
-* [`vault_keystorage_authbackend`](#-rundeck--vault_keystorage_authbackend)
 * [`log_properties_template`](#-rundeck--log_properties_template)
 * [`mail_config`](#-rundeck--mail_config)
 * [`sshkey_manage`](#-rundeck--sshkey_manage)
@@ -286,13 +280,13 @@ The default key password.
 
 Default value: `$rundeck::params::key_password`
 
-##### <a name="-rundeck--key_storage_type"></a>`key_storage_type`
+##### <a name="-rundeck--key_storage_config"></a>`key_storage_config`
 
-Data type: `Enum['db', 'file', 'vault']`
+Data type: `Array[Hash]`
 
-Type used to store secrets. Must be 'file', 'db' or 'vault'
+An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
 
-Default value: `$rundeck::params::key_storage_type`
+Default value: `$rundeck::params::key_storage_config`
 
 ##### <a name="-rundeck--keystore"></a>`keystore`
 
@@ -309,54 +303,6 @@ Data type: `String`
 The password for the given keystore.
 
 Default value: `$rundeck::params::keystore_password`
-
-##### <a name="-rundeck--vault_keystorage_url"></a>`vault_keystorage_url`
-
-Data type: `Optional[Stdlib::HTTPSUrl]`
-
-A url to a HashiCorp vault instance.
-
-Default value: `undef`
-
-##### <a name="-rundeck--vault_keystorage_prefix"></a>`vault_keystorage_prefix`
-
-Data type: `Optional[String[1]]`
-
-HashiCorp vault kv path prefix.
-
-Default value: `undef`
-
-##### <a name="-rundeck--vault_keystorage_approle_approleid"></a>`vault_keystorage_approle_approleid`
-
-Data type: `Optional[String[1]]`
-
-HashiCorp vault approle role id.
-
-Default value: `undef`
-
-##### <a name="-rundeck--vault_keystorage_approle_secretid"></a>`vault_keystorage_approle_secretid`
-
-Data type: `Optional[String[1]]`
-
-HashiCorp vault approle secret id.
-
-Default value: `undef`
-
-##### <a name="-rundeck--vault_keystorage_approle_authmount"></a>`vault_keystorage_approle_authmount`
-
-Data type: `Optional[String[1]]`
-
-HashiCorp vault auth sys mount.
-
-Default value: `undef`
-
-##### <a name="-rundeck--vault_keystorage_authbackend"></a>`vault_keystorage_authbackend`
-
-Data type: `Optional[String[1]]`
-
-HashiCorp vault authentication backend.
-
-Default value: `undef`
 
 ##### <a name="-rundeck--log_properties_template"></a>`log_properties_template`
 

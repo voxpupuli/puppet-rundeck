@@ -17,12 +17,6 @@ class rundeck::config {
   $file_default_mode                  = $rundeck::file_default_mode
   $file_keystorage_dir                = $rundeck::file_keystorage_dir
   $file_keystorage_keys               = $rundeck::file_keystorage_keys
-  $vault_keystorage_prefix            = $rundeck::vault_keystorage_prefix
-  $vault_keystorage_url               = $rundeck::vault_keystorage_url
-  $vault_keystorage_approle_approleid = $rundeck::vault_keystorage_approle_approleid
-  $vault_keystorage_approle_secretid  = $rundeck::vault_keystorage_approle_secretid
-  $vault_keystorage_approle_authmount = $rundeck::vault_keystorage_approle_authmount
-  $vault_keystorage_authbackend       = $rundeck::vault_keystorage_authbackend
   $grails_server_url                  = $rundeck::grails_server_url
   $group                              = $rundeck::group
   $gui_config                         = $rundeck::gui_config
@@ -30,7 +24,7 @@ class rundeck::config {
   $jvm_args                           = $rundeck::jvm_args
   $kerberos_realms                    = $rundeck::kerberos_realms
   $key_password                       = $rundeck::key_password
-  $key_storage_type                   = $rundeck::key_storage_type
+  $key_storage_config                 = $rundeck::key_storage_config
   $keystore                           = $rundeck::keystore
   $keystore_password                  = $rundeck::keystore_password
   $log_properties_template            = $rundeck::log_properties_template

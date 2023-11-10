@@ -87,7 +87,12 @@ associated parameters.
 
 ```puppet
 class { 'rundeck':
-  key_storage_type      => 'db',
+  key_storage_config => [
+    {
+      'type' => 'db',
+      'path' => '/',
+    },
+  ],
   projects_storage_type => 'db',
   database_config       => {
     'type'            => 'mysql',
@@ -109,23 +114,53 @@ class { 'rundeck':
 }
 ```
 
-### Use HashiCorp vault as keystorage
+### Configure HashiCorp vault as keystorage
 
 An additional [Rundeck Vault plugin](https://github.com/rundeck-plugins/vault-storage/) is required.
 
 ```Puppet
 class { 'rundeck':
-  key_storage_type                   => 'vault',
-  vault_keystorage_url               => 'https://vault.example.com',
-  vault_keystorage_prefix            => 'rundeck',
-  vault_keystorage_approle_approleid => 'xxx-xxx-xxx-xxx-xxx',
-  vault_keystorage_approle_secretid  => 'xxx-xxx-xxx-xxx-xxx',
-  vault_keystorage_approle_authmount => 'approle',
-  vault_keystorage_authbackend       => 'approle',
+  key_storage_config => [
+    {
+      'type'   => 'vault-storage',
+      'path'   => '/',
+      'config' => {
+        'prefix'           => 'rundeck',
+        'address'          => 'https://vault.example.com',
+        'storageBehaviour' => 'vault',
+        'secretBackend'    => 'rundeck',
+        'engineVersion'    => '2',
+        'authBackend'      => 'approle',
+        'approleAuthMount' => 'approle',
+        'approleId'        => 'xxx-xxx-xxx-xxx-xxx',
+        'approleSecretId'  => 'xxx-xxx-xxx-xxx-xxx',
+      },
+    },
+  ],
 }
 ```
 
-### Configuring shared authentication credentials
+### Configure multiple keystorage types
+
+```Puppet
+class { 'rundeck':
+  key_storage_config => [
+    {
+      'type'   => 'file',
+      'path'   => '/keys',
+      'config' => {
+        'baseDir => '/path/to/dir',
+      },
+    },
+    {
+      'type' => 'db',
+      'path' => '/keys/database',
+    },
+  ],
+}
+```
+
+### Configure shared authentication credentials
 
 To perform LDAP authentication and file authorization following code can be used.
 
