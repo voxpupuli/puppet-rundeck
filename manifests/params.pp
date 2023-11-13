@@ -61,12 +61,8 @@ class rundeck::params {
 
   $auth_types = ['file']
   $auth_users = {}
-  $auth_template = 'rundeck/jaas-auth.conf.epp'
 
   $log_properties_template = 'rundeck/log4j.properties.erb'
-
-  $acl_template = 'rundeck/aclpolicy.erb'
-  $api_template = 'rundeck/aclpolicy.erb'
 
   $acl_policies = [
     {
@@ -110,54 +106,6 @@ class rundeck::params {
       },
       'by' => [{
           'group' => ['admin']
-      }]
-    }
-  ]
-
-  $api_policies = [
-    {
-      'description' => 'API project level access control',
-      'context' => {
-        'project' => '.*',
-      },
-      'for' => {
-        'resource' => [
-          { 'equals' => { 'kind' => 'job' }, 'allow' => ['create','delete'] },
-          { 'equals' => { 'kind' => 'node' }, 'allow' => ['read','create','update','refresh'] },
-          { 'equals' => { 'kind' => 'event' }, 'allow' => ['read','create'] }
-        ],
-        'adhoc' => [
-          { 'allow' => ['read','run','kill'] }
-        ],
-        'job' => [
-          { 'allow' => ['create','read','update','delete','run','kill'] }
-        ],
-        'node' => [
-          { 'allow' => ['read','run'] }
-        ],
-      },
-      'by' => [{
-          'group' => ['api_token_group']
-      }]
-    },
-    {
-      'description' => 'API Application level access control',
-      'context' => {
-        'application' => 'rundeck',
-      },
-      'for' => {
-        'resource' => [
-          { 'equals' => { 'kind' => 'system' }, 'allow' => ['read'] }
-        ],
-        'project' => [
-          { 'match' => { 'name' => '.*' }, 'allow' => ['read'] }
-        ],
-        'storage' => [
-          { 'match' => { 'path' => '(keys|keys/.*)' }, 'allow' => '*' },
-        ],
-      },
-      'by' => [{
-          'group' => ['api_token_group']
       }]
     }
   ]

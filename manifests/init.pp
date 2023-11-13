@@ -155,16 +155,16 @@
 #   https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
 #
 class rundeck (
-  Array[Hash]                         $acl_policies                       = $rundeck::params::acl_policies,
-  String                              $acl_template                       = $rundeck::params::acl_template,
-  Array[Hash]                         $api_policies                       = $rundeck::params::api_policies,
-  String                              $api_template                       = $rundeck::params::api_template,
+  Array[Hash]                         $acl_policies,
+  String                              $acl_template                       = 'rundeck/aclpolicy.erb',
+  Array[Hash]                         $api_policies                       = {},
+  String                              $api_template                       = 'rundeck/aclpolicy.erb',
   Hash                                $auth_config                        = $rundeck::params::auth_config,
-  String                              $auth_template                      = $rundeck::params::auth_template,
-  Array                               $auth_types                         = $rundeck::params::auth_types,
+  String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
+  Array                               $auth_types                         = ['file'],
   Boolean                             $clustermode_enabled                = $rundeck::params::clustermode_enabled,
   Hash                                $database_config                    = $rundeck::params::database_config,
-  Optional[Enum['active', 'passive']] $execution_mode                     = undef,
+  Enum['active', 'passive']           $execution_mode                     = 'active',
   Stdlib::Absolutepath                $file_keystorage_dir                = $rundeck::params::file_keystorage_dir,
   Hash                                $file_keystorage_keys               = $rundeck::params::file_keystorage_keys,
   Hash                                $framework_config                   = $rundeck::params::framework_config,
@@ -231,7 +231,7 @@ class rundeck (
   Boolean                             $security_roles_array_enabled       = $rundeck::params::security_roles_array_enabled,
   Array                               $security_roles_array               = $rundeck::params::security_roles_array,
   Hash[String,String]                 $storage_encrypt_config             = {},
-) inherits rundeck::params {
+) {
   validate_rd_policy($acl_policies)
 
   contain rundeck::install
