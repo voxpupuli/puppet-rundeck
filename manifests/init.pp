@@ -36,8 +36,6 @@
 #   Extra arguments for the JVM.
 # @param kerberos_realms
 #   A hash of mappings between Kerberos domain DNS names and realm names
-# @param key_password
-#   The default key password.
 # @param key_storage_config
 #   An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
 # @param keystore
@@ -50,6 +48,8 @@
 #   A hash of the notification email configuraton.
 # @param sshkey_manage
 #   Should this module manage the sshkey used by rundeck at all.
+# @param key_password
+#   The ssl key password.
 # @param ssl_keyfile
 #   Full path to the SSL private key to be used by Rundeck.
 # @param ssl_certfile
@@ -70,8 +70,6 @@
 #   The description that will be set by default for any projects.
 # @param projects_organization
 #   The organization value that will be set by default for any projects.
-# @param projects_storage_type
-#   The storage type for any projects. Must be 'filesystem' or 'db'
 # @param quartz_job_threadcount
 #   The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
 # @param rd_loglevel
@@ -156,83 +154,96 @@
 #
 class rundeck (
   Array[Hash]                         $acl_policies,
+  Hash                                $framework_config,
+  Hash                                $auth_config,
+  Hash                                $database_config,
+  Array[Hash]                         $key_storage_config,
+  Hash                                $security_config,
+  Hash                                $preauthenticated_config,
+  String                              $keystore_password,
+  String                              $truststore_password,
+  Stdlib::Absolutepath                $file_keystorage_dir,
   String                              $acl_template                       = 'rundeck/aclpolicy.erb',
-  Array[Hash]                         $api_policies                       = {},
+  Array[Hash]                         $api_policies                       = [],
   String                              $api_template                       = 'rundeck/aclpolicy.erb',
-  Hash                                $auth_config                        = $rundeck::params::auth_config,
   String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
   Array                               $auth_types                         = ['file'],
-  Boolean                             $clustermode_enabled                = $rundeck::params::clustermode_enabled,
-  Hash                                $database_config                    = $rundeck::params::database_config,
+  Boolean                             $clustermode_enabled                = false,
   Enum['active', 'passive']           $execution_mode                     = 'active',
-  Stdlib::Absolutepath                $file_keystorage_dir                = $rundeck::params::file_keystorage_dir,
-  Hash                                $file_keystorage_keys               = $rundeck::params::file_keystorage_keys,
-  Hash                                $framework_config                   = $rundeck::params::framework_config,
-  Stdlib::HTTPUrl                     $grails_server_url                  = $rundeck::params::grails_server_url,
-  Hash                                $gui_config                         = $rundeck::params::gui_config,
+  Hash                                $file_keystorage_keys               = {},
+  Stdlib::HTTPUrl                     $grails_server_url                  = "http://${facts['networking']['fqdn']}:4440",
+  Hash                                $gui_config                         = {},
   Optional[Stdlib::Absolutepath]      $java_home                          = undef,
-  String                              $jvm_args                           = $rundeck::params::jvm_args,
-  Hash                                $kerberos_realms                    = $rundeck::params::kerberos_realms,
-  String                              $key_password                       = $rundeck::params::key_password,
-  Array[Hash]                         $key_storage_config                 = $rundeck::params::key_storage_config,
-  Stdlib::Absolutepath                $keystore                           = $rundeck::params::keystore,
-  String                              $keystore_password                  = $rundeck::params::keystore_password,
-  String                              $log_properties_template            = $rundeck::params::log_properties_template,
-  Hash                                $mail_config                        = $rundeck::params::mail_config,
-  Boolean                             $sshkey_manage                      = $rundeck::params::sshkey_manage,
-  Stdlib::Absolutepath                $ssl_keyfile                        = $rundeck::params::ssl_keyfile,
-  Stdlib::Absolutepath                $ssl_certfile                       = $rundeck::params::ssl_certfile,
-  Boolean                             $manage_default_admin_policy        = $rundeck::params::manage_default_admin_policy,
-  Boolean                             $manage_default_api_policy          = $rundeck::params::manage_default_api_policy,
-  Boolean                             $manage_repo                        = $rundeck::params::manage_repo,
-  String                              $package_ensure                     = $rundeck::params::package_ensure,
-  Hash                                $preauthenticated_config            = $rundeck::params::preauthenticated_config,
-  Hash                                $projects                           = $rundeck::params::projects,
-  String                              $projects_description               = $rundeck::params::projects_default_desc,
-  String                              $projects_organization              = $rundeck::params::projects_default_org,
-  Enum['db', 'filesystem']            $projects_storage_type              = $rundeck::params::projects_storage_type,
-  Integer                             $quartz_job_threadcount             = $rundeck::params::quartz_job_threadcount,
-  Rundeck::Loglevel                   $rd_loglevel                        = $rundeck::params::loglevel,
-  Rundeck::Loglevel                   $rd_auditlevel                      = $rundeck::params::loglevel,
-  String                              $rdeck_config_template              = $rundeck::params::rdeck_config_template,
-  Stdlib::Absolutepath                $rdeck_home                         = $rundeck::params::rdeck_home,
-  Boolean                             $manage_home                        = $rundeck::params::manage_home,
+  String                              $jvm_args                           = '-Xmx1024m -Xms256m -server',
+  Hash                                $kerberos_realms                    = {},
+  Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
+  String                              $log_properties_template            = 'rundeck/log4j.properties.erb',
+  Hash                                $mail_config                        = {},
+  Boolean                             $sshkey_manage                      = true,
+  Boolean                             $manage_default_admin_policy        = true,
+  Boolean                             $manage_default_api_policy          = true,
+  Boolean                             $manage_repo                        = true,
+  String                              $package_ensure                     = 'installed',
+  Hash                                $projects                           = {},
+  String                              $projects_description               = '',
+  String                              $projects_organization              = '',
+  Integer                             $quartz_job_threadcount             = 10,
+  Rundeck::Loglevel                   $rd_loglevel                        = 'INFO',
+  Rundeck::Loglevel                   $rd_auditlevel                      = 'INFO',
+  String                              $rdeck_config_template              = 'rundeck/rundeck-config.epp',
+  Stdlib::Absolutepath                $rdeck_home                         = '/var/lib/rundeck',
+  Boolean                             $manage_home                        = true,
   Optional[String]                    $rdeck_profile_template             = undef,
   String                              $rdeck_override_template            = 'rundeck/profile_overrides.erb',
-  String                              $realm_template                     = $rundeck::params::realm_template,
-  Stdlib::HTTPUrl                     $repo_yum_source                    = $rundeck::params::repo_yum_source,
-  String                              $repo_yum_gpgkey                    = $rundeck::params::repo_yum_gpgkey,
-  Stdlib::HTTPUrl                     $repo_apt_source                    = $rundeck::params::repo_apt_source,
-  String                              $repo_apt_key_id                    = $rundeck::params::repo_apt_key_id,
-  Stdlib::Httpsurl                    $repo_apt_gpgkey                    = $rundeck::params::repo_apt_gpgkey,
-  String                              $repo_apt_keyserver                 = $rundeck::params::repo_apt_keyserver,
-  Boolean                             $rss_enabled                        = $rundeck::params::rss_enabled,
-  Hash                                $security_config                    = $rundeck::params::security_config,
-  String                              $security_role                      = $rundeck::params::security_role,
+  String                              $realm_template                     = 'rundeck/realm.properties.erb',
+  Stdlib::HTTPUrl                     $repo_yum_source                    = 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
+  String                              $repo_yum_gpgkey                    = 'https://packagecloud.io/pagerduty/rundeck/gpgkey',
+  Stdlib::HTTPUrl                     $repo_apt_source                    = 'https://packagecloud.io/pagerduty/rundeck/any',
+  String                              $repo_apt_key_id                    = '0DDD2FA79B15D736ECEA32B89B5206167C5C34C0',
+  Stdlib::Httpsurl                    $repo_apt_gpgkey                    = 'https://packagecloud.io/pagerduty/rundeck/gpgkey',
+  String                              $repo_apt_keyserver                 = 'keyserver.ubuntu.com',
+  Boolean                             $rss_enabled                        = false,
+  String                              $security_role                      = 'user',
   Optional[String]                    $server_web_context                 = undef,
   Optional[String]                    $service_config                     = undef,
-  Stdlib::Absolutepath                $service_logs_dir                   = $rundeck::params::service_logs_dir,
-  String                              $service_name                       = $rundeck::params::service_name,
+  Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
+  String                              $service_name                       = 'rundeckd',
   Boolean                             $service_restart                    = true,
   Optional[String]                    $service_script                     = undef,
-  Enum['stopped', 'running']          $service_ensure                     = $rundeck::params::service_ensure,
-  Integer                             $session_timeout                    = $rundeck::params::session_timeout,
-  Boolean                             $ssl_enabled                        = $rundeck::params::ssl_enabled,
-  Stdlib::Port                        $ssl_port                           = $rundeck::params::ssl_port,
-  Stdlib::Absolutepath                $truststore                         = $rundeck::params::truststore,
-  String                              $truststore_password                = $rundeck::params::truststore_password,
-  String                              $user                               = $rundeck::params::user,
-  String                              $group                              = $rundeck::params::group,
-  Boolean                             $manage_user                        = $rundeck::params::manage_user,
-  Boolean                             $manage_group                       = $rundeck::params::manage_group,
+  Enum['stopped', 'running']          $service_ensure                     = 'running',
+  Integer                             $session_timeout                    = 30,
+  Boolean                             $ssl_enabled                        = false,
+  Stdlib::Port                        $ssl_port                           = 4443,
+  Optional[String]                    $key_password                       = undef,
+  Stdlib::Absolutepath                $ssl_keyfile                        = '/etc/rundeck/ssl/rundeck.key',
+  Stdlib::Absolutepath                $ssl_certfile                       = '/etc/rundeck/ssl/rundeck.crt',
+  Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
+  String                              $user                               = 'rundeck',
+  String                              $group                              = 'rundeck',
+  Boolean                             $manage_user                        = false,
+  Boolean                             $manage_group                       = false,
   Optional[Integer]                   $user_id                            = undef,
   Optional[Integer]                   $group_id                           = undef,
-  String                              $file_default_mode                  = $rundeck::params::file_default_mode,
-  Boolean                             $security_roles_array_enabled       = $rundeck::params::security_roles_array_enabled,
-  Array                               $security_roles_array               = $rundeck::params::security_roles_array,
+  String                              $file_default_mode                  = '0640',
+  Boolean                             $security_roles_array_enabled       = false,
+  Array                               $security_roles_array               = [],
   Hash[String,String]                 $storage_encrypt_config             = {},
+  String                              $file_copier_provider               = 'jsch-scp',
+  String                              $node_executor_provider             = 'jsch-ssh',
+  Hash                                $resource_sources                   = {},
+  Enum['xml', 'yaml']                 $resource_format                    = 'xml',
+  Boolean                             $include_server_node                = false,
+  Enum['file']                        $default_source_type                = 'file',
+  Stdlib::Absolutepath                $default_resource_dir               = '/',
+  Stdlib::Port                        $default_http_proxy_port            = 80,
+  Integer                             $default_refresh_interval           = 30,
+  Boolean                             $url_cache                          = true,
+  Integer                             $url_timeout                        = 30,
+  Boolean                             $script_args_quoted                 = true,
+  Stdlib::Absolutepath                $script_interpreter                 = '/bin/bash',
 ) {
   validate_rd_policy($acl_policies)
+  validate_rd_policy($api_policies)
 
   contain rundeck::install
   contain rundeck::config

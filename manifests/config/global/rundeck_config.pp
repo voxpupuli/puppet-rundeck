@@ -14,7 +14,6 @@ class rundeck::config::global::rundeck_config {
   $key_storage_config                   = $rundeck::config::key_storage_config
   $mail_config                          = $rundeck::config::mail_config
   $preauthenticated_config              = $rundeck::config::preauthenticated_config
-  $projects_storage_type                = $rundeck::config::projects_storage_type
   $properties_dir                       = $rundeck::config::properties_dir
   $quartz_job_threadcount               = $rundeck::config::quartz_job_threadcount
   $rd_loglevel                          = $rundeck::config::rd_loglevel

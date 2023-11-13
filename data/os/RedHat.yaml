@@ -1,2 +1,2 @@
 ---
-prometheus::env_file_path: '/etc/sysconfig'
+rundeck::overrides_dir: '/etc/sysconfig'

@@ -66,7 +66,6 @@ rundeck.clusterMode.enabled = "<%= $rundeck::config::global::rundeck_config::clu
 rundeck.executionMode = "<%= $rundeck::config::global::rundeck_config::execution_mode %>"
 <%- } -%>
 
-rundeck.projectsStorageType = "<%= $rundeck::config::global::rundeck_config::projects_storage_type %>"
 quartz.threadPool.threadCount = "<%= $rundeck::config::global::rundeck_config::quartz_job_threadcount %>"
 
 <%- $rundeck::config::global::rundeck_config::key_storage_config.each |$i, $cfg| { -%>

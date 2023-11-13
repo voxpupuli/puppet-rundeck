@@ -10,7 +10,6 @@
 
 * [`rundeck`](#rundeck): Class to manage installation and configuration of Rundeck.
 * [`rundeck::config::global::web`](#rundeck--config--global--web): This class will manage the application's web.xml.
-* [`rundeck::params`](#rundeck--params): == Class rundeck::params  This class is meant to be called from `rundeck` It sets variables according to platform
 
 #### Private Classes
 
@@ -69,13 +68,13 @@ The following parameters are available in the `rundeck` class:
 * [`java_home`](#-rundeck--java_home)
 * [`jvm_args`](#-rundeck--jvm_args)
 * [`kerberos_realms`](#-rundeck--kerberos_realms)
-* [`key_password`](#-rundeck--key_password)
 * [`key_storage_config`](#-rundeck--key_storage_config)
 * [`keystore`](#-rundeck--keystore)
 * [`keystore_password`](#-rundeck--keystore_password)
 * [`log_properties_template`](#-rundeck--log_properties_template)
 * [`mail_config`](#-rundeck--mail_config)
 * [`sshkey_manage`](#-rundeck--sshkey_manage)
+* [`key_password`](#-rundeck--key_password)
 * [`ssl_keyfile`](#-rundeck--ssl_keyfile)
 * [`ssl_certfile`](#-rundeck--ssl_certfile)
 * [`manage_default_admin_policy`](#-rundeck--manage_default_admin_policy)
@@ -127,6 +126,19 @@ The following parameters are available in the `rundeck` class:
 * [`security_roles_array_enabled`](#-rundeck--security_roles_array_enabled)
 * [`security_roles_array`](#-rundeck--security_roles_array)
 * [`storage_encrypt_config`](#-rundeck--storage_encrypt_config)
+* [`file_copier_provider`](#-rundeck--file_copier_provider)
+* [`node_executor_provider`](#-rundeck--node_executor_provider)
+* [`resource_sources`](#-rundeck--resource_sources)
+* [`resource_format`](#-rundeck--resource_format)
+* [`include_server_node`](#-rundeck--include_server_node)
+* [`default_source_type`](#-rundeck--default_source_type)
+* [`default_resource_dir`](#-rundeck--default_resource_dir)
+* [`default_http_proxy_port`](#-rundeck--default_http_proxy_port)
+* [`default_refresh_interval`](#-rundeck--default_refresh_interval)
+* [`url_cache`](#-rundeck--url_cache)
+* [`url_timeout`](#-rundeck--url_timeout)
+* [`script_args_quoted`](#-rundeck--script_args_quoted)
+* [`script_interpreter`](#-rundeck--script_interpreter)
 
 ##### <a name="-rundeck--acl_policies"></a>`acl_policies`
 
@@ -134,15 +146,13 @@ Data type: `Array[Hash]`
 
 Admin acl policies.
 
-Default value: `$rundeck::params::acl_policies`
-
 ##### <a name="-rundeck--acl_template"></a>`acl_template`
 
 Data type: `String`
 
 The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
 
-Default value: `$rundeck::params::acl_template`
+Default value: `'rundeck/aclpolicy.erb'`
 
 ##### <a name="-rundeck--api_policies"></a>`api_policies`
 
@@ -150,7 +160,7 @@ Data type: `Array[Hash]`
 
 apitoken acl policies.
 
-Default value: `$rundeck::params::api_policies`
+Default value: `[]`
 
 ##### <a name="-rundeck--api_template"></a>`api_template`
 
@@ -158,7 +168,7 @@ Data type: `String`
 
 The template used for apitoken acl policy. Default is rundeck/aclpolicy.erb.
 
-Default value: `$rundeck::params::api_template`
+Default value: `'rundeck/aclpolicy.erb'`
 
 ##### <a name="-rundeck--auth_config"></a>`auth_config`
 
@@ -166,15 +176,13 @@ Data type: `Hash`
 
 Authentication configuration.
 
-Default value: `$rundeck::params::auth_config`
-
 ##### <a name="-rundeck--auth_template"></a>`auth_template`
 
 Data type: `String`
 
 The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
 
-Default value: `$rundeck::params::auth_template`
+Default value: `'rundeck/jaas-auth.conf.epp'`
 
 ##### <a name="-rundeck--auth_types"></a>`auth_types`
 
@@ -182,7 +190,7 @@ Data type: `Array`
 
 The method used to authenticate to rundeck. Default is file.
 
-Default value: `$rundeck::params::auth_types`
+Default value: `['file']`
 
 ##### <a name="-rundeck--clustermode_enabled"></a>`clustermode_enabled`
 
@@ -190,7 +198,7 @@ Data type: `Boolean`
 
 Boolean value if set to true enables cluster mode
 
-Default value: `$rundeck::params::clustermode_enabled`
+Default value: `false`
 
 ##### <a name="-rundeck--database_config"></a>`database_config`
 
@@ -198,15 +206,13 @@ Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 
-Default value: `$rundeck::params::database_config`
-
 ##### <a name="-rundeck--execution_mode"></a>`execution_mode`
 
-Data type: `Optional[Enum['active', 'passive']]`
+Data type: `Enum['active', 'passive']`
 
 If set, allows setting the execution mode to 'active' or 'passive'.
 
-Default value: `undef`
+Default value: `'active'`
 
 ##### <a name="-rundeck--file_keystorage_dir"></a>`file_keystorage_dir`
 
@@ -214,15 +220,13 @@ Data type: `Stdlib::Absolutepath`
 
 Path to dir where the keystorage should be located.
 
-Default value: `$rundeck::params::file_keystorage_dir`
-
 ##### <a name="-rundeck--file_keystorage_keys"></a>`file_keystorage_keys`
 
 Data type: `Hash`
 
 Add keys to file keystorage.
 
-Default value: `$rundeck::params::file_keystorage_keys`
+Default value: `{}`
 
 ##### <a name="-rundeck--framework_config"></a>`framework_config`
 
@@ -230,15 +234,13 @@ Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
 
-Default value: `$rundeck::params::framework_config`
-
 ##### <a name="-rundeck--grails_server_url"></a>`grails_server_url`
 
 Data type: `Stdlib::HTTPUrl`
 
 Sets `grails.serverURL` so that Rundeck knows its external address.
 
-Default value: `$rundeck::params::grails_server_url`
+Default value: `"http://${facts['networking']['fqdn']}:4440"`
 
 ##### <a name="-rundeck--gui_config"></a>`gui_config`
 
@@ -246,7 +248,7 @@ Data type: `Hash`
 
 Hash of properties for customizing the [Rundeck GUI](https://docs.rundeck.com/docs/administration/configuration/gui-customization.html)
 
-Default value: `$rundeck::params::gui_config`
+Default value: `{}`
 
 ##### <a name="-rundeck--java_home"></a>`java_home`
 
@@ -262,7 +264,7 @@ Data type: `String`
 
 Extra arguments for the JVM.
 
-Default value: `$rundeck::params::jvm_args`
+Default value: `'-Xmx1024m -Xms256m -server'`
 
 ##### <a name="-rundeck--kerberos_realms"></a>`kerberos_realms`
 
@@ -270,15 +272,7 @@ Data type: `Hash`
 
 A hash of mappings between Kerberos domain DNS names and realm names
 
-Default value: `$rundeck::params::kerberos_realms`
-
-##### <a name="-rundeck--key_password"></a>`key_password`
-
-Data type: `String`
-
-The default key password.
-
-Default value: `$rundeck::params::key_password`
+Default value: `{}`
 
 ##### <a name="-rundeck--key_storage_config"></a>`key_storage_config`
 
@@ -286,15 +280,13 @@ Data type: `Array[Hash]`
 
 An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
 
-Default value: `$rundeck::params::key_storage_config`
-
 ##### <a name="-rundeck--keystore"></a>`keystore`
 
 Data type: `Stdlib::Absolutepath`
 
 Full path to the java keystore to be used by Rundeck.
 
-Default value: `$rundeck::params::keystore`
+Default value: `'/etc/rundeck/ssl/keystore'`
 
 ##### <a name="-rundeck--keystore_password"></a>`keystore_password`
 
@@ -302,15 +294,13 @@ Data type: `String`
 
 The password for the given keystore.
 
-Default value: `$rundeck::params::keystore_password`
-
 ##### <a name="-rundeck--log_properties_template"></a>`log_properties_template`
 
 Data type: `String`
 
 The template used for log properties. Default is rundeck/log4j.properties.erb.
 
-Default value: `$rundeck::params::log_properties_template`
+Default value: `'rundeck/log4j.properties.erb'`
 
 ##### <a name="-rundeck--mail_config"></a>`mail_config`
 
@@ -318,7 +308,7 @@ Data type: `Hash`
 
 A hash of the notification email configuraton.
 
-Default value: `$rundeck::params::mail_config`
+Default value: `{}`
 
 ##### <a name="-rundeck--sshkey_manage"></a>`sshkey_manage`
 
@@ -326,7 +316,15 @@ Data type: `Boolean`
 
 Should this module manage the sshkey used by rundeck at all.
 
-Default value: `$rundeck::params::sshkey_manage`
+Default value: `true`
+
+##### <a name="-rundeck--key_password"></a>`key_password`
+
+Data type: `Optional[String]`
+
+The ssl key password.
+
+Default value: `undef`
 
 ##### <a name="-rundeck--ssl_keyfile"></a>`ssl_keyfile`
 
@@ -334,7 +332,7 @@ Data type: `Stdlib::Absolutepath`
 
 Full path to the SSL private key to be used by Rundeck.
 
-Default value: `$rundeck::params::ssl_keyfile`
+Default value: `'/etc/rundeck/ssl/rundeck.key'`
 
 ##### <a name="-rundeck--ssl_certfile"></a>`ssl_certfile`
 
@@ -342,7 +340,7 @@ Data type: `Stdlib::Absolutepath`
 
 Full path to the SSL public key to be used by Rundeck.
 
-Default value: `$rundeck::params::ssl_certfile`
+Default value: `'/etc/rundeck/ssl/rundeck.crt'`
 
 ##### <a name="-rundeck--manage_default_admin_policy"></a>`manage_default_admin_policy`
 
@@ -350,7 +348,7 @@ Data type: `Boolean`
 
 Boolean value if set to true enables default admin policy management
 
-Default value: `$rundeck::params::manage_default_admin_policy`
+Default value: `true`
 
 ##### <a name="-rundeck--manage_default_api_policy"></a>`manage_default_api_policy`
 
@@ -358,7 +356,7 @@ Data type: `Boolean`
 
 Boolean value if set to true enables default api policy management
 
-Default value: `$rundeck::params::manage_default_api_policy`
+Default value: `true`
 
 ##### <a name="-rundeck--manage_repo"></a>`manage_repo`
 
@@ -366,7 +364,7 @@ Data type: `Boolean`
 
 Whether to manage the package repository. Defaults to true.
 
-Default value: `$rundeck::params::manage_repo`
+Default value: `true`
 
 ##### <a name="-rundeck--package_ensure"></a>`package_ensure`
 
@@ -374,7 +372,7 @@ Data type: `String`
 
 Ensure the state of the rundeck package, either present, absent or a specific version
 
-Default value: `$rundeck::params::package_ensure`
+Default value: `'installed'`
 
 ##### <a name="-rundeck--preauthenticated_config"></a>`preauthenticated_config`
 
@@ -382,15 +380,13 @@ Data type: `Hash`
 
 A hash of the rundeck preauthenticated config mode
 
-Default value: `$rundeck::params::preauthenticated_config`
-
 ##### <a name="-rundeck--projects"></a>`projects`
 
 Data type: `Hash`
 
 The hash of projects in your instance.
 
-Default value: `$rundeck::params::projects`
+Default value: `{}`
 
 ##### <a name="-rundeck--projects_description"></a>`projects_description`
 
@@ -398,7 +394,7 @@ Data type: `String`
 
 The description that will be set by default for any projects.
 
-Default value: `$rundeck::params::projects_default_desc`
+Default value: `''`
 
 ##### <a name="-rundeck--projects_organization"></a>`projects_organization`
 
@@ -406,7 +402,7 @@ Data type: `String`
 
 The organization value that will be set by default for any projects.
 
-Default value: `$rundeck::params::projects_default_org`
+Default value: `''`
 
 ##### <a name="-rundeck--projects_storage_type"></a>`projects_storage_type`
 
@@ -414,7 +410,7 @@ Data type: `Enum['db', 'filesystem']`
 
 The storage type for any projects. Must be 'filesystem' or 'db'
 
-Default value: `$rundeck::params::projects_storage_type`
+Default value: `'filesystem'`
 
 ##### <a name="-rundeck--quartz_job_threadcount"></a>`quartz_job_threadcount`
 
@@ -422,7 +418,7 @@ Data type: `Integer`
 
 The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
 
-Default value: `$rundeck::params::quartz_job_threadcount`
+Default value: `10`
 
 ##### <a name="-rundeck--rd_loglevel"></a>`rd_loglevel`
 
@@ -430,7 +426,7 @@ Data type: `Rundeck::Loglevel`
 
 The log4j logging level to be set for the Rundeck application.
 
-Default value: `$rundeck::params::loglevel`
+Default value: `'INFO'`
 
 ##### <a name="-rundeck--rd_auditlevel"></a>`rd_auditlevel`
 
@@ -438,7 +434,7 @@ Data type: `Rundeck::Loglevel`
 
 The log4j logging level to be set for the Rundeck application.
 
-Default value: `$rundeck::params::loglevel`
+Default value: `'INFO'`
 
 ##### <a name="-rundeck--rdeck_config_template"></a>`rdeck_config_template`
 
@@ -446,7 +442,7 @@ Data type: `String`
 
 Allows you to override the rundeck-config template.
 
-Default value: `$rundeck::params::rdeck_config_template`
+Default value: `'rundeck/rundeck-config.epp'`
 
 ##### <a name="-rundeck--rdeck_home"></a>`rdeck_home`
 
@@ -454,7 +450,7 @@ Data type: `Stdlib::Absolutepath`
 
 Directory under which the projects directories live.
 
-Default value: `$rundeck::params::rdeck_home`
+Default value: `'/var/lib/rundeck'`
 
 ##### <a name="-rundeck--manage_home"></a>`manage_home`
 
@@ -462,7 +458,7 @@ Data type: `Boolean`
 
 Whether to manage rundeck home dir. Defaults to true.
 
-Default value: `$rundeck::params::manage_home`
+Default value: `true`
 
 ##### <a name="-rundeck--rdeck_profile_template"></a>`rdeck_profile_template`
 
@@ -486,7 +482,7 @@ Data type: `String`
 
 Allows you to use your own override template instead of the default from the package maintainer
 
-Default value: `$rundeck::params::realm_template`
+Default value: `'rundeck/realm.properties.erb'`
 
 ##### <a name="-rundeck--repo_yum_source"></a>`repo_yum_source`
 
@@ -494,7 +490,7 @@ Data type: `Stdlib::HTTPUrl`
 
 Baseurl for the yum repo
 
-Default value: `$rundeck::params::repo_yum_source`
+Default value: `'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch'`
 
 ##### <a name="-rundeck--repo_yum_gpgkey"></a>`repo_yum_gpgkey`
 
@@ -502,7 +498,7 @@ Data type: `String`
 
 URL or path for the GPG key for the rpm
 
-Default value: `$rundeck::params::repo_yum_gpgkey`
+Default value: `'https://packagecloud.io/pagerduty/rundeck/gpgkey'`
 
 ##### <a name="-rundeck--repo_apt_source"></a>`repo_apt_source`
 
@@ -510,7 +506,7 @@ Data type: `Stdlib::HTTPUrl`
 
 Baseurl for the apt repo
 
-Default value: `$rundeck::params::repo_apt_source`
+Default value: `'https://packagecloud.io/pagerduty/rundeck/any'`
 
 ##### <a name="-rundeck--repo_apt_key_id"></a>`repo_apt_key_id`
 
@@ -518,7 +514,7 @@ Data type: `String`
 
 Key ID for the GPG key for the Debian package
 
-Default value: `$rundeck::params::repo_apt_key_id`
+Default value: `'0DDD2FA79B15D736ECEA32B89B5206167C5C34C0'`
 
 ##### <a name="-rundeck--repo_apt_gpgkey"></a>`repo_apt_gpgkey`
 
@@ -526,7 +522,7 @@ Data type: `Stdlib::Httpsurl`
 
 Location where the GPG key can be found
 
-Default value: `$rundeck::params::repo_apt_gpgkey`
+Default value: `'https://packagecloud.io/pagerduty/rundeck/gpgkey'`
 
 ##### <a name="-rundeck--repo_apt_keyserver"></a>`repo_apt_keyserver`
 
@@ -534,7 +530,7 @@ Data type: `String`
 
 Keysever for the GPG key for the Debian package
 
-Default value: `$rundeck::params::repo_apt_keyserver`
+Default value: `'keyserver.ubuntu.com'`
 
 ##### <a name="-rundeck--rss_enabled"></a>`rss_enabled`
 
@@ -542,7 +538,7 @@ Data type: `Boolean`
 
 Boolean value if set to true enables RSS feeds that are public (non-authenticated)
 
-Default value: `$rundeck::params::rss_enabled`
+Default value: `false`
 
 ##### <a name="-rundeck--security_config"></a>`security_config`
 
@@ -550,15 +546,13 @@ Data type: `Hash`
 
 A hash of the rundeck security configuration.
 
-Default value: `$rundeck::params::security_config`
-
 ##### <a name="-rundeck--security_role"></a>`security_role`
 
 Data type: `String`
 
 Name of the role that is required for all users to be allowed access.
 
-Default value: `$rundeck::params::security_role`
+Default value: `'user'`
 
 ##### <a name="-rundeck--server_web_context"></a>`server_web_context`
 
@@ -582,7 +576,7 @@ Data type: `Stdlib::Absolutepath`
 
 The path to the directory to store logs.
 
-Default value: `$rundeck::params::service_logs_dir`
+Default value: `'/var/log/rundeck'`
 
 ##### <a name="-rundeck--service_name"></a>`service_name`
 
@@ -590,7 +584,7 @@ Data type: `String`
 
 The name of the rundeck service.
 
-Default value: `$rundeck::params::service_name`
+Default value: `'rundeckd'`
 
 ##### <a name="-rundeck--service_restart"></a>`service_restart`
 
@@ -614,7 +608,7 @@ Data type: `Enum['stopped', 'running']`
 
 State of the rundeck service (defaults to 'running')
 
-Default value: `$rundeck::params::service_ensure`
+Default value: `'running'`
 
 ##### <a name="-rundeck--session_timeout"></a>`session_timeout`
 
@@ -622,7 +616,7 @@ Data type: `Integer`
 
 Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 
-Default value: `$rundeck::params::session_timeout`
+Default value: `30`
 
 ##### <a name="-rundeck--ssl_enabled"></a>`ssl_enabled`
 
@@ -630,7 +624,7 @@ Data type: `Boolean`
 
 Enable ssl for the rundeck web application.
 
-Default value: `$rundeck::params::ssl_enabled`
+Default value: `false`
 
 ##### <a name="-rundeck--ssl_port"></a>`ssl_port`
 
@@ -638,7 +632,7 @@ Data type: `Stdlib::Port`
 
 Ssl port of the rundeck web application (default to '4443').
 
-Default value: `$rundeck::params::ssl_port`
+Default value: `4443`
 
 ##### <a name="-rundeck--truststore"></a>`truststore`
 
@@ -646,7 +640,7 @@ Data type: `Stdlib::Absolutepath`
 
 The full path to the java truststore to be used by Rundeck.
 
-Default value: `$rundeck::params::truststore`
+Default value: `'/etc/rundeck/ssl/truststore'`
 
 ##### <a name="-rundeck--truststore_password"></a>`truststore_password`
 
@@ -654,15 +648,13 @@ Data type: `String`
 
 The password for the given truststore.
 
-Default value: `$rundeck::params::truststore_password`
-
 ##### <a name="-rundeck--user"></a>`user`
 
 Data type: `String`
 
 The user that rundeck is installed as.
 
-Default value: `$rundeck::params::user`
+Default value: `'rundeck'`
 
 ##### <a name="-rundeck--group"></a>`group`
 
@@ -670,7 +662,7 @@ Data type: `String`
 
 The group permission that rundeck is installed as.
 
-Default value: `$rundeck::params::group`
+Default value: `'rundeck'`
 
 ##### <a name="-rundeck--manage_user"></a>`manage_user`
 
@@ -678,7 +670,7 @@ Data type: `Boolean`
 
 Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
 
-Default value: `$rundeck::params::manage_user`
+Default value: `false`
 
 ##### <a name="-rundeck--manage_group"></a>`manage_group`
 
@@ -686,7 +678,7 @@ Data type: `Boolean`
 
 Whether to manage `group` (and enforce `group_id` if set). Defaults to false.
 
-Default value: `$rundeck::params::manage_group`
+Default value: `false`
 
 ##### <a name="-rundeck--user_id"></a>`user_id`
 
@@ -710,7 +702,7 @@ Data type: `String`
 
 Default file mode for managed files. Default to 0640
 
-Default value: `$rundeck::params::file_default_mode`
+Default value: `'0640'`
 
 ##### <a name="-rundeck--security_roles_array_enabled"></a>`security_roles_array_enabled`
 
@@ -718,7 +710,7 @@ Data type: `Boolean`
 
 Boolean value if you need more roles. false or true (default is false).
 
-Default value: `$rundeck::params::security_roles_array_enabled`
+Default value: `false`
 
 ##### <a name="-rundeck--security_roles_array"></a>`security_roles_array`
 
@@ -726,7 +718,7 @@ Data type: `Array`
 
 Array value if you need more roles and you set true the "security_roles_array_enabled" value.
 
-Default value: `$rundeck::params::security_roles_array`
+Default value: `[]`
 
 ##### <a name="-rundeck--storage_encrypt_config"></a>`storage_encrypt_config`
 
@@ -736,6 +728,110 @@ Hash containing the necessary values to configure a plugin for key storage encry
 https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
 
 Default value: `{}`
+
+##### <a name="-rundeck--file_copier_provider"></a>`file_copier_provider`
+
+Data type: `String`
+
+
+
+Default value: `'jsch-scp'`
+
+##### <a name="-rundeck--node_executor_provider"></a>`node_executor_provider`
+
+Data type: `String`
+
+
+
+Default value: `'jsch-ssh'`
+
+##### <a name="-rundeck--resource_sources"></a>`resource_sources`
+
+Data type: `Hash`
+
+
+
+Default value: `{}`
+
+##### <a name="-rundeck--resource_format"></a>`resource_format`
+
+Data type: `Enum['xml', 'yaml']`
+
+
+
+Default value: `'xml'`
+
+##### <a name="-rundeck--include_server_node"></a>`include_server_node`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
+##### <a name="-rundeck--default_source_type"></a>`default_source_type`
+
+Data type: `Enum['file']`
+
+
+
+Default value: `'file'`
+
+##### <a name="-rundeck--default_resource_dir"></a>`default_resource_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+Default value: `'/'`
+
+##### <a name="-rundeck--default_http_proxy_port"></a>`default_http_proxy_port`
+
+Data type: `Stdlib::Port`
+
+
+
+Default value: `80`
+
+##### <a name="-rundeck--default_refresh_interval"></a>`default_refresh_interval`
+
+Data type: `Integer`
+
+
+
+Default value: `30`
+
+##### <a name="-rundeck--url_cache"></a>`url_cache`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-rundeck--url_timeout"></a>`url_timeout`
+
+Data type: `Integer`
+
+
+
+Default value: `30`
+
+##### <a name="-rundeck--script_args_quoted"></a>`script_args_quoted`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-rundeck--script_interpreter"></a>`script_interpreter`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+Default value: `'/bin/bash'`
 
 ### <a name="rundeck--config--global--web"></a>`rundeck::config::global::web`
 
@@ -751,6 +847,7 @@ The following parameters are available in the `rundeck::config::global::web` cla
 * [`session_timeout`](#-rundeck--config--global--web--session_timeout)
 * [`security_roles_array_enabled`](#-rundeck--config--global--web--security_roles_array_enabled)
 * [`security_roles_array`](#-rundeck--config--global--web--security_roles_array)
+* [`web_xml`](#-rundeck--config--global--web--web_xml)
 
 ##### <a name="-rundeck--config--global--web--security_role"></a>`security_role`
 
@@ -784,12 +881,13 @@ Array value if you set the value 'security_roles_array_enabled' to true.
 
 Default value: `$rundeck::params::security_roles_array`
 
-### <a name="rundeck--params"></a>`rundeck::params`
+##### <a name="-rundeck--config--global--web--web_xml"></a>`web_xml`
 
-== Class rundeck::params
+Data type: `Stdlib::Absolutepath`
 
-This class is meant to be called from `rundeck`
-It sets variables according to platform
+
+
+Default value: `"${rundeck::rdeck_home}/exp/webapp/WEB-INF/web.xml"`
 
 ## Defined types
 
@@ -1485,6 +1583,20 @@ Default value: `undef`
 
 Author: Zoltan Lanyi <zoltan.lanyi@gmail.com>
 Date  : 03.06.2016
+
+#### Parameters
+
+The following parameters are available in the `rundeck::config::securityroles` defined type:
+
+* [`web_xml`](#-rundeck--config--securityroles--web_xml)
+
+##### <a name="-rundeck--config--securityroles--web_xml"></a>`web_xml`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+Default value: `"${rundeck::rdeck_home}/exp/webapp/WEB-INF/web.xml"`
 
 ## Functions
 

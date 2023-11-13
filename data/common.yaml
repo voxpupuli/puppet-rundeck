@@ -1,2 +1,139 @@
 ---
 rundeck::acl_policies:
+  - description: 'Admin, all access'
+    context:
+      project: '.*'
+    for:
+      resource:
+        - allow: '*'
+      adhoc:
+        - allow: '*'
+      job:
+        - allow: '*'
+      node:
+        - allow: '*'
+    by:
+      - group:
+          - 'admin'
+
+  - description: 'Admin, all access'
+    context:
+      application: 'rundeck'
+    for:
+      resource:
+        - allow: '*'
+      project:
+        - allow: '*'
+      storage:
+        - allow: '*'
+    by:
+      - group:
+          - 'admin'
+
+rundeck::framework_config:
+  framework.server.name: "%{facts.networking.fqdn}"
+  framework.server.hostname: "%{facts.networking.hostname}"
+  framework.server.port: '4440'
+  framework.server.url: "http://%{facts.networking.fqdn}:4440"
+  framework.server.username: 'admin'
+  framework.server.password: 'admin'
+  rdeck.base: '/var/lib/rundeck'
+  framework.projects.dir: '/var/lib/rundeck/projects'
+  framework.etc.dir: '/etc/rundeck'
+  framework.var.dir: '/var/lib/rundeck/var'
+  framework.tmp.dir: '/var/lib/rundeck/var/tmp'
+  framework.logs.dir: '/var/lib/rundeck/logs'
+  framework.libext.dir: '/var/lib/rundeck/libext'
+  framework.ssh.keypath: '/var/lib/rundeck/.ssh/id_rsa'
+  framework.ssh.user: 'rundeck'
+  framework.ssh.timeout: '0'
+  rundeck.server.uuid: "fqdn_uuid(%{facts.networking.fqdn})"
+
+rundeck::file_keystorage_dir: "%{lookup('rundeck::framework_config.framework.var.dir')}/storage"
+
+rundeck::auth_config:
+  file:
+    admin_user: "%{lookup('rundeck::framework_config.framework.server.username')}"
+    admin_password: "%{lookup('rundeck::framework_config.framework.server.password')}"
+    auth_users: {}
+    file: '/etc/rundeck/realm.properties'
+  pam:
+    service: 'sshd'
+    supplemental_roles:
+      - 'user'
+    store_pass: true
+    clear_pass: null
+    try_first_pass: null
+    use_first_pass: null
+    use_unix_groups: null
+  ldap:
+    server: null
+    port: '389'
+    force_binding: false
+    force_binding_use_root: false
+    bind_dn: null
+    bind_password: null
+    user_base_dn: null
+    user_rdn_attribute: 'uid'
+    user_id_attribute: 'uid'
+    user_password_attribute: 'userPassword'
+    user_object_class: 'user'
+    role_base_dn: null
+    role_name_attribute: 'cn'
+    role_member_attribute: 'memberUid'
+    role_object_class: 'group'
+    role_prefix: null
+    nested_groups: true
+  active_directory:
+    server: null
+    port: '389'
+    force_binding: true
+    force_binding_use_root: true
+    bind_dn: null
+    bind_password: null
+    user_base_dn: null
+    user_rdn_attribute: 'sAMAccountName'
+    user_id_attribute: 'sAMAccountName'
+    user_password_attribute: 'unicodePwd'
+    user_object_class: 'user'
+    role_base_dn: null
+    role_name_attribute: 'cn'
+    role_member_attribute: 'member'
+    role_object_class: 'group'
+    role_prefix: null
+    supplemental_roles:
+      - 'user'
+    nested_groups: true
+
+rundeck::security_config:
+  useHMacRequestTokens: true
+  apiCookieAccess: true
+
+rundeck::database_config:
+  type: 'h2'
+  dbCreate: 'update'
+  url: 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb'
+  driverClassName: ''
+  username: ''
+  password: ''
+  dialect: ''
+  enable_h2_logs: 'on'
+
+rundeck::key_storage_config:
+  - type: 'file'
+    path: '/'
+    config:
+      baseDir: "%{lookup('file_keystorage_dir')}"
+
+rundeck::preauthenticated_config:
+  enabled: false
+  attributeName: 'REMOTE_USER_GROUPS'
+  delimiter: ':'
+  userNameHeader: 'X-Forwarded-Uuid'
+  userRolesHeader: 'X-Forwarded-Roles'
+  redirectLogout: false
+  redirectUrl: '/oauth2/sign_in'
+
+rundeck::keystore_password: 'adminadmin'
+rundeck::truststore_password: 'adminadmin'
+rundeck::rdeck_base: '/var/lib/rundeck'
