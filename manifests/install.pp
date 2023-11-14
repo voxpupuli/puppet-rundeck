@@ -1,23 +1,21 @@
-# @api private
-#
-# @summary This private class installs the rundeck package and its dependencies.
+# @summary This class is called from rundeck for install.
 #
 class rundeck::install {
   assert_private()
 
-  $manage_repo        = $rundeck::manage_repo
-  $package_ensure     = $rundeck::package_ensure
-  $repo_yum_source    = $rundeck::repo_yum_source
-  $repo_yum_gpgkey    = $rundeck::repo_yum_gpgkey
-  $repo_apt_source    = $rundeck::repo_apt_source
-  $repo_apt_key_id    = $rundeck::repo_apt_key_id
-  $repo_apt_keyserver = $rundeck::repo_apt_keyserver
   $user               = $rundeck::user
   $group              = $rundeck::group
   $manage_user        = $rundeck::manage_user
   $manage_group       = $rundeck::manage_group
   $user_id            = $rundeck::user_id
   $group_id           = $rundeck::group_id
+  $package_ensure     = $rundeck::package_ensure
+  $manage_repo        = $rundeck::manage_repo
+  $repo_yum_source    = $rundeck::repo_yum_source
+  $repo_yum_gpgkey    = $rundeck::repo_yum_gpgkey
+  $repo_apt_source    = $rundeck::repo_apt_source
+  $repo_apt_key_id    = $rundeck::repo_apt_key_id
+  $repo_apt_keyserver = $rundeck::repo_apt_keyserver
 
   if $manage_group {
     group { $group:
