@@ -1,6 +1,4 @@
-# @api private
-#
-# @summary This class is meant to be called from `rundeck` and ensures the service is running.
+# @summary This class is called from rundeck to manage service.
 #
 class rundeck::service {
   assert_private()
