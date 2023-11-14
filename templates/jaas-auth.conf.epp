@@ -1,5 +1,5 @@
 authentication {
-<%- $rundeck::config::auth_types.each  |$type| { -%>
+<%- $rundeck::config::auth_config.each  |$_type| { -%>
   <%- if 'ldap' in $type or 'ldap_shared' in $type { -%>
     <%= epp('rundeck/_auth_ldap.epp') %>
   <%- } elsif 'active_directory' in $type or 'active_directory_shared' in $type { -%>

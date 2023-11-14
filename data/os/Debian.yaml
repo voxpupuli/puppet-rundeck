@@ -1,2 +1,14 @@
 ---
 rundeck::overrides_dir: '/etc/default'
+
+rundeck::repoconfig:
+  'apt::source':
+    'rundeck':
+      location: 'https://packagecloud.io/pagerduty/rundeck/any'
+      release: 'any'
+      repos: 'main'
+      comment: 'Official repository for Rundeck'
+      key:
+        id: '0DDD2FA79B15D736ECEA32B89B5206167C5C34C0'
+        source: 'https://packagecloud.io/pagerduty/rundeck/gpgkey'
+        server: 'keyserver.ubuntu.com'

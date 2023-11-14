@@ -6,14 +6,10 @@
 #   The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
 # @param api_policies
 #   apitoken acl policies.
-# @param api_template
-#   The template used for apitoken acl policy. Default is rundeck/aclpolicy.erb.
 # @param auth_config
 #   Authentication configuration.
 # @param auth_template
 #   The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
-# @param auth_types
-#   The method used to authenticate to rundeck. Default is file.
 # @param clustermode_enabled
 #   Boolean value if set to true enables cluster mode
 # @param database_config
@@ -58,6 +54,9 @@
 #   Boolean value if set to true enables default admin policy management
 # @param manage_default_api_policy
 #   Boolean value if set to true enables default api policy management
+# @param repo_config
+#   A hash of repository types and attributes for configuring the rundeck package repositories.
+#   Examples/defaults for yumrepo can be found at data/os/RedHat.yaml, and for apt at data/os/Debian.yaml
 # @param manage_repo
 #   Whether to manage the package repository. Defaults to true.
 # @param package_ensure
@@ -88,18 +87,6 @@
 #   Allows you to use your own override template instead of the default from the package maintainer
 # @param realm_template
 #   Allows you to use your own override template instead of the default from the package maintainer
-# @param repo_yum_source
-#   Baseurl for the yum repo
-# @param repo_yum_gpgkey
-#   URL or path for the GPG key for the rpm
-# @param repo_apt_source
-#   Baseurl for the apt repo
-# @param repo_apt_key_id
-#   Key ID for the GPG key for the Debian package
-# @param repo_apt_gpgkey
-#   Location where the GPG key can be found
-# @param repo_apt_keyserver
-#   Keysever for the GPG key for the Debian package
 # @param rss_enabled
 #   Boolean value if set to true enables RSS feeds that are public (non-authenticated)
 # @param security_config
@@ -108,18 +95,18 @@
 #   Name of the role that is required for all users to be allowed access.
 # @param server_web_context
 #   Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
-# @param service_config
-#   The name of the rundeck service.
-# @param service_logs_dir
-#   The path to the directory to store logs.
 # @param service_name
 #   The name of the rundeck service.
-# @param service_restart
-#   The restart of the rundeck service (default to true)
-# @param service_script
-#   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
 # @param service_ensure
 #   State of the rundeck service (defaults to 'running')
+# @param service_restart
+#   The restart of the rundeck service (default to true)
+# @param service_logs_dir
+#   The path to the directory to store logs.
+# @param service_config
+#   Allows you to use your own override template instead to config rundeckd init script.
+# @param service_script
+#   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
 # @param session_timeout
 #   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 # @param ssl_enabled
@@ -142,8 +129,6 @@
 #   If you want to have always the same user id. Eg. because of the NFS share.
 # @param group_id
 #   If you want to have always the same group id. Eg. because of the NFS share.
-# @param file_default_mode
-#   Default file mode for managed files. Default to 0640
 # @param security_roles_array_enabled
 #   Boolean value if you need more roles. false or true (default is false).
 # @param security_roles_array
@@ -155,7 +140,7 @@
 class rundeck (
   Array[Hash]                         $acl_policies,
   Hash                                $framework_config,
-  Hash                                $auth_config,
+  Array[Hash]                         $auth_config,
   Hash                                $database_config,
   Array[Hash]                         $key_storage_config,
   Hash                                $security_config,
@@ -163,11 +148,12 @@ class rundeck (
   String                              $keystore_password,
   String                              $truststore_password,
   Stdlib::Absolutepath                $file_keystorage_dir,
+  Hash                                $repo_config,
+  Boolean                             $manage_repo                        = true,
+  String                              $package_ensure                     = 'installed',
   String                              $acl_template                       = 'rundeck/aclpolicy.erb',
   Array[Hash]                         $api_policies                       = [],
-  String                              $api_template                       = 'rundeck/aclpolicy.erb',
   String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
-  Array                               $auth_types                         = ['file'],
   Boolean                             $clustermode_enabled                = false,
   Enum['active', 'passive']           $execution_mode                     = 'active',
   Hash                                $file_keystorage_keys               = {},
@@ -182,12 +168,7 @@ class rundeck (
   Boolean                             $sshkey_manage                      = true,
   Boolean                             $manage_default_admin_policy        = true,
   Boolean                             $manage_default_api_policy          = true,
-  Boolean                             $manage_repo                        = true,
-  String                              $package_ensure                     = 'installed',
-  Hash                                $projects                           = {},
-  String                              $projects_description               = '',
-  String                              $projects_organization              = '',
-  Integer                             $quartz_job_threadcount             = 10,
+
   Rundeck::Loglevel                   $rd_loglevel                        = 'INFO',
   Rundeck::Loglevel                   $rd_auditlevel                      = 'INFO',
   String                              $rdeck_config_template              = 'rundeck/rundeck-config.epp',
@@ -195,22 +176,11 @@ class rundeck (
   Boolean                             $manage_home                        = true,
   Optional[String]                    $rdeck_profile_template             = undef,
   String                              $rdeck_override_template            = 'rundeck/profile_overrides.erb',
-  String                              $realm_template                     = 'rundeck/realm.properties.erb',
-  Stdlib::HTTPUrl                     $repo_yum_source                    = 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
-  String                              $repo_yum_gpgkey                    = 'https://packagecloud.io/pagerduty/rundeck/gpgkey',
-  Stdlib::HTTPUrl                     $repo_apt_source                    = 'https://packagecloud.io/pagerduty/rundeck/any',
-  String                              $repo_apt_key_id                    = '0DDD2FA79B15D736ECEA32B89B5206167C5C34C0',
-  Stdlib::Httpsurl                    $repo_apt_gpgkey                    = 'https://packagecloud.io/pagerduty/rundeck/gpgkey',
-  String                              $repo_apt_keyserver                 = 'keyserver.ubuntu.com',
+  String                              $realm_template                     = 'rundeck/realm.properties.epp',
+
   Boolean                             $rss_enabled                        = false,
   String                              $security_role                      = 'user',
   Optional[String]                    $server_web_context                 = undef,
-  Optional[String]                    $service_config                     = undef,
-  Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
-  String                              $service_name                       = 'rundeckd',
-  Boolean                             $service_restart                    = true,
-  Optional[String]                    $service_script                     = undef,
-  Enum['stopped', 'running']          $service_ensure                     = 'running',
   Integer                             $session_timeout                    = 30,
   Boolean                             $ssl_enabled                        = false,
   Stdlib::Port                        $ssl_port                           = 4443,
@@ -218,16 +188,28 @@ class rundeck (
   Stdlib::Absolutepath                $ssl_keyfile                        = '/etc/rundeck/ssl/rundeck.key',
   Stdlib::Absolutepath                $ssl_certfile                       = '/etc/rundeck/ssl/rundeck.crt',
   Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
+  Boolean                             $security_roles_array_enabled       = false,
+  Array                               $security_roles_array               = [],
+  Hash[String,String]                 $storage_encrypt_config             = {},
+  # User config
   String                              $user                               = 'rundeck',
   String                              $group                              = 'rundeck',
   Boolean                             $manage_user                        = false,
   Boolean                             $manage_group                       = false,
   Optional[Integer]                   $user_id                            = undef,
   Optional[Integer]                   $group_id                           = undef,
-  String                              $file_default_mode                  = '0640',
-  Boolean                             $security_roles_array_enabled       = false,
-  Array                               $security_roles_array               = [],
-  Hash[String,String]                 $storage_encrypt_config             = {},
+  # Service config
+  String                              $service_name                       = 'rundeckd',
+  Enum['stopped', 'running']          $service_ensure                     = 'running',
+  Boolean                             $service_restart                    = true,
+  Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
+  Optional[String]                    $service_config                     = undef,
+  Optional[String]                    $service_script                     = undef,
+  # Project management
+  Hash                                $projects                           = {},
+  String                              $projects_description               = '',
+  String                              $projects_organization              = '',
+  Integer                             $quartz_job_threadcount             = 10,
   String                              $file_copier_provider               = 'jsch-scp',
   String                              $node_executor_provider             = 'jsch-ssh',
   Hash                                $resource_sources                   = {},

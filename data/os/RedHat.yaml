@@ -1,2 +1,12 @@
 ---
 rundeck::overrides_dir: '/etc/sysconfig'
+
+rundeck::repo_config:
+  'yumrepo':
+    'rundeck':
+      baseurl: 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch'
+      descr: 'Rundeck repository'
+      enabled: 1
+      gpgcheck: 1
+      gpgkey: 'https://packagecloud.io/pagerduty/rundeck/gpgkey'
+      repo_gpgcheck: 1

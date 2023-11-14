@@ -3,29 +3,24 @@
 class rundeck::service {
   assert_private()
 
-  $service_config = $rundeck::service_config
-  $service_name   = $rundeck::service_name
-  $service_script = $rundeck::service_script
-  $service_ensure = $rundeck::service_ensure
-
-  if $service_config {
+  if $rundeck::service_config {
     file { '/etc/init/rundeckd.conf':
       ensure  => file,
       mode    => '0644',
-      content => template($service_config),
+      content => template($rundeck::service_config),
     }
   }
 
-  if $service_script {
+  if $rundeck::service_script {
     file { '/etc/init.d/rundeckd':
       ensure  => file,
       mode    => '0755',
-      content => template($service_script),
+      content => template($rundeck::service_script),
     }
   }
 
-  service { $service_name:
-    ensure     => $service_ensure,
+  service { $rundeck::service_name:
+    ensure     => $rundeck::service_ensure,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,

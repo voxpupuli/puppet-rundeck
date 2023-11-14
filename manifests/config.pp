@@ -1,6 +1,4 @@
-# @api private
-#
-# @summary This private class is called from `rundeck` to manage the configuration.
+# @summary This class is called from rundeck to manage the configuration.
 #
 class rundeck::config {
   $acl_policies                       = $rundeck::acl_policies
@@ -8,11 +6,9 @@ class rundeck::config {
   $api_policies                       = $rundeck::api_policies
   $api_template                       = $rundeck::api_template
   $auth_template                      = $rundeck::auth_template
-  $auth_types                         = $rundeck::auth_types
   $clustermode_enabled                = $rundeck::clustermode_enabled
   $database_config                    = $rundeck::database_config
   $execution_mode                     = $rundeck::execution_mode
-  $file_default_mode                  = $rundeck::file_default_mode
   $file_keystorage_dir                = $rundeck::file_keystorage_dir
   $file_keystorage_keys               = $rundeck::file_keystorage_keys
   $grails_server_url                  = $rundeck::grails_server_url
@@ -67,7 +63,7 @@ class rundeck::config {
   File {
     owner  => $rundeck::user,
     group  => $rundeck::group,
-    mode   => $rundeck::file_default_mode,
+    mode   => '0640',
   }
 
   $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)

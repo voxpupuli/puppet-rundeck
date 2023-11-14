@@ -10,6 +10,8 @@
 
 * [`rundeck`](#rundeck): Class to manage installation and configuration of Rundeck.
 * [`rundeck::config::global::web`](#rundeck--config--global--web): This class will manage the application's web.xml.
+* [`rundeck::install`](#rundeck--install): This class is called from rundeck for install.
+* [`rundeck::service`](#rundeck--service): This class is called from rundeck to manage service.
 
 #### Private Classes
 
@@ -19,8 +21,6 @@
 * `rundeck::config::global::project`: This private class is called from rundeck::config used to manage the default project properties.
 * `rundeck::config::global::rundeck_config`: This private class is called from rundeck::config used to manage the rundeck-config properties.
 * `rundeck::config::global::ssl`: This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled.
-* `rundeck::install`: This private class installs the rundeck package and its dependencies.
-* `rundeck::service`: This class is meant to be called from `rundeck` and ensures the service is running.
 
 ### Defined types
 
@@ -53,7 +53,6 @@ The following parameters are available in the `rundeck` class:
 * [`acl_policies`](#-rundeck--acl_policies)
 * [`acl_template`](#-rundeck--acl_template)
 * [`api_policies`](#-rundeck--api_policies)
-* [`api_template`](#-rundeck--api_template)
 * [`auth_config`](#-rundeck--auth_config)
 * [`auth_template`](#-rundeck--auth_template)
 * [`auth_types`](#-rundeck--auth_types)
@@ -79,13 +78,13 @@ The following parameters are available in the `rundeck` class:
 * [`ssl_certfile`](#-rundeck--ssl_certfile)
 * [`manage_default_admin_policy`](#-rundeck--manage_default_admin_policy)
 * [`manage_default_api_policy`](#-rundeck--manage_default_api_policy)
+* [`repo_config`](#-rundeck--repo_config)
 * [`manage_repo`](#-rundeck--manage_repo)
 * [`package_ensure`](#-rundeck--package_ensure)
 * [`preauthenticated_config`](#-rundeck--preauthenticated_config)
 * [`projects`](#-rundeck--projects)
 * [`projects_description`](#-rundeck--projects_description)
 * [`projects_organization`](#-rundeck--projects_organization)
-* [`projects_storage_type`](#-rundeck--projects_storage_type)
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`rd_loglevel`](#-rundeck--rd_loglevel)
 * [`rd_auditlevel`](#-rundeck--rd_auditlevel)
@@ -95,22 +94,16 @@ The following parameters are available in the `rundeck` class:
 * [`rdeck_profile_template`](#-rundeck--rdeck_profile_template)
 * [`rdeck_override_template`](#-rundeck--rdeck_override_template)
 * [`realm_template`](#-rundeck--realm_template)
-* [`repo_yum_source`](#-rundeck--repo_yum_source)
-* [`repo_yum_gpgkey`](#-rundeck--repo_yum_gpgkey)
-* [`repo_apt_source`](#-rundeck--repo_apt_source)
-* [`repo_apt_key_id`](#-rundeck--repo_apt_key_id)
-* [`repo_apt_gpgkey`](#-rundeck--repo_apt_gpgkey)
-* [`repo_apt_keyserver`](#-rundeck--repo_apt_keyserver)
 * [`rss_enabled`](#-rundeck--rss_enabled)
 * [`security_config`](#-rundeck--security_config)
 * [`security_role`](#-rundeck--security_role)
 * [`server_web_context`](#-rundeck--server_web_context)
-* [`service_config`](#-rundeck--service_config)
-* [`service_logs_dir`](#-rundeck--service_logs_dir)
 * [`service_name`](#-rundeck--service_name)
-* [`service_restart`](#-rundeck--service_restart)
-* [`service_script`](#-rundeck--service_script)
 * [`service_ensure`](#-rundeck--service_ensure)
+* [`service_restart`](#-rundeck--service_restart)
+* [`service_logs_dir`](#-rundeck--service_logs_dir)
+* [`service_config`](#-rundeck--service_config)
+* [`service_script`](#-rundeck--service_script)
 * [`session_timeout`](#-rundeck--session_timeout)
 * [`ssl_enabled`](#-rundeck--ssl_enabled)
 * [`ssl_port`](#-rundeck--ssl_port)
@@ -122,7 +115,6 @@ The following parameters are available in the `rundeck` class:
 * [`manage_group`](#-rundeck--manage_group)
 * [`user_id`](#-rundeck--user_id)
 * [`group_id`](#-rundeck--group_id)
-* [`file_default_mode`](#-rundeck--file_default_mode)
 * [`security_roles_array_enabled`](#-rundeck--security_roles_array_enabled)
 * [`security_roles_array`](#-rundeck--security_roles_array)
 * [`storage_encrypt_config`](#-rundeck--storage_encrypt_config)
@@ -161,14 +153,6 @@ Data type: `Array[Hash]`
 apitoken acl policies.
 
 Default value: `[]`
-
-##### <a name="-rundeck--api_template"></a>`api_template`
-
-Data type: `String`
-
-The template used for apitoken acl policy. Default is rundeck/aclpolicy.erb.
-
-Default value: `'rundeck/aclpolicy.erb'`
 
 ##### <a name="-rundeck--auth_config"></a>`auth_config`
 
@@ -358,6 +342,13 @@ Boolean value if set to true enables default api policy management
 
 Default value: `true`
 
+##### <a name="-rundeck--repo_config"></a>`repo_config`
+
+Data type: `Hash`
+
+A hash of repository types and attributes for configuring the rundeck package repositories.
+Examples/defaults for yumrepo can be found at data/os/RedHat.yaml, and for apt at data/os/Debian.yaml
+
 ##### <a name="-rundeck--manage_repo"></a>`manage_repo`
 
 Data type: `Boolean`
@@ -403,14 +394,6 @@ Data type: `String`
 The organization value that will be set by default for any projects.
 
 Default value: `''`
-
-##### <a name="-rundeck--projects_storage_type"></a>`projects_storage_type`
-
-Data type: `Enum['db', 'filesystem']`
-
-The storage type for any projects. Must be 'filesystem' or 'db'
-
-Default value: `'filesystem'`
 
 ##### <a name="-rundeck--quartz_job_threadcount"></a>`quartz_job_threadcount`
 
@@ -484,54 +467,6 @@ Allows you to use your own override template instead of the default from the pac
 
 Default value: `'rundeck/realm.properties.erb'`
 
-##### <a name="-rundeck--repo_yum_source"></a>`repo_yum_source`
-
-Data type: `Stdlib::HTTPUrl`
-
-Baseurl for the yum repo
-
-Default value: `'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch'`
-
-##### <a name="-rundeck--repo_yum_gpgkey"></a>`repo_yum_gpgkey`
-
-Data type: `String`
-
-URL or path for the GPG key for the rpm
-
-Default value: `'https://packagecloud.io/pagerduty/rundeck/gpgkey'`
-
-##### <a name="-rundeck--repo_apt_source"></a>`repo_apt_source`
-
-Data type: `Stdlib::HTTPUrl`
-
-Baseurl for the apt repo
-
-Default value: `'https://packagecloud.io/pagerduty/rundeck/any'`
-
-##### <a name="-rundeck--repo_apt_key_id"></a>`repo_apt_key_id`
-
-Data type: `String`
-
-Key ID for the GPG key for the Debian package
-
-Default value: `'0DDD2FA79B15D736ECEA32B89B5206167C5C34C0'`
-
-##### <a name="-rundeck--repo_apt_gpgkey"></a>`repo_apt_gpgkey`
-
-Data type: `Stdlib::Httpsurl`
-
-Location where the GPG key can be found
-
-Default value: `'https://packagecloud.io/pagerduty/rundeck/gpgkey'`
-
-##### <a name="-rundeck--repo_apt_keyserver"></a>`repo_apt_keyserver`
-
-Data type: `String`
-
-Keysever for the GPG key for the Debian package
-
-Default value: `'keyserver.ubuntu.com'`
-
 ##### <a name="-rundeck--rss_enabled"></a>`rss_enabled`
 
 Data type: `Boolean`
@@ -562,22 +497,6 @@ Web context path to use, such as "/rundeck". http://host.domain:port/server_web_
 
 Default value: `undef`
 
-##### <a name="-rundeck--service_config"></a>`service_config`
-
-Data type: `Optional[String]`
-
-The name of the rundeck service.
-
-Default value: `undef`
-
-##### <a name="-rundeck--service_logs_dir"></a>`service_logs_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-The path to the directory to store logs.
-
-Default value: `'/var/log/rundeck'`
-
 ##### <a name="-rundeck--service_name"></a>`service_name`
 
 Data type: `String`
@@ -585,6 +504,14 @@ Data type: `String`
 The name of the rundeck service.
 
 Default value: `'rundeckd'`
+
+##### <a name="-rundeck--service_ensure"></a>`service_ensure`
+
+Data type: `Enum['stopped', 'running']`
+
+State of the rundeck service (defaults to 'running')
+
+Default value: `'running'`
 
 ##### <a name="-rundeck--service_restart"></a>`service_restart`
 
@@ -594,6 +521,22 @@ The restart of the rundeck service (default to true)
 
 Default value: `true`
 
+##### <a name="-rundeck--service_logs_dir"></a>`service_logs_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The path to the directory to store logs.
+
+Default value: `'/var/log/rundeck'`
+
+##### <a name="-rundeck--service_config"></a>`service_config`
+
+Data type: `Optional[String]`
+
+Allows you to use your own override template instead to config rundeckd init script.
+
+Default value: `undef`
+
 ##### <a name="-rundeck--service_script"></a>`service_script`
 
 Data type: `Optional[String]`
@@ -601,14 +544,6 @@ Data type: `Optional[String]`
 Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
 
 Default value: `undef`
-
-##### <a name="-rundeck--service_ensure"></a>`service_ensure`
-
-Data type: `Enum['stopped', 'running']`
-
-State of the rundeck service (defaults to 'running')
-
-Default value: `'running'`
 
 ##### <a name="-rundeck--session_timeout"></a>`session_timeout`
 
@@ -695,14 +630,6 @@ Data type: `Optional[Integer]`
 If you want to have always the same group id. Eg. because of the NFS share.
 
 Default value: `undef`
-
-##### <a name="-rundeck--file_default_mode"></a>`file_default_mode`
-
-Data type: `String`
-
-Default file mode for managed files. Default to 0640
-
-Default value: `'0640'`
 
 ##### <a name="-rundeck--security_roles_array_enabled"></a>`security_roles_array_enabled`
 
@@ -888,6 +815,14 @@ Data type: `Stdlib::Absolutepath`
 
 
 Default value: `"${rundeck::rdeck_home}/exp/webapp/WEB-INF/web.xml"`
+
+### <a name="rundeck--install"></a>`rundeck::install`
+
+This class is called from rundeck for install.
+
+### <a name="rundeck--service"></a>`rundeck::service`
+
+This class is called from rundeck to manage service.
 
 ## Defined types
 

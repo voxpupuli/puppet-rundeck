@@ -140,7 +140,6 @@ To perform LDAP authentication and file authorization following code can be used
 
 ```puppet
 class { 'rundeck':
-  auth_types  => ['ldap_shared'],
   auth_config => {
     'file' => {
       'auth_users' => [

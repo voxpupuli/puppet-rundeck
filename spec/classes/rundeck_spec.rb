@@ -25,7 +25,6 @@ describe 'rundeck' do
         describe 'setting auth_config ldap roleUsernameMemberAttribute' do
           let(:params) do
             {
-              auth_types: ['ldap'],
               auth_config: {
                 'ldap' => {
                   'role_username_member_attribute' => 'memberUid'
@@ -46,7 +45,6 @@ describe 'rundeck' do
         describe 'setting auth_config ldap url' do
           let(:params) do
             {
-              auth_types: ['ldap'],
               auth_config: {
                 'ldap' => {
                   'url' => 'ldaps://myrealldap.example.com',

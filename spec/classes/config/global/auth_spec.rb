@@ -87,7 +87,6 @@ describe 'rundeck' do
       describe 'with multiauth ldap and file auth users array' do
         let(:params) do
           {
-            auth_types: %w[ldap file],
             auth_config: {
               'file' => {
                 'auth_users' => [
@@ -138,7 +137,6 @@ describe 'rundeck' do
       describe 'with ldap using ldap_sync' do
         let(:params) do
           {
-            auth_types: %w[ldap],
             auth_config: {
               'ldap' => {
                 'debug' => 'true',
@@ -180,7 +178,6 @@ describe 'rundeck' do
       describe 'with multiauth active_directory and file auth users array' do
         let(:params) do
           {
-            auth_types: %w[active_directory file],
             auth_config: {
               'file' => {
                 'auth_users' => [
@@ -231,7 +228,6 @@ describe 'rundeck' do
       describe 'with active_directory using ldap_sync' do
         let(:params) do
           {
-            auth_types: %w[active_directory],
             auth_config: {
               'active_directory' => {
                 'debug' => 'true',
@@ -328,7 +324,6 @@ describe 'rundeck' do
       describe 'ldap with rolePrefix' do
         let(:params) do
           {
-            auth_types: %w[ldap],
             auth_config: {
               'ldap' => {
                 'url' => 'localhost:389',
@@ -347,7 +342,6 @@ describe 'rundeck' do
       describe 'active_directory with rolePrefix' do
         let(:params) do
           {
-            auth_types: %w[active_directory],
             auth_config: {
               'active_directory' => {
                 'url' => 'localhost:389',
