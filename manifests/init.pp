@@ -246,10 +246,10 @@ class rundeck (
   validate_rd_policy($api_policies)
 
   contain rundeck::install
-  contain rundeck::config
-  contain rundeck::service
+  # contain rundeck::config
+  # contain rundeck::service
 
-  Class['rundeck::install']
-  -> Class['rundeck::config']
-  ~> Class['rundeck::service']
+  # Class['rundeck::install']
+  # -> Class['rundeck::config']
+  # ~> Class['rundeck::service']
 }
