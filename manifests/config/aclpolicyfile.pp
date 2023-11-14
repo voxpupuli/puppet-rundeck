@@ -51,7 +51,7 @@
 #   The template used for acl policy. Default is rundeck/aclpolicy.erb
 #
 define rundeck::config::aclpolicyfile (
-  Array                $acl_policies,
+  Array[Hash]          $acl_policies,
   String               $group          = 'rundeck',
   String               $owner          = 'rundeck',
   Stdlib::Absolutepath $properties_dir = '/etc/rundeck',

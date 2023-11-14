@@ -9,13 +9,13 @@
 #### Public Classes
 
 * [`rundeck`](#rundeck): Class to manage installation and configuration of Rundeck.
+* [`rundeck::config`](#rundeck--config): This class is called from rundeck to manage the configuration.
 * [`rundeck::config::global::web`](#rundeck--config--global--web): This class will manage the application's web.xml.
 * [`rundeck::install`](#rundeck--install): This class is called from rundeck for install.
 * [`rundeck::service`](#rundeck--service): This class is called from rundeck to manage service.
 
 #### Private Classes
 
-* `rundeck::config`: This private class is called from `rundeck` to manage the configuration.
 * `rundeck::config::global::file_keystore`: This private class is used to manage the keys of the Rundeck key storage facility if a file-based backend is used.
 * `rundeck::config::global::framework`: This private class is called from rundeck::config used to manage the framework properties of rundeck.
 * `rundeck::config::global::project`: This private class is called from rundeck::config used to manage the default project properties.
@@ -50,12 +50,11 @@ Class to manage installation and configuration of Rundeck.
 
 The following parameters are available in the `rundeck` class:
 
-* [`acl_policies`](#-rundeck--acl_policies)
+* [`admin_policies`](#-rundeck--admin_policies)
 * [`acl_template`](#-rundeck--acl_template)
 * [`api_policies`](#-rundeck--api_policies)
 * [`auth_config`](#-rundeck--auth_config)
 * [`auth_template`](#-rundeck--auth_template)
-* [`auth_types`](#-rundeck--auth_types)
 * [`clustermode_enabled`](#-rundeck--clustermode_enabled)
 * [`database_config`](#-rundeck--database_config)
 * [`execution_mode`](#-rundeck--execution_mode)
@@ -89,7 +88,7 @@ The following parameters are available in the `rundeck` class:
 * [`rd_loglevel`](#-rundeck--rd_loglevel)
 * [`rd_auditlevel`](#-rundeck--rd_auditlevel)
 * [`rdeck_config_template`](#-rundeck--rdeck_config_template)
-* [`rdeck_home`](#-rundeck--rdeck_home)
+* [`home_dir`](#-rundeck--home_dir)
 * [`manage_home`](#-rundeck--manage_home)
 * [`rdeck_profile_template`](#-rundeck--rdeck_profile_template)
 * [`rdeck_override_template`](#-rundeck--rdeck_override_template)
@@ -132,7 +131,7 @@ The following parameters are available in the `rundeck` class:
 * [`script_args_quoted`](#-rundeck--script_args_quoted)
 * [`script_interpreter`](#-rundeck--script_interpreter)
 
-##### <a name="-rundeck--acl_policies"></a>`acl_policies`
+##### <a name="-rundeck--admin_policies"></a>`admin_policies`
 
 Data type: `Array[Hash]`
 
@@ -150,13 +149,13 @@ Default value: `'rundeck/aclpolicy.erb'`
 
 Data type: `Array[Hash]`
 
-apitoken acl policies.
+Apitoken acl policies.
 
 Default value: `[]`
 
 ##### <a name="-rundeck--auth_config"></a>`auth_config`
 
-Data type: `Hash`
+Data type: `Array[Hash]`
 
 Authentication configuration.
 
@@ -167,14 +166,6 @@ Data type: `String`
 The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
 
 Default value: `'rundeck/jaas-auth.conf.epp'`
-
-##### <a name="-rundeck--auth_types"></a>`auth_types`
-
-Data type: `Array`
-
-The method used to authenticate to rundeck. Default is file.
-
-Default value: `['file']`
 
 ##### <a name="-rundeck--clustermode_enabled"></a>`clustermode_enabled`
 
@@ -427,11 +418,11 @@ Allows you to override the rundeck-config template.
 
 Default value: `'rundeck/rundeck-config.epp'`
 
-##### <a name="-rundeck--rdeck_home"></a>`rdeck_home`
+##### <a name="-rundeck--home_dir"></a>`home_dir`
 
 Data type: `Stdlib::Absolutepath`
 
-Directory under which the projects directories live.
+Home/base directory under which rundeck is installed.
 
 Default value: `'/var/lib/rundeck'`
 
@@ -465,7 +456,7 @@ Data type: `String`
 
 Allows you to use your own override template instead of the default from the package maintainer
 
-Default value: `'rundeck/realm.properties.erb'`
+Default value: `'rundeck/realm.properties.epp'`
 
 ##### <a name="-rundeck--rss_enabled"></a>`rss_enabled`
 
@@ -760,6 +751,10 @@ Data type: `Stdlib::Absolutepath`
 
 Default value: `'/bin/bash'`
 
+### <a name="rundeck--config"></a>`rundeck::config`
+
+This class is called from rundeck to manage the configuration.
+
 ### <a name="rundeck--config--global--web"></a>`rundeck::config::global::web`
 
 Currently only manages the <security-role> required for any user to login and session timout:
@@ -814,7 +809,7 @@ Data type: `Stdlib::Absolutepath`
 
 
 
-Default value: `"${rundeck::rdeck_home}/exp/webapp/WEB-INF/web.xml"`
+Default value: `"${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"`
 
 ### <a name="rundeck--install"></a>`rundeck::install`
 
@@ -886,7 +881,7 @@ The following parameters are available in the `rundeck::config::aclpolicyfile` d
 
 ##### <a name="-rundeck--config--aclpolicyfile--acl_policies"></a>`acl_policies`
 
-Data type: `Array`
+Data type: `Array[Hash]`
 
 An array of hashes containing acl policies. See example.
 
@@ -1531,7 +1526,7 @@ Data type: `Stdlib::Absolutepath`
 
 
 
-Default value: `"${rundeck::rdeck_home}/exp/webapp/WEB-INF/web.xml"`
+Default value: `"${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"`
 
 ## Functions
 

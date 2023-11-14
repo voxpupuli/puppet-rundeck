@@ -3,7 +3,7 @@
 # Date  : 03.06.2016
 # 
 define rundeck::config::securityroles (
-  Stdlib::Absolutepath $web_xml = "${rundeck::rdeck_home}/exp/webapp/WEB-INF/web.xml"
+  Stdlib::Absolutepath $web_xml = "${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"
 ) {
   augeas { "rundeck/web.xml/security-role/role-name/${name}":
     lens    => 'Xml.lns',

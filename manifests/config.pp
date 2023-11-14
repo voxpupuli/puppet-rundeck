@@ -1,7 +1,7 @@
 # @summary This class is called from rundeck to manage the configuration.
 #
 class rundeck::config {
-  $acl_policies                       = $rundeck::acl_policies
+  $admin_policies                     = $rundeck::admin_policies
   $acl_template                       = $rundeck::acl_template
   $api_policies                       = $rundeck::api_policies
   $api_template                       = $rundeck::api_template
@@ -36,7 +36,7 @@ class rundeck::config {
   $rd_loglevel                        = $rundeck::rd_loglevel
   $rd_auditlevel                      = $rundeck::rd_auditlevel
   $rdeck_config_template              = $rundeck::rdeck_config_template
-  $rdeck_home                         = $rundeck::rdeck_home
+  $home_dir                           = $rundeck::home_dir
   $manage_home                        = $rundeck::manage_home
   $rdeck_profile_template             = $rundeck::rdeck_profile_template
   $rdeck_override_template            = $rundeck::rdeck_override_template
@@ -63,40 +63,45 @@ class rundeck::config {
   File {
     owner  => $rundeck::user,
     group  => $rundeck::group,
-    mode   => '0640',
+    mode   => '0644',
   }
 
-  $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
-  $auth_config      = deep_merge($rundeck::params::auth_config, $rundeck::auth_config)
+  $framework_config = deep_merge(lookup('rundeck::framework_config'), $rundeck::framework_config)
+  $auth_config      = deep_merge(lookup('rundeck::auth_config'), $rundeck::auth_config)
 
   $logs_dir       = $framework_config['framework.logs.dir']
-  $rdeck_base     = $framework_config['rdeck.base']
   $projects_dir   = $framework_config['framework.projects.dir']
   $properties_dir = $framework_config['framework.etc.dir']
   $plugin_dir     = $framework_config['framework.libext.dir']
 
-  File[$rundeck::rdeck_home] ~> File[$rundeck::framework_config['framework.ssh.keypath']]
+  File[$rundeck::home_dir] ~> File[$rundeck::framework_config['framework.ssh.keypath']]
 
   if $manage_home {
-    file { $rdeck_home:
-      ensure  => directory,
+    file { $home_dir:
+      ensure => directory,
+      mode   => '0755',
     }
-  } elsif ! defined_with_params(File[$rdeck_home], { 'ensure' => 'directory' }) {
-    fail('when rundeck::manage_home = false a file definition for the home directory must be included outside of this module.')
   }
 
   if $rundeck::sshkey_manage {
     file { $framework_config['framework.ssh.keypath']:
-      mode    => '0600',
+      mode => '0600',
     }
   }
 
   file { $rundeck::service_logs_dir:
-    ensure  => directory,
+    ensure => directory,
+    mode   => '0755',
   }
 
   ensure_resource(file, $projects_dir, { 'ensure' => 'directory' })
   ensure_resource(file, $plugin_dir, { 'ensure'   => 'directory' })
+
+  $auth_types = $auth_config.map |$_config| { $_config['type'] }
+
+  notify { 'auth_types_array':
+    message => $auth_types,
+  }
 
   # Checking if we need to deploy realm file
   #  ugly, I know. Fix it if you know better way to do that
@@ -152,7 +157,7 @@ class rundeck::config {
 
   if $manage_default_admin_policy {
     rundeck::config::aclpolicyfile { 'admin':
-      acl_policies   => $acl_policies,
+      acl_policies   => $admin_policies,
       owner          => $user,
       group          => $group,
       properties_dir => $properties_dir,
@@ -183,41 +188,41 @@ class rundeck::config {
     }
   }
 
-  contain rundeck::config::global::framework
-  contain rundeck::config::global::project
-  contain rundeck::config::global::rundeck_config
-  contain rundeck::config::global::file_keystore
+  # contain rundeck::config::global::framework
+  # contain rundeck::config::global::project
+  # contain rundeck::config::global::rundeck_config
+  # contain rundeck::config::global::file_keystore
 
-  Class['rundeck::config::global::framework']
-  -> Class['rundeck::config::global::project']
-  -> Class['rundeck::config::global::rundeck_config']
-  -> Class['rundeck::config::global::file_keystore']
+  # Class['rundeck::config::global::framework']
+  # -> Class['rundeck::config::global::project']
+  # -> Class['rundeck::config::global::rundeck_config']
+  # -> Class['rundeck::config::global::file_keystore']
 
-  if $ssl_enabled {
-    contain rundeck::config::global::ssl
-    Class['rundeck::config::global::rundeck_config']
-    -> Class['rundeck::config::global::ssl']
-  }
+  # if $ssl_enabled {
+  #   contain rundeck::config::global::ssl
+  #   Class['rundeck::config::global::rundeck_config']
+  #   -> Class['rundeck::config::global::ssl']
+  # }
 
-  create_resources(rundeck::config::project, $projects)
+  # create_resources(rundeck::config::project, $projects)
 
-  if versioncmp( $package_ensure, '3.0.0' ) < 0 {
-    class { 'rundeck::config::global::web':
-      security_role                => $security_role,
-      session_timeout              => $session_timeout,
-      security_roles_array_enabled => $security_roles_array_enabled,
-      security_roles_array         => $security_roles_array,
-      require                      => Class['rundeck::install'],
-    }
-  }
+  # if versioncmp( $package_ensure, '3.0.0' ) < 0 {
+  #   class { 'rundeck::config::global::web':
+  #     security_role                => $security_role,
+  #     session_timeout              => $session_timeout,
+  #     security_roles_array_enabled => $security_roles_array_enabled,
+  #     security_roles_array         => $security_roles_array,
+  #     require                      => Class['rundeck::install'],
+  #   }
+  # }
 
-  if !empty($kerberos_realms) {
-    file { "${properties_dir}/krb5.conf":
-      owner   => $user,
-      group   => $group,
-      mode    => '0640',
-      content => template('rundeck/krb5.conf.erb'),
-      require => File[$properties_dir],
-    }
-  }
+  # if !empty($kerberos_realms) {
+  #   file { "${properties_dir}/krb5.conf":
+  #     owner   => $user,
+  #     group   => $group,
+  #     mode    => '0640',
+  #     content => template('rundeck/krb5.conf.erb'),
+  #     require => File[$properties_dir],
+  #   }
+  # }
 }

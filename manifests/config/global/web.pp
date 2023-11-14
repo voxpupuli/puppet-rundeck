@@ -18,7 +18,7 @@ class rundeck::config::global::web (
   Integer[0]           $session_timeout              = $rundeck::params::session_timeout,
   Boolean              $security_roles_array_enabled = $rundeck::params::security_roles_array_enabled,
   Array                $security_roles_array         = $rundeck::params::security_roles_array,
-  Stdlib::Absolutepath $web_xml                      = "${rundeck::rdeck_home}/exp/webapp/WEB-INF/web.xml"
+  Stdlib::Absolutepath $web_xml                      = "${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"
 ) inherits rundeck::params {
   if $security_roles_array_enabled {
     rundeck::config::securityroles { $security_roles_array: }

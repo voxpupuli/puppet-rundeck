@@ -1,12 +1,12 @@
 authentication {
 <%- $rundeck::config::auth_config.each  |$_type| { -%>
-  <%- if 'ldap' in $type or 'ldap_shared' in $type { -%>
+  <%- if $_type in ['ldap', 'ldap_shared'] { -%>
     <%= epp('rundeck/_auth_ldap.epp') %>
-  <%- } elsif 'active_directory' in $type or 'active_directory_shared' in $type { -%>
+  <%- } elsif ['active_directory', 'active_directory_shared'] { -%>
     <%= epp('rundeck/_auth_ad.epp') %>
-  <%- } elsif 'pam' in $type { -%>
+  <%- } elsif $_type == 'pam' { -%>
     <%= epp('rundeck/_auth_pam.epp') %>
-  <%- } elsif 'file' in $type { -%>
+  <%- } elsif $_type == 'file' { -%>
     <%= epp('rundeck/_auth_file.epp') %>
   <%- } -%>
 <%- } -%>

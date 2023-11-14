@@ -1,11 +1,11 @@
 # @summary Class to manage installation and configuration of Rundeck.
 #
-# @param acl_policies
+# @param admin_policies
 #   Admin acl policies.
 # @param acl_template
 #   The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
 # @param api_policies
-#   apitoken acl policies.
+#   Apitoken acl policies.
 # @param auth_config
 #   Authentication configuration.
 # @param auth_template
@@ -77,8 +77,8 @@
 #   The log4j logging level to be set for the Rundeck application.
 # @param rdeck_config_template
 #   Allows you to override the rundeck-config template.
-# @param rdeck_home
-#   Directory under which the projects directories live.
+# @param home_dir
+#   Home/base directory under which rundeck is installed.
 # @param manage_home
 #   Whether to manage rundeck home dir. Defaults to true.
 # @param rdeck_profile_template
@@ -138,7 +138,7 @@
 #   https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
 #
 class rundeck (
-  Array[Hash]                         $acl_policies,
+  Array[Hash]                         $admin_policies,
   Hash                                $framework_config,
   Array[Hash]                         $auth_config,
   Hash                                $database_config,
@@ -172,8 +172,6 @@ class rundeck (
   Rundeck::Loglevel                   $rd_loglevel                        = 'INFO',
   Rundeck::Loglevel                   $rd_auditlevel                      = 'INFO',
   String                              $rdeck_config_template              = 'rundeck/rundeck-config.epp',
-  Stdlib::Absolutepath                $rdeck_home                         = '/var/lib/rundeck',
-  Boolean                             $manage_home                        = true,
   Optional[String]                    $rdeck_profile_template             = undef,
   String                              $rdeck_override_template            = 'rundeck/profile_overrides.erb',
   String                              $realm_template                     = 'rundeck/realm.properties.epp',
@@ -205,7 +203,7 @@ class rundeck (
   Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
   Optional[String]                    $service_config                     = undef,
   Optional[String]                    $service_script                     = undef,
-  # Project management
+  # Project config
   Hash                                $projects                           = {},
   String                              $projects_description               = '',
   String                              $projects_organization              = '',
@@ -223,12 +221,15 @@ class rundeck (
   Integer                             $url_timeout                        = 30,
   Boolean                             $script_args_quoted                 = true,
   Stdlib::Absolutepath                $script_interpreter                 = '/bin/bash',
+  # Home config
+  Stdlib::Absolutepath                $home_dir                           = '/var/lib/rundeck',
+  Boolean                             $manage_home                        = true,
 ) {
-  validate_rd_policy($acl_policies)
+  validate_rd_policy($admin_policies)
   validate_rd_policy($api_policies)
 
   contain rundeck::install
-  # contain rundeck::config
+  contain rundeck::config
   contain rundeck::service
 
   # Class['rundeck::install']
