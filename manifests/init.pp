@@ -7,7 +7,7 @@
 # @param api_policies
 #   Apitoken acl policies.
 # @param auth_config
-#   Authentication configuration.
+#   Authentication configuration. Default value is located in data/defaults.yaml.
 # @param auth_template
 #   The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
 # @param clustermode_enabled
@@ -22,6 +22,7 @@
 #   Add keys to file keystorage.
 # @param framework_config
 #   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
+#   Default value is located in data/defaults.yaml.
 # @param grails_server_url
 #   Sets `grails.serverURL` so that Rundeck knows its external address.
 # @param gui_config
@@ -139,8 +140,6 @@
 #
 class rundeck (
   Array[Hash]                         $admin_policies,
-  Hash                                $framework_config,
-  Array[Hash]                         $auth_config,
   Hash                                $database_config,
   Array[Hash]                         $key_storage_config,
   Hash                                $security_config,
@@ -153,7 +152,12 @@ class rundeck (
   String                              $package_ensure                     = 'installed',
   String                              $acl_template                       = 'rundeck/aclpolicy.erb',
   Array[Hash]                         $api_policies                       = [],
+
+  Hash                                $framework_config                   = {},
+
+  Array[Hash]                         $auth_config                        = [],
   String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
+
   Boolean                             $clustermode_enabled                = false,
   Enum['active', 'passive']           $execution_mode                     = 'active',
   Hash                                $file_keystorage_keys               = {},
