@@ -1,3 +1,5 @@
+# @api private
+#
 # @summary This class is called from rundeck for install.
 #
 class rundeck::install {
@@ -34,24 +36,20 @@ class rundeck::install {
     }
   }
 
-  if $rundeck::manage_repo {
-    $rundeck::repo_config.each() | String $_resource_type, Hash $_resources | {
-      if downcase($_resource_type) == 'apt::source' {
-        Class['Apt::Update'] -> Package['rundeck']
+  case $facts['os']['family'] {
+    /RedHat|Debian/: {
+      if $rundeck::manage_repo {
+        $rundeck::repo_config.each() | String $_resource_type, Hash $_resources | {
+          if downcase($_resource_type) == 'apt::source' {
+            Class['Apt::Update'] -> Package['rundeck']
+          }
+          create_resources($_resource_type, $_resources, { 'before' => Package['rundeck'] })
+        }
       }
-      create_resources($_resource_type, $_resources, { 'before' => Package['rundeck'] })
+      ensure_packages(['rundeck'], { 'ensure' => $rundeck::package_ensure, notify => Class['rundeck::service'] })
     }
-  }
-
-  ensure_packages(['rundeck'], { 'ensure' => $rundeck::package_ensure, notify => Class['rundeck::service'] })
-
-  # Leave this one here, to avoid notifying service when permissions change
-  file { '/var/rundeck':
-    ensure  => directory,
-    owner   => $rundeck::user,
-    group   => $rundeck::group,
-    mode    => '0640',
-    recurse => true,
-    require => Package['rundeck'],
+    default: {
+      err("The osfamily: ${facts['os']['family']} is not supported")
+    }
   }
 }

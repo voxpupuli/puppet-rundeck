@@ -1,3 +1,5 @@
+# @api private
+#
 # @summary This class is called from rundeck to manage service.
 #
 class rundeck::service {

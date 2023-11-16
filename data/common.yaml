@@ -30,6 +30,13 @@ rundeck::admin_policies:
       - group:
           - 'admin'
 
+rundeck::auth_config:
+  file:
+    admin_user: 'admin'
+    admin_password: 'admin'
+    auth_users: {}
+    realm_file: '/etc/rundeck/realm.properties'
+
 rundeck::framework_config:
   framework.server.name: "%{facts.networking.fqdn}"
   framework.server.hostname: "%{facts.networking.hostname}"
@@ -48,13 +55,6 @@ rundeck::framework_config:
   rundeck.server.uuid: "fqdn_uuid(%{facts.networking.fqdn})"
 
 rundeck::file_keystorage_dir: "%{lookup('rundeck::framework_config.framework.var.dir')}/storage"
-
-rundeck::auth_config:
-  - type: 'file'
-    config:
-      admin_user: 'admin'
-      admin_password: 'admin'
-      auth_users: {}
 
 rundeck::security_config:
   useHMacRequestTokens: true

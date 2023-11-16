@@ -7,7 +7,7 @@
 # @param api_policies
 #   Apitoken acl policies.
 # @param auth_config
-#   Authentication configuration. Default value is located in data/defaults.yaml.
+#   Authentication configuration. Default value is located in data/common.yaml.
 # @param auth_template
 #   The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
 # @param clustermode_enabled
@@ -22,7 +22,6 @@
 #   Add keys to file keystorage.
 # @param framework_config
 #   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
-#   Default value is located in data/defaults.yaml.
 # @param grails_server_url
 #   Sets `grails.serverURL` so that Rundeck knows its external address.
 # @param gui_config
@@ -43,8 +42,6 @@
 #   The template used for log properties. Default is rundeck/log4j.properties.erb.
 # @param mail_config
 #   A hash of the notification email configuraton.
-# @param sshkey_manage
-#   Should this module manage the sshkey used by rundeck at all.
 # @param key_password
 #   The ssl key password.
 # @param ssl_keyfile
@@ -140,6 +137,7 @@
 #
 class rundeck (
   Array[Hash]                         $admin_policies,
+  Hash                                $auth_config,
   Hash                                $database_config,
   Array[Hash]                         $key_storage_config,
   Hash                                $security_config,
@@ -155,7 +153,6 @@ class rundeck (
 
   Hash                                $framework_config                   = {},
 
-  Array[Hash]                         $auth_config                        = [],
   String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
 
   Boolean                             $clustermode_enabled                = false,
@@ -169,7 +166,6 @@ class rundeck (
   Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
   String                              $log_properties_template            = 'rundeck/log4j.properties.erb',
   Hash                                $mail_config                        = {},
-  Boolean                             $sshkey_manage                      = true,
   Boolean                             $manage_default_admin_policy        = true,
   Boolean                             $manage_default_api_policy          = true,
 

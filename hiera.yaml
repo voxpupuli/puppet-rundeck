@@ -1,11 +1,13 @@
 ---
 version: 5
+
 defaults:
   datadir: 'data'
   data_hash: 'yaml_data'
+
 hierarchy:
-  - name: 'OS family'
+  - name: 'Operating System Family'
     path: 'os/%{facts.os.family}.yaml'
 
-  - name: 'defaults'
-    path: 'defaults.yaml'
+  - name: 'common'
+    path: 'common.yaml'
