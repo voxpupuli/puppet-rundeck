@@ -70,10 +70,10 @@
 #   The organization value that will be set by default for any projects.
 # @param quartz_job_threadcount
 #   The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
-# @param rd_loglevel
+# @param app_log_level
 #   The log4j logging level to be set for the Rundeck application.
-# @param rd_auditlevel
-#   The log4j logging level to be set for the Rundeck application.
+# @param audit_log_level
+#   The log4j logging level to be set for the Rundeck autorization.
 # @param rdeck_config_template
 #   Allows you to override the rundeck-config template.
 # @param home_dir
@@ -101,7 +101,7 @@
 # @param service_restart
 #   The restart of the rundeck service (default to true)
 # @param service_logs_dir
-#   The path to the directory to store logs.
+#   The path to the directory to store service related logs.
 # @param service_config
 #   Allows you to use your own override template instead to config rundeckd init script.
 # @param service_script
@@ -165,13 +165,13 @@ class rundeck (
   String                              $jvm_args                           = '-Xmx1024m -Xms256m -server',
   Hash                                $kerberos_realms                    = {},
   Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
-  String                              $log_properties_template            = 'rundeck/log4j.properties.erb',
+  String                              $log_properties_template            = 'rundeck/log4j2.properties.epp',
   Hash                                $mail_config                        = {},
   Boolean                             $manage_default_admin_policy        = true,
   Boolean                             $manage_default_api_policy          = true,
 
-  Rundeck::Loglevel                   $rd_loglevel                        = 'INFO',
-  Rundeck::Loglevel                   $rd_auditlevel                      = 'INFO',
+  Rundeck::Loglevel                   $app_log_level                      = 'info',
+  Rundeck::Loglevel                   $audit_log_level                    = 'info',
   String                              $rdeck_config_template              = 'rundeck/rundeck-config.epp',
   Optional[String]                    $rdeck_profile_template             = undef,
   String                              $rdeck_override_template            = 'rundeck/profile_overrides.erb',

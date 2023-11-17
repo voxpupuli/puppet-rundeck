@@ -1,4 +1,4 @@
-loglevel.default = "<%= $rundeck::config::global::rundeck_config::rd_loglevel %>"
+loglevel.default = "<%= $rundeck::app_log_level %>"
 rdeck.base = "<%= $rundeck::config::global::rundeck_config::rdeck_base %>"
 rss.enabled = "<%= $rundeck::config::global::rundeck_config::rss_enabled %>"
 rundeck.log4j.config.file = "<%= $rundeck::config::global::rundeck_config::properties_dir %>/log4j.properties"

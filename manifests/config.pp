@@ -51,30 +51,30 @@ class rundeck::config {
     require => File[$properties_dir],
   }
 
-  # file { "${properties_dir}/log4j.properties":
-  #   content => template($rundeck::log_properties_template),
-  #   require => File[$properties_dir],
-  # }
+  file { "${properties_dir}/log4j2.properties":
+    content => epp($rundeck::log_properties_template),
+    require => File[$properties_dir],
+  }
 
-  # if $rundeck::manage_default_admin_policy {
-  #   rundeck::config::aclpolicyfile { 'admin':
-  #     acl_policies   => $rundeck::admin_policies,
-  #     owner          => $rundeck::user,
-  #     group          => $rundeck::group,
-  #     properties_dir => $properties_dir,
-  #     template_file  => $rundeck::acl_template,
-  #   }
-  # }
+  if $rundeck::manage_default_admin_policy {
+    rundeck::config::aclpolicyfile { 'admin':
+      acl_policies   => $rundeck::admin_policies,
+      owner          => $rundeck::user,
+      group          => $rundeck::group,
+      properties_dir => $properties_dir,
+      template_file  => $rundeck::acl_template,
+    }
+  }
 
-  # if $rundeck::manage_default_api_policy {
-  #   rundeck::config::aclpolicyfile { 'apitoken':
-  #     acl_policies   => $rundeck::api_policies,
-  #     owner          => $rundeck::user,
-  #     group          => $rundeck::group,
-  #     properties_dir => $properties_dir,
-  #     template_file  => $rundeck::acl_template,
-  #   }
-  # }
+  if $rundeck::manage_default_api_policy {
+    rundeck::config::aclpolicyfile { 'apitoken':
+      acl_policies   => $rundeck::api_policies,
+      owner          => $rundeck::user,
+      group          => $rundeck::group,
+      properties_dir => $properties_dir,
+      template_file  => $rundeck::acl_template,
+    }
+  }
 
   # if ($rundeck::rdeck_profile_template) {
   #   file { "${properties_dir}/profile":

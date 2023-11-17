@@ -9,18 +9,18 @@
 #### Public Classes
 
 * [`rundeck`](#rundeck): Class to manage installation and configuration of Rundeck.
-* [`rundeck::config`](#rundeck--config): This class is called from rundeck to manage the configuration.
 * [`rundeck::config::global::web`](#rundeck--config--global--web): This class will manage the application's web.xml.
-* [`rundeck::install`](#rundeck--install): This class is called from rundeck for install.
-* [`rundeck::service`](#rundeck--service): This class is called from rundeck to manage service.
 
 #### Private Classes
 
+* `rundeck::config`: This class is called from rundeck to manage the configuration.
 * `rundeck::config::global::file_keystore`: This private class is used to manage the keys of the Rundeck key storage facility if a file-based backend is used.
 * `rundeck::config::global::framework`: This private class is called from rundeck::config used to manage the framework properties of rundeck.
 * `rundeck::config::global::project`: This private class is called from rundeck::config used to manage the default project properties.
 * `rundeck::config::global::rundeck_config`: This private class is called from rundeck::config used to manage the rundeck-config properties.
 * `rundeck::config::global::ssl`: This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled.
+* `rundeck::install`: This class is called from rundeck for install.
+* `rundeck::service`: This class is called from rundeck to manage service.
 
 ### Defined types
 
@@ -37,6 +37,7 @@
 
 ### Data types
 
+* [`Rundeck::Authconfig`](#Rundeck--Authconfig): Rundeck authentication config type.
 * [`Rundeck::Loglevel`](#Rundeck--Loglevel): Rundeck log level type.
 * [`Rundeck::Sourcetype`](#Rundeck--Sourcetype): Rundeck sourcetype type.
 
@@ -71,7 +72,6 @@ The following parameters are available in the `rundeck` class:
 * [`keystore_password`](#-rundeck--keystore_password)
 * [`log_properties_template`](#-rundeck--log_properties_template)
 * [`mail_config`](#-rundeck--mail_config)
-* [`sshkey_manage`](#-rundeck--sshkey_manage)
 * [`key_password`](#-rundeck--key_password)
 * [`ssl_keyfile`](#-rundeck--ssl_keyfile)
 * [`ssl_certfile`](#-rundeck--ssl_certfile)
@@ -85,8 +85,8 @@ The following parameters are available in the `rundeck` class:
 * [`projects_description`](#-rundeck--projects_description)
 * [`projects_organization`](#-rundeck--projects_organization)
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
-* [`rd_loglevel`](#-rundeck--rd_loglevel)
-* [`rd_auditlevel`](#-rundeck--rd_auditlevel)
+* [`app_log_level`](#-rundeck--app_log_level)
+* [`audit_log_level`](#-rundeck--audit_log_level)
 * [`rdeck_config_template`](#-rundeck--rdeck_config_template)
 * [`home_dir`](#-rundeck--home_dir)
 * [`manage_home`](#-rundeck--manage_home)
@@ -155,9 +155,10 @@ Default value: `[]`
 
 ##### <a name="-rundeck--auth_config"></a>`auth_config`
 
-Data type: `Array[Hash]`
+Data type: `Rundeck::Authconfig`
 
-Authentication configuration.
+Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
+Default value is located in data/common.yaml.
 
 ##### <a name="-rundeck--auth_template"></a>`auth_template`
 
@@ -208,6 +209,8 @@ Default value: `{}`
 Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
+
+Default value: `{}`
 
 ##### <a name="-rundeck--grails_server_url"></a>`grails_server_url`
 
@@ -275,7 +278,7 @@ Data type: `String`
 
 The template used for log properties. Default is rundeck/log4j.properties.erb.
 
-Default value: `'rundeck/log4j.properties.erb'`
+Default value: `'rundeck/log4j2.properties.epp'`
 
 ##### <a name="-rundeck--mail_config"></a>`mail_config`
 
@@ -284,14 +287,6 @@ Data type: `Hash`
 A hash of the notification email configuraton.
 
 Default value: `{}`
-
-##### <a name="-rundeck--sshkey_manage"></a>`sshkey_manage`
-
-Data type: `Boolean`
-
-Should this module manage the sshkey used by rundeck at all.
-
-Default value: `true`
 
 ##### <a name="-rundeck--key_password"></a>`key_password`
 
@@ -394,21 +389,21 @@ The maximum number of threads used by Rundeck for concurrent jobs by default is 
 
 Default value: `10`
 
-##### <a name="-rundeck--rd_loglevel"></a>`rd_loglevel`
+##### <a name="-rundeck--app_log_level"></a>`app_log_level`
 
 Data type: `Rundeck::Loglevel`
 
 The log4j logging level to be set for the Rundeck application.
 
-Default value: `'INFO'`
+Default value: `'info'`
 
-##### <a name="-rundeck--rd_auditlevel"></a>`rd_auditlevel`
+##### <a name="-rundeck--audit_log_level"></a>`audit_log_level`
 
 Data type: `Rundeck::Loglevel`
 
-The log4j logging level to be set for the Rundeck application.
+The log4j logging level to be set for the Rundeck autorization.
 
-Default value: `'INFO'`
+Default value: `'info'`
 
 ##### <a name="-rundeck--rdeck_config_template"></a>`rdeck_config_template`
 
@@ -516,7 +511,7 @@ Default value: `true`
 
 Data type: `Stdlib::Absolutepath`
 
-The path to the directory to store logs.
+The path to the directory to store service related logs.
 
 Default value: `'/var/log/rundeck'`
 
@@ -751,10 +746,6 @@ Data type: `Stdlib::Absolutepath`
 
 Default value: `'/bin/bash'`
 
-### <a name="rundeck--config"></a>`rundeck::config`
-
-This class is called from rundeck to manage the configuration.
-
 ### <a name="rundeck--config--global--web"></a>`rundeck::config::global::web`
 
 Currently only manages the <security-role> required for any user to login and session timout:
@@ -810,14 +801,6 @@ Data type: `Stdlib::Absolutepath`
 
 
 Default value: `"${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"`
-
-### <a name="rundeck--install"></a>`rundeck::install`
-
-This class is called from rundeck for install.
-
-### <a name="rundeck--service"></a>`rundeck::service`
-
-This class is called from rundeck to manage service.
 
 ## Defined types
 
@@ -1544,11 +1527,25 @@ Returns: `Any`
 
 ## Data types
 
+### <a name="Rundeck--Authconfig"></a>`Rundeck::Authconfig`
+
+Rundeck authentication config type.
+
+Alias of
+
+```puppet
+Struct[{
+    Optional['file'] => Hash[String, Data],
+    Optional['ldap'] => Hash[String, Data],
+    Optional['pam']  => Hash[String, Data],
+}]
+```
+
 ### <a name="Rundeck--Loglevel"></a>`Rundeck::Loglevel`
 
 Rundeck log level type.
 
-Alias of `Enum['ALL', 'DEBUG', 'ERROR', 'FATAL', 'INFO', 'OFF', 'TRACE', 'WARN']`
+Alias of `Enum['all', 'debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn']`
 
 ### <a name="Rundeck--Sourcetype"></a>`Rundeck::Sourcetype`
 

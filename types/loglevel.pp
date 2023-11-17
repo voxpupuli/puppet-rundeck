@@ -1,2 +1,2 @@
 # Rundeck log level type.
-type Rundeck::Loglevel = Enum['ALL', 'DEBUG', 'ERROR', 'FATAL', 'INFO', 'OFF', 'TRACE', 'WARN']
+type Rundeck::Loglevel = Enum['all', 'debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn']

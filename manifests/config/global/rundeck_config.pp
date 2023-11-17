@@ -16,7 +16,7 @@ class rundeck::config::global::rundeck_config {
   $preauthenticated_config              = $rundeck::config::preauthenticated_config
   $properties_dir                       = $rundeck::config::properties_dir
   $quartz_job_threadcount               = $rundeck::config::quartz_job_threadcount
-  $rd_loglevel                          = $rundeck::config::rd_loglevel
+  $app_log_level                        = $rundeck::config::app_log_level
   $rdeck_base                           = $rundeck::config::rdeck_base
   $rdeck_config_template                = $rundeck::config::rdeck_config_template
   $rss_enabled                          = $rundeck::config::rss_enabled
