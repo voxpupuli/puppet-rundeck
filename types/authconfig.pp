@@ -1,4 +1,4 @@
-# Rundeck log level type.
+# Rundeck authentication config type.
 type Rundeck::Authconfig = Struct[{
     Optional['file']             => Hash[String, Data],
     Optional['ldap']             => Hash[String, Data],
