@@ -9,9 +9,8 @@ class rundeck::config {
   $properties_dir = $rundeck::framework_config['framework.etc.dir']
 
   File {
-    owner  => $rundeck::user,
-    group  => $rundeck::group,
-    mode   => '0644',
+    owner => $rundeck::user,
+    group => $rundeck::group,
   }
 
   if $rundeck::manage_home {
@@ -31,6 +30,7 @@ class rundeck::config {
   if 'file' in $auth_types {
     file { "${properties_dir}/realm.properties":
       content => Sensitive(epp($rundeck::realm_template, { auth_config => $rundeck::auth_config })),
+      mode    => '0600',
       require => File[$properties_dir],
     }
   } else {
@@ -46,7 +46,8 @@ class rundeck::config {
   }
 
   file { "${properties_dir}/jaas-auth.conf":
-    content => epp($rundeck::auth_template, { auth_config => $rundeck::auth_config }),
+    content => Sensitive(epp($rundeck::auth_template, { auth_config => $rundeck::auth_config })),
+    mode    => '0600',
     require => File[$properties_dir],
   }
 
