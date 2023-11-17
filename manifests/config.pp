@@ -5,7 +5,7 @@
 class rundeck::config {
   assert_private()
 
-  $auth_types     = $rundeck::auth_config.keys.unique
+  $auth_types     = $rundeck::auth_config.keys
   $properties_dir = $rundeck::framework_config['framework.etc.dir']
 
   File {
@@ -29,7 +29,7 @@ class rundeck::config {
 
   if 'file' in $auth_types {
     file { "${properties_dir}/realm.properties":
-      content => Sensitive(epp($rundeck::realm_template, { auth_config => $rundeck::auth_config })),
+      content => Sensitive(epp($rundeck::realm_template)),
       mode    => '0600',
       require => File[$properties_dir],
     }
@@ -46,7 +46,7 @@ class rundeck::config {
   }
 
   file { "${properties_dir}/jaas-auth.conf":
-    content => Sensitive(epp($rundeck::auth_template, { auth_config => $rundeck::auth_config })),
+    content => Sensitive(epp($rundeck::auth_template)),
     mode    => '0600',
     require => File[$properties_dir],
   }

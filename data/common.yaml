@@ -34,12 +34,18 @@ rundeck::auth_config:
   file:
     auth_flag: 'required'
     jaas_config:
-      debug: true
       file: '/etc/rundeck/realm.properties'
     realm_config:
       admin_user: 'admin'
       admin_password: 'admin'
       auth_users: {}
+  ldap:
+    jaas_config:
+      blabla: 'dgdfg'
+  pam:
+    auth_flag: 'sufficient'
+    jaas_config:
+      service_account: 'ewrwer'
 
 rundeck::framework_config:
   framework.server.name: "%{facts.networking.fqdn}"

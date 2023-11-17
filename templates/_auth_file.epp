@@ -1,8 +1,0 @@
-<%- if $auth_config['file']['auth_flag'] {-%>
-  org.eclipse.jetty.jaas.spi.PropertyFileLoginModule <%= $auth_config['file']['auth_flag'] %>
-<%-} else {-%>
-  org.eclipse.jetty.jaas.spi.PropertyFileLoginModule required
-<%-}-%>
-<%- $auth_config['file']['jaas_config'].each |$_key, $_value| {-%>
-    <%= $_key -%>="<%= $_value %>"
-<%} %>;
