@@ -51,11 +51,11 @@ Class to manage installation and configuration of Rundeck.
 
 The following parameters are available in the `rundeck` class:
 
-* [`admin_policies`](#-rundeck--admin_policies)
 * [`acl_template`](#-rundeck--acl_template)
+* [`admin_policies`](#-rundeck--admin_policies)
 * [`api_policies`](#-rundeck--api_policies)
-* [`auth_config`](#-rundeck--auth_config)
 * [`auth_template`](#-rundeck--auth_template)
+* [`auth_config`](#-rundeck--auth_config)
 * [`clustermode_enabled`](#-rundeck--clustermode_enabled)
 * [`database_config`](#-rundeck--database_config)
 * [`execution_mode`](#-rundeck--execution_mode)
@@ -131,27 +131,33 @@ The following parameters are available in the `rundeck` class:
 * [`script_args_quoted`](#-rundeck--script_args_quoted)
 * [`script_interpreter`](#-rundeck--script_interpreter)
 
-##### <a name="-rundeck--admin_policies"></a>`admin_policies`
-
-Data type: `Array[Hash]`
-
-Admin acl policies.
-
 ##### <a name="-rundeck--acl_template"></a>`acl_template`
 
 Data type: `String`
 
-The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
+The template used for acl policy. Needs to be in epp format.
 
 Default value: `'rundeck/aclpolicy.erb'`
+
+##### <a name="-rundeck--admin_policies"></a>`admin_policies`
+
+Data type: `Array[Hash]`
+
+Admin acl policies. Default value is located in data/common.yaml.
 
 ##### <a name="-rundeck--api_policies"></a>`api_policies`
 
 Data type: `Array[Hash]`
 
-Apitoken acl policies.
+Apitoken acl policies. Default value is located in data/common.yaml.
 
-Default value: `[]`
+##### <a name="-rundeck--auth_template"></a>`auth_template`
+
+Data type: `String`
+
+The template used for authentication config. Needs to be in epp format.
+
+Default value: `'rundeck/jaas-auth.conf.epp'`
 
 ##### <a name="-rundeck--auth_config"></a>`auth_config`
 
@@ -159,14 +165,6 @@ Data type: `Rundeck::Authconfig`
 
 Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
 Default value is located in data/common.yaml.
-
-##### <a name="-rundeck--auth_template"></a>`auth_template`
-
-Data type: `String`
-
-The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
-
-Default value: `'rundeck/jaas-auth.conf.epp'`
 
 ##### <a name="-rundeck--clustermode_enabled"></a>`clustermode_enabled`
 
@@ -209,8 +207,7 @@ Default value: `{}`
 Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
-
-Default value: `{}`
+Default value is located in data/common.yaml.
 
 ##### <a name="-rundeck--grails_server_url"></a>`grails_server_url`
 
@@ -276,7 +273,7 @@ The password for the given keystore.
 
 Data type: `String`
 
-The template used for log properties. Default is rundeck/log4j.properties.erb.
+The template used for log properties. Needs to be in epp format.
 
 Default value: `'rundeck/log4j2.properties.epp'`
 

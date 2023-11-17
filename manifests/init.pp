@@ -1,16 +1,16 @@
 # @summary Class to manage installation and configuration of Rundeck.
 #
-# @param admin_policies
-#   Admin acl policies.
 # @param acl_template
-#   The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
+#   The template used for acl policy. Needs to be in epp format.
+# @param admin_policies
+#   Admin acl policies. Default value is located in data/common.yaml.
 # @param api_policies
-#   Apitoken acl policies.
+#   Apitoken acl policies. Default value is located in data/common.yaml.
+# @param auth_template
+#   The template used for authentication config. Needs to be in epp format.
 # @param auth_config
 #   Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
 #   Default value is located in data/common.yaml.
-# @param auth_template
-#   The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
 # @param clustermode_enabled
 #   Boolean value if set to true enables cluster mode
 # @param database_config
@@ -23,6 +23,7 @@
 #   Add keys to file keystorage.
 # @param framework_config
 #   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
+#   Default value is located in data/common.yaml.
 # @param grails_server_url
 #   Sets `grails.serverURL` so that Rundeck knows its external address.
 # @param gui_config
@@ -40,7 +41,7 @@
 # @param keystore_password
 #   The password for the given keystore.
 # @param log_properties_template
-#   The template used for log properties. Default is rundeck/log4j.properties.erb.
+#   The template used for log properties. Needs to be in epp format.
 # @param mail_config
 #   A hash of the notification email configuraton.
 # @param key_password
@@ -138,7 +139,9 @@
 #
 class rundeck (
   Array[Hash]                         $admin_policies,
+  Array[Hash]                         $api_policies,
   Rundeck::Authconfig                 $auth_config,
+  Hash                                $framework_config,
   Hash                                $database_config,
   Array[Hash]                         $key_storage_config,
   Hash                                $security_config,
@@ -150,9 +153,6 @@ class rundeck (
   Boolean                             $manage_repo                        = true,
   String                              $package_ensure                     = 'installed',
   String                              $acl_template                       = 'rundeck/aclpolicy.erb',
-  Array[Hash]                         $api_policies                       = [],
-
-  Hash                                $framework_config                   = {},
 
   String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
 
