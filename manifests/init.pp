@@ -137,7 +137,7 @@
 #
 class rundeck (
   Array[Hash]                         $admin_policies,
-  Hash                                $auth_config,
+  Rundeck::Authconfig                 $auth_config,
   Hash                                $database_config,
   Array[Hash]                         $key_storage_config,
   Hash                                $security_config,
