@@ -7,7 +7,8 @@
 # @param api_policies
 #   Apitoken acl policies.
 # @param auth_config
-#   Authentication configuration. Default value is located in data/common.yaml.
+#   Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
+#   Default value is located in data/common.yaml.
 # @param auth_template
 #   The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
 # @param clustermode_enabled
