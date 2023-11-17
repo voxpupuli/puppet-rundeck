@@ -21,22 +21,22 @@
 #
 # This sets the default user accounts for the Rundeck app
 #
-<%= $auth_config['file']['admin_user'] %>:<%= $auth_config['file']['admin_password'] %>,user,admin,architect,deploy,build
-<%- if $auth_config['file']['auth_users'] { -%>
-  <%- if is_array($auth_config['file']['auth_users']) { -%> 
-    <%- $auth_config['file']['auth_users'].each |$x| { -%>
+<%= $auth_config['file']['realm_config']['admin_user'] %>:<%= $auth_config['file']['realm_config']['admin_password'] %>,user,admin,architect,deploy,build
+<%- if $auth_config['file']['realm_config']['auth_users'] { -%>
+  <%- if is_array($auth_config['file']['realm_config']['auth_users']) { -%> 
+    <%- $auth_config['file']['realm_config']['auth_users'].each |$x| { -%>
       <%- if $x['username'] { -%>
-        <%= $x['username'] -%>:<%= get('x.password', '-')  -%>
+        <%= $x['username'] -%>:<%= $x['password'] -%>
         <%- if $x['roles'] {-%>
           <%- $x['roles'].each |$v| {-%>,<%= $v -%><%- } %>
         <%- } -%>
       <%- } -%>
     <%- } -%>
   <%- } else { -%>
-    <%- if $auth_config['file']['auth_users']['username'] and $auth_config['file']['auth_users']['password'] { -%>
-      <%= $auth_config['file']['auth_users']['username'] -%>:<%= $auth_config['file']['auth_users']['password'] -%>
-      <%- if $auth_config['file']['auth_users']['roles'] { -%>
-        <%- $auth_config['file']['auth_users']['roles'].each |$v| {-%>,<%=$v -%><%- } %>
+    <%- if $auth_config['file']['realm_config']['auth_users']['username'] and $auth_config['file']['realm_config']['auth_users']['password'] { -%>
+      <%= $auth_config['file']['realm_config']['auth_users']['username'] -%>:<%= $auth_config['file']['realm_config']['auth_users']['password'] -%>
+      <%- if $auth_config['file']['realm_config']['auth_users']['roles'] { -%>
+        <%- $auth_config['file']['realm_config']['auth_users']['roles'].each |$v| {-%>,<%=$v -%><%- } %>
       <%- } -%>
     <%- } -%>
   <%- } -%>

@@ -32,14 +32,14 @@ rundeck::admin_policies:
 
 rundeck::auth_config:
   file:
-    admin_user: 'admin'
-    admin_password: 'admin'
-    auth_users: {}
-    realm_file: '/etc/rundeck/realm.properties'
-  active_directory:
-    debug: true
-  pam:
-    debug: true
+    auth_flag: 'required'
+    jaas_config:
+      debug: true
+      file: '/etc/rundeck/realm.properties'
+    realm_config:
+      admin_user: 'admin'
+      admin_password: 'admin'
+      auth_users: {}
 
 rundeck::framework_config:
   framework.server.name: "%{facts.networking.fqdn}"

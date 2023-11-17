@@ -1,10 +1,9 @@
 authentication {
-<%- $auth_config.each  |$_type| { -%>
-  <%- if $_type in ['ldap', 'ldap_shared'] { -%>
+<%- $auth_config.each |$_type| { -%>
+type = "<%= $_type -%>"
+  <%- if $_type == 'ldap' { -%>
     <%= epp('rundeck/_auth_ldap.epp', { auth_config => $auth_config }) %>
-  <%- } elsif ['active_directory', 'active_directory_shared'] { -%>
-    <%= epp('rundeck/_auth_ad.epp', { auth_config => $auth_config }) %>
-  <%- } elsif $_type == 'pam' { -%>
+  <%- }  elsif $_type == 'pam' { -%>
     <%= epp('rundeck/_auth_pam.epp', { auth_config => $auth_config }) %>
   <%- } elsif $_type == 'file' { -%>
     <%= epp('rundeck/_auth_file.epp', { auth_config => $auth_config }) %>
