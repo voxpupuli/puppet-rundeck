@@ -36,6 +36,10 @@ rundeck::auth_config:
     admin_password: 'admin'
     auth_users: {}
     realm_file: '/etc/rundeck/realm.properties'
+  active_directory:
+    debug: true
+  pam:
+    debug: true
 
 rundeck::framework_config:
   framework.server.name: "%{facts.networking.fqdn}"

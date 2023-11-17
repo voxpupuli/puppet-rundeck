@@ -28,9 +28,7 @@ class rundeck::config {
     }
   }
 
-  if any(['file', 'ldap_shared', 'active_directory_shared']) |$_type| {
-    $_type in $auth_types
-  } {
+  if 'file' in $auth_types {
     file { "${properties_dir}/realm.properties":
       content => Sensitive(epp($rundeck::realm_template, { auth_config => $rundeck::auth_config })),
       require => File[$properties_dir],
@@ -41,36 +39,59 @@ class rundeck::config {
     }
   }
 
-  case $auth_types {
-    'file': {
-      $active_directory_auth_flag = 'sufficient'
-      $ldap_auth_flag = 'sufficient'
+  $auth_types.each  |$_type| {
+    if $_type == 'file' {
+      notify { 'file':
+        message => 'file enabled',
+      }
+    } elsif $_type == 'ldap' {
+      notify { 'ldap':
+        message => 'ldap enabled',
+      }
+    } elsif $_type == 'active_directory' {
+      notify { 'active_directory':
+        message => 'active_directory enabled',
+      }
+    } elsif $_type == 'pam' {
+      notify { 'pam':
+        message => 'pam enabled',
+      }
+    } else {
+      fail('Wrong auth type provided. Valid types are file, active_directory, ldap or pam')
     }
-    'active_directory': {
-      $active_directory_auth_flag = 'required'
-      $ldap_auth_flag = 'sufficient'
-      $ldap_login_module = 'JettyCachingLdapLoginModule'
-    }
-    'active_directory_shared': {
-      $active_directory_auth_flag = 'requisite'
-      $ldap_auth_flag = 'sufficient'
-      $ldap_login_module = 'JettyCombinedLdapLoginModule'
-    }
-    'ldap_shared': {
-      $ldap_auth_flag = 'requisite'
-      $ldap_login_module = 'JettyCombinedLdapLoginModule'
-    }
-    'ldap': {
-      $ldap_auth_flag = 'required'
-      $ldap_login_module = 'JettyCachingLdapLoginModule'
-    }
-    default: {}
   }
 
-  file { "${properties_dir}/jaas-auth.conf":
-    content => epp($rundeck::auth_template, { auth_config => $rundeck::auth_config }),
-    require => File[$properties_dir],
-  }
+  # if 'file' in $auth_types {
+  #   $active_directory_auth_flag = 'sufficient'
+  #   $ldap_auth_flag = 'sufficient'
+  # } else {
+  #   if 'active_directory' in $auth_types {
+  #     $active_directory_auth_flag = 'required'
+  #     $ldap_auth_flag = 'sufficient'
+  #   }
+  #   elsif 'active_directory_shared' in $auth_types {
+  #     $active_directory_auth_flag = 'requisite'
+  #     $ldap_auth_flag = 'sufficient'
+  #   }
+  #   elsif 'ldap_shared' in $auth_types {
+  #     $ldap_auth_flag = 'requisite'
+  #   }
+  #   elsif 'ldap' in $auth_types {
+  #     $ldap_auth_flag = 'required'
+  #   }
+  # }
+
+  # if 'active_directory' in $auth_types or 'ldap' in $auth_types {
+  #   $ldap_login_module = 'JettyCachingLdapLoginModule'
+  # }
+  # elsif 'active_directory_shared' in $auth_types or 'ldap_shared' in $auth_types {
+  #   $ldap_login_module = 'JettyCombinedLdapLoginModule'
+  # }
+
+  # file { "${properties_dir}/jaas-auth.conf":
+  #   content => epp($rundeck::auth_template, { auth_config => $rundeck::auth_config }),
+  #   require => File[$properties_dir],
+  # }
 
   # file { "${properties_dir}/log4j.properties":
   #   content => template($rundeck::log_properties_template),
