@@ -5,7 +5,7 @@
 # without the proper security policies for the private key data in place.
 #
 # @example Basic usage.
-#   rundeck::config::file_keystore { 'mypassword':
+#   rundeck::config::resource::file_keystore { 'mypassword':
 #     path         => 'myproject/mypassword',
 #     value        => 'secret',
 #     content_type => 'application/x-rundeck-data-password',
@@ -39,7 +39,7 @@
 # @param user
 #   Default system user for the Rundeck framework
 #
-define rundeck::config::file_keystore (
+define rundeck::config::resource::file_keystore (
   Enum[
     'application/x-rundeck-data-password',
     'application/pgp-keys',

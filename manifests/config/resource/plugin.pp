@@ -1,7 +1,7 @@
 # @summary This define will install a rundeck plugin.
 #
 # @example Basic usage.
-#   rundeck::config::plugin { 'rundeck-hipchat-plugin-1.0.0.jar':
+#   rundeck::config::resource::plugin { 'rundeck-hipchat-plugin-1.0.0.jar':
 #     source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar',
 #   }
 #
@@ -10,7 +10,7 @@
 # @param source
 #   The http source or local path from which to get the plugin.
 #
-define rundeck::config::plugin (
+define rundeck::config::resource::plugin (
   String                    $source,
   Enum['present', 'absent'] $ensure = 'present',
 ) {

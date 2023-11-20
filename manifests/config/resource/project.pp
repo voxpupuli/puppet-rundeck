@@ -1,7 +1,7 @@
 # @summary This define can be used to configure rundeck projects.
 #
 # @example Basic usage.
-#   rundeck::config::project { 'test project':
+#   rundeck::config::resource::project { 'test project':
 #     ssh_keypath            => '/var/lib/rundeck/.ssh/id_rsa',
 #     file_copier_provider   => 'jsch-scp',
 #     node_executor_provider => 'jsch-ssh',
@@ -32,7 +32,7 @@
 # @param ssh_keypath
 #   The path to the ssh key that will be used by the ssh/scp providers
 #
-define rundeck::config::project (
+define rundeck::config::resource::project (
   String                         $file_copier_provider   = $rundeck::file_copier_provider,
   Hash                           $framework_config       = $rundeck::framework_config,
   String                         $group                  = $rundeck::group,

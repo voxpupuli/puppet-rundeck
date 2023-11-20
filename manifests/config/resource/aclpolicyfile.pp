@@ -1,7 +1,7 @@
 # @summary This define will create a custom acl policy file.
 #
 # @example Admin access.
-#   rundeck::config::aclpolicyfile { 'myPolicyFile':
+#   rundeck::config::resource::aclpolicyfile { 'myPolicyFile':
 #     acl_policies => [
 #       {
 #         'description'    => 'Admin, all access',
@@ -50,7 +50,7 @@
 # @param template_file
 #   The template used for acl policy. Default is rundeck/aclpolicy.erb
 #
-define rundeck::config::aclpolicyfile (
+define rundeck::config::resource::aclpolicyfile (
   Array[Hash]          $acl_policies,
   String               $group          = 'rundeck',
   String               $owner          = 'rundeck',

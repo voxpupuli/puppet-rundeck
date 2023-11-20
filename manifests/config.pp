@@ -5,7 +5,6 @@
 class rundeck::config {
   assert_private()
 
-  $auth_types     = $rundeck::auth_config.keys
   $properties_dir = $rundeck::framework_config['framework.etc.dir']
 
   File {
@@ -27,37 +26,13 @@ class rundeck::config {
     }
   }
 
-  if 'file' in $auth_types {
-    file { "${properties_dir}/realm.properties":
-      content => Sensitive(epp($rundeck::realm_template)),
-      mode    => '0600',
-      require => File[$properties_dir],
-    }
-  } else {
-    file { "${properties_dir}/realm.properties":
-      ensure => absent,
-    }
-  }
-
-  if 'file' in $auth_types and 'ldap' in $auth_types {
-    $ldap_login_module = 'JettyCombinedLdapLoginModule'
-  } else {
-    $ldap_login_module = 'JettyCachingLdapLoginModule'
-  }
-
-  file { "${properties_dir}/jaas-auth.conf":
-    content => Sensitive(epp($rundeck::auth_template)),
-    mode    => '0600',
-    require => File[$properties_dir],
-  }
-
   file { "${properties_dir}/log4j2.properties":
     content => epp($rundeck::log_properties_template),
     require => File[$properties_dir],
   }
 
   if $rundeck::manage_default_admin_policy {
-    rundeck::config::aclpolicyfile { 'admin':
+    rundeck::config::resource::aclpolicyfile { 'admin':
       acl_policies   => $rundeck::admin_policies,
       owner          => $rundeck::user,
       group          => $rundeck::group,
@@ -67,7 +42,7 @@ class rundeck::config {
   }
 
   if $rundeck::manage_default_api_policy {
-    rundeck::config::aclpolicyfile { 'apitoken':
+    rundeck::config::resource::aclpolicyfile { 'apitoken':
       acl_policies   => $rundeck::api_policies,
       owner          => $rundeck::user,
       group          => $rundeck::group,
@@ -82,7 +57,8 @@ class rundeck::config {
     }
   }
 
-  # contain rundeck::config::global::framework
+  contain rundeck::config::jaas_auth
+  contain rundeck::config::framework
   # contain rundeck::config::global::project
   # contain rundeck::config::global::rundeck_config
   # contain rundeck::config::global::file_keystore

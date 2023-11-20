@@ -1,7 +1,7 @@
 # @summary This define will create a resource source that gathers node information.
 #
 # @example Basic usage.
-#   rundeck::config::resource_source { 'myresource':
+#   rundeck::config::resource::resource_source { 'myresource':
 #     project_name        => 'myproject',
 #     number              => '1',
 #     source_type         => 'file',
@@ -71,7 +71,7 @@
 # @param puppet_enterprise_tag_source
 #   The Puppet Enterprise tag source.
 #
-define rundeck::config::resource_source (
+define rundeck::config::resource::resource_source (
   Stdlib::Absolutepath                $directory                          = $rundeck::params::default_resource_dir,
   Boolean                             $include_server_node                = $rundeck::params::include_server_node,
   String                              $mapping_params                     = '', # lint:ignore:params_empty_string_assignment
