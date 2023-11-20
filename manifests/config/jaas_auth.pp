@@ -3,9 +3,10 @@
 # @summary This private class is called from rundeck::config used to manage jaas authentication for rundeck.
 #
 class rundeck::config::jaas_auth {
-  $auth_types = $rundeck::auth_config.keys
+  $_auth_config = deep_merge(lookup('rundeck::auth_config'), $rundeck::auth_config)
+  $_auth_types  = $_auth_config.keys
 
-  if 'file' in $auth_types {
+  if 'file' in $_auth_types {
     file { "${rundeck::config::properties_dir}/realm.properties":
       content => Sensitive(epp($rundeck::realm_template)),
       mode    => '0600',
@@ -17,14 +18,14 @@ class rundeck::config::jaas_auth {
     }
   }
 
-  if 'file' in $auth_types and 'ldap' in $auth_types {
-    $ldap_login_module = 'JettyCombinedLdapLoginModule'
+  if 'file' in $_auth_types and 'ldap' in $_auth_types {
+    $_ldap_login_module = 'JettyCombinedLdapLoginModule'
   } else {
-    $ldap_login_module = 'JettyCachingLdapLoginModule'
+    $_ldap_login_module = 'JettyCachingLdapLoginModule'
   }
 
   file { "${rundeck::config::properties_dir}/jaas-auth.conf":
-    content => Sensitive(epp($rundeck::auth_template)),
+    content => Sensitive(epp($rundeck::auth_template, { auth_config => $_auth_config, ldap_login_module => $_ldap_login_module })),
     mode    => '0600',
     require => File[$rundeck::config::properties_dir],
   }

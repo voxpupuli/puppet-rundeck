@@ -1,5 +1,5 @@
 authentication {
-<%- $rundeck::config::auth_types.each |$_type| { -%>
+<%- $auth_config.keys.each |$_type| { -%>
 <%- if $_type == 'file' { -%>
 <%- if $rundeck::auth_config['file']['auth_flag'] {-%>
   org.eclipse.jetty.jaas.spi.PropertyFileLoginModule <%= $rundeck::auth_config['file']['auth_flag'] %>
@@ -11,9 +11,9 @@ authentication {
 <%-}-%>;
 <%- }  elsif $_type == 'ldap' { -%>
 <%- if $rundeck::auth_config['ldap']['auth_flag'] {-%>
-  com.dtolabs.rundeck.jetty.jaas.<%= $rundeck::config::ldap_login_module %> <%= $rundeck::auth_config['ldap']['auth_flag'] %>
+  com.dtolabs.rundeck.jetty.jaas.<%= $ldap_login_module %> <%= $rundeck::auth_config['ldap']['auth_flag'] %>
 <%-} else {-%>
-  com.dtolabs.rundeck.jetty.jaas.<%= $rundeck::config::ldap_login_module %> required
+  com.dtolabs.rundeck.jetty.jaas.<%= $ldap_login_module %> required
 <%-}-%>
     contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
 <%- $rundeck::auth_config['ldap']['jaas_config'].each |$_key, $_value| {-%>

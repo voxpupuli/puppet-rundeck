@@ -128,7 +128,7 @@ rundeck::framework_config:
   framework.ssh.user: 'rundeck'
   framework.ssh.timeout: '0'
   rdeck.base: '/var/lib/rundeck'
-  rundeck.server.uuid: "fqdn_uuid(%{facts.networking.fqdn})"
+  rundeck.server.uuid: "%{fqdn_uuid(facts.networking.fqdn)}" # Fix function
 
 rundeck::file_keystorage_dir: "%{lookup('rundeck::framework_config.framework.var.dir')}/storage"
 

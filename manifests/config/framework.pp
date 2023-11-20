@@ -14,11 +14,11 @@ class rundeck::config::framework {
 
   $_framework_config = merge($rundeck::framework_config, $_ssl_config)
 
-  file { "${rundeck::properties_dir}/framework.properties":
+  file { "${rundeck::config::properties_dir}/framework.properties":
     ensure  => file,
-    content => epp('rundeck/framework.properties.epp'),
+    content => epp('rundeck/framework.properties.epp', { framework_config => $_framework_config }),
     owner   => $rundeck::user,
     group   => $rundeck::group,
-    require => File[$rundeck::properties_dir],
+    require => File[$rundeck::config::properties_dir],
   }
 }
