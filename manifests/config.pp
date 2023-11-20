@@ -5,7 +5,9 @@
 class rundeck::config {
   assert_private()
 
-  $properties_dir = $rundeck::framework_config['framework.etc.dir']
+  $framework_config = deep_merge(lookup('rundeck::framework_config'), $rundeck::framework_config)
+  $properties_dir   = $framework_config['framework.etc.dir']
+  $base_dir         = $framework_config['rdeck.base']
 
   File {
     owner => $rundeck::user,
@@ -13,7 +15,7 @@ class rundeck::config {
   }
 
   if $rundeck::manage_home {
-    file { $rundeck::home_dir:
+    file { $base_dir:
       ensure => directory,
       mode   => '0755',
     }

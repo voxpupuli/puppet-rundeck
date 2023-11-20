@@ -6,8 +6,6 @@
 #   Admin acl policies. Default value is located in data/common.yaml.
 # @param api_policies
 #   Apitoken acl policies. Default value is located in data/common.yaml.
-# @param auth_template
-#   The template used for authentication config. Needs to be in epp format.
 # @param auth_config
 #   Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
 #   Default value is located in data/common.yaml.
@@ -75,10 +73,8 @@
 #   The log4j logging level to be set for the Rundeck application.
 # @param audit_log_level
 #   The log4j logging level to be set for the Rundeck autorization.
-# @param rdeck_config_template
+# @param config_template
 #   Allows you to override the rundeck-config template.
-# @param home_dir
-#   Home/base directory under which rundeck is installed.
 # @param manage_home
 #   Whether to manage rundeck home dir. Defaults to true.
 # @param override_template
@@ -172,7 +168,6 @@ class rundeck (
   String                              $override_template                  = 'rundeck/profile_overrides.epp',
   String                              $realm_template                     = 'rundeck/realm.properties.epp',
   String                              $acl_template                       = 'rundeck/aclpolicy.erb',
-  String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
   String                              $log_properties_template            = 'rundeck/log4j2.properties.epp',
 
   Boolean                             $rss_enabled                        = false,
@@ -220,8 +215,7 @@ class rundeck (
   Integer                             $url_timeout                        = 30,
   Boolean                             $script_args_quoted                 = true,
   Stdlib::Absolutepath                $script_interpreter                 = '/bin/bash',
-  # Home config
-  Stdlib::Absolutepath                $home_dir                           = '/var/lib/rundeck',
+
   Boolean                             $manage_home                        = true,
 ) {
   validate_rd_policy($admin_policies)

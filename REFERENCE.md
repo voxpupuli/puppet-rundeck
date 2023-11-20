@@ -14,22 +14,23 @@
 #### Private Classes
 
 * `rundeck::config`: This class is called from rundeck to manage the configuration.
+* `rundeck::config::framework`: This private class is called from rundeck::config used to manage the framework properties of rundeck.
 * `rundeck::config::global::file_keystore`: This private class is used to manage the keys of the Rundeck key storage facility if a file-based backend is used.
-* `rundeck::config::global::framework`: This private class is called from rundeck::config used to manage the framework properties of rundeck.
 * `rundeck::config::global::project`: This private class is called from rundeck::config used to manage the default project properties.
 * `rundeck::config::global::rundeck_config`: This private class is called from rundeck::config used to manage the rundeck-config properties.
 * `rundeck::config::global::ssl`: This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled.
+* `rundeck::config::jaas_auth`: This private class is called from rundeck::config used to manage jaas authentication for rundeck.
 * `rundeck::install`: This class is called from rundeck for install.
 * `rundeck::service`: This class is called from rundeck to manage service.
 
 ### Defined types
 
-* [`rundeck::config::aclpolicyfile`](#rundeck--config--aclpolicyfile): This define will create a custom acl policy file.
-* [`rundeck::config::file_keystore`](#rundeck--config--file_keystore): This define will create the 'content' and 'meta' components for the key to be stored.
-* [`rundeck::config::plugin`](#rundeck--config--plugin): This define will install a rundeck plugin.
-* [`rundeck::config::project`](#rundeck--config--project): This define can be used to configure rundeck projects.
-* [`rundeck::config::resource_source`](#rundeck--config--resource_source): This define will create a resource source that gathers node information.
-* [`rundeck::config::securityroles`](#rundeck--config--securityroles): Author: Zoltan Lanyi <zoltan.lanyi@gmail.com> Date  : 03.06.2016
+* [`rundeck::config::resource::aclpolicyfile`](#rundeck--config--resource--aclpolicyfile): This define will create a custom acl policy file.
+* [`rundeck::config::resource::file_keystore`](#rundeck--config--resource--file_keystore): This define will create the 'content' and 'meta' components for the key to be stored.
+* [`rundeck::config::resource::plugin`](#rundeck--config--resource--plugin): This define will install a rundeck plugin.
+* [`rundeck::config::resource::project`](#rundeck--config--resource--project): This define can be used to configure rundeck projects.
+* [`rundeck::config::resource::resource_source`](#rundeck--config--resource--resource_source): This define will create a resource source that gathers node information.
+* [`rundeck::config::resource::securityroles`](#rundeck--config--resource--securityroles): Author: Zoltan Lanyi <zoltan.lanyi@gmail.com> Date  : 03.06.2016
 
 ### Functions
 
@@ -54,7 +55,6 @@ The following parameters are available in the `rundeck` class:
 * [`acl_template`](#-rundeck--acl_template)
 * [`admin_policies`](#-rundeck--admin_policies)
 * [`api_policies`](#-rundeck--api_policies)
-* [`auth_template`](#-rundeck--auth_template)
 * [`auth_config`](#-rundeck--auth_config)
 * [`clustermode_enabled`](#-rundeck--clustermode_enabled)
 * [`database_config`](#-rundeck--database_config)
@@ -87,11 +87,9 @@ The following parameters are available in the `rundeck` class:
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`app_log_level`](#-rundeck--app_log_level)
 * [`audit_log_level`](#-rundeck--audit_log_level)
-* [`rdeck_config_template`](#-rundeck--rdeck_config_template)
-* [`home_dir`](#-rundeck--home_dir)
+* [`config_template`](#-rundeck--config_template)
 * [`manage_home`](#-rundeck--manage_home)
-* [`rdeck_profile_template`](#-rundeck--rdeck_profile_template)
-* [`rdeck_override_template`](#-rundeck--rdeck_override_template)
+* [`override_template`](#-rundeck--override_template)
 * [`realm_template`](#-rundeck--realm_template)
 * [`rss_enabled`](#-rundeck--rss_enabled)
 * [`security_config`](#-rundeck--security_config)
@@ -117,6 +115,7 @@ The following parameters are available in the `rundeck` class:
 * [`security_roles_array_enabled`](#-rundeck--security_roles_array_enabled)
 * [`security_roles_array`](#-rundeck--security_roles_array)
 * [`storage_encrypt_config`](#-rundeck--storage_encrypt_config)
+* [`override_dir`](#-rundeck--override_dir)
 * [`file_copier_provider`](#-rundeck--file_copier_provider)
 * [`node_executor_provider`](#-rundeck--node_executor_provider)
 * [`resource_sources`](#-rundeck--resource_sources)
@@ -150,14 +149,6 @@ Admin acl policies. Default value is located in data/common.yaml.
 Data type: `Array[Hash]`
 
 Apitoken acl policies. Default value is located in data/common.yaml.
-
-##### <a name="-rundeck--auth_template"></a>`auth_template`
-
-Data type: `String`
-
-The template used for authentication config. Needs to be in epp format.
-
-Default value: `'rundeck/jaas-auth.conf.epp'`
 
 ##### <a name="-rundeck--auth_config"></a>`auth_config`
 
@@ -243,11 +234,11 @@ Default value: `'-Xmx1024m -Xms256m -server'`
 
 ##### <a name="-rundeck--kerberos_realms"></a>`kerberos_realms`
 
-Data type: `Hash`
+Data type: `Optional[Hash]`
 
 A hash of mappings between Kerberos domain DNS names and realm names
 
-Default value: `{}`
+Default value: `undef`
 
 ##### <a name="-rundeck--key_storage_config"></a>`key_storage_config`
 
@@ -402,21 +393,13 @@ The log4j logging level to be set for the Rundeck autorization.
 
 Default value: `'info'`
 
-##### <a name="-rundeck--rdeck_config_template"></a>`rdeck_config_template`
+##### <a name="-rundeck--config_template"></a>`config_template`
 
 Data type: `String`
 
 Allows you to override the rundeck-config template.
 
 Default value: `'rundeck/rundeck-config.epp'`
-
-##### <a name="-rundeck--home_dir"></a>`home_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-Home/base directory under which rundeck is installed.
-
-Default value: `'/var/lib/rundeck'`
 
 ##### <a name="-rundeck--manage_home"></a>`manage_home`
 
@@ -426,27 +409,19 @@ Whether to manage rundeck home dir. Defaults to true.
 
 Default value: `true`
 
-##### <a name="-rundeck--rdeck_profile_template"></a>`rdeck_profile_template`
-
-Data type: `Optional[String]`
-
-Allows you to use your own profile template instead of the default from the package maintainer
-
-Default value: `undef`
-
-##### <a name="-rundeck--rdeck_override_template"></a>`rdeck_override_template`
+##### <a name="-rundeck--override_template"></a>`override_template`
 
 Data type: `String`
 
-Allows you to use your own override template instead of the default from the package maintainer
+Allows you to use your own override template for rundeck profile instead of the default from the package maintainer
 
-Default value: `'rundeck/profile_overrides.erb'`
+Default value: `'rundeck/profile_overrides.epp'`
 
 ##### <a name="-rundeck--realm_template"></a>`realm_template`
 
 Data type: `String`
 
-Allows you to use your own override template instead of the default from the package maintainer
+Allows you to use your own override template for realm properties instead of the default from the package maintainer
 
 Default value: `'rundeck/realm.properties.epp'`
 
@@ -639,6 +614,12 @@ https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.h
 
 Default value: `{}`
 
+##### <a name="-rundeck--override_dir"></a>`override_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
 ##### <a name="-rundeck--file_copier_provider"></a>`file_copier_provider`
 
 Data type: `String`
@@ -801,7 +782,7 @@ Default value: `"${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"`
 
 ## Defined types
 
-### <a name="rundeck--config--aclpolicyfile"></a>`rundeck::config::aclpolicyfile`
+### <a name="rundeck--config--resource--aclpolicyfile"></a>`rundeck::config::resource::aclpolicyfile`
 
 This define will create a custom acl policy file.
 
@@ -810,7 +791,7 @@ This define will create a custom acl policy file.
 ##### Admin access.
 
 ```puppet
-rundeck::config::aclpolicyfile { 'myPolicyFile':
+rundeck::config::resource::aclpolicyfile { 'myPolicyFile':
   acl_policies => [
     {
       'description'    => 'Admin, all access',
@@ -851,21 +832,21 @@ rundeck::config::aclpolicyfile { 'myPolicyFile':
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::aclpolicyfile` defined type:
+The following parameters are available in the `rundeck::config::resource::aclpolicyfile` defined type:
 
-* [`acl_policies`](#-rundeck--config--aclpolicyfile--acl_policies)
-* [`group`](#-rundeck--config--aclpolicyfile--group)
-* [`owner`](#-rundeck--config--aclpolicyfile--owner)
-* [`properties_dir`](#-rundeck--config--aclpolicyfile--properties_dir)
-* [`template_file`](#-rundeck--config--aclpolicyfile--template_file)
+* [`acl_policies`](#-rundeck--config--resource--aclpolicyfile--acl_policies)
+* [`group`](#-rundeck--config--resource--aclpolicyfile--group)
+* [`owner`](#-rundeck--config--resource--aclpolicyfile--owner)
+* [`properties_dir`](#-rundeck--config--resource--aclpolicyfile--properties_dir)
+* [`template_file`](#-rundeck--config--resource--aclpolicyfile--template_file)
 
-##### <a name="-rundeck--config--aclpolicyfile--acl_policies"></a>`acl_policies`
+##### <a name="-rundeck--config--resource--aclpolicyfile--acl_policies"></a>`acl_policies`
 
 Data type: `Array[Hash]`
 
 An array of hashes containing acl policies. See example.
 
-##### <a name="-rundeck--config--aclpolicyfile--group"></a>`group`
+##### <a name="-rundeck--config--resource--aclpolicyfile--group"></a>`group`
 
 Data type: `String`
 
@@ -873,7 +854,7 @@ The group permission that rundeck is installed as.
 
 Default value: `'rundeck'`
 
-##### <a name="-rundeck--config--aclpolicyfile--owner"></a>`owner`
+##### <a name="-rundeck--config--resource--aclpolicyfile--owner"></a>`owner`
 
 Data type: `String`
 
@@ -881,7 +862,7 @@ The user that rundeck is installed as.
 
 Default value: `'rundeck'`
 
-##### <a name="-rundeck--config--aclpolicyfile--properties_dir"></a>`properties_dir`
+##### <a name="-rundeck--config--resource--aclpolicyfile--properties_dir"></a>`properties_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -889,7 +870,7 @@ The rundeck configuration directory.
 
 Default value: `'/etc/rundeck'`
 
-##### <a name="-rundeck--config--aclpolicyfile--template_file"></a>`template_file`
+##### <a name="-rundeck--config--resource--aclpolicyfile--template_file"></a>`template_file`
 
 Data type: `String`
 
@@ -897,7 +878,7 @@ The template used for acl policy. Default is rundeck/aclpolicy.erb
 
 Default value: `"${module_name}/aclpolicy.erb"`
 
-### <a name="rundeck--config--file_keystore"></a>`rundeck::config::file_keystore`
+### <a name="rundeck--config--resource--file_keystore"></a>`rundeck::config::resource::file_keystore`
 
 Currently supports password-based public keys.
 Private keys are also supported, but not recommended to be privisioned via this mechanism
@@ -908,7 +889,7 @@ without the proper security policies for the private key data in place.
 ##### Basic usage.
 
 ```puppet
-rundeck::config::file_keystore { 'mypassword':
+rundeck::config::resource::file_keystore { 'mypassword':
   path         => 'myproject/mypassword',
   value        => 'secret',
   content_type => 'application/x-rundeck-data-password',
@@ -918,23 +899,23 @@ rundeck::config::file_keystore { 'mypassword':
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::file_keystore` defined type:
+The following parameters are available in the `rundeck::config::resource::file_keystore` defined type:
 
-* [`content_type`](#-rundeck--config--file_keystore--content_type)
-* [`data_type`](#-rundeck--config--file_keystore--data_type)
-* [`path`](#-rundeck--config--file_keystore--path)
-* [`value`](#-rundeck--config--file_keystore--value)
-* [`auth_created_username`](#-rundeck--config--file_keystore--auth_created_username)
-* [`auth_modified_username`](#-rundeck--config--file_keystore--auth_modified_username)
-* [`content_creation_time`](#-rundeck--config--file_keystore--content_creation_time)
-* [`content_mask`](#-rundeck--config--file_keystore--content_mask)
-* [`content_modify_time`](#-rundeck--config--file_keystore--content_modify_time)
-* [`content_size`](#-rundeck--config--file_keystore--content_size)
-* [`file_keystorage_dir`](#-rundeck--config--file_keystore--file_keystorage_dir)
-* [`group`](#-rundeck--config--file_keystore--group)
-* [`user`](#-rundeck--config--file_keystore--user)
+* [`content_type`](#-rundeck--config--resource--file_keystore--content_type)
+* [`data_type`](#-rundeck--config--resource--file_keystore--data_type)
+* [`path`](#-rundeck--config--resource--file_keystore--path)
+* [`value`](#-rundeck--config--resource--file_keystore--value)
+* [`auth_created_username`](#-rundeck--config--resource--file_keystore--auth_created_username)
+* [`auth_modified_username`](#-rundeck--config--resource--file_keystore--auth_modified_username)
+* [`content_creation_time`](#-rundeck--config--resource--file_keystore--content_creation_time)
+* [`content_mask`](#-rundeck--config--resource--file_keystore--content_mask)
+* [`content_modify_time`](#-rundeck--config--resource--file_keystore--content_modify_time)
+* [`content_size`](#-rundeck--config--resource--file_keystore--content_size)
+* [`file_keystorage_dir`](#-rundeck--config--resource--file_keystore--file_keystorage_dir)
+* [`group`](#-rundeck--config--resource--file_keystore--group)
+* [`user`](#-rundeck--config--resource--file_keystore--user)
 
-##### <a name="-rundeck--config--file_keystore--content_type"></a>`content_type`
+##### <a name="-rundeck--config--resource--file_keystore--content_type"></a>`content_type`
 
 Data type:
 
@@ -948,25 +929,25 @@ Enum[
 
 MIME type of the content
 
-##### <a name="-rundeck--config--file_keystore--data_type"></a>`data_type`
+##### <a name="-rundeck--config--resource--file_keystore--data_type"></a>`data_type`
 
 Data type: `Enum['password', 'public', 'private']`
 
 Data type (password, public-key or private-key)
 
-##### <a name="-rundeck--config--file_keystore--path"></a>`path`
+##### <a name="-rundeck--config--resource--file_keystore--path"></a>`path`
 
 Data type: `String`
 
 The path of the named key
 
-##### <a name="-rundeck--config--file_keystore--value"></a>`value`
+##### <a name="-rundeck--config--resource--file_keystore--value"></a>`value`
 
 Data type: `String`
 
 The actual value (password) of the named key
 
-##### <a name="-rundeck--config--file_keystore--auth_created_username"></a>`auth_created_username`
+##### <a name="-rundeck--config--resource--file_keystore--auth_created_username"></a>`auth_created_username`
 
 Data type: `String`
 
@@ -974,7 +955,7 @@ User who created the key
 
 Default value: `$rundeck::framework_config['framework.ssh.user']`
 
-##### <a name="-rundeck--config--file_keystore--auth_modified_username"></a>`auth_modified_username`
+##### <a name="-rundeck--config--resource--file_keystore--auth_modified_username"></a>`auth_modified_username`
 
 Data type: `String`
 
@@ -982,7 +963,7 @@ User who last modified the key
 
 Default value: `$rundeck::framework_config['framework.ssh.user']`
 
-##### <a name="-rundeck--config--file_keystore--content_creation_time"></a>`content_creation_time`
+##### <a name="-rundeck--config--resource--file_keystore--content_creation_time"></a>`content_creation_time`
 
 Data type: `String`
 
@@ -990,7 +971,7 @@ When the key was first created
 
 Default value: `chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ'))`
 
-##### <a name="-rundeck--config--file_keystore--content_mask"></a>`content_mask`
+##### <a name="-rundeck--config--resource--file_keystore--content_mask"></a>`content_mask`
 
 Data type: `String`
 
@@ -998,7 +979,7 @@ Content mask (default is 'content')
 
 Default value: `'content'`
 
-##### <a name="-rundeck--config--file_keystore--content_modify_time"></a>`content_modify_time`
+##### <a name="-rundeck--config--resource--file_keystore--content_modify_time"></a>`content_modify_time`
 
 Data type: `String`
 
@@ -1006,7 +987,7 @@ When the key was modified
 
 Default value: `chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ'))`
 
-##### <a name="-rundeck--config--file_keystore--content_size"></a>`content_size`
+##### <a name="-rundeck--config--resource--file_keystore--content_size"></a>`content_size`
 
 Data type: `Optional[Integer]`
 
@@ -1014,7 +995,7 @@ Size of the content string in bytes
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--file_keystore--file_keystorage_dir"></a>`file_keystorage_dir`
+##### <a name="-rundeck--config--resource--file_keystore--file_keystorage_dir"></a>`file_keystorage_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1022,7 +1003,7 @@ Base directory for file-based key storage (defaulted to /var/lib/rundeck/var/sto
 
 Default value: `$rundeck::file_keystorage_dir`
 
-##### <a name="-rundeck--config--file_keystore--group"></a>`group`
+##### <a name="-rundeck--config--resource--file_keystore--group"></a>`group`
 
 Data type: `String`
 
@@ -1030,7 +1011,7 @@ Default system group for the Rundeck framework
 
 Default value: `$rundeck::config::group`
 
-##### <a name="-rundeck--config--file_keystore--user"></a>`user`
+##### <a name="-rundeck--config--resource--file_keystore--user"></a>`user`
 
 Data type: `String`
 
@@ -1038,7 +1019,7 @@ Default system user for the Rundeck framework
 
 Default value: `$rundeck::config::user`
 
-### <a name="rundeck--config--plugin"></a>`rundeck::config::plugin`
+### <a name="rundeck--config--resource--plugin"></a>`rundeck::config::resource::plugin`
 
 This define will install a rundeck plugin.
 
@@ -1047,19 +1028,19 @@ This define will install a rundeck plugin.
 ##### Basic usage.
 
 ```puppet
-rundeck::config::plugin { 'rundeck-hipchat-plugin-1.0.0.jar':
+rundeck::config::resource::plugin { 'rundeck-hipchat-plugin-1.0.0.jar':
   source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar',
 }
 ```
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::plugin` defined type:
+The following parameters are available in the `rundeck::config::resource::plugin` defined type:
 
-* [`ensure`](#-rundeck--config--plugin--ensure)
-* [`source`](#-rundeck--config--plugin--source)
+* [`ensure`](#-rundeck--config--resource--plugin--ensure)
+* [`source`](#-rundeck--config--resource--plugin--source)
 
-##### <a name="-rundeck--config--plugin--ensure"></a>`ensure`
+##### <a name="-rundeck--config--resource--plugin--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -1067,13 +1048,13 @@ Set present or absent to add or remove the plugin
 
 Default value: `'present'`
 
-##### <a name="-rundeck--config--plugin--source"></a>`source`
+##### <a name="-rundeck--config--resource--plugin--source"></a>`source`
 
 Data type: `String`
 
 The http source or local path from which to get the plugin.
 
-### <a name="rundeck--config--project"></a>`rundeck::config::project`
+### <a name="rundeck--config--resource--project"></a>`rundeck::config::resource::project`
 
 This define can be used to configure rundeck projects.
 
@@ -1082,7 +1063,7 @@ This define can be used to configure rundeck projects.
 ##### Basic usage.
 
 ```puppet
-rundeck::config::project { 'test project':
+rundeck::config::resource::project { 'test project':
   ssh_keypath            => '/var/lib/rundeck/.ssh/id_rsa',
   file_copier_provider   => 'jsch-scp',
   node_executor_provider => 'jsch-ssh',
@@ -1093,21 +1074,21 @@ rundeck::config::project { 'test project':
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::project` defined type:
+The following parameters are available in the `rundeck::config::resource::project` defined type:
 
-* [`file_copier_provider`](#-rundeck--config--project--file_copier_provider)
-* [`framework_config`](#-rundeck--config--project--framework_config)
-* [`group`](#-rundeck--config--project--group)
-* [`user`](#-rundeck--config--project--user)
-* [`node_executor_provider`](#-rundeck--config--project--node_executor_provider)
-* [`node_executor_settings`](#-rundeck--config--project--node_executor_settings)
-* [`projects_dir`](#-rundeck--config--project--projects_dir)
-* [`resource_sources`](#-rundeck--config--project--resource_sources)
-* [`scm_import_properties`](#-rundeck--config--project--scm_import_properties)
-* [`scm_export_properties`](#-rundeck--config--project--scm_export_properties)
-* [`ssh_keypath`](#-rundeck--config--project--ssh_keypath)
+* [`file_copier_provider`](#-rundeck--config--resource--project--file_copier_provider)
+* [`framework_config`](#-rundeck--config--resource--project--framework_config)
+* [`group`](#-rundeck--config--resource--project--group)
+* [`user`](#-rundeck--config--resource--project--user)
+* [`node_executor_provider`](#-rundeck--config--resource--project--node_executor_provider)
+* [`node_executor_settings`](#-rundeck--config--resource--project--node_executor_settings)
+* [`projects_dir`](#-rundeck--config--resource--project--projects_dir)
+* [`resource_sources`](#-rundeck--config--resource--project--resource_sources)
+* [`scm_import_properties`](#-rundeck--config--resource--project--scm_import_properties)
+* [`scm_export_properties`](#-rundeck--config--resource--project--scm_export_properties)
+* [`ssh_keypath`](#-rundeck--config--resource--project--ssh_keypath)
 
-##### <a name="-rundeck--config--project--file_copier_provider"></a>`file_copier_provider`
+##### <a name="-rundeck--config--resource--project--file_copier_provider"></a>`file_copier_provider`
 
 Data type: `String`
 
@@ -1115,7 +1096,7 @@ The type of proivder that will be used for copying files to each of the nodes
 
 Default value: `$rundeck::file_copier_provider`
 
-##### <a name="-rundeck--config--project--framework_config"></a>`framework_config`
+##### <a name="-rundeck--config--resource--project--framework_config"></a>`framework_config`
 
 Data type: `Hash`
 
@@ -1123,7 +1104,7 @@ Rundeck framework config
 
 Default value: `$rundeck::framework_config`
 
-##### <a name="-rundeck--config--project--group"></a>`group`
+##### <a name="-rundeck--config--resource--project--group"></a>`group`
 
 Data type: `String`
 
@@ -1131,7 +1112,7 @@ Rundeck group
 
 Default value: `$rundeck::group`
 
-##### <a name="-rundeck--config--project--user"></a>`user`
+##### <a name="-rundeck--config--resource--project--user"></a>`user`
 
 Data type: `String`
 
@@ -1139,7 +1120,7 @@ Rundeck user
 
 Default value: `$rundeck::user`
 
-##### <a name="-rundeck--config--project--node_executor_provider"></a>`node_executor_provider`
+##### <a name="-rundeck--config--resource--project--node_executor_provider"></a>`node_executor_provider`
 
 Data type: `String`
 
@@ -1147,7 +1128,7 @@ The type of provider that will be used to gather node resources
 
 Default value: `$rundeck::node_executor_provider`
 
-##### <a name="-rundeck--config--project--node_executor_settings"></a>`node_executor_settings`
+##### <a name="-rundeck--config--resource--project--node_executor_settings"></a>`node_executor_settings`
 
 Data type: `Hash`
 
@@ -1155,7 +1136,7 @@ Node executor settings
 
 Default value: `{}`
 
-##### <a name="-rundeck--config--project--projects_dir"></a>`projects_dir`
+##### <a name="-rundeck--config--resource--project--projects_dir"></a>`projects_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1163,7 +1144,7 @@ The directory where rundeck is configured to store project information
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--project--resource_sources"></a>`resource_sources`
+##### <a name="-rundeck--config--resource--project--resource_sources"></a>`resource_sources`
 
 Data type: `Hash`
 
@@ -1171,7 +1152,7 @@ A hash of rundeck::config::resource_source that will be used to specify the node
 
 Default value: `$rundeck::resource_sources`
 
-##### <a name="-rundeck--config--project--scm_import_properties"></a>`scm_import_properties`
+##### <a name="-rundeck--config--resource--project--scm_import_properties"></a>`scm_import_properties`
 
 Data type: `Hash`
 
@@ -1179,7 +1160,7 @@ A hash of name value pairs representing properties for the scm-import.properties
 
 Default value: `{}`
 
-##### <a name="-rundeck--config--project--scm_export_properties"></a>`scm_export_properties`
+##### <a name="-rundeck--config--resource--project--scm_export_properties"></a>`scm_export_properties`
 
 Data type: `Hash`
 
@@ -1187,7 +1168,7 @@ A hash of name value pairs representing properties for the scm-export.properties
 
 Default value: `{}`
 
-##### <a name="-rundeck--config--project--ssh_keypath"></a>`ssh_keypath`
+##### <a name="-rundeck--config--resource--project--ssh_keypath"></a>`ssh_keypath`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1195,7 +1176,7 @@ The path to the ssh key that will be used by the ssh/scp providers
 
 Default value: `undef`
 
-### <a name="rundeck--config--resource_source"></a>`rundeck::config::resource_source`
+### <a name="rundeck--config--resource--resource_source"></a>`rundeck::config::resource::resource_source`
 
 This define will create a resource source that gathers node information.
 
@@ -1204,7 +1185,7 @@ This define will create a resource source that gathers node information.
 ##### Basic usage.
 
 ```puppet
-rundeck::config::resource_source { 'myresource':
+rundeck::config::resource::resource_source { 'myresource':
   project_name        => 'myproject',
   number              => '1',
   source_type         => 'file',
@@ -1215,40 +1196,40 @@ rundeck::config::resource_source { 'myresource':
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::resource_source` defined type:
+The following parameters are available in the `rundeck::config::resource::resource_source` defined type:
 
-* [`directory`](#-rundeck--config--resource_source--directory)
-* [`include_server_node`](#-rundeck--config--resource_source--include_server_node)
-* [`mapping_params`](#-rundeck--config--resource_source--mapping_params)
-* [`number`](#-rundeck--config--resource_source--number)
-* [`project_name`](#-rundeck--config--resource_source--project_name)
-* [`resource_format`](#-rundeck--config--resource_source--resource_format)
-* [`running_only`](#-rundeck--config--resource_source--running_only)
-* [`script_args`](#-rundeck--config--resource_source--script_args)
-* [`script_args_quoted`](#-rundeck--config--resource_source--script_args_quoted)
-* [`script_file`](#-rundeck--config--resource_source--script_file)
-* [`script_interpreter`](#-rundeck--config--resource_source--script_interpreter)
-* [`source_type`](#-rundeck--config--resource_source--source_type)
-* [`url`](#-rundeck--config--resource_source--url)
-* [`url_cache`](#-rundeck--config--resource_source--url_cache)
-* [`url_timeout`](#-rundeck--config--resource_source--url_timeout)
-* [`use_default_mapping`](#-rundeck--config--resource_source--use_default_mapping)
-* [`endpoint_url`](#-rundeck--config--resource_source--endpoint_url)
-* [`assume_role_arn`](#-rundeck--config--resource_source--assume_role_arn)
-* [`filter_tag`](#-rundeck--config--resource_source--filter_tag)
-* [`http_proxy_port`](#-rundeck--config--resource_source--http_proxy_port)
-* [`refresh_interval`](#-rundeck--config--resource_source--refresh_interval)
-* [`puppet_enterprise_host`](#-rundeck--config--resource_source--puppet_enterprise_host)
-* [`puppet_enterprise_port`](#-rundeck--config--resource_source--puppet_enterprise_port)
-* [`puppet_enterprise_ssl_dir`](#-rundeck--config--resource_source--puppet_enterprise_ssl_dir)
-* [`puppet_enterprise_certificate_name`](#-rundeck--config--resource_source--puppet_enterprise_certificate_name)
-* [`puppet_enterprise_mapping_file`](#-rundeck--config--resource_source--puppet_enterprise_mapping_file)
-* [`puppet_enterprise_metrics_interval`](#-rundeck--config--resource_source--puppet_enterprise_metrics_interval)
-* [`puppet_enterprise_node_query`](#-rundeck--config--resource_source--puppet_enterprise_node_query)
-* [`puppet_enterprise_default_node_tag`](#-rundeck--config--resource_source--puppet_enterprise_default_node_tag)
-* [`puppet_enterprise_tag_source`](#-rundeck--config--resource_source--puppet_enterprise_tag_source)
+* [`directory`](#-rundeck--config--resource--resource_source--directory)
+* [`include_server_node`](#-rundeck--config--resource--resource_source--include_server_node)
+* [`mapping_params`](#-rundeck--config--resource--resource_source--mapping_params)
+* [`number`](#-rundeck--config--resource--resource_source--number)
+* [`project_name`](#-rundeck--config--resource--resource_source--project_name)
+* [`resource_format`](#-rundeck--config--resource--resource_source--resource_format)
+* [`running_only`](#-rundeck--config--resource--resource_source--running_only)
+* [`script_args`](#-rundeck--config--resource--resource_source--script_args)
+* [`script_args_quoted`](#-rundeck--config--resource--resource_source--script_args_quoted)
+* [`script_file`](#-rundeck--config--resource--resource_source--script_file)
+* [`script_interpreter`](#-rundeck--config--resource--resource_source--script_interpreter)
+* [`source_type`](#-rundeck--config--resource--resource_source--source_type)
+* [`url`](#-rundeck--config--resource--resource_source--url)
+* [`url_cache`](#-rundeck--config--resource--resource_source--url_cache)
+* [`url_timeout`](#-rundeck--config--resource--resource_source--url_timeout)
+* [`use_default_mapping`](#-rundeck--config--resource--resource_source--use_default_mapping)
+* [`endpoint_url`](#-rundeck--config--resource--resource_source--endpoint_url)
+* [`assume_role_arn`](#-rundeck--config--resource--resource_source--assume_role_arn)
+* [`filter_tag`](#-rundeck--config--resource--resource_source--filter_tag)
+* [`http_proxy_port`](#-rundeck--config--resource--resource_source--http_proxy_port)
+* [`refresh_interval`](#-rundeck--config--resource--resource_source--refresh_interval)
+* [`puppet_enterprise_host`](#-rundeck--config--resource--resource_source--puppet_enterprise_host)
+* [`puppet_enterprise_port`](#-rundeck--config--resource--resource_source--puppet_enterprise_port)
+* [`puppet_enterprise_ssl_dir`](#-rundeck--config--resource--resource_source--puppet_enterprise_ssl_dir)
+* [`puppet_enterprise_certificate_name`](#-rundeck--config--resource--resource_source--puppet_enterprise_certificate_name)
+* [`puppet_enterprise_mapping_file`](#-rundeck--config--resource--resource_source--puppet_enterprise_mapping_file)
+* [`puppet_enterprise_metrics_interval`](#-rundeck--config--resource--resource_source--puppet_enterprise_metrics_interval)
+* [`puppet_enterprise_node_query`](#-rundeck--config--resource--resource_source--puppet_enterprise_node_query)
+* [`puppet_enterprise_default_node_tag`](#-rundeck--config--resource--resource_source--puppet_enterprise_default_node_tag)
+* [`puppet_enterprise_tag_source`](#-rundeck--config--resource--resource_source--puppet_enterprise_tag_source)
 
-##### <a name="-rundeck--config--resource_source--directory"></a>`directory`
+##### <a name="-rundeck--config--resource--resource_source--directory"></a>`directory`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1256,7 +1237,7 @@ When the directory source_type is specified this is the path to that directory.
 
 Default value: `$rundeck::params::default_resource_dir`
 
-##### <a name="-rundeck--config--resource_source--include_server_node"></a>`include_server_node`
+##### <a name="-rundeck--config--resource--resource_source--include_server_node"></a>`include_server_node`
 
 Data type: `Boolean`
 
@@ -1264,7 +1245,7 @@ Boolean value to decide whether or not to include the server node in your list o
 
 Default value: `$rundeck::params::include_server_node`
 
-##### <a name="-rundeck--config--resource_source--mapping_params"></a>`mapping_params`
+##### <a name="-rundeck--config--resource--resource_source--mapping_params"></a>`mapping_params`
 
 Data type: `String`
 
@@ -1273,7 +1254,7 @@ and what their values will be set to using a "selector" on properties of the EC2
 
 Default value: `''`
 
-##### <a name="-rundeck--config--resource_source--number"></a>`number`
+##### <a name="-rundeck--config--resource--resource_source--number"></a>`number`
 
 Data type: `Integer`
 
@@ -1281,7 +1262,7 @@ The sequential number of the resource within the project.
 
 Default value: `1`
 
-##### <a name="-rundeck--config--resource_source--project_name"></a>`project_name`
+##### <a name="-rundeck--config--resource--resource_source--project_name"></a>`project_name`
 
 Data type: `Optional[String]`
 
@@ -1289,7 +1270,7 @@ The name of the project for which this resource in intended to be a part.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--resource_format"></a>`resource_format`
+##### <a name="-rundeck--config--resource--resource_source--resource_format"></a>`resource_format`
 
 Data type: `Enum['resourcexml', 'resourceyaml']`
 
@@ -1297,7 +1278,7 @@ The format of the resource that will procesed, either resourcexml or resourceyam
 
 Default value: `$rundeck::params::resource_format`
 
-##### <a name="-rundeck--config--resource_source--running_only"></a>`running_only`
+##### <a name="-rundeck--config--resource--resource_source--running_only"></a>`running_only`
 
 Data type: `Boolean`
 
@@ -1305,7 +1286,7 @@ Boolean to retrieve only running AWS EC2 instances.
 
 Default value: `true`
 
-##### <a name="-rundeck--config--resource_source--script_args"></a>`script_args`
+##### <a name="-rundeck--config--resource--resource_source--script_args"></a>`script_args`
 
 Data type: `String`
 
@@ -1313,7 +1294,7 @@ A string of the full arguments to pass the the specified script.
 
 Default value: `''`
 
-##### <a name="-rundeck--config--resource_source--script_args_quoted"></a>`script_args_quoted`
+##### <a name="-rundeck--config--resource--resource_source--script_args_quoted"></a>`script_args_quoted`
 
 Data type: `Boolean`
 
@@ -1321,7 +1302,7 @@ Boolean value. Quote the arguments of the script.
 
 Default value: `$rundeck::params::script_args_quoted`
 
-##### <a name="-rundeck--config--resource_source--script_file"></a>`script_file`
+##### <a name="-rundeck--config--resource--resource_source--script_file"></a>`script_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1329,7 +1310,7 @@ When the script source_type is specified this is the path that that script.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--script_interpreter"></a>`script_interpreter`
+##### <a name="-rundeck--config--resource--resource_source--script_interpreter"></a>`script_interpreter`
 
 Data type: `String`
 
@@ -1337,7 +1318,7 @@ The interpreter to use in executing the script. Defaults to: '/bin/bash'
 
 Default value: `$rundeck::params::script_interpreter`
 
-##### <a name="-rundeck--config--resource_source--source_type"></a>`source_type`
+##### <a name="-rundeck--config--resource--resource_source--source_type"></a>`source_type`
 
 Data type: `Rundeck::Sourcetype`
 
@@ -1345,7 +1326,7 @@ The source type where resources will come from: file, directory, url or script.
 
 Default value: `$rundeck::params::default_source_type`
 
-##### <a name="-rundeck--config--resource_source--url"></a>`url`
+##### <a name="-rundeck--config--resource--resource_source--url"></a>`url`
 
 Data type: `String`
 
@@ -1353,7 +1334,7 @@ When the url source_type is specified this is the path to that url.
 
 Default value: `''`
 
-##### <a name="-rundeck--config--resource_source--url_cache"></a>`url_cache`
+##### <a name="-rundeck--config--resource--resource_source--url_cache"></a>`url_cache`
 
 Data type: `Boolean`
 
@@ -1361,7 +1342,7 @@ Boolean value. Keep a local cache of the resources pulled from the url.
 
 Default value: `$rundeck::params::url_cache`
 
-##### <a name="-rundeck--config--resource_source--url_timeout"></a>`url_timeout`
+##### <a name="-rundeck--config--resource--resource_source--url_timeout"></a>`url_timeout`
 
 Data type: `Integer`
 
@@ -1369,7 +1350,7 @@ An integer value in seconds that rundeck will wait for resources from the url be
 
 Default value: `$rundeck::params::url_timeout`
 
-##### <a name="-rundeck--config--resource_source--use_default_mapping"></a>`use_default_mapping`
+##### <a name="-rundeck--config--resource--resource_source--use_default_mapping"></a>`use_default_mapping`
 
 Data type: `Boolean`
 
@@ -1377,7 +1358,7 @@ When using the aws-ec2 source_type,this specifies wheter to use the default mapp
 
 Default value: `true`
 
-##### <a name="-rundeck--config--resource_source--endpoint_url"></a>`endpoint_url`
+##### <a name="-rundeck--config--resource--resource_source--endpoint_url"></a>`endpoint_url`
 
 Data type: `Optional[String]`
 
@@ -1385,7 +1366,7 @@ The API AWS endpoint.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--assume_role_arn"></a>`assume_role_arn`
+##### <a name="-rundeck--config--resource--resource_source--assume_role_arn"></a>`assume_role_arn`
 
 Data type: `Optional[String[1]]`
 
@@ -1393,7 +1374,7 @@ When using the aws-ec2 source_type, this specifies the assume role ARN parameter
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--filter_tag"></a>`filter_tag`
+##### <a name="-rundeck--config--resource--resource_source--filter_tag"></a>`filter_tag`
 
 Data type: `String`
 
@@ -1401,7 +1382,7 @@ String value for using tags.
 
 Default value: `''`
 
-##### <a name="-rundeck--config--resource_source--http_proxy_port"></a>`http_proxy_port`
+##### <a name="-rundeck--config--resource--resource_source--http_proxy_port"></a>`http_proxy_port`
 
 Data type: `Stdlib::Port`
 
@@ -1409,7 +1390,7 @@ An integer value that defines the http proxy port.
 
 Default value: `$rundeck::params::default_http_proxy_port`
 
-##### <a name="-rundeck--config--resource_source--refresh_interval"></a>`refresh_interval`
+##### <a name="-rundeck--config--resource--resource_source--refresh_interval"></a>`refresh_interval`
 
 Data type: `Integer`
 
@@ -1417,7 +1398,7 @@ How often the data will be updated.
 
 Default value: `$rundeck::params::default_refresh_interval`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_host"></a>`puppet_enterprise_host`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_host"></a>`puppet_enterprise_host`
 
 Data type: `Optional[String]`
 
@@ -1425,7 +1406,7 @@ The Puppet Enterprise host.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_port"></a>`puppet_enterprise_port`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_port"></a>`puppet_enterprise_port`
 
 Data type: `Optional[Stdlib::Port]`
 
@@ -1433,7 +1414,7 @@ The Puppet Enterprise port.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_ssl_dir"></a>`puppet_enterprise_ssl_dir`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_ssl_dir"></a>`puppet_enterprise_ssl_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1441,7 +1422,7 @@ The Puppet Enterprise ssl directory.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_certificate_name"></a>`puppet_enterprise_certificate_name`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_certificate_name"></a>`puppet_enterprise_certificate_name`
 
 Data type: `Optional[String]`
 
@@ -1449,7 +1430,7 @@ The Puppet Enterprise certificate name.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_mapping_file"></a>`puppet_enterprise_mapping_file`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_mapping_file"></a>`puppet_enterprise_mapping_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
@@ -1457,7 +1438,7 @@ The Puppet Enterprise mapping file.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_metrics_interval"></a>`puppet_enterprise_metrics_interval`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_metrics_interval"></a>`puppet_enterprise_metrics_interval`
 
 Data type: `Optional[Integer]`
 
@@ -1465,7 +1446,7 @@ The Puppet Enterprise metrics interval.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_node_query"></a>`puppet_enterprise_node_query`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_node_query"></a>`puppet_enterprise_node_query`
 
 Data type: `Optional[String]`
 
@@ -1473,7 +1454,7 @@ The Puppet Enterprise node query.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_default_node_tag"></a>`puppet_enterprise_default_node_tag`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_default_node_tag"></a>`puppet_enterprise_default_node_tag`
 
 Data type: `Optional[String]`
 
@@ -1481,7 +1462,7 @@ The Puppet Enterprise default node tag.
 
 Default value: `undef`
 
-##### <a name="-rundeck--config--resource_source--puppet_enterprise_tag_source"></a>`puppet_enterprise_tag_source`
+##### <a name="-rundeck--config--resource--resource_source--puppet_enterprise_tag_source"></a>`puppet_enterprise_tag_source`
 
 Data type: `Optional[String]`
 
@@ -1489,18 +1470,18 @@ The Puppet Enterprise tag source.
 
 Default value: `undef`
 
-### <a name="rundeck--config--securityroles"></a>`rundeck::config::securityroles`
+### <a name="rundeck--config--resource--securityroles"></a>`rundeck::config::resource::securityroles`
 
 Author: Zoltan Lanyi <zoltan.lanyi@gmail.com>
 Date  : 03.06.2016
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::securityroles` defined type:
+The following parameters are available in the `rundeck::config::resource::securityroles` defined type:
 
-* [`web_xml`](#-rundeck--config--securityroles--web_xml)
+* [`web_xml`](#-rundeck--config--resource--securityroles--web_xml)
 
-##### <a name="-rundeck--config--securityroles--web_xml"></a>`web_xml`
+##### <a name="-rundeck--config--resource--securityroles--web_xml"></a>`web_xml`
 
 Data type: `Stdlib::Absolutepath`
 

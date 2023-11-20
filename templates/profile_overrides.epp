@@ -1,7 +1,7 @@
-RDECK_BASE=<%= $rundeck::home_dir %>
+RDECK_BASE=<%= $rundeck::config::base_dir %>
 RDECK_CONFIG=<%= $rundeck::config::properties_dir %>
 RDECK_CONFIG_FILE="<%= $rundeck::config::properties_dir %>/rundeck-config.groovy"
-RDECK_INSTALL=<%= $rundeck::home_dir %>
+RDECK_INSTALL=<%= $rundeck::config::base_dir %>
 JAAS_CONF=$RDECK_CONFIG/jaas-auth.conf
 LOGIN_MODULE=authentication
 JAVA_CMD=java

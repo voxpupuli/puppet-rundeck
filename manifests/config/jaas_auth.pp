@@ -25,7 +25,7 @@ class rundeck::config::jaas_auth {
   }
 
   file { "${rundeck::config::properties_dir}/jaas-auth.conf":
-    content => Sensitive(epp($rundeck::auth_template, { auth_config => $_auth_config, ldap_login_module => $_ldap_login_module })),
+    content => Sensitive(epp('rundeck/jaas-auth.conf.epp', { _auth_config => $_auth_config, _ldap_login_module => $_ldap_login_module })),
     mode    => '0600',
     require => File[$rundeck::config::properties_dir],
   }
