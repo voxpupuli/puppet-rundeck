@@ -1,5 +1,5 @@
 ---
-rundeck::overrides_dir: '/etc/default'
+rundeck::override_dir: '/etc/default'
 
 rundeck::repoconfig:
   'apt::source':

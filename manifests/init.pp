@@ -81,12 +81,10 @@
 #   Home/base directory under which rundeck is installed.
 # @param manage_home
 #   Whether to manage rundeck home dir. Defaults to true.
-# @param rdeck_profile_template
-#   Allows you to use your own profile template instead of the default from the package maintainer
-# @param rdeck_override_template
-#   Allows you to use your own override template instead of the default from the package maintainer
+# @param override_template
+#   Allows you to use your own override template for rundeck profile instead of the default from the package maintainer
 # @param realm_template
-#   Allows you to use your own override template instead of the default from the package maintainer
+#   Allows you to use your own override template for realm properties instead of the default from the package maintainer
 # @param rss_enabled
 #   Boolean value if set to true enables RSS feeds that are public (non-authenticated)
 # @param security_config
@@ -149,6 +147,7 @@ class rundeck (
   String                              $keystore_password,
   String                              $truststore_password,
   Stdlib::Absolutepath                $file_keystorage_dir,
+  Stdlib::Absolutepath                $override_dir,
   Hash                                $repo_config,
   Boolean                             $manage_repo                        = true,
   String                              $package_ensure                     = 'installed',
@@ -160,7 +159,7 @@ class rundeck (
   Hash                                $gui_config                         = {},
   Optional[Stdlib::Absolutepath]      $java_home                          = undef,
   String                              $jvm_args                           = '-Xmx1024m -Xms256m -server',
-  Hash                                $kerberos_realms                    = {},
+  Optional[Hash]                      $kerberos_realms                    = undef,
   Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
   Hash                                $mail_config                        = {},
   Boolean                             $manage_default_admin_policy        = true,
@@ -170,8 +169,7 @@ class rundeck (
   Rundeck::Loglevel                   $audit_log_level                    = 'info',
   # Template config
   String                              $config_template                    = 'rundeck/rundeck-config.epp',
-  Optional[String]                    $profile_template                   = undef,
-  String                              $override_template                  = 'rundeck/profile_overrides.erb',
+  String                              $override_template                  = 'rundeck/profile_overrides.epp',
   String                              $realm_template                     = 'rundeck/realm.properties.epp',
   String                              $acl_template                       = 'rundeck/aclpolicy.erb',
   String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',

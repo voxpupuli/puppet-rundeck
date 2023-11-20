@@ -76,18 +76,11 @@ class rundeck::config {
     }
   }
 
-  # if ($rundeck::rdeck_profile_template) {
-  #   file { "${properties_dir}/profile":
-  #     content => template($rundeck::rdeck_profile_template),
-  #     require => File[$properties_dir],
-  #   }
-  # }
-
-  # if ($rundeck::rdeck_override_template) {
-  #   file { "${rundeck::overrides_dir}/${rundeck::service_name}":
-  #     content => template($rundeck::rdeck_override_template),
-  #   }
-  # }
+  if ($rundeck::override_template) {
+    file { "${rundeck::override_dir}/${rundeck::service_name}":
+      content => epp($rundeck::override_template),
+    }
+  }
 
   # contain rundeck::config::global::framework
   # contain rundeck::config::global::project

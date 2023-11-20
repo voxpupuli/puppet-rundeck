@@ -1,5 +1,5 @@
 ---
-rundeck::overrides_dir: '/etc/sysconfig'
+rundeck::override_dir: '/etc/sysconfig'
 
 rundeck::repo_config:
   'yumrepo':
