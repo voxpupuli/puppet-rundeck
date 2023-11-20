@@ -31,35 +31,70 @@ rundeck::admin_policies:
           - 'admin'
 
 rundeck::api_policies:
-  - description: 'Admin, all access'
+  - description: 'API project level access control'
     context:
       project: '.*'
     for:
       resource:
-        - allow: '*'
+        - equals:
+            kind: 'job'
+          allow:
+            - 'create'
+            - 'delete'
+        - equals:
+            kind: 'node'
+          allow:
+            - 'read'
+            - 'create'
+            - 'update'
+            - 'refresh'
+        - equals:
+            kind: 'event'
+          allow:
+            - 'read'
+            - 'create'
       adhoc:
-        - allow: '*'
+        - allow:
+            - 'read'
+            - 'run'
+            - 'kill'
       job:
-        - allow: '*'
+        - allow:
+            - 'create'
+            - 'read'
+            - 'update'
+            - 'delete'
+            - 'run'
+            - 'kill'
       node:
-        - allow: '*'
+        - allow:
+            - 'read'
+            - 'run'
     by:
       - group:
-          - 'admin'
+          - 'api_token_group'
 
-  - description: 'Admin, all access'
+  - description: 'API Application level access control'
     context:
       application: 'rundeck'
     for:
       resource:
-        - allow: '*'
+        - equals:
+            kind: 'system'
+          allow:
+            - 'read'
       project:
-        - allow: '*'
+        - match:
+            name: '.*'
+          allow:
+            - 'read'
       storage:
-        - allow: '*'
+        - match:
+            path: '(keys|keys/.*)'
+          allow: '*'
     by:
       - group:
-          - 'admin'
+          - 'api_token_group'
 
 rundeck::auth_config:
   file:
