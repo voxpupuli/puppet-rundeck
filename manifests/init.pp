@@ -152,9 +152,6 @@ class rundeck (
   Hash                                $repo_config,
   Boolean                             $manage_repo                        = true,
   String                              $package_ensure                     = 'installed',
-  String                              $acl_template                       = 'rundeck/aclpolicy.erb',
-
-  String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
 
   Boolean                             $clustermode_enabled                = false,
   Enum['active', 'passive']           $execution_mode                     = 'active',
@@ -165,17 +162,20 @@ class rundeck (
   String                              $jvm_args                           = '-Xmx1024m -Xms256m -server',
   Hash                                $kerberos_realms                    = {},
   Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
-  String                              $log_properties_template            = 'rundeck/log4j2.properties.epp',
   Hash                                $mail_config                        = {},
   Boolean                             $manage_default_admin_policy        = true,
   Boolean                             $manage_default_api_policy          = true,
-
+  # Log config
   Rundeck::Loglevel                   $app_log_level                      = 'info',
   Rundeck::Loglevel                   $audit_log_level                    = 'info',
-  String                              $rdeck_config_template              = 'rundeck/rundeck-config.epp',
-  Optional[String]                    $rdeck_profile_template             = undef,
-  String                              $rdeck_override_template            = 'rundeck/profile_overrides.erb',
+  # Template config
+  String                              $config_template                    = 'rundeck/rundeck-config.epp',
+  Optional[String]                    $profile_template                   = undef,
+  String                              $override_template                  = 'rundeck/profile_overrides.erb',
   String                              $realm_template                     = 'rundeck/realm.properties.epp',
+  String                              $acl_template                       = 'rundeck/aclpolicy.erb',
+  String                              $auth_template                      = 'rundeck/jaas-auth.conf.epp',
+  String                              $log_properties_template            = 'rundeck/log4j2.properties.epp',
 
   Boolean                             $rss_enabled                        = false,
   String                              $security_role                      = 'user',
