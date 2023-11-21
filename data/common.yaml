@@ -105,13 +105,6 @@ rundeck::auth_config:
       admin_user: 'admin'
       admin_password: 'admin'
       auth_users: {}
-  ldap:
-    jaas_config:
-      blabla: 'dgdfg'
-  pam:
-    auth_flag: 'sufficient'
-    jaas_config:
-      service_account: 'ewrwer'
 
 rundeck::framework_config:
   framework.server.name: "%{facts.networking.fqdn}"
