@@ -123,9 +123,9 @@ rundeck::framework_config:
   rdeck.base: '/var/lib/rundeck'
 
 rundeck::project_config:
-  project.dir: "%{lookup('rundeck::framework_config.framework.projects.dir')}/${project.name}"
-  project.etc.dir: "%{lookup('rundeck::framework_config.framework.projects.dir')}/${project.name}/etc"
-  project.resources.file: "%{lookup('rundeck::framework_config.framework.projects.dir')}/${project.name}/etc/resources.xml"
+  project.dir: "%{lookup('rundeck::framework_config.\"framework.projects.dir\"')}/${project.name}"
+  project.etc.dir: "%{lookup('rundeck::framework_config.\"framework.projects.dir\"')}/${project.name}/etc"
+  project.resources.file: "%{lookup('rundeck::framework_config.\"framework.projects.dir\"')}/${project.name}/etc/resources.xml"
 
 rundeck::file_keystorage_dir: "%{lookup('rundeck::framework_config.framework.var.dir')}/storage"
 

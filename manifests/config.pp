@@ -21,16 +21,24 @@ class rundeck::config {
     }
   }
 
-  [$rundeck::service_logs_dir, $properties_dir].each |$_path| {
-    file { $_path:
-      ensure => directory,
-      mode   => '0755',
+  $framework_config.each |$_key, $_value| {
+    if $_key =~ '.dir' {
+      file { $_value:
+        ensure => directory,
+        mode   => '0755',
+      }
     }
   }
 
-  file { "${properties_dir}/log4j2.properties":
-    content => epp($rundeck::log_properties_template),
-    require => File[$properties_dir],
+  file {
+    $rundeck::service_logs_dir:
+      ensure => directory,
+      mode   => '0755',
+      ;
+    "${properties_dir}/log4j2.properties":
+      content => epp($rundeck::log_properties_template),
+      require => File[$properties_dir, $rundeck::service_logs_dir],
+      ;
   }
 
   if $rundeck::manage_default_admin_policy {
