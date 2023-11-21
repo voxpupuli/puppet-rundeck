@@ -6,8 +6,8 @@ defaults:
   data_hash: 'yaml_data'
 
 hierarchy:
-  - name: 'Operating System Family'
+  - name: 'Rundeck Operating System Family defaults'
     path: 'os/%{facts.os.family}.yaml'
 
-  - name: 'Rundeck defaults'
-    path: 'defaults.yaml'
+  - name: 'Rundeck common defaults'
+    path: 'common.yaml'

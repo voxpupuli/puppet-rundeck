@@ -139,8 +139,6 @@ class rundeck (
   Hash                                $framework_config,
   Array[Hash]                         $key_storage_config, # Create type?
   Hash                                $project_config,
-  String                              $keystore_password,
-  String                              $truststore_password,
   Stdlib::Absolutepath                $file_keystorage_dir,
   Stdlib::Absolutepath                $override_dir,
   Hash                                $repo_config,
@@ -181,6 +179,9 @@ class rundeck (
   Stdlib::Absolutepath                $ssl_keyfile                        = '/etc/rundeck/ssl/rundeck.key',
   Stdlib::Absolutepath                $ssl_certfile                       = '/etc/rundeck/ssl/rundeck.crt',
   Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
+  String                              $keystore_password                  = 'admin',
+  String                              $truststore_password                = 'admin',
+
   Boolean                             $security_roles_array_enabled       = false,
   Array                               $security_roles_array               = [],
   Hash                                $key_storage_encrypt_config         = {},
