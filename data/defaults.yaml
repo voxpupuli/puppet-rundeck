@@ -136,15 +136,6 @@ rundeck::key_storage_config:
   - type: 'db'
     path: 'keys'
 
-rundeck::preauthenticated_config:
-  enabled: false
-  attributeName: 'REMOTE_USER_GROUPS'
-  delimiter: ':'
-  userNameHeader: 'X-Forwarded-Uuid'
-  userRolesHeader: 'X-Forwarded-Roles'
-  redirectLogout: false
-  redirectUrl: '/oauth2/sign_in'
-
 rundeck::keystore_password: 'adminadmin'
 rundeck::truststore_password: 'adminadmin'
 rundeck::rdeck_base: '/var/lib/rundeck'

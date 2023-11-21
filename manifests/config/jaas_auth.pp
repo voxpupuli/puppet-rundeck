@@ -5,7 +5,7 @@
 class rundeck::config::jaas_auth {
   assert_private()
 
-  $_auth_config = deep_merge(lookup('rundeck::auth_config'), $rundeck::auth_config)
+  $_auth_config = $rundeck::auth_config
   $_auth_types  = $_auth_config.keys
 
   if 'file' in $_auth_types {

@@ -138,9 +138,7 @@ class rundeck (
   Rundeck::Db_config                  $database_config,
   Hash                                $framework_config,
   Array[Hash]                         $key_storage_config, # Create type?
-  Hash                                $preauthenticated_config,
   Hash                                $project_config,
-  Hash                                $security_config,
   String                              $keystore_password,
   String                              $truststore_password,
   Stdlib::Absolutepath                $file_keystorage_dir,
@@ -158,6 +156,9 @@ class rundeck (
   Optional[Hash]                      $kerberos_realms                    = undef,
   Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
   Rundeck::Mail_config                $mail_config                        = {},
+  Hash                                $security_config                    = {},
+  Hash                                $preauthenticated_config            = {},
+
   Boolean                             $manage_default_admin_policy        = true,
   Boolean                             $manage_default_api_policy          = true,
   # Log config

@@ -1,6 +1,6 @@
 # Rundeck database config type.
 type Rundeck::Db_config = Struct[{
-    ['url']                                => String,
+    'url'                                  => String,
     Optional['driverClassName']            => String,
     Optional['username']                   => String,
     Optional['password']                   => String,
