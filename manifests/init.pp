@@ -139,11 +139,13 @@ class rundeck (
   Hash                                $framework_config,
   Array[Hash]                         $key_storage_config, # Create type?
   Hash                                $project_config,
-  Stdlib::Absolutepath                $file_keystorage_dir,
   Stdlib::Absolutepath                $override_dir,
   Hash                                $repo_config,
   Boolean                             $manage_repo                        = true,
   String                              $package_ensure                     = 'installed',
+  Boolean                             $manage_home                        = true,
+
+  Stdlib::Absolutepath                $file_keystorage_dir                = "${framework_config['framework.var.dir']}/storage",
 
   Boolean                             $clustermode_enabled                = false,
   Enum['active', 'passive']           $execution_mode                     = 'active',
@@ -217,7 +219,6 @@ class rundeck (
   Boolean                             $script_args_quoted                 = true,
   Stdlib::Absolutepath                $script_interpreter                 = '/bin/bash',
 
-  Boolean                             $manage_home                        = true,
 ) {
   validate_rd_policy($admin_policies)
   validate_rd_policy($api_policies)
