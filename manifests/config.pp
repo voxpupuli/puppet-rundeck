@@ -11,11 +11,6 @@ class rundeck::config {
   $base_dir       = $framework_config['rdeck.base']
   $properties_dir = $framework_config['framework.etc.dir']
 
-  $service_notify = $rundeck::service_notify ? {
-    false => undef,
-    default => Service[$rundeck::service_name]
-  }
-
   File {
     owner => $rundeck::user,
     group => $rundeck::group,
@@ -45,7 +40,6 @@ class rundeck::config {
     "${properties_dir}/log4j2.properties":
       content => epp($rundeck::log_properties_template),
       require => File[$properties_dir, $rundeck::service_logs_dir],
-      notify  => $service_notify,
       ;
   }
 
@@ -81,16 +75,14 @@ class rundeck::config {
   file { "${properties_dir}/project.properties":
     ensure  => file,
     content => epp('rundeck/project.properties.epp', { _project_config => $project_config }),
-    notify  => $service_notify,
   }
 
   file { "${properties_dir}/rundeck-config.properties":
     ensure  => file,
     content => epp($rundeck::config_template),
-    notify  => $service_notify,
   }
 
-  create_resources(rundeck::config::resource::file_keystore, $rundeck::file_keystorage_keys)
+  # create_resources(rundeck::config::resource::file_keystore, $rundeck::file_keystorage_keys)
 
   # if $ssl_enabled {
   #   contain rundeck::config::global::ssl

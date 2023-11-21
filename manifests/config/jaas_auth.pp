@@ -12,7 +12,6 @@ class rundeck::config::jaas_auth {
     file { "${rundeck::config::properties_dir}/realm.properties":
       content => Sensitive(epp($rundeck::realm_template, { _auth_config => $_auth_config })),
       mode    => '0600',
-      notify  => $rundeck::config::service_notify,
     }
   } else {
     file { "${rundeck::config::properties_dir}/realm.properties":
@@ -29,6 +28,5 @@ class rundeck::config::jaas_auth {
   file { "${rundeck::config::properties_dir}/jaas-loginmodule.conf":
     content => Sensitive(epp('rundeck/jaas-auth.conf.epp', { _auth_config => $_auth_config, _ldap_login_module => $_ldap_login_module })),
     mode    => '0600',
-    notify  => $rundeck::config::service_notify,
   }
 }

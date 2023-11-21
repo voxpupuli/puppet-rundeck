@@ -93,8 +93,6 @@
 #   The name of the rundeck service.
 # @param service_ensure
 #   State of the rundeck service (defaults to 'running')
-# @param service_notify
-#   Wheter to restart the rundeck service if config changes (default to true)
 # @param service_logs_dir
 #   The path to the directory to store service related logs.
 # @param service_config
@@ -197,7 +195,6 @@ class rundeck (
   # Service config
   String                              $service_name                       = 'rundeckd',
   Enum['stopped', 'running']          $service_ensure                     = 'running',
-  Boolean                             $service_notify                     = true,
   Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
   Optional[String]                    $service_config                     = undef,
   Optional[String]                    $service_script                     = undef,
