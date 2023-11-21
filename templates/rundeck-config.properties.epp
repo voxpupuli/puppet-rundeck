@@ -15,14 +15,6 @@ dataSource.dbCreate = update
 dataSource.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
-<%- $rundeck::mail_config.each |$_k, $_v| {-%>
-grails.mail.<%= $_k %> = <%= $_v %>
-<%- } -%>
-
-<%- $rundeck::security_config.each |$_k, $_v| {-%>
-<%= $k %> = <%= $rundeck::security_config[$k] %>
-<%- } -%>
-
 <%- $rundeck::key_storage_config.each |$_i, $_cfg| { -%>
 rundeck.storage.provider.<%= $_i+1 %>.type = <%= $_cfg['type'] %>
 rundeck.storage.provider.<%= $_i+1 %>.path = <%= $_cfg['path'] %>
@@ -34,6 +26,14 @@ rundeck.storage.provider.<%= $_i+1 %>.removePathPrefix = <%= $_cfg['removePathPr
 rundeck.storage.provider.<%= $_i+1 %>.config.<%= $_k %> = <%= $_v %>
 <%- } -%>
 <%- } -%>
+<%- } -%>
+
+<%- $rundeck::mail_config.each |$_k, $_v| {-%>
+grails.mail.<%= $_k %> = <%= $_v %>
+<%- } -%>
+
+<%- $rundeck::security_config.each |$_k, $_v| {-%>
+<%= $k %> = <%= $rundeck::security_config[$k] %>
 <%- } -%>
 
 <%- $rundeck::key_storage_encrypt_config.each |$_k, $_v| { -%>
