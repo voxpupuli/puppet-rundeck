@@ -15,8 +15,6 @@
 #   Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 # @param execution_mode
 #   If set, allows setting the execution mode to 'active' or 'passive'.
-# @param file_keystorage_dir
-#   Path to dir where the keystorage should be located.
 # @param file_keystorage_keys
 #   Add keys to file keystorage.
 # @param framework_config
@@ -150,11 +148,9 @@ class rundeck (
   Optional[Integer]                   $user_id                            = undef,
   Optional[Integer]                   $group_id                           = undef,
 
-  Stdlib::Absolutepath                $file_keystorage_dir                = "${framework_config['framework.var.dir']}/storage",
-
   Boolean                             $clustermode_enabled                = false,
   Enum['active', 'passive']           $execution_mode                     = 'active',
-  Hash                                $file_keystorage_keys               = {},
+
   Hash                                $gui_config                         = {},
   Optional[Stdlib::Absolutepath]      $java_home                          = undef,
   String                              $jvm_args                           = '-Xmx1024m -Xms256m -server',
@@ -198,9 +194,9 @@ class rundeck (
   Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
   Optional[String]                    $service_config                     = undef,
   Optional[String]                    $service_script                     = undef,
+
   # Project config
   Hash                                $projects                           = {},
-
   Integer                             $quartz_job_threadcount             = 10,
   String                              $file_copier_provider               = 'jsch-scp',
   String                              $node_executor_provider             = 'jsch-ssh',

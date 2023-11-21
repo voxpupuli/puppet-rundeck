@@ -54,7 +54,7 @@ define rundeck::config::resource::file_keystore (
   String                                $content_mask           = 'content',
   String                                $content_modify_time    = chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ')),
   Optional[Integer]                     $content_size           = undef,
-  Stdlib::Absolutepath                  $file_keystorage_dir    = $rundeck::file_keystorage_dir,
+  Stdlib::Absolutepath                  $file_keystorage_dir    = "${rundeck::config::framework_config['framework.var.dir']}/storage",
   String                                $group                  = $rundeck::group,
   String                                $user                   = $rundeck::user,
 ) {

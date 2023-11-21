@@ -82,15 +82,11 @@ class rundeck::config {
     content => epp($rundeck::config_template),
   }
 
-  # create_resources(rundeck::config::resource::file_keystore, $rundeck::file_keystorage_keys)
-
   # if $ssl_enabled {
   #   contain rundeck::config::global::ssl
   #   Class['rundeck::config::global::rundeck_config']
   #   -> Class['rundeck::config::global::ssl']
   # }
-
-  # create_resources(rundeck::config::resource::project, $rundeck::projects)
 
   # if versioncmp( $package_ensure, '3.0.0' ) < 0 {
   #   class { 'rundeck::config::global::web':
