@@ -227,7 +227,7 @@ class rundeck (
   contain rundeck::config
   contain rundeck::service
 
-  # Class['rundeck::install']
-  # -> Class['rundeck::config']
-  # ~> Class['rundeck::service']
+  Class['rundeck::install']
+  -> Class['rundeck::config']
+  ~> Class['rundeck::service']
 }
