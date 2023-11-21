@@ -123,31 +123,18 @@ rundeck::framework_config:
   rdeck.base: '/var/lib/rundeck'
 
 rundeck::project_config:
-  project.dir: "%{lookup('rundeck::framework_config.\"framework.projects.dir\"')}/${project.name}"
-  project.etc.dir: "%{lookup('rundeck::framework_config.\"framework.projects.dir\"')}/${project.name}/etc"
-  project.resources.file: "%{lookup('rundeck::framework_config.\"framework.projects.dir\"')}/${project.name}/etc/resources.xml"
+  project.dir: '/var/lib/rundeck/projects/${project.name}'
+  project.etc.dir: '/var/lib/rundeck/projects/${project.name}/etc'
+  project.resources.file: '/var/lib/rundeck/projects/${project.name}/etc/resources.xml'
 
-rundeck::file_keystorage_dir: "%{lookup('rundeck::framework_config.framework.var.dir')}/storage"
-
-rundeck::security_config:
-  useHMacRequestTokens: true
-  apiCookieAccess: true
+rundeck::file_keystorage_dir: '/var/lib/rundeck/var/storage'
 
 rundeck::database_config:
-  type: 'h2'
-  dbCreate: 'update'
-  url: 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb'
-  driverClassName: ''
-  username: ''
-  password: ''
-  dialect: ''
-  enable_h2_logs: 'on'
+  url: "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb;MVCC=true"
 
 rundeck::key_storage_config:
-  - type: 'file'
-    path: '/'
-    config:
-      baseDir: "%{lookup('file_keystorage_dir')}"
+  - type: 'db'
+    path: 'keys'
 
 rundeck::preauthenticated_config:
   enabled: false
