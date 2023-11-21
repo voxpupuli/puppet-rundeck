@@ -9,5 +9,5 @@ hierarchy:
   - name: 'Operating System Family'
     path: 'os/%{facts.os.family}.yaml'
 
-  - name: 'common'
-    path: 'common.yaml'
+  - name: 'Rundeck defaults'
+    path: 'defaults.yaml'

@@ -136,6 +136,7 @@ class rundeck (
   Array[Hash]                         $api_policies,
   Rundeck::Authconfig                 $auth_config,
   Hash                                $framework_config,
+  Hash                                $project_config,
   Hash                                $database_config,
   Array[Hash]                         $key_storage_config,
   Hash                                $security_config,
@@ -199,8 +200,7 @@ class rundeck (
   Optional[String]                    $service_script                     = undef,
   # Project config
   Hash                                $projects                           = {},
-  String                              $projects_description               = '',
-  String                              $projects_organization              = '',
+
   Integer                             $quartz_job_threadcount             = 10,
   String                              $file_copier_provider               = 'jsch-scp',
   String                              $node_executor_provider             = 'jsch-ssh',

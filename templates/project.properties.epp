@@ -1,0 +1,3 @@
+<%- $_project_config.keys.unique.sort.each |$k| { -%>
+<%= $k %> = <%= $_project_config[$k] %>
+<%- } -%>

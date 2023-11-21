@@ -3,12 +3,14 @@
 # @summary This private class is called from rundeck::config used to manage jaas authentication for rundeck.
 #
 class rundeck::config::jaas_auth {
+  assert_private()
+
   $_auth_config = deep_merge(lookup('rundeck::auth_config'), $rundeck::auth_config)
   $_auth_types  = $_auth_config.keys
 
   if 'file' in $_auth_types {
     file { "${rundeck::config::properties_dir}/realm.properties":
-      content => Sensitive(epp($rundeck::realm_template)),
+      content => Sensitive(epp($rundeck::realm_template, { _auth_config => $_auth_config })),
       mode    => '0600',
       require => File[$rundeck::config::properties_dir],
     }

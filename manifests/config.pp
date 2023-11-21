@@ -61,7 +61,7 @@ class rundeck::config {
 
   contain rundeck::config::jaas_auth
   contain rundeck::config::framework
-  # contain rundeck::config::global::project
+  contain rundeck::config::project
   # contain rundeck::config::global::rundeck_config
   # contain rundeck::config::global::file_keystore
 

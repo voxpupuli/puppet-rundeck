@@ -21,10 +21,10 @@
 #
 # This sets the default user accounts for the Rundeck app
 #
-<%= $rundeck::auth_config['file']['realm_config']['admin_user'] %>:<%= $rundeck::auth_config['file']['realm_config']['admin_password'] %>,user,admin,architect,deploy,build
-<%- if $rundeck::auth_config['file']['realm_config']['auth_users'] { -%>
-  <%- if is_array($rundeck::auth_config['file']['realm_config']['auth_users']) { -%> 
-    <%- $rundeck::auth_config['file']['realm_config']['auth_users'].each |$x| { -%>
+<%= $_auth_config['file']['realm_config']['admin_user'] %>:<%= $_auth_config['file']['realm_config']['admin_password'] %>,user,admin,architect,deploy,build
+<%- if $_auth_config['file']['realm_config']['auth_users'] { -%>
+  <%- if is_array($_auth_config['file']['realm_config']['auth_users']) { -%> 
+    <%- $_auth_config['file']['realm_config']['auth_users'].each |$x| { -%>
       <%- if $x['username'] { -%>
         <%= $x['username'] -%>:<%= $x['password'] -%>
         <%- if $x['roles'] {-%>
@@ -33,10 +33,10 @@
       <%- } -%>
     <%- } -%>
   <%- } else { -%>
-    <%- if $rundeck::auth_config['file']['realm_config']['auth_users']['username'] and $rundeck::auth_config['file']['realm_config']['auth_users']['password'] { -%>
-      <%= $rundeck::auth_config['file']['realm_config']['auth_users']['username'] -%>:<%= $rundeck::auth_config['file']['realm_config']['auth_users']['password'] -%>
-      <%- if $rundeck::auth_config['file']['realm_config']['auth_users']['roles'] { -%>
-        <%- $rundeck::auth_config['file']['realm_config']['auth_users']['roles'].each |$v| {-%>,<%=$v -%><%- } %>
+    <%- if $_auth_config['file']['realm_config']['auth_users']['username'] and $_auth_config['file']['realm_config']['auth_users']['password'] { -%>
+      <%= $_auth_config['file']['realm_config']['auth_users']['username'] -%>:<%= $_auth_config['file']['realm_config']['auth_users']['password'] -%>
+      <%- if $_auth_config['file']['realm_config']['auth_users']['roles'] { -%>
+        <%- $_auth_config['file']['realm_config']['auth_users']['roles'].each |$v| {-%>,<%=$v -%><%- } %>
       <%- } -%>
     <%- } -%>
   <%- } -%>
