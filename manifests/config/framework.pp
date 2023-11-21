@@ -19,6 +19,6 @@ class rundeck::config::framework {
   file { "${rundeck::config::properties_dir}/framework.properties":
     ensure  => file,
     content => epp('rundeck/framework.properties.epp', { _framework_config => $_framework_config }),
-    require => File[$rundeck::config::properties_dir],
+    notify  => $rundeck::config::service_notify,
   }
 }

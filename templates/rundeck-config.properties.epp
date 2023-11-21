@@ -36,8 +36,8 @@ rundeck.storage.provider."<%= $_i+1 %>".config.<%= $_k %> = "<%= $_v %>"
 <%- } -%>
 <%- } -%>
 
-<%- $rundeck::key_storage_encrypt_config.keys.each |$k| { -%>
-rundeck.storage.converter."1".<%= $k %> = "<%= $rundeck::config::global::rundeck_config::storage_encrypt_config[$k] %>"
+<%- $rundeck::key_storage_encrypt_config.each |$_k, $_v| { -%>
+rundeck.storage.converter."1".<%= $_k %> = "<%= $_v %>"
 <%- } -%>
 
 <%- $rundeck::preauthenticated_config.each  |$_k, $_v| { -%>

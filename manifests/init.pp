@@ -93,8 +93,8 @@
 #   The name of the rundeck service.
 # @param service_ensure
 #   State of the rundeck service (defaults to 'running')
-# @param service_restart
-#   The restart of the rundeck service (default to true)
+# @param service_notify
+#   Wheter to restart the rundeck service if config changes (default to true)
 # @param service_logs_dir
 #   The path to the directory to store service related logs.
 # @param service_config
@@ -165,7 +165,7 @@ class rundeck (
   Rundeck::Loglevel                   $app_log_level                      = 'info',
   Rundeck::Loglevel                   $audit_log_level                    = 'info',
   # Template config
-  String                              $config_template                    = 'rundeck/rundeck-config.epp',
+  String                              $config_template                    = 'rundeck/rundeck-config.properties.epp',
   String                              $override_template                  = 'rundeck/profile_overrides.epp',
   String                              $realm_template                     = 'rundeck/realm.properties.epp',
   String                              $acl_template                       = 'rundeck/aclpolicy.erb',
@@ -183,7 +183,7 @@ class rundeck (
   Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
   Boolean                             $security_roles_array_enabled       = false,
   Array                               $security_roles_array               = [],
-  Hash[String,String]                 $storage_encrypt_config             = {},
+  Hash                                $key_storage_encrypt_config         = {},
   # User config
   String                              $user                               = 'rundeck',
   String                              $group                              = 'rundeck',

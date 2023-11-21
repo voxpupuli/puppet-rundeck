@@ -6,8 +6,15 @@ class rundeck::config {
   assert_private()
 
   $framework_config = deep_merge(lookup('rundeck::framework_config'), $rundeck::framework_config)
-  $properties_dir   = $framework_config['framework.etc.dir']
-  $base_dir         = $framework_config['rdeck.base']
+  $project_config   = deep_merge(lookup('rundeck::project_config'), $rundeck::project_config)
+
+  $base_dir       = $framework_config['rdeck.base']
+  $properties_dir = $framework_config['framework.etc.dir']
+
+  $service_notify = $rundeck::service_notify ? {
+    false => undef,
+    default => Service[$rundeck::service_name]
+  }
 
   File {
     owner => $rundeck::user,
@@ -38,6 +45,7 @@ class rundeck::config {
     "${properties_dir}/log4j2.properties":
       content => epp($rundeck::log_properties_template),
       require => File[$properties_dir, $rundeck::service_logs_dir],
+      notify  => $service_notify,
       ;
   }
 
@@ -69,8 +77,18 @@ class rundeck::config {
 
   contain rundeck::config::jaas_auth
   contain rundeck::config::framework
-  contain rundeck::config::project
-  # contain rundeck::config::global::rundeck_config
+
+  file { "${properties_dir}/project.properties":
+    ensure  => file,
+    content => epp('rundeck/project.properties.epp', { _project_config => $project_config }),
+    notify  => $service_notify,
+  }
+
+  file { "${properties_dir}/rundeck-config.properties":
+    ensure  => file,
+    content => epp($rundeck::config_template),
+    notify  => $service_notify,
+  }
   # contain rundeck::config::global::file_keystore
 
   # Class['rundeck::config::global::framework']
