@@ -144,6 +144,13 @@ class rundeck (
   Boolean                             $manage_repo                        = true,
   String                              $package_ensure                     = 'installed',
   Boolean                             $manage_home                        = true,
+  # User config
+  String                              $user                               = 'rundeck',
+  String                              $group                              = 'rundeck',
+  Boolean                             $manage_user                        = false,
+  Boolean                             $manage_group                       = false,
+  Optional[Integer]                   $user_id                            = undef,
+  Optional[Integer]                   $group_id                           = undef,
 
   Stdlib::Absolutepath                $file_keystorage_dir                = "${framework_config['framework.var.dir']}/storage",
 
@@ -187,13 +194,6 @@ class rundeck (
   Boolean                             $security_roles_array_enabled       = false,
   Array                               $security_roles_array               = [],
   Hash                                $key_storage_encrypt_config         = {},
-  # User config
-  String                              $user                               = 'rundeck',
-  String                              $group                              = 'rundeck',
-  Boolean                             $manage_user                        = false,
-  Boolean                             $manage_group                       = false,
-  Optional[Integer]                   $user_id                            = undef,
-  Optional[Integer]                   $group_id                           = undef,
   # Service config
   String                              $service_name                       = 'rundeckd',
   Enum['stopped', 'running']          $service_ensure                     = 'running',
