@@ -37,7 +37,7 @@
 # @param mail_config
 #   A hash of the notification email configuraton.
 # @param key_password
-#   The ssl key password.
+#   The password used to protect the key in keystore.
 # @param ssl_private_key
 #   Full path to the SSL private key to be used by Rundeck.
 # @param ssl_certificate
@@ -171,9 +171,9 @@ class rundeck (
   Stdlib::Absolutepath                $ssl_private_key                    = '/etc/rundeck/ssl/rundeck.key',
   Optional[String]                    $key_password                       = undef,
   Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
-  String                              $keystore_password                  = 'admin',
+  String                              $keystore_password                  = 'adminadmin',
   Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
-  String                              $truststore_password                = 'admin',
+  String                              $truststore_password                = 'adminadmin',
 
   Boolean                             $security_roles_array_enabled       = false,
   Array                               $security_roles_array               = [],

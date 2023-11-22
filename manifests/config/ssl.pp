@@ -20,16 +20,18 @@ class rundeck::config::ssl {
   java_ks {
     default:
       ensure       => present,
-      private_key  => $rundeck::ssl_private_key,
       certificate  => $rundeck::ssl_certificate,
+      private_key  => $rundeck::ssl_private_key,
       destkeypass  => $rundeck::key_password,
       trustcacerts => true,
       ;
-    "${rundeck::config::properties_dir}/ssl/keystore":
+    'keystore':
       password => $rundeck::keystore_password,
+      target   => "${rundeck::config::properties_dir}/ssl/keystore",
       ;
-    "${rundeck::config::properties_dir}/ssl/truststore":
+    'truststore':
       password => $rundeck::truststore_password,
+      target   => "${rundeck::config::properties_dir}/ssl/truststore",
       ;
   }
 }
