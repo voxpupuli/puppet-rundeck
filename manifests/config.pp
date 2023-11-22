@@ -86,15 +86,22 @@ class rundeck::config {
     contain rundeck::config::ssl
   }
 
-  # if versioncmp( $package_ensure, '3.0.0' ) < 0 {
-  #   class { 'rundeck::config::global::web':
-  #     security_role                => $security_role,
-  #     session_timeout              => $session_timeout,
-  #     security_roles_array_enabled => $security_roles_array_enabled,
-  #     security_roles_array         => $security_roles_array,
-  #     require                      => Class['rundeck::install'],
-  #   }
-  # }
+  if versioncmp( $rundeck::package_ensure, '3.0.0' ) < 0 {
+    notify { 'test':
+      message => 'Add web',
+    }
+    # class { 'rundeck::config::global::web':
+    #   security_role                => $security_role,
+    #   session_timeout              => $session_timeout,
+    #   security_roles_array_enabled => $security_roles_array_enabled,
+    #   security_roles_array         => $security_roles_array,
+    #   require                      => Class['rundeck::install'],
+    # }
+  } else {
+    notify { 'test':
+      message => 'Dont add web',
+    }
+  }
 
   # if !empty($kerberos_realms) {
   #   file { "${properties_dir}/krb5.conf":
