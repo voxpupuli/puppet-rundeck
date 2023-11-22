@@ -15,9 +15,6 @@
 
 * `rundeck::config`: This class is called from rundeck to manage the configuration.
 * `rundeck::config::framework`: This private class is called from rundeck::config used to manage the framework properties of rundeck.
-* `rundeck::config::global::file_keystore`: This private class is used to manage the keys of the Rundeck key storage facility if a file-based backend is used.
-* `rundeck::config::global::project`: This private class is called from rundeck::config used to manage the default project properties.
-* `rundeck::config::global::rundeck_config`: This private class is called from rundeck::config used to manage the rundeck-config properties.
 * `rundeck::config::global::ssl`: This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled.
 * `rundeck::config::jaas_auth`: This private class is called from rundeck::config used to manage jaas authentication for rundeck.
 * `rundeck::install`: This class is called from rundeck for install.
@@ -26,7 +23,6 @@
 ### Defined types
 
 * [`rundeck::config::resource::aclpolicyfile`](#rundeck--config--resource--aclpolicyfile): This define will create a custom acl policy file.
-* [`rundeck::config::resource::file_keystore`](#rundeck--config--resource--file_keystore): This define will create the 'content' and 'meta' components for the key to be stored.
 * [`rundeck::config::resource::plugin`](#rundeck--config--resource--plugin): This define will install a rundeck plugin.
 * [`rundeck::config::resource::project`](#rundeck--config--resource--project): This define can be used to configure rundeck projects.
 * [`rundeck::config::resource::resource_source`](#rundeck--config--resource--resource_source): This define will create a resource source that gathers node information.
@@ -38,8 +34,10 @@
 
 ### Data types
 
-* [`Rundeck::Authconfig`](#Rundeck--Authconfig): Rundeck authentication config type.
+* [`Rundeck::Auth_config`](#Rundeck--Auth_config): Rundeck authentication config type.
+* [`Rundeck::Db_config`](#Rundeck--Db_config): Rundeck database config type.
 * [`Rundeck::Loglevel`](#Rundeck--Loglevel): Rundeck log level type.
+* [`Rundeck::Mail_config`](#Rundeck--Mail_config): Rundeck mail config type.
 * [`Rundeck::Sourcetype`](#Rundeck--Sourcetype): Rundeck sourcetype type.
 
 ## Classes
@@ -59,10 +57,7 @@ The following parameters are available in the `rundeck` class:
 * [`clustermode_enabled`](#-rundeck--clustermode_enabled)
 * [`database_config`](#-rundeck--database_config)
 * [`execution_mode`](#-rundeck--execution_mode)
-* [`file_keystorage_dir`](#-rundeck--file_keystorage_dir)
-* [`file_keystorage_keys`](#-rundeck--file_keystorage_keys)
 * [`framework_config`](#-rundeck--framework_config)
-* [`grails_server_url`](#-rundeck--grails_server_url)
 * [`gui_config`](#-rundeck--gui_config)
 * [`java_home`](#-rundeck--java_home)
 * [`jvm_args`](#-rundeck--jvm_args)
@@ -82,8 +77,6 @@ The following parameters are available in the `rundeck` class:
 * [`package_ensure`](#-rundeck--package_ensure)
 * [`preauthenticated_config`](#-rundeck--preauthenticated_config)
 * [`projects`](#-rundeck--projects)
-* [`projects_description`](#-rundeck--projects_description)
-* [`projects_organization`](#-rundeck--projects_organization)
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`app_log_level`](#-rundeck--app_log_level)
 * [`audit_log_level`](#-rundeck--audit_log_level)
@@ -97,7 +90,6 @@ The following parameters are available in the `rundeck` class:
 * [`server_web_context`](#-rundeck--server_web_context)
 * [`service_name`](#-rundeck--service_name)
 * [`service_ensure`](#-rundeck--service_ensure)
-* [`service_restart`](#-rundeck--service_restart)
 * [`service_logs_dir`](#-rundeck--service_logs_dir)
 * [`service_config`](#-rundeck--service_config)
 * [`service_script`](#-rundeck--service_script)
@@ -114,7 +106,8 @@ The following parameters are available in the `rundeck` class:
 * [`group_id`](#-rundeck--group_id)
 * [`security_roles_array_enabled`](#-rundeck--security_roles_array_enabled)
 * [`security_roles_array`](#-rundeck--security_roles_array)
-* [`storage_encrypt_config`](#-rundeck--storage_encrypt_config)
+* [`key_storage_encrypt_config`](#-rundeck--key_storage_encrypt_config)
+* [`project_config`](#-rundeck--project_config)
 * [`override_dir`](#-rundeck--override_dir)
 * [`file_copier_provider`](#-rundeck--file_copier_provider)
 * [`node_executor_provider`](#-rundeck--node_executor_provider)
@@ -152,7 +145,7 @@ Apitoken acl policies. Default value is located in data/common.yaml.
 
 ##### <a name="-rundeck--auth_config"></a>`auth_config`
 
-Data type: `Rundeck::Authconfig`
+Data type: `Rundeck::Auth_config`
 
 Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
 Default value is located in data/common.yaml.
@@ -167,7 +160,7 @@ Default value: `false`
 
 ##### <a name="-rundeck--database_config"></a>`database_config`
 
-Data type: `Hash`
+Data type: `Rundeck::Db_config`
 
 Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 
@@ -179,34 +172,12 @@ If set, allows setting the execution mode to 'active' or 'passive'.
 
 Default value: `'active'`
 
-##### <a name="-rundeck--file_keystorage_dir"></a>`file_keystorage_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-Path to dir where the keystorage should be located.
-
-##### <a name="-rundeck--file_keystorage_keys"></a>`file_keystorage_keys`
-
-Data type: `Hash`
-
-Add keys to file keystorage.
-
-Default value: `{}`
-
 ##### <a name="-rundeck--framework_config"></a>`framework_config`
 
 Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
 Default value is located in data/common.yaml.
-
-##### <a name="-rundeck--grails_server_url"></a>`grails_server_url`
-
-Data type: `Stdlib::HTTPUrl`
-
-Sets `grails.serverURL` so that Rundeck knows its external address.
-
-Default value: `"http://${facts['networking']['fqdn']}:4440"`
 
 ##### <a name="-rundeck--gui_config"></a>`gui_config`
 
@@ -260,6 +231,8 @@ Data type: `String`
 
 The password for the given keystore.
 
+Default value: `'admin'`
+
 ##### <a name="-rundeck--log_properties_template"></a>`log_properties_template`
 
 Data type: `String`
@@ -270,7 +243,7 @@ Default value: `'rundeck/log4j2.properties.epp'`
 
 ##### <a name="-rundeck--mail_config"></a>`mail_config`
 
-Data type: `Hash`
+Data type: `Rundeck::Mail_config`
 
 A hash of the notification email configuraton.
 
@@ -345,6 +318,8 @@ Data type: `Hash`
 
 A hash of the rundeck preauthenticated config mode
 
+Default value: `{}`
+
 ##### <a name="-rundeck--projects"></a>`projects`
 
 Data type: `Hash`
@@ -352,22 +327,6 @@ Data type: `Hash`
 The hash of projects in your instance.
 
 Default value: `{}`
-
-##### <a name="-rundeck--projects_description"></a>`projects_description`
-
-Data type: `String`
-
-The description that will be set by default for any projects.
-
-Default value: `''`
-
-##### <a name="-rundeck--projects_organization"></a>`projects_organization`
-
-Data type: `String`
-
-The organization value that will be set by default for any projects.
-
-Default value: `''`
 
 ##### <a name="-rundeck--quartz_job_threadcount"></a>`quartz_job_threadcount`
 
@@ -399,7 +358,7 @@ Data type: `String`
 
 Allows you to override the rundeck-config template.
 
-Default value: `'rundeck/rundeck-config.epp'`
+Default value: `'rundeck/rundeck-config.properties.epp'`
 
 ##### <a name="-rundeck--manage_home"></a>`manage_home`
 
@@ -439,6 +398,8 @@ Data type: `Hash`
 
 A hash of the rundeck security configuration.
 
+Default value: `{}`
+
 ##### <a name="-rundeck--security_role"></a>`security_role`
 
 Data type: `String`
@@ -470,14 +431,6 @@ Data type: `Enum['stopped', 'running']`
 State of the rundeck service (defaults to 'running')
 
 Default value: `'running'`
-
-##### <a name="-rundeck--service_restart"></a>`service_restart`
-
-Data type: `Boolean`
-
-The restart of the rundeck service (default to true)
-
-Default value: `true`
 
 ##### <a name="-rundeck--service_logs_dir"></a>`service_logs_dir`
 
@@ -540,6 +493,8 @@ Default value: `'/etc/rundeck/ssl/truststore'`
 Data type: `String`
 
 The password for the given truststore.
+
+Default value: `'admin'`
 
 ##### <a name="-rundeck--user"></a>`user`
 
@@ -605,14 +560,20 @@ Array value if you need more roles and you set true the "security_roles_array_en
 
 Default value: `[]`
 
-##### <a name="-rundeck--storage_encrypt_config"></a>`storage_encrypt_config`
+##### <a name="-rundeck--key_storage_encrypt_config"></a>`key_storage_encrypt_config`
 
-Data type: `Hash[String,String]`
+Data type: `Hash`
 
 Hash containing the necessary values to configure a plugin for key storage encryption.
 https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
 
 Default value: `{}`
+
+##### <a name="-rundeck--project_config"></a>`project_config`
+
+Data type: `Hash`
+
+
 
 ##### <a name="-rundeck--override_dir"></a>`override_dir`
 
@@ -877,147 +838,6 @@ Data type: `String`
 The template used for acl policy. Default is rundeck/aclpolicy.erb
 
 Default value: `"${module_name}/aclpolicy.erb"`
-
-### <a name="rundeck--config--resource--file_keystore"></a>`rundeck::config::resource::file_keystore`
-
-Currently supports password-based public keys.
-Private keys are also supported, but not recommended to be privisioned via this mechanism
-without the proper security policies for the private key data in place.
-
-#### Examples
-
-##### Basic usage.
-
-```puppet
-rundeck::config::resource::file_keystore { 'mypassword':
-  path         => 'myproject/mypassword',
-  value        => 'secret',
-  content_type => 'application/x-rundeck-data-password',
-  data_type    => 'password',
-}
-```
-
-#### Parameters
-
-The following parameters are available in the `rundeck::config::resource::file_keystore` defined type:
-
-* [`content_type`](#-rundeck--config--resource--file_keystore--content_type)
-* [`data_type`](#-rundeck--config--resource--file_keystore--data_type)
-* [`path`](#-rundeck--config--resource--file_keystore--path)
-* [`value`](#-rundeck--config--resource--file_keystore--value)
-* [`auth_created_username`](#-rundeck--config--resource--file_keystore--auth_created_username)
-* [`auth_modified_username`](#-rundeck--config--resource--file_keystore--auth_modified_username)
-* [`content_creation_time`](#-rundeck--config--resource--file_keystore--content_creation_time)
-* [`content_mask`](#-rundeck--config--resource--file_keystore--content_mask)
-* [`content_modify_time`](#-rundeck--config--resource--file_keystore--content_modify_time)
-* [`content_size`](#-rundeck--config--resource--file_keystore--content_size)
-* [`file_keystorage_dir`](#-rundeck--config--resource--file_keystore--file_keystorage_dir)
-* [`group`](#-rundeck--config--resource--file_keystore--group)
-* [`user`](#-rundeck--config--resource--file_keystore--user)
-
-##### <a name="-rundeck--config--resource--file_keystore--content_type"></a>`content_type`
-
-Data type:
-
-```puppet
-Enum[
-    'application/x-rundeck-data-password',
-    'application/pgp-keys',
-    'application/octet-stream'
-  ]
-```
-
-MIME type of the content
-
-##### <a name="-rundeck--config--resource--file_keystore--data_type"></a>`data_type`
-
-Data type: `Enum['password', 'public', 'private']`
-
-Data type (password, public-key or private-key)
-
-##### <a name="-rundeck--config--resource--file_keystore--path"></a>`path`
-
-Data type: `String`
-
-The path of the named key
-
-##### <a name="-rundeck--config--resource--file_keystore--value"></a>`value`
-
-Data type: `String`
-
-The actual value (password) of the named key
-
-##### <a name="-rundeck--config--resource--file_keystore--auth_created_username"></a>`auth_created_username`
-
-Data type: `String`
-
-User who created the key
-
-Default value: `$rundeck::framework_config['framework.ssh.user']`
-
-##### <a name="-rundeck--config--resource--file_keystore--auth_modified_username"></a>`auth_modified_username`
-
-Data type: `String`
-
-User who last modified the key
-
-Default value: `$rundeck::framework_config['framework.ssh.user']`
-
-##### <a name="-rundeck--config--resource--file_keystore--content_creation_time"></a>`content_creation_time`
-
-Data type: `String`
-
-When the key was first created
-
-Default value: `chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ'))`
-
-##### <a name="-rundeck--config--resource--file_keystore--content_mask"></a>`content_mask`
-
-Data type: `String`
-
-Content mask (default is 'content')
-
-Default value: `'content'`
-
-##### <a name="-rundeck--config--resource--file_keystore--content_modify_time"></a>`content_modify_time`
-
-Data type: `String`
-
-When the key was modified
-
-Default value: `chomp(generate('/bin/date', '+%Y-%m-%dT%H:%M:%SZ'))`
-
-##### <a name="-rundeck--config--resource--file_keystore--content_size"></a>`content_size`
-
-Data type: `Optional[Integer]`
-
-Size of the content string in bytes
-
-Default value: `undef`
-
-##### <a name="-rundeck--config--resource--file_keystore--file_keystorage_dir"></a>`file_keystorage_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-Base directory for file-based key storage (defaulted to /var/lib/rundeck/var/storage)
-
-Default value: `$rundeck::file_keystorage_dir`
-
-##### <a name="-rundeck--config--resource--file_keystore--group"></a>`group`
-
-Data type: `String`
-
-Default system group for the Rundeck framework
-
-Default value: `$rundeck::config::group`
-
-##### <a name="-rundeck--config--resource--file_keystore--user"></a>`user`
-
-Data type: `String`
-
-Default system user for the Rundeck framework
-
-Default value: `$rundeck::config::user`
 
 ### <a name="rundeck--config--resource--plugin"></a>`rundeck::config::resource::plugin`
 
@@ -1505,7 +1325,7 @@ Returns: `Any`
 
 ## Data types
 
-### <a name="Rundeck--Authconfig"></a>`Rundeck::Authconfig`
+### <a name="Rundeck--Auth_config"></a>`Rundeck::Auth_config`
 
 Rundeck authentication config type.
 
@@ -1519,11 +1339,47 @@ Struct[{
 }]
 ```
 
+### <a name="Rundeck--Db_config"></a>`Rundeck::Db_config`
+
+Rundeck database config type.
+
+Alias of
+
+```puppet
+Struct[{
+    'url'                                  => String,
+    Optional['driverClassName']            => String,
+    Optional['username']                   => String,
+    Optional['password']                   => String,
+    Optional['dialect']                    => String,
+    Optional['properties.validationQuery'] => String,
+}]
+```
+
 ### <a name="Rundeck--Loglevel"></a>`Rundeck::Loglevel`
 
 Rundeck log level type.
 
 Alias of `Enum['all', 'debug', 'error', 'fatal', 'info', 'off', 'trace', 'warn']`
+
+### <a name="Rundeck--Mail_config"></a>`Rundeck::Mail_config`
+
+Rundeck mail config type.
+
+Alias of
+
+```puppet
+Struct[{
+    Optional['host']         => String,
+    Optional['port']         => Integer,
+    Optional['username']     => String,
+    Optional['password']     => String,
+    Optional['props']        => Array[Hash],
+    Optional['default.from'] => String,
+    Optional['default.to']   => String,
+    Optional['disabled']     => Boolean,
+}]
+```
 
 ### <a name="Rundeck--Sourcetype"></a>`Rundeck::Sourcetype`
 

@@ -15,13 +15,9 @@
 #   Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 # @param execution_mode
 #   If set, allows setting the execution mode to 'active' or 'passive'.
-# @param file_keystorage_keys
-#   Add keys to file keystorage.
 # @param framework_config
 #   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
 #   Default value is located in data/common.yaml.
-# @param grails_server_url
-#   Sets `grails.serverURL` so that Rundeck knows its external address.
 # @param gui_config
 #   Hash of properties for customizing the [Rundeck GUI](https://docs.rundeck.com/docs/administration/configuration/gui-customization.html)
 # @param java_home
@@ -61,10 +57,6 @@
 #   A hash of the rundeck preauthenticated config mode
 # @param projects
 #   The hash of projects in your instance.
-# @param projects_description
-#   The description that will be set by default for any projects.
-# @param projects_organization
-#   The organization value that will be set by default for any projects.
 # @param quartz_job_threadcount
 #   The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
 # @param app_log_level
@@ -123,7 +115,7 @@
 #   Boolean value if you need more roles. false or true (default is false).
 # @param security_roles_array
 #   Array value if you need more roles and you set true the "security_roles_array_enabled" value.
-# @param storage_encrypt_config
+# @param key_storage_encrypt_config
 #   Hash containing the necessary values to configure a plugin for key storage encryption.
 #   https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
 #
@@ -194,24 +186,6 @@ class rundeck (
   Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
   Optional[String]                    $service_config                     = undef,
   Optional[String]                    $service_script                     = undef,
-
-  # Project config
-  Hash                                $projects                           = {},
-  Integer                             $quartz_job_threadcount             = 10,
-  String                              $file_copier_provider               = 'jsch-scp',
-  String                              $node_executor_provider             = 'jsch-ssh',
-  Hash                                $resource_sources                   = {},
-  Enum['xml', 'yaml']                 $resource_format                    = 'xml',
-  Boolean                             $include_server_node                = false,
-  Enum['file']                        $default_source_type                = 'file',
-  Stdlib::Absolutepath                $default_resource_dir               = '/',
-  Stdlib::Port                        $default_http_proxy_port            = 80,
-  Integer                             $default_refresh_interval           = 30,
-  Boolean                             $url_cache                          = true,
-  Integer                             $url_timeout                        = 30,
-  Boolean                             $script_args_quoted                 = true,
-  Stdlib::Absolutepath                $script_interpreter                 = '/bin/bash',
-
 ) {
   validate_rd_policy($admin_policies)
   validate_rd_policy($api_policies)
