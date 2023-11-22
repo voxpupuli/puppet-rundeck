@@ -16,10 +16,11 @@ class rundeck::config::framework {
 
   $_server_uuid = { 'rundeck.server.uuid' => fqdn_uuid($facts['networking']['fqdn']) }
 
-  $_framework_config = deep_merge($rundeck::config::framework_config, $_server_uuid, $_ssl_config)
+  $_framework_config       = deep_merge($rundeck::config::framework_config, $_server_uuid)
+  $_final_framework_config = deep_merge($_ssl_config, $_framework_config, { 'strategy' => 'first' }) # TODO: Test ssl_config merge
 
   file { "${rundeck::config::properties_dir}/framework.properties":
     ensure  => file,
-    content => epp('rundeck/framework.properties.epp', { _framework_config => $_framework_config }),
+    content => epp('rundeck/framework.properties.epp', { _framework_config => $_final_framework_config }),
   }
 }

@@ -21,8 +21,8 @@
 
 ### Defined types
 
-* [`rundeck::config::resource::aclpolicyfile`](#rundeck--config--resource--aclpolicyfile): This define will create a custom acl policy file.
-* [`rundeck::config::resource::plugin`](#rundeck--config--resource--plugin): This define will install a rundeck plugin.
+* [`rundeck::config::aclpolicyfile`](#rundeck--config--aclpolicyfile): This define will create a custom acl policy file.
+* [`rundeck::config::plugin`](#rundeck--config--plugin): This define will install a rundeck plugin.
 
 ### Functions
 
@@ -505,7 +505,7 @@ Data type: `Stdlib::Absolutepath`
 
 ## Defined types
 
-### <a name="rundeck--config--resource--aclpolicyfile"></a>`rundeck::config::resource::aclpolicyfile`
+### <a name="rundeck--config--aclpolicyfile"></a>`rundeck::config::aclpolicyfile`
 
 This define will create a custom acl policy file.
 
@@ -514,7 +514,7 @@ This define will create a custom acl policy file.
 ##### Admin access.
 
 ```puppet
-rundeck::config::resource::aclpolicyfile { 'myPolicyFile':
+rundeck::config::aclpolicyfile { 'myPolicyFile':
   acl_policies => [
     {
       'description'    => 'Admin, all access',
@@ -555,21 +555,21 @@ rundeck::config::resource::aclpolicyfile { 'myPolicyFile':
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::resource::aclpolicyfile` defined type:
+The following parameters are available in the `rundeck::config::aclpolicyfile` defined type:
 
-* [`acl_policies`](#-rundeck--config--resource--aclpolicyfile--acl_policies)
-* [`group`](#-rundeck--config--resource--aclpolicyfile--group)
-* [`owner`](#-rundeck--config--resource--aclpolicyfile--owner)
-* [`properties_dir`](#-rundeck--config--resource--aclpolicyfile--properties_dir)
-* [`template_file`](#-rundeck--config--resource--aclpolicyfile--template_file)
+* [`acl_policies`](#-rundeck--config--aclpolicyfile--acl_policies)
+* [`group`](#-rundeck--config--aclpolicyfile--group)
+* [`owner`](#-rundeck--config--aclpolicyfile--owner)
+* [`properties_dir`](#-rundeck--config--aclpolicyfile--properties_dir)
+* [`template_file`](#-rundeck--config--aclpolicyfile--template_file)
 
-##### <a name="-rundeck--config--resource--aclpolicyfile--acl_policies"></a>`acl_policies`
+##### <a name="-rundeck--config--aclpolicyfile--acl_policies"></a>`acl_policies`
 
 Data type: `Array[Hash]`
 
 An array of hashes containing acl policies. See example.
 
-##### <a name="-rundeck--config--resource--aclpolicyfile--group"></a>`group`
+##### <a name="-rundeck--config--aclpolicyfile--group"></a>`group`
 
 Data type: `String`
 
@@ -577,7 +577,7 @@ The group permission that rundeck is installed as.
 
 Default value: `'rundeck'`
 
-##### <a name="-rundeck--config--resource--aclpolicyfile--owner"></a>`owner`
+##### <a name="-rundeck--config--aclpolicyfile--owner"></a>`owner`
 
 Data type: `String`
 
@@ -585,7 +585,7 @@ The user that rundeck is installed as.
 
 Default value: `'rundeck'`
 
-##### <a name="-rundeck--config--resource--aclpolicyfile--properties_dir"></a>`properties_dir`
+##### <a name="-rundeck--config--aclpolicyfile--properties_dir"></a>`properties_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -593,7 +593,7 @@ The rundeck configuration directory.
 
 Default value: `'/etc/rundeck'`
 
-##### <a name="-rundeck--config--resource--aclpolicyfile--template_file"></a>`template_file`
+##### <a name="-rundeck--config--aclpolicyfile--template_file"></a>`template_file`
 
 Data type: `String`
 
@@ -601,7 +601,7 @@ The template used for acl policy. Default is rundeck/aclpolicy.erb
 
 Default value: `"${module_name}/aclpolicy.erb"`
 
-### <a name="rundeck--config--resource--plugin"></a>`rundeck::config::resource::plugin`
+### <a name="rundeck--config--plugin"></a>`rundeck::config::plugin`
 
 This define will install a rundeck plugin.
 
@@ -610,19 +610,19 @@ This define will install a rundeck plugin.
 ##### Basic usage.
 
 ```puppet
-rundeck::config::resource::plugin { 'rundeck-hipchat-plugin-1.0.0.jar':
+rundeck::config::plugin { 'rundeck-hipchat-plugin-1.0.0.jar':
   source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar',
 }
 ```
 
 #### Parameters
 
-The following parameters are available in the `rundeck::config::resource::plugin` defined type:
+The following parameters are available in the `rundeck::config::plugin` defined type:
 
-* [`ensure`](#-rundeck--config--resource--plugin--ensure)
-* [`source`](#-rundeck--config--resource--plugin--source)
+* [`ensure`](#-rundeck--config--plugin--ensure)
+* [`source`](#-rundeck--config--plugin--source)
 
-##### <a name="-rundeck--config--resource--plugin--ensure"></a>`ensure`
+##### <a name="-rundeck--config--plugin--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -630,7 +630,7 @@ Set present or absent to add or remove the plugin
 
 Default value: `'present'`
 
-##### <a name="-rundeck--config--resource--plugin--source"></a>`source`
+##### <a name="-rundeck--config--plugin--source"></a>`source`
 
 Data type: `String`
 

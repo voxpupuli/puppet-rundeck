@@ -44,7 +44,7 @@ class rundeck::config {
   }
 
   if $rundeck::manage_default_admin_policy {
-    rundeck::config::resource::aclpolicyfile { 'admin':
+    rundeck::config::aclpolicyfile { 'admin':
       acl_policies   => $rundeck::admin_policies,
       owner          => $rundeck::user,
       group          => $rundeck::group,
@@ -54,7 +54,7 @@ class rundeck::config {
   }
 
   if $rundeck::manage_default_api_policy {
-    rundeck::config::resource::aclpolicyfile { 'apitoken':
+    rundeck::config::aclpolicyfile { 'apitoken':
       acl_policies   => $rundeck::api_policies,
       owner          => $rundeck::user,
       group          => $rundeck::group,
