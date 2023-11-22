@@ -2,20 +2,20 @@
 #
 # @summary This private class is called from rundeck::config used to manage the ssl properties if ssl is enabled.
 #
-class rundeck::config::global::ssl {
+class rundeck::config::ssl {
   assert_private()
 
-  $group               = $rundeck::config::group
-  $key_password        = $rundeck::config::key_password
-  $ssl_keyfile         = $rundeck::config::ssl_keyfile
-  $ssl_certfile        = $rundeck::config::ssl_certfile
-  $keystore            = $rundeck::config::keystore
-  $keystore_password   = $rundeck::config::keystore_password
+  $group               = $rundeck::group
+  $key_password        = $rundeck::key_password
+  $ssl_keyfile         = $rundeck::ssl_keyfile
+  $ssl_certfile        = $rundeck::ssl_certfile
+  $keystore            = $rundeck::keystore
+  $keystore_password   = $rundeck::keystore_password
   $properties_dir      = $rundeck::config::properties_dir
   $service_name        = $rundeck::service_name
-  $truststore          = $rundeck::config::truststore
-  $truststore_password = $rundeck::config::truststore_password
-  $user                = $rundeck::config::user
+  $truststore          = $rundeck::truststore
+  $truststore_password = $rundeck::truststore_password
+  $user                = $rundeck::user
 
   $properties_file = "${properties_dir}/ssl/ssl.properties"
 

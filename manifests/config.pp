@@ -6,7 +6,6 @@ class rundeck::config {
   assert_private()
 
   $framework_config = deep_merge(lookup('rundeck::framework_config'), $rundeck::framework_config)
-  $project_config   = deep_merge(lookup('rundeck::project_config'), $rundeck::project_config)
 
   $base_dir       = $framework_config['rdeck.base']
   $properties_dir = $framework_config['framework.etc.dir']
@@ -73,8 +72,7 @@ class rundeck::config {
   contain rundeck::config::framework
 
   file { "${properties_dir}/project.properties":
-    ensure  => file,
-    content => epp('rundeck/project.properties.epp', { _project_config => $project_config }),
+    ensure => absent,
   }
 
   file { "${properties_dir}/rundeck-config.properties":
@@ -82,11 +80,11 @@ class rundeck::config {
     content => epp($rundeck::config_template),
   }
 
-  # if $ssl_enabled {
-  #   contain rundeck::config::global::ssl
-  #   Class['rundeck::config::global::rundeck_config']
-  #   -> Class['rundeck::config::global::ssl']
-  # }
+  if $rundeck::ssl_enabled {
+    contain rundeck::config::ssl
+    File["${properties_dir}/rundeck-config.properties"]
+    -> Class['rundeck::config::ssl']
+  }
 
   # if versioncmp( $package_ensure, '3.0.0' ) < 0 {
   #   class { 'rundeck::config::global::web':
