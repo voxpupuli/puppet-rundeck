@@ -114,6 +114,8 @@
 # @param key_storage_encrypt_config
 #   Hash containing the necessary values to configure a plugin for key storage encryption.
 #   https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
+# @param quartz_job_threadcount
+#   The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
 #
 class rundeck (
   Array[Hash]                         $admin_policies,
@@ -181,6 +183,8 @@ class rundeck (
   Stdlib::Absolutepath                $service_logs_dir                   = '/var/log/rundeck',
   Optional[String]                    $service_config                     = undef,
   Optional[String]                    $service_script                     = undef,
+
+  Integer                             $quartz_job_threadcount             = 10,
 ) {
   validate_rd_policy($admin_policies)
   validate_rd_policy($api_policies)

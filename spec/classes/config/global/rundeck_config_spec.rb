@@ -94,9 +94,6 @@ describe 'rundeck' do
           grails.serverURL = "http://foo.example.com:4440"
           rundeck.clusterMode.enabled = "false"
 
-          rundeck.projectsStorageType = "filesystem"
-          quartz.threadPool.threadCount = "10"
-
           rundeck.storage.provider."1".type = "file"
           rundeck.storage.provider."1".path = "/"
           rundeck.storage.provider."1".config.baseDir = "/var/lib/rundeck/var/storage"

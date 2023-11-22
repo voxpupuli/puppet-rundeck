@@ -31,8 +31,7 @@ The rundeck puppet module for installing and managing [Rundeck](http://rundeck.o
 
 ## Module Description
 
-This module provides a way to manage the installation and configuration of
-rundeck, its projects, jobs and plugins.
+This module provides a way to manage the installation and configuration of rundeck and plugins.
 
 ## Setup
 
