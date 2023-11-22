@@ -38,9 +38,9 @@
 #   A hash of the notification email configuraton.
 # @param key_password
 #   The ssl key password.
-# @param ssl_keyfile
+# @param ssl_private_key
 #   Full path to the SSL private key to be used by Rundeck.
-# @param ssl_certfile
+# @param ssl_certificate
 #   Full path to the SSL public key to be used by Rundeck.
 # @param manage_default_admin_policy
 #   Boolean value if set to true enables default admin policy management
@@ -129,7 +129,6 @@ class rundeck (
   Boolean                             $manage_repo                        = true,
   String                              $package_ensure                     = 'installed',
   Boolean                             $manage_home                        = true,
-  # User config
   String                              $user                               = 'rundeck',
   String                              $group                              = 'rundeck',
   Boolean                             $manage_user                        = false,
@@ -144,7 +143,7 @@ class rundeck (
   Optional[Stdlib::Absolutepath]      $java_home                          = undef,
   String                              $jvm_args                           = '-Xmx1024m -Xms256m -server',
   Optional[Hash]                      $kerberos_realms                    = undef,
-  Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
+
   Rundeck::Mail_config                $mail_config                        = {},
   Hash                                $security_config                    = {},
   Hash                                $preauthenticated_config            = {},
@@ -165,13 +164,15 @@ class rundeck (
   String                              $security_role                      = 'user',
   Optional[String]                    $server_web_context                 = undef,
   Integer                             $session_timeout                    = 30,
+
   Boolean                             $ssl_enabled                        = false,
   Stdlib::Port                        $ssl_port                           = 4443,
+  Stdlib::Absolutepath                $ssl_certificate                    = '/etc/rundeck/ssl/rundeck.crt',
+  Stdlib::Absolutepath                $ssl_private_key                    = '/etc/rundeck/ssl/rundeck.key',
   Optional[String]                    $key_password                       = undef,
-  Stdlib::Absolutepath                $ssl_keyfile                        = '/etc/rundeck/ssl/rundeck.key',
-  Stdlib::Absolutepath                $ssl_certfile                       = '/etc/rundeck/ssl/rundeck.crt',
-  Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
+  Stdlib::Absolutepath                $keystore                           = '/etc/rundeck/ssl/keystore',
   String                              $keystore_password                  = 'admin',
+  Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
   String                              $truststore_password                = 'admin',
 
   Boolean                             $security_roles_array_enabled       = false,

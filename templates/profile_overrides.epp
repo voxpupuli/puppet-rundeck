@@ -7,6 +7,11 @@ LOGIN_MODULE=authentication
 JAVA_CMD=java
 RDECK_JVM_SETTINGS="<%= $rundeck::jvm_args %>"
 
+<% if $rundeck::ssl_enabled { -%>
+RUNDECK_WITH_SSL=true
+RDECK_HTTPS_PORT=<%= $rundeck::ssl_port %>
+<% } -%>
+
 <% if $rundeck::server_web_context { -%>
 RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.web.context=<%= $rundeck::server_web_context %>"
 <% } -%>
@@ -18,7 +23,3 @@ RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Djava.security.krb5.conf=$RDECK_CONFIG/
 <% if $rundeck::java_home { %>
 JAVA_HOME=<%= $rundeck::java_home %>
 <% } %>
-
-<% if $rundeck::ssl_enabled { -%>
-RUNDECK_WITH_SSL=true
-<% } -%>

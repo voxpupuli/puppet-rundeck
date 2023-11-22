@@ -1,0 +1,5 @@
+keystore=<%= $rundeck::keystore %>
+keystore.password=<%= $rundeck::keystore_password %>
+key.password=<%= $rundeck::key_password %>
+truststore=<%= $rundeck::truststore %>
+truststore.password=<%= $rundeck::truststore_password %>

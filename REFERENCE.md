@@ -66,8 +66,8 @@ The following parameters are available in the `rundeck` class:
 * [`log_properties_template`](#-rundeck--log_properties_template)
 * [`mail_config`](#-rundeck--mail_config)
 * [`key_password`](#-rundeck--key_password)
-* [`ssl_keyfile`](#-rundeck--ssl_keyfile)
-* [`ssl_certfile`](#-rundeck--ssl_certfile)
+* [`ssl_private_key`](#-rundeck--ssl_private_key)
+* [`ssl_certificate`](#-rundeck--ssl_certificate)
 * [`manage_default_admin_policy`](#-rundeck--manage_default_admin_policy)
 * [`manage_default_api_policy`](#-rundeck--manage_default_api_policy)
 * [`repo_config`](#-rundeck--repo_config)
@@ -103,6 +103,7 @@ The following parameters are available in the `rundeck` class:
 * [`security_roles_array_enabled`](#-rundeck--security_roles_array_enabled)
 * [`security_roles_array`](#-rundeck--security_roles_array)
 * [`key_storage_encrypt_config`](#-rundeck--key_storage_encrypt_config)
+* [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`override_dir`](#-rundeck--override_dir)
 
 ##### <a name="-rundeck--acl_template"></a>`acl_template`
@@ -239,7 +240,7 @@ The ssl key password.
 
 Default value: `undef`
 
-##### <a name="-rundeck--ssl_keyfile"></a>`ssl_keyfile`
+##### <a name="-rundeck--ssl_private_key"></a>`ssl_private_key`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -247,7 +248,7 @@ Full path to the SSL private key to be used by Rundeck.
 
 Default value: `'/etc/rundeck/ssl/rundeck.key'`
 
-##### <a name="-rundeck--ssl_certfile"></a>`ssl_certfile`
+##### <a name="-rundeck--ssl_certificate"></a>`ssl_certificate`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -534,6 +535,14 @@ Hash containing the necessary values to configure a plugin for key storage encry
 https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
 
 Default value: `{}`
+
+##### <a name="-rundeck--quartz_job_threadcount"></a>`quartz_job_threadcount`
+
+Data type: `Integer`
+
+The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
+
+Default value: `10`
 
 ##### <a name="-rundeck--override_dir"></a>`override_dir`
 

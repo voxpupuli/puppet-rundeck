@@ -37,6 +37,7 @@ class rundeck::config {
       mode   => '0755',
       ;
     "${properties_dir}/log4j2.properties":
+      ensure  => file,
       content => epp($rundeck::log_properties_template),
       require => File[$properties_dir, $rundeck::service_logs_dir],
       ;
@@ -64,6 +65,7 @@ class rundeck::config {
 
   if ($rundeck::override_template) {
     file { "${rundeck::override_dir}/${rundeck::service_name}":
+      ensure  => file,
       content => epp($rundeck::override_template),
     }
   }
