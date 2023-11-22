@@ -24,8 +24,6 @@
 #   Set the home directory of java.
 # @param jvm_args
 #   Extra arguments for the JVM.
-# @param kerberos_realms
-#   A hash of mappings between Kerberos domain DNS names and realm names
 # @param key_storage_config
 #   An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
 # @param keystore
@@ -71,8 +69,6 @@
 #   Boolean value if set to true enables RSS feeds that are public (non-authenticated)
 # @param security_config
 #   A hash of the rundeck security configuration.
-# @param security_role
-#   Name of the role that is required for all users to be allowed access.
 # @param server_web_context
 #   Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
 # @param service_name
@@ -85,8 +81,6 @@
 #   Allows you to use your own override template instead to config rundeckd init script.
 # @param service_script
 #   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
-# @param session_timeout
-#   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
 # @param ssl_enabled
 #   Enable ssl for the rundeck web application.
 # @param ssl_port
@@ -107,10 +101,6 @@
 #   If you want to have always the same user id. Eg. because of the NFS share.
 # @param group_id
 #   If you want to have always the same group id. Eg. because of the NFS share.
-# @param security_roles_array_enabled
-#   Boolean value if you need more roles. false or true (default is false).
-# @param security_roles_array
-#   Array value if you need more roles and you set true the "security_roles_array_enabled" value.
 # @param key_storage_encrypt_config
 #   Hash containing the necessary values to configure a plugin for key storage encryption.
 #   https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
@@ -142,7 +132,6 @@ class rundeck (
   Hash                                $gui_config                         = {},
   Optional[Stdlib::Absolutepath]      $java_home                          = undef,
   String                              $jvm_args                           = '-Xmx1024m -Xms256m -server',
-  Optional[Hash]                      $kerberos_realms                    = undef,
 
   Rundeck::Mail_config                $mail_config                        = {},
   Hash                                $security_config                    = {},
@@ -161,9 +150,7 @@ class rundeck (
   String                              $log_properties_template            = 'rundeck/log4j2.properties.epp',
 
   Boolean                             $rss_enabled                        = false,
-  String                              $security_role                      = 'user',
   Optional[String]                    $server_web_context                 = undef,
-  Integer                             $session_timeout                    = 30,
 
   Boolean                             $ssl_enabled                        = false,
   Stdlib::Port                        $ssl_port                           = 4443,
@@ -175,8 +162,6 @@ class rundeck (
   Stdlib::Absolutepath                $truststore                         = '/etc/rundeck/ssl/truststore',
   String                              $truststore_password                = 'adminadmin',
 
-  Boolean                             $security_roles_array_enabled       = false,
-  Array                               $security_roles_array               = [],
   Hash                                $key_storage_encrypt_config         = {},
   # Service config
   String                              $service_name                       = 'rundeckd',

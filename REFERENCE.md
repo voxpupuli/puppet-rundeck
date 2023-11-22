@@ -9,7 +9,6 @@
 #### Public Classes
 
 * [`rundeck`](#rundeck): Class to manage installation and configuration of Rundeck.
-* [`rundeck::config::global::web`](#rundeck--config--global--web): This class will manage the application's web.xml.
 
 #### Private Classes
 
@@ -24,7 +23,6 @@
 
 * [`rundeck::config::resource::aclpolicyfile`](#rundeck--config--resource--aclpolicyfile): This define will create a custom acl policy file.
 * [`rundeck::config::resource::plugin`](#rundeck--config--resource--plugin): This define will install a rundeck plugin.
-* [`rundeck::config::resource::securityroles`](#rundeck--config--resource--securityroles): Author: Zoltan Lanyi <zoltan.lanyi@gmail.com> Date  : 03.06.2016
 
 ### Functions
 
@@ -59,7 +57,6 @@ The following parameters are available in the `rundeck` class:
 * [`gui_config`](#-rundeck--gui_config)
 * [`java_home`](#-rundeck--java_home)
 * [`jvm_args`](#-rundeck--jvm_args)
-* [`kerberos_realms`](#-rundeck--kerberos_realms)
 * [`key_storage_config`](#-rundeck--key_storage_config)
 * [`keystore`](#-rundeck--keystore)
 * [`keystore_password`](#-rundeck--keystore_password)
@@ -82,14 +79,12 @@ The following parameters are available in the `rundeck` class:
 * [`realm_template`](#-rundeck--realm_template)
 * [`rss_enabled`](#-rundeck--rss_enabled)
 * [`security_config`](#-rundeck--security_config)
-* [`security_role`](#-rundeck--security_role)
 * [`server_web_context`](#-rundeck--server_web_context)
 * [`service_name`](#-rundeck--service_name)
 * [`service_ensure`](#-rundeck--service_ensure)
 * [`service_logs_dir`](#-rundeck--service_logs_dir)
 * [`service_config`](#-rundeck--service_config)
 * [`service_script`](#-rundeck--service_script)
-* [`session_timeout`](#-rundeck--session_timeout)
 * [`ssl_enabled`](#-rundeck--ssl_enabled)
 * [`ssl_port`](#-rundeck--ssl_port)
 * [`truststore`](#-rundeck--truststore)
@@ -100,8 +95,6 @@ The following parameters are available in the `rundeck` class:
 * [`manage_group`](#-rundeck--manage_group)
 * [`user_id`](#-rundeck--user_id)
 * [`group_id`](#-rundeck--group_id)
-* [`security_roles_array_enabled`](#-rundeck--security_roles_array_enabled)
-* [`security_roles_array`](#-rundeck--security_roles_array)
 * [`key_storage_encrypt_config`](#-rundeck--key_storage_encrypt_config)
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`override_dir`](#-rundeck--override_dir)
@@ -186,14 +179,6 @@ Extra arguments for the JVM.
 
 Default value: `'-Xmx1024m -Xms256m -server'`
 
-##### <a name="-rundeck--kerberos_realms"></a>`kerberos_realms`
-
-Data type: `Optional[Hash]`
-
-A hash of mappings between Kerberos domain DNS names and realm names
-
-Default value: `undef`
-
 ##### <a name="-rundeck--key_storage_config"></a>`key_storage_config`
 
 Data type: `Array[Hash]`
@@ -214,7 +199,7 @@ Data type: `String`
 
 The password for the given keystore.
 
-Default value: `'admin'`
+Default value: `'adminadmin'`
 
 ##### <a name="-rundeck--log_properties_template"></a>`log_properties_template`
 
@@ -236,7 +221,7 @@ Default value: `{}`
 
 Data type: `Optional[String]`
 
-The ssl key password.
+The password used to protect the key in keystore.
 
 Default value: `undef`
 
@@ -367,14 +352,6 @@ A hash of the rundeck security configuration.
 
 Default value: `{}`
 
-##### <a name="-rundeck--security_role"></a>`security_role`
-
-Data type: `String`
-
-Name of the role that is required for all users to be allowed access.
-
-Default value: `'user'`
-
 ##### <a name="-rundeck--server_web_context"></a>`server_web_context`
 
 Data type: `Optional[String]`
@@ -423,14 +400,6 @@ Allows you to use your own override template instead of the default from the pac
 
 Default value: `undef`
 
-##### <a name="-rundeck--session_timeout"></a>`session_timeout`
-
-Data type: `Integer`
-
-Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
-
-Default value: `30`
-
 ##### <a name="-rundeck--ssl_enabled"></a>`ssl_enabled`
 
 Data type: `Boolean`
@@ -461,7 +430,7 @@ Data type: `String`
 
 The password for the given truststore.
 
-Default value: `'admin'`
+Default value: `'adminadmin'`
 
 ##### <a name="-rundeck--user"></a>`user`
 
@@ -511,22 +480,6 @@ If you want to have always the same group id. Eg. because of the NFS share.
 
 Default value: `undef`
 
-##### <a name="-rundeck--security_roles_array_enabled"></a>`security_roles_array_enabled`
-
-Data type: `Boolean`
-
-Boolean value if you need more roles. false or true (default is false).
-
-Default value: `false`
-
-##### <a name="-rundeck--security_roles_array"></a>`security_roles_array`
-
-Data type: `Array`
-
-Array value if you need more roles and you set true the "security_roles_array_enabled" value.
-
-Default value: `[]`
-
 ##### <a name="-rundeck--key_storage_encrypt_config"></a>`key_storage_encrypt_config`
 
 Data type: `Hash`
@@ -549,62 +502,6 @@ Default value: `10`
 Data type: `Stdlib::Absolutepath`
 
 
-
-### <a name="rundeck--config--global--web"></a>`rundeck::config::global::web`
-
-Currently only manages the <security-role> required for any user to login and session timout:
-http://rundeck.org/docs/administration/authenticating-users.html#security-role
-http://rundeck.org/docs/administration/configuration-file-reference.html#session-timeout
-
-#### Parameters
-
-The following parameters are available in the `rundeck::config::global::web` class:
-
-* [`security_role`](#-rundeck--config--global--web--security_role)
-* [`session_timeout`](#-rundeck--config--global--web--session_timeout)
-* [`security_roles_array_enabled`](#-rundeck--config--global--web--security_roles_array_enabled)
-* [`security_roles_array`](#-rundeck--config--global--web--security_roles_array)
-* [`web_xml`](#-rundeck--config--global--web--web_xml)
-
-##### <a name="-rundeck--config--global--web--security_role"></a>`security_role`
-
-Data type: `String[1]`
-
-Name of role that is required for all users to be allowed access.
-
-Default value: `$rundeck::params::security_role`
-
-##### <a name="-rundeck--config--global--web--session_timeout"></a>`session_timeout`
-
-Data type: `Integer[0]`
-
-Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
-
-Default value: `$rundeck::params::session_timeout`
-
-##### <a name="-rundeck--config--global--web--security_roles_array_enabled"></a>`security_roles_array_enabled`
-
-Data type: `Boolean`
-
-Boolen value if you want to have more roles in web.xml
-
-Default value: `$rundeck::params::security_roles_array_enabled`
-
-##### <a name="-rundeck--config--global--web--security_roles_array"></a>`security_roles_array`
-
-Data type: `Array`
-
-Array value if you set the value 'security_roles_array_enabled' to true.
-
-Default value: `$rundeck::params::security_roles_array`
-
-##### <a name="-rundeck--config--global--web--web_xml"></a>`web_xml`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-Default value: `"${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"`
 
 ## Defined types
 
@@ -738,25 +635,6 @@ Default value: `'present'`
 Data type: `String`
 
 The http source or local path from which to get the plugin.
-
-### <a name="rundeck--config--resource--securityroles"></a>`rundeck::config::resource::securityroles`
-
-Author: Zoltan Lanyi <zoltan.lanyi@gmail.com>
-Date  : 03.06.2016
-
-#### Parameters
-
-The following parameters are available in the `rundeck::config::resource::securityroles` defined type:
-
-* [`web_xml`](#-rundeck--config--resource--securityroles--web_xml)
-
-##### <a name="-rundeck--config--resource--securityroles--web_xml"></a>`web_xml`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-Default value: `"${rundeck::home_dir}/exp/webapp/WEB-INF/web.xml"`
 
 ## Functions
 

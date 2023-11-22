@@ -16,10 +16,6 @@ RDECK_HTTPS_PORT=<%= $rundeck::ssl_port %>
 RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.web.context=<%= $rundeck::server_web_context %>"
 <% } -%>
 
-<% if $rundeck::kerberos_realms { -%>
-RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Djava.security.krb5.conf=$RDECK_CONFIG/krb5.conf"
-<% } -%>
-
 <% if $rundeck::java_home { %>
 JAVA_HOME=<%= $rundeck::java_home %>
 <% } %>
