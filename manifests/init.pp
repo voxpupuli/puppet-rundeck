@@ -55,10 +55,6 @@
 #   Ensure the state of the rundeck package, either present, absent or a specific version
 # @param preauthenticated_config
 #   A hash of the rundeck preauthenticated config mode
-# @param projects
-#   The hash of projects in your instance.
-# @param quartz_job_threadcount
-#   The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
 # @param app_log_level
 #   The log4j logging level to be set for the Rundeck application.
 # @param audit_log_level
@@ -126,7 +122,6 @@ class rundeck (
   Rundeck::Db_config                  $database_config,
   Hash                                $framework_config,
   Array[Hash]                         $key_storage_config, # Create type?
-  Hash                                $project_config,
   Stdlib::Absolutepath                $override_dir,
   Hash                                $repo_config,
   Boolean                             $manage_repo                        = true,

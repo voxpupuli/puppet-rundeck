@@ -3,6 +3,8 @@
 # @summary This private class is called from rundeck::config used to manage the framework properties of rundeck.
 #
 class rundeck::config::framework {
+  assert_private()
+
   if $rundeck::ssl_enabled {
     $_ssl_conig = {
       'framework.server.port' => $rundeck::ssl_port,

@@ -82,8 +82,6 @@ class rundeck::config {
 
   if $rundeck::ssl_enabled {
     contain rundeck::config::ssl
-    File["${properties_dir}/rundeck-config.properties"]
-    -> Class['rundeck::config::ssl']
   }
 
   # if versioncmp( $package_ensure, '3.0.0' ) < 0 {
