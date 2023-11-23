@@ -3,7 +3,7 @@ rdeck.base = <%= $rundeck::config::base_dir %>
 
 rss.enabled = <%= $rundeck::rss_enabled %>
 
-grails.serverURL = <%= $rundeck::config::framework_config['framework.server.url'] %>
+grails.serverURL = <%= $rundeck::grails_server_url %>
 
 rundeck.clusterMode.enabled = <%= $rundeck::clustermode_enabled %>
 rundeck.executionMode = <%= $rundeck::execution_mode %>

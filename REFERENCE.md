@@ -86,7 +86,6 @@ The following parameters are available in the `rundeck` class:
 * [`service_config`](#-rundeck--service_config)
 * [`service_script`](#-rundeck--service_script)
 * [`ssl_enabled`](#-rundeck--ssl_enabled)
-* [`ssl_port`](#-rundeck--ssl_port)
 * [`truststore`](#-rundeck--truststore)
 * [`truststore_password`](#-rundeck--truststore_password)
 * [`user`](#-rundeck--user)
@@ -407,14 +406,6 @@ Data type: `Boolean`
 Enable ssl for the rundeck web application.
 
 Default value: `false`
-
-##### <a name="-rundeck--ssl_port"></a>`ssl_port`
-
-Data type: `Stdlib::Port`
-
-Ssl port of the rundeck web application (default to '4443').
-
-Default value: `4443`
 
 ##### <a name="-rundeck--truststore"></a>`truststore`
 

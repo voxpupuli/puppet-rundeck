@@ -81,6 +81,8 @@
 #   Allows you to use your own override template instead to config rundeckd init script.
 # @param service_script
 #   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
+# @param grails_server_url
+#   Sets `grails.serverURL` so that Rundeck knows its external address.
 # @param ssl_enabled
 #   Enable ssl for the rundeck web application.
 # @param ssl_port
@@ -125,6 +127,7 @@ class rundeck (
   Boolean                        $manage_group                = false,
   Optional[Integer]              $user_id                     = undef,
   Optional[Integer]              $group_id                    = undef,
+  Stdlib::HTTPUrl                $grails_server_url           = "http://${facts['networking']['fqdn']}:4440",
   Boolean                        $clustermode_enabled         = false,
   Enum['active', 'passive']      $execution_mode              = 'active',
   Optional[Stdlib::Absolutepath] $java_home                   = undef,
@@ -160,7 +163,6 @@ class rundeck (
   Stdlib::Absolutepath           $service_logs_dir            = '/var/log/rundeck',
   Optional[String]               $service_config              = undef,
   Optional[String]               $service_script              = undef,
-
 ) {
   validate_rd_policy($admin_policies)
   validate_rd_policy($api_policies)

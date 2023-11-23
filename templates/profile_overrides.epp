@@ -9,7 +9,6 @@ RDECK_JVM_SETTINGS="<%= $rundeck::jvm_args %>"
 
 <% if $rundeck::ssl_enabled { -%>
 RUNDECK_WITH_SSL=true
-RDECK_HTTPS_PORT=<%= $rundeck::ssl_port %>
 <% } -%>
 
 <% if $rundeck::server_web_context { -%>
