@@ -9,38 +9,30 @@
 #   Set present or absent to add or remove the plugin
 # @param source
 #   The http source or local path from which to get the plugin.
+# @param plugins_dir
+#   Directory where plugins will be installed.
+# @param proxy_server
+#   Get the plugin trough a proxy server.
 #
 define rundeck::config::plugin (
   String                    $source,
-  Enum['present', 'absent'] $ensure = 'present',
+  Enum['present', 'absent'] $ensure       = 'present',
+  Stdlib::Absolutepath      $plugins_dir  = '/var/lib/rundeck/libext',
+  Optional[Stdlib::HTTPUrl] $proxy_server = undef,
 ) {
-  include rundeck
-  include archive
-
-  $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
-
-  $user = $rundeck::user
-  $group = $rundeck::group
-  $plugin_dir = $framework_config['framework.libext.dir']
+  ensure_resource('file', $plugins_dir, { 'ensure' => 'directory', 'mode' => '0755' })
 
   if $ensure == 'present' {
     archive { "download plugin ${name}":
-      ensure  => present,
-      source  => $source,
-      path    => "${plugin_dir}/${name}",
-      require => File[$plugin_dir],
-      before  => File["${plugin_dir}/${name}"],
-    }
-
-    file { "${plugin_dir}/${name}":
-      mode  => '0644',
-      owner => $user,
-      group => $group,
+      ensure       => present,
+      source       => $source,
+      path         => "${plugins_dir}/${name}",
+      proxy_server => $proxy_server,
     }
   }
-  elsif $ensure == 'absent' {
-    file { "${plugin_dir}/${name}":
-      ensure => 'absent',
-    }
+
+  file { "${plugins_dir}/${name}":
+    ensure => $ensure,
+    mode   => '0644',
   }
 }

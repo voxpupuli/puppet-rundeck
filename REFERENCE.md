@@ -85,7 +85,9 @@ The following parameters are available in the `rundeck` class:
 * [`service_logs_dir`](#-rundeck--service_logs_dir)
 * [`service_config`](#-rundeck--service_config)
 * [`service_script`](#-rundeck--service_script)
+* [`grails_server_url`](#-rundeck--grails_server_url)
 * [`ssl_enabled`](#-rundeck--ssl_enabled)
+* [`ssl_port`](#-rundeck--ssl_port)
 * [`truststore`](#-rundeck--truststore)
 * [`truststore_password`](#-rundeck--truststore_password)
 * [`user`](#-rundeck--user)
@@ -399,6 +401,14 @@ Allows you to use your own override template instead of the default from the pac
 
 Default value: `undef`
 
+##### <a name="-rundeck--grails_server_url"></a>`grails_server_url`
+
+Data type: `Stdlib::HTTPUrl`
+
+Sets `grails.serverURL` so that Rundeck knows its external address.
+
+Default value: `"http://${facts['networking']['fqdn']}:4440"`
+
 ##### <a name="-rundeck--ssl_enabled"></a>`ssl_enabled`
 
 Data type: `Boolean`
@@ -406,6 +416,14 @@ Data type: `Boolean`
 Enable ssl for the rundeck web application.
 
 Default value: `false`
+
+##### <a name="-rundeck--ssl_port"></a>`ssl_port`
+
+Data type: `Stdlib::Port`
+
+Ssl port of the rundeck web application (default to '4443').
+
+Default value: `4443`
 
 ##### <a name="-rundeck--truststore"></a>`truststore`
 
@@ -612,6 +630,8 @@ The following parameters are available in the `rundeck::config::plugin` defined 
 
 * [`ensure`](#-rundeck--config--plugin--ensure)
 * [`source`](#-rundeck--config--plugin--source)
+* [`plugins_dir`](#-rundeck--config--plugin--plugins_dir)
+* [`proxy_server`](#-rundeck--config--plugin--proxy_server)
 
 ##### <a name="-rundeck--config--plugin--ensure"></a>`ensure`
 
@@ -626,6 +646,22 @@ Default value: `'present'`
 Data type: `String`
 
 The http source or local path from which to get the plugin.
+
+##### <a name="-rundeck--config--plugin--plugins_dir"></a>`plugins_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Dir where plugins will be installed.
+
+Default value: `'/var/lib/rundeck/libext'`
+
+##### <a name="-rundeck--config--plugin--proxy_server"></a>`proxy_server`
+
+Data type: `Optional[Stdlib::HTTPUrl]`
+
+Get the plugin trough a proxy server.
+
+Default value: `undef`
 
 ## Functions
 

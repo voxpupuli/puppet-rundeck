@@ -28,16 +28,25 @@ rundeck.storage.provider.<%= $_i+1 %>.config.<%= $_k %> = <%= $_v %>
 <%- } -%>
 <%- } -%>
 
+<%- $rundeck::key_storage_encrypt_config.each |$_i, $_cfg| { -%>
+rundeck.storage.converter.<%= $_i+1 %>.type = <%= $_cfg['type'] %>
+rundeck.storage.converter.<%= $_i+1 %>.path = <%= $_cfg['path'] %>
+<%- if $_cfg['resourceSelector'] { -%>
+rundeck.storage.converter.<%= $_i+1 %>.resourceSelector = <%= $_cfg['resourceSelector'] %>
+<%- } -%>
+<%- if $_cfg['config'] { -%>
+<%- $_cfg['config'].each |$_k, $_v| { -%>
+rundeck.storage.converter.<%= $_i+1 %>.config.<%= $_k %> = <%= $_v %>
+<%- } -%>
+<%- } -%>
+<%- } -%>
+
 <%- $rundeck::mail_config.each |$_k, $_v| {-%>
 grails.mail.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
 <%- $rundeck::security_config.each |$_k, $_v| {-%>
 <%= $k %> = <%= $rundeck::security_config[$k] %>
-<%- } -%>
-
-<%- $rundeck::key_storage_encrypt_config.each |$_k, $_v| { -%>
-rundeck.storage.converter.1.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
 <%- $rundeck::preauthenticated_config.each  |$_k, $_v| { -%>
