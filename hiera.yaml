@@ -7,7 +7,4 @@ defaults:
 
 hierarchy:
   - name: 'Rundeck Operating System Family defaults'
-    path: 'os/%{facts.os.family}.yaml'
-
-  - name: 'Rundeck common defaults'
-    path: 'common.yaml'
+    path: '%{facts.os.family}.yaml'

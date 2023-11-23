@@ -14,9 +14,7 @@ class rundeck::config::framework {
     $_framework_ssl_config = {}
   }
 
-  $_server_uuid = { 'rundeck.server.uuid' => fqdn_uuid($facts['networking']['fqdn']) }
-
-  $_framework_config = deep_merge($rundeck::config::framework_config, $_server_uuid, $_framework_ssl_config)
+  $_framework_config = deep_merge($rundeck::config::framework_config, $_framework_ssl_config)
 
   file { "${rundeck::config::properties_dir}/framework.properties":
     ensure  => file,
