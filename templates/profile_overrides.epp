@@ -1,19 +1,20 @@
-RDECK_BASE=<%= $rundeck::config::base_dir %>
-RDECK_CONFIG=<%= $rundeck::config::properties_dir %>
-RDECK_CONFIG_FILE="<%= $rundeck::config::properties_dir %>/rundeck-config.properties"
-RDECK_INSTALL=<%= $rundeck::config::base_dir %>
-JAAS_CONF=$RDECK_CONFIG/jaas-loginmodule.conf
+RDECK_BASE="<%= $rundeck::config::base_dir %>"
+RDECK_CONFIG="<%= $rundeck::config::properties_dir %>"
+RDECK_CONFIG_FILE="${RDECK_CONFIG}/rundeck-config.properties"
+RDECK_INSTALL="${RDECK_BASE}"
 LOGIN_MODULE=authentication
 JAVA_CMD=java
 RDECK_JVM_SETTINGS="<%= $rundeck::jvm_args %>"
 
 <% if $rundeck::ssl_enabled { -%>
-RUNDECK_WITH_SSL=true
 RDECK_HTTP_PORT=<%= $rundeck::ssl_port %>
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Drundeck.ssl.config=${RDECK_CONFIG}/ssl/ssl.properties"
+<% } else { -%>
+RDECK_HTTP_PORT=<%= $rundeck::config::framework_config['framework.server.port'] %>
 <% } -%>
 
 <% if $rundeck::server_web_context { -%>
-RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.web.context=<%= $rundeck::server_web_context %>"
+RDECK_JVM_SETTINGS="$RDECK_JVM_SETTINGS -Dserver.servlet.context-path=<%= $rundeck::server_web_context %>"
 <% } -%>
 
 <% if $rundeck::java_home { %>
