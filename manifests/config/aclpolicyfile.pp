@@ -60,6 +60,6 @@ define rundeck::config::aclpolicyfile (
     owner   => $owner,
     group   => $group,
     mode    => '0640',
-    content => epp('rundeck/aclpolicy.epp'),
+    content => template('rundeck/aclpolicy.erb'),
   }
 }
