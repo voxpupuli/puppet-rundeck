@@ -28,6 +28,7 @@ define rundeck::config::plugin (
       source       => $source,
       path         => "${plugins_dir}/${name}",
       proxy_server => $proxy_server,
+      before       => File["${plugins_dir}/${name}"],
     }
   }
 

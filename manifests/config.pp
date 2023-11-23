@@ -49,7 +49,6 @@ class rundeck::config {
       owner          => $rundeck::user,
       group          => $rundeck::group,
       properties_dir => $properties_dir,
-      template_file  => $rundeck::acl_template,
     }
   }
 
@@ -59,7 +58,6 @@ class rundeck::config {
       owner          => $rundeck::user,
       group          => $rundeck::group,
       properties_dir => $properties_dir,
-      template_file  => $rundeck::acl_template,
     }
   }
 

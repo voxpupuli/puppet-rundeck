@@ -41,26 +41,25 @@
 #
 # @param acl_policies
 #   An array of hashes containing acl policies. See example.
-# @param group
-#   The group permission that rundeck is installed as.
 # @param owner
 #   The user that rundeck is installed as.
+# @param group
+#   The group permission that rundeck is installed as.
 # @param properties_dir
 #   The rundeck configuration directory.
-# @param template_file
-#   The template used for acl policy. Default is rundeck/aclpolicy.erb
 #
 define rundeck::config::aclpolicyfile (
   Array[Hash]          $acl_policies,
   String               $group          = 'rundeck',
   String               $owner          = 'rundeck',
   Stdlib::Absolutepath $properties_dir = '/etc/rundeck',
-  String               $template_file  = "${module_name}/aclpolicy.erb",
 ) {
+  ensure_resource('file', $properties_dir, { 'ensure' => 'directory', 'mode' => '0755' })
+
   file { "${properties_dir}/${name}.aclpolicy":
     owner   => $owner,
     group   => $group,
     mode    => '0640',
-    content => template($template_file),
+    content => epp('rundeck/aclpolicy.epp'),
   }
 }

@@ -46,7 +46,6 @@ Class to manage installation and configuration of Rundeck.
 
 The following parameters are available in the `rundeck` class:
 
-* [`acl_template`](#-rundeck--acl_template)
 * [`admin_policies`](#-rundeck--admin_policies)
 * [`api_policies`](#-rundeck--api_policies)
 * [`auth_config`](#-rundeck--auth_config)
@@ -99,14 +98,6 @@ The following parameters are available in the `rundeck` class:
 * [`key_storage_encrypt_config`](#-rundeck--key_storage_encrypt_config)
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`override_dir`](#-rundeck--override_dir)
-
-##### <a name="-rundeck--acl_template"></a>`acl_template`
-
-Data type: `String`
-
-The template used for acl policy. Needs to be in epp format.
-
-Default value: `'rundeck/aclpolicy.erb'`
 
 ##### <a name="-rundeck--admin_policies"></a>`admin_policies`
 
@@ -567,10 +558,9 @@ rundeck::config::aclpolicyfile { 'myPolicyFile':
 The following parameters are available in the `rundeck::config::aclpolicyfile` defined type:
 
 * [`acl_policies`](#-rundeck--config--aclpolicyfile--acl_policies)
-* [`group`](#-rundeck--config--aclpolicyfile--group)
 * [`owner`](#-rundeck--config--aclpolicyfile--owner)
+* [`group`](#-rundeck--config--aclpolicyfile--group)
 * [`properties_dir`](#-rundeck--config--aclpolicyfile--properties_dir)
-* [`template_file`](#-rundeck--config--aclpolicyfile--template_file)
 
 ##### <a name="-rundeck--config--aclpolicyfile--acl_policies"></a>`acl_policies`
 
@@ -578,19 +568,19 @@ Data type: `Array[Hash]`
 
 An array of hashes containing acl policies. See example.
 
-##### <a name="-rundeck--config--aclpolicyfile--group"></a>`group`
-
-Data type: `String`
-
-The group permission that rundeck is installed as.
-
-Default value: `'rundeck'`
-
 ##### <a name="-rundeck--config--aclpolicyfile--owner"></a>`owner`
 
 Data type: `String`
 
 The user that rundeck is installed as.
+
+Default value: `'rundeck'`
+
+##### <a name="-rundeck--config--aclpolicyfile--group"></a>`group`
+
+Data type: `String`
+
+The group permission that rundeck is installed as.
 
 Default value: `'rundeck'`
 
@@ -601,14 +591,6 @@ Data type: `Stdlib::Absolutepath`
 The rundeck configuration directory.
 
 Default value: `'/etc/rundeck'`
-
-##### <a name="-rundeck--config--aclpolicyfile--template_file"></a>`template_file`
-
-Data type: `String`
-
-The template used for acl policy. Default is rundeck/aclpolicy.erb
-
-Default value: `"${module_name}/aclpolicy.erb"`
 
 ### <a name="rundeck--config--plugin"></a>`rundeck::config::plugin`
 
@@ -651,7 +633,7 @@ The http source or local path from which to get the plugin.
 
 Data type: `Stdlib::Absolutepath`
 
-Dir where plugins will be installed.
+Directory where plugins will be installed.
 
 Default value: `'/var/lib/rundeck/libext'`
 

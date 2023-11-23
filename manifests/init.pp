@@ -1,7 +1,5 @@
 # @summary Class to manage installation and configuration of Rundeck.
 #
-# @param acl_template
-#   The template used for acl policy. Needs to be in epp format.
 # @param admin_policies
 #   Admin acl policies. Default value is located in data/common.yaml.
 # @param api_policies
@@ -145,7 +143,6 @@ class rundeck (
   String                         $config_template             = 'rundeck/rundeck-config.properties.epp',
   String                         $override_template           = 'rundeck/profile_overrides.epp',
   String                         $realm_template              = 'rundeck/realm.properties.epp',
-  String                         $acl_template                = 'rundeck/aclpolicy.erb',
   String                         $log_properties_template     = 'rundeck/log4j2.properties.epp',
   Boolean                        $rss_enabled                 = false,
   Optional[String]               $server_web_context          = undef,
