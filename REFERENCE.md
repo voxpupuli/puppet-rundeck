@@ -1283,9 +1283,10 @@ Default value: `undef`
 
 ##### <a name="-rundeck--config--resource_source--resource_format"></a>`resource_format`
 
-Data type: `Enum['resourcexml', 'resourceyaml']`
+Data type: `Enum['resourcexml', 'resourceyaml', 'resourcejson']`
 
-The format of the resource that will procesed, either resourcexml or resourceyaml.
+The format of the resource that will procesed, either resourcexml, resourceyaml, or
+resourcejson.
 
 Default value: `$rundeck::params::resource_format`
 
