@@ -417,7 +417,7 @@ Data type: `Array[Hash]`
 
 An array with hashes of properties for customizing the [Rundeck Key Storage converter](https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins)
 
-Default value: `[{}]`
+Default value: `[]`
 
 ##### <a name="-rundeck--app_log_level"></a>`app_log_level`
 
