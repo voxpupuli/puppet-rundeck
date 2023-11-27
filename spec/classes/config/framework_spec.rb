@@ -9,7 +9,7 @@ describe 'rundeck' do
         facts
       end
 
-      describe "rundeck::config::global::framework class without any parameters on #{os}" do
+      describe "rundeck::config::framework class without any parameters on #{os}" do
         let(:params) { {} }
 
         framework_details = {

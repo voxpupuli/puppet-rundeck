@@ -23,7 +23,7 @@
 #
 <%= $_auth_config['file']['realm_config']['admin_user'] %>:<%= $_auth_config['file']['realm_config']['admin_password'] %>,user,admin,architect,deploy,build
 <%- if $_auth_config['file']['realm_config']['auth_users'] { -%>
-  <%- if is_array($_auth_config['file']['realm_config']['auth_users']) { -%> 
+  <%- if $_auth_config['file']['realm_config']['auth_users'] =~ Array { -%> 
     <%- $_auth_config['file']['realm_config']['auth_users'].each |$x| { -%>
       <%- if $x['username'] { -%>
         <%= $x['username'] -%>:<%= $x['password'] -%>

@@ -9,7 +9,7 @@ describe 'rundeck' do
         facts
       end
 
-      describe "rundeck::config::global::aclpolicyfile class without any parameters on #{os}" do
+      describe "rundeck::config::aclpolicyfile class without any parameters on #{os}" do
         let(:params) { {} }
 
         default_acl = <<~CONFIG.gsub(%r{[^\S\n]{10}}, '')
