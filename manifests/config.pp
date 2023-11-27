@@ -5,7 +5,7 @@
 class rundeck::config {
   assert_private()
 
-  $framework_config = deep_merge(lookup('rundeck::framework_config'), $rundeck::framework_config)
+  $framework_config = $rundeck::framework_config
 
   $base_dir       = $framework_config['rdeck.base']
   $properties_dir = $framework_config['framework.etc.dir']

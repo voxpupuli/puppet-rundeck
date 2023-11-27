@@ -208,7 +208,7 @@ class rundeck (
   Hash                           $security_config = {},
   Hash                           $preauthenticated_config = {},
   Rundeck::Key_storage_config    $key_storage_config = [{ 'type' => 'db', 'path' => 'keys' }],
-  Array[Hash]                    $key_storage_encrypt_config = [{}],
+  Array[Hash]                    $key_storage_encrypt_config = [],
   Rundeck::Loglevel              $app_log_level = 'info',
   Rundeck::Loglevel              $audit_log_level = 'info',
   String                         $config_template = 'rundeck/rundeck-config.properties.epp',
