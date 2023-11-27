@@ -13,7 +13,7 @@ describe 'rundeck' do
         let(:params) { {} }
 
         default_acl = <<~CONFIG.gsub(%r{[^\S\n]{10}}, '')
-          description: 'Admin, all access'
+          description: Admin, all access
           context:
             project: '.*'
           for:
@@ -31,7 +31,7 @@ describe 'rundeck' do
 
           ---
 
-          description: 'Admin, all access'
+          description: Admin, all access
           context:
             application: 'rundeck'
           for:

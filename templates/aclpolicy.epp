@@ -1,7 +1,7 @@
 <%- $_acl_policies.each |$_index, $_policy| { -%>
 description: <%= $_policy['description'] %>
 context:
-  <%= $_policy['context'].keys[0] %>: "<%= $_policy['context'].values[0] %>"
+  <%= $_policy['context'].keys[0] %>: '<%= $_policy['context'].values[0] %>'
 for:
 <%- $_policy['for'].each |$_resource, $_kind| { -%>
   <%= $_resource %>:
