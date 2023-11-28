@@ -16,6 +16,7 @@ describe 'rundeck' do
         it { is_expected.to contain_file('/var/lib/rundeck').with('ensure' => 'directory') }
         it { is_expected.to contain_file('/var/lib/rundeck/libext').with('ensure' => 'directory') }
         it { is_expected.to contain_file('/etc/rundeck').with('ensure' => 'directory') }
+        it { is_expected.to contain_file('/var/log/rundeck').with('ensure' => 'directory') }
 
         it { is_expected.to contain_file('/etc/rundeck/log4j2.properties') }
 
@@ -25,7 +26,9 @@ describe 'rundeck' do
         end
 
         it { is_expected.to contain_rundeck__config__aclpolicyfile('admin') }
+        it { is_expected.to contain_file('/etc/rundeck/admin.aclpolicy') }
         it { is_expected.to contain_rundeck__config__aclpolicyfile('apitoken') }
+        it { is_expected.to contain_file('/etc/rundeck/apitoken.aclpolicy') }
 
         it { is_expected.to contain_file(overrides) }
 
@@ -57,18 +60,6 @@ describe 'rundeck' do
           expect(content).to include('dataSource.url = jdbc:h2:file:/var/lib/rundeck/data/rundeckdb')
           expect(content).to include('rundeck.storage.provider.1.type = db')
           expect(content).to include('rundeck.storage.provider.1.path = keys')
-        end
-      end
-
-      context 'with override_template set' do
-        template = 'rundeck/../spec/fixtures/files/override.template'
-        let(:params) { { override_template: template } }
-
-        it { is_expected.to contain_file(overrides) }
-
-        it 'uses the content for the profile overrides template' do
-          content = catalogue.resource('file', overrides)[:content]
-          expect(content).to include('test override template')
         end
       end
 

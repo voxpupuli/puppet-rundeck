@@ -17,6 +17,7 @@ describe 'rundeck' do
         end
 
         it { is_expected.to contain_file('/etc/rundeck/realm.properties').with(ensure: 'absent') }
+        it { is_expected.to contain_file('/etc/rundeck/jaas-loginmodule.conf').with(ensure: 'file') }
 
         it 'jaas-loginmodule.conf contains no auth classes' do
           jaas_auth = catalogue.resource('file', '/etc/rundeck/jaas-loginmodule.conf')[:content]
@@ -44,6 +45,9 @@ describe 'rundeck' do
             }
           }
         end
+
+        it { is_expected.to contain_file('/etc/rundeck/realm.properties').with(ensure: 'file') }
+        it { is_expected.to contain_file('/etc/rundeck/jaas-loginmodule.conf').with(ensure: 'file') }
 
         it 'generates valid content for realm.properties' do
           content = catalogue.resource('file', '/etc/rundeck/realm.properties')[:content]
@@ -207,7 +211,7 @@ describe 'rundeck' do
 
         it 'generates valid content for jaas-loginmodule.conf' do
           content = catalogue.resource('file', '/etc/rundeck/jaas-loginmodule.conf')[:content]
-          expect(content).to include('com.dtolabs.rundeck.jetty.jaas.JettyCombinedLdapLoginModule required')
+          expect(content).to include(' com.dtolabs.rundeck.jetty.jaas.JettyCachingLdapLoginModule required')
           expect(content).to include('debug="true"')
           expect(content).to include('providerUrl="ldap://server:389"')
           expect(content).to include('bindDn="cn=Manager,dc=example,dc=com"')

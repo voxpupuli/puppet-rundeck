@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe 'rundeck::config::aclpolicyfile', type: :define do
-  admin_policy = [
+  test_policy = [
     {
-      'description' => 'Admin, all access',
+      'description' => 'Test project access',
       'context' => {
         'project' => '.*'
       },
@@ -24,11 +24,11 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         ],
       },
       'by' => [
-        { 'group' => ['admin'] }
+        { 'group' => ['test'] }
       ],
     },
     {
-      'description' => 'Admin, all access',
+      'description' => 'Test application access',
       'context' => {
         'application' => 'rundeck'
       },
@@ -44,13 +44,13 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         ],
       },
       'by' => [
-        { 'group' => ['admin'] }
+        { 'group' => ['test'] }
       ]
     }
   ]
 
-  admin_acl = <<~CONFIG.gsub(%r{[^\S\n]{10}}, '')
-    description: Admin, all access
+  test_acl = <<~CONFIG.gsub(%r{[^\S\n]{10}}, '')
+    description: Test project access
     context:
       project: '.*'
     for:
@@ -64,11 +64,11 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         - allow: '*'
     by:
       group:
-        - 'admin'
+        - 'test'
 
     ---
 
-    description: Admin, all access
+    description: Test application access
     context:
       application: 'rundeck'
     for:
@@ -80,32 +80,32 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         - allow: '*'
     by:
       group:
-        - 'admin'
+        - 'test'
   CONFIG
 
-  context 'with admin acl and default parameters' do
-    let(:title) { 'admin' }
+  context 'with test acl and default parameters' do
+    let(:title) { 'test' }
     let(:params) do
       {
-        acl_policies: admin_policy,
+        acl_policies: test_policy,
       }
     end
 
     it {
-      is_expected.to contain_file('/etc/rundeck/admin.aclpolicy').with(
+      is_expected.to contain_file('/etc/rundeck/test.aclpolicy').with(
         owner: 'rundeck',
         group: 'rundeck',
         mode: '0644',
-        content: admin_acl
+        content: test_acl
       )
     }
   end
 
-  context 'with admin acl and custom parameters' do
-    let(:title) { 'admin' }
+  context 'with test acl and custom parameters' do
+    let(:title) { 'test' }
     let(:params) do
       {
-        acl_policies: admin_policy,
+        acl_policies: test_policy,
         properties_dir: '/etc/rundeck-acl',
         owner: 'myUser',
         group: 'myGroup'
@@ -113,11 +113,20 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
     end
 
     it {
-      is_expected.to contain_file('/etc/rundeck-acl/admin.aclpolicy').with(
+      is_expected.to contain_file('/etc/rundeck-acl').with(
+        ensure: 'directory',
+        owner: 'myUser',
+        group: 'myGroup',
+        mode: '0755'
+      )
+    }
+
+    it {
+      is_expected.to contain_file('/etc/rundeck-acl/test.aclpolicy').with(
         owner: 'myUser',
         group: 'myGroup',
         mode: '0644',
-        content: admin_acl
+        content: test_acl
       )
     }
   end

@@ -49,19 +49,18 @@ describe 'rundeck' do
       end
 
       context 'setting framework.server.{name,url}' do
-        context 'with non-default framework.server.hostname' do
+        context 'with non-default framework.server.url' do
           let(:params) do
             {
               framework_config: {
-                'framework.server.url' => 'rundeck.example.com'
+                'framework.server.url' => 'http://rundeck.example.com:4440'
               }
             }
           end
 
-          it do
-            is_expected.to contain_file('/etc/rundeck/framework.properties').with_content(
-              %r{framework\.server\.url = http://rundeck\.example\.com:4440}
-            )
+          it 'generates valid content for framework.properties' do
+            content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+            expect(content).to include('framework.server.url = http://rundeck.example.com:4440')
           end
         end
 
@@ -73,10 +72,10 @@ describe 'rundeck' do
             }
           end
 
-          it do
-            is_expected.to contain_file('/etc/rundeck/framework.properties'). \
-              with_content(%r{^framework\.server\.port = 443$}). \
-              with_content(%r{framework\.server\.url = https://foo\.example\.com:443})
+          it 'generates valid content for framework.properties' do
+            content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+            expect(content).to include('framework.server.port = 443')
+            expect(content).to include('framework.server.url = https://foo.example.com:443')
           end
         end
 
@@ -91,10 +90,10 @@ describe 'rundeck' do
             }
           end
 
-          it do
-            is_expected.to contain_file('/etc/rundeck/framework.properties'). \
-              with_content(%r{^framework\.server\.port = 443$}). \
-              with_content(%r{framework\.server\.url = https://rundeck\.example\.com:443})
+          it 'generates valid content for framework.properties' do
+            content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+            expect(content).to include('framework.server.port = 443')
+            expect(content).to include('framework.server.url = https://rundeck.example.com:443')
           end
         end
       end

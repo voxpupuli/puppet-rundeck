@@ -9,7 +9,7 @@ describe 'rundeck' do
         facts
       end
 
-      context 'rundeck class without any parameters' do
+      context 'without any parameters test rundeck' do
         let(:params) { {} }
 
         it { is_expected.to compile.with_all_deps }
@@ -21,7 +21,19 @@ describe 'rundeck' do
         it { is_expected.not_to contain_class('rundeck::config::ssl') }
       end
 
-      context 'rundeck class with ssl_enabled => true' do
+      context 'with service_notify => false' do
+        let(:params) do
+          {
+            service_notify: false
+          }
+        end
+
+        it { is_expected.to contain_class('rundeck::install').that_comes_before('Class[rundeck::config]') }
+        it { is_expected.to contain_class('rundeck::config').that_comes_before('Class[rundeck::service]') }
+        it { is_expected.to contain_class('rundeck::service') }
+      end
+
+      context 'with ssl_enabled => true' do
         let(:params) do
           {
             ssl_enabled: true

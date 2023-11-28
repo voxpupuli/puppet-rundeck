@@ -26,6 +26,25 @@ describe 'rundeck' do
         it { is_expected.to contain_file('/etc/rundeck/ssl').with('ensure' => 'directory') }
         it { is_expected.to contain_file('/etc/rundeck/ssl/ssl.properties') }
 
+        it {
+          is_expected.to contain_java_ks('keystore').with(
+            ensure: 'present',
+            certificate: '/etc/rundeck/ssl/rundeck.crt',
+            private_key: '/etc/rundeck/ssl/rundeck.key',
+            trustcacerts: true,
+            password: 'adminadmin',
+            target: '/etc/rundeck/ssl/keystore',
+          )
+        }
+
+        it {
+          is_expected.to contain_java_ks('truststore').with(
+            ensure: 'present',
+            password: 'adminadmin',
+            target: '/etc/rundeck/ssl/truststore'
+          )
+        }
+
         ssl_details.each do |key, value|
           it 'generates valid content for ssl.properties' do
             content = catalogue.resource('file', '/etc/rundeck/ssl/ssl.properties')[:content]
@@ -41,6 +60,20 @@ describe 'rundeck' do
             key_password: 'verysecure'
           }
         end
+
+        it {
+          is_expected.to contain_java_ks('keystore').with(
+            ensure: 'present',
+            destkeypass: 'verysecure'
+          )
+        }
+
+        it {
+          is_expected.to contain_java_ks('truststore').with(
+            ensure: 'present',
+            destkeypass: 'verysecure'
+          )
+        }
 
         it 'generates valid content for ssl.properties' do
           content = catalogue.resource('file', '/etc/rundeck/ssl/ssl.properties')[:content]
