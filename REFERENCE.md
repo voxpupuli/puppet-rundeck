@@ -352,24 +352,9 @@ Default value: `{ 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' }`
 Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
+This hash will be merged some [defaults](https://github.com/voxpupuli/puppet-rundeck/blob/ffcc77ea943f2ee52257004ec6385ab3a3aa6f91/manifests/config.pp#L8C12-L8C12) # TODO: Update ref
 
-Default value:
-
-```puppet
-{
-    'rdeck.base'                => '/var/lib/rundeck',
-    'framework.server.hostname' => $facts['networking']['hostname'],
-    'framework.server.name'     => $facts['networking']['fqdn'],
-    'framework.server.port'     => '4440',
-    'framework.server.url'      => "http://${facts['networking']['fqdn']}:4440",
-    'framework.etc.dir'         => '/etc/rundeck',
-    'framework.libext.dir'      => '/var/lib/rundeck/libext',
-    'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
-    'framework.ssh.user'        => 'rundeck',
-    'framework.ssh.timeout'     => '0',
-    'rundeck.server.uuid'       => fqdn_uuid($facts['networking']['fqdn']),
-  }
-```
+Default value: `{}`
 
 ##### <a name="-rundeck--gui_config"></a>`gui_config`
 

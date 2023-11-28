@@ -14,7 +14,7 @@ class rundeck::config::framework {
     $_framework_ssl_config = {}
   }
 
-  $_framework_config = deep_merge($rundeck::config::framework_config, $_framework_ssl_config)
+  $_framework_config = $rundeck::config::framework_config + $_framework_ssl_config
 
   file { "${rundeck::config::properties_dir}/framework.properties":
     ensure  => file,

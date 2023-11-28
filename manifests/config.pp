@@ -5,7 +5,21 @@
 class rundeck::config {
   assert_private()
 
-  $framework_config = $rundeck::framework_config
+  $_framework_defaults = {
+    'rdeck.base'                => '/var/lib/rundeck',
+    'framework.server.hostname' => $facts['networking']['hostname'],
+    'framework.server.name'     => $facts['networking']['fqdn'],
+    'framework.server.port'     => '4440',
+    'framework.server.url'      => "http://${facts['networking']['fqdn']}:4440",
+    'framework.etc.dir'         => '/etc/rundeck',
+    'framework.libext.dir'      => '/var/lib/rundeck/libext',
+    'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
+    'framework.ssh.user'        => 'rundeck',
+    'framework.ssh.timeout'     => '0',
+    'rundeck.server.uuid'       => fqdn_uuid($facts['networking']['fqdn']),
+  }
+
+  $framework_config = $_framework_defaults + $rundeck::framework_config
 
   $base_dir       = $framework_config['rdeck.base']
   $properties_dir = $framework_config['framework.etc.dir']
