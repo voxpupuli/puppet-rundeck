@@ -21,7 +21,7 @@ describe 'rundeck' do
               baseurl: 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
               descr: 'Rundeck repository',
               enabled: 1,
-              gpgcheck: 1,
+              gpgcheck: 0,
               gpgkey: 'https://packagecloud.io/pagerduty/rundeck/gpgkey',
               repo_gpgcheck: 1
             ).that_comes_before('Package[rundeck]')
