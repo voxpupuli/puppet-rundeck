@@ -352,7 +352,7 @@ Default value: `{ 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' }`
 Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
-This hash will be merged with the [Rundeck defaults](https://github.com/voxpupuli/puppet-rundeck/blob/4eb3f4158f49cd1176090897aa88098f1e4507ab/manifests/config.pp#L8-L20) # TODO: Update ref
+This hash will be merged with the [Rundeck defaults](https://github.com/voxpupuli/puppet-rundeck/blob/master/manifests/config.pp#L8-L20)
 
 Default value: `{}`
 

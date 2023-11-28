@@ -75,7 +75,7 @@ class rundeck::config {
     }
   }
 
-  if ($rundeck::override_template) {
+  if $rundeck::override_template {
     file { "${rundeck::override_dir}/${rundeck::service_name}":
       ensure  => file,
       content => epp($rundeck::override_template),

@@ -9,7 +9,7 @@ class rundeck::service {
     file { '/etc/init/rundeckd.conf':
       ensure  => file,
       mode    => '0644',
-      content => template($rundeck::service_config),
+      content => epp($rundeck::service_config),
     }
   }
 

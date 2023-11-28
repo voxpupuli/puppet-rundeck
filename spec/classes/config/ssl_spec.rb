@@ -33,7 +33,7 @@ describe 'rundeck' do
             private_key: '/etc/rundeck/ssl/rundeck.key',
             trustcacerts: true,
             password: 'adminadmin',
-            target: '/etc/rundeck/ssl/keystore',
+            target: '/etc/rundeck/ssl/keystore'
           )
         }
 
