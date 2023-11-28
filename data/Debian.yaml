@@ -1,7 +1,7 @@
 ---
 rundeck::override_dir: '/etc/default'
 
-rundeck::repoconfig:
+rundeck::repo_config:
   'apt::source':
     'rundeck':
       location: 'https://packagecloud.io/pagerduty/rundeck/any'
