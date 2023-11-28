@@ -46,7 +46,7 @@ grails.mail.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
 <%- $rundeck::security_config.each |$_k, $_v| {-%>
-<%= $k %> = <%= $rundeck::security_config[$k] %>
+rundeck.security.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
 <%- $rundeck::preauthenticated_config.each  |$_k, $_v| { -%>
@@ -54,5 +54,5 @@ rundeck.security.authorization.preauthenticated.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
 <%- $rundeck::gui_config.each |$_k, $_v| {-%>
-<%= $_k %> = <%= $_v %>
+rundeck.gui.<%= $_k %> = <%= $_v %>
 <%- } -%>

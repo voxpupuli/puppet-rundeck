@@ -9,7 +9,7 @@ describe 'rundeck::config::plugin', type: :define do
         facts
       end
 
-      describe "rundeck::config::plugin definition without any parameters on #{os}" do
+      context 'install rundeck hipchat plugin' do
         name = 'rundeck-hipchat-plugin-1.0.0.jar'
         source = 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
         plugin_dir = '/var/lib/rundeck/libext'
@@ -36,7 +36,7 @@ describe 'rundeck::config::plugin', type: :define do
         end
       end
 
-      describe "rundeck::config::plugin definition with ensure set to absent on #{os}" do
+      context 'make rundeck hipchat plugin absent' do
         name = 'rundeck-hipchat-plugin-1.0.0.jar'
         source = 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
         plugin_dir = '/var/lib/rundeck/libext'

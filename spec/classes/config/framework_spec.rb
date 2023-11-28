@@ -3,22 +3,18 @@
 require 'spec_helper'
 
 describe 'rundeck' do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let :facts do
-        facts
-      end
+      let(:facts) { os_facts }
 
-      describe "rundeck::config::framework class without any parameters on #{os}" do
+      context 'without any parameters test rundeck::config::framework' do
         let(:params) { {} }
 
         framework_details = {
           'framework.server.name' => 'foo.example.com',
-          'framework.server.hostname' => 'foo.example.com',
+          'framework.server.hostname' => 'foo',
           'framework.server.port' => '4440',
           'framework.server.url' => 'http://foo.example.com:4440',
-          'framework.server.username' => 'admin',
-          'framework.server.password' => 'admin',
           'framework.etc.dir' => '/etc/rundeck',
           'framework.libext.dir' => '/var/lib/rundeck/libext',
           'framework.ssh.keypath' => '/var/lib/rundeck/.ssh/id_rsa',
@@ -36,30 +32,28 @@ describe 'rundeck' do
         end
       end
 
-      context 'add plugin configuration' do
-        describe 'add plugin configuration for the logstash plugin' do
-          let(:params) do
-            {
-              framework_config: {
-                'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
-              }
+      context 'add plugin configuration for the logstash plugin' do
+        let(:params) do
+          {
+            framework_config: {
+              'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
             }
-          end
+          }
+        end
 
-          it 'generates valid content for framework.properties' do
-            content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
-            expect(content).to include('framework.server.name = foo.example.com')
-            expect(content).to include('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
-          end
+        it 'generates valid content for framework.properties' do
+          content = catalogue.resource('file', '/etc/rundeck/framework.properties')[:content]
+          expect(content).to include('framework.server.name = foo.example.com')
+          expect(content).to include('framework.plugin.StreamingLogWriter.LogstashPlugin.port = 9700')
         end
       end
 
-      context 'setting framework.server.{port,url}' do
-        describe 'with non-default framework.server.hostname' do
+      context 'setting framework.server.{name,url}' do
+        context 'with non-default framework.server.hostname' do
           let(:params) do
             {
               framework_config: {
-                'framework.server.hostname' => 'rundeck.example.com'
+                'framework.server.url' => 'rundeck.example.com'
               }
             }
           end
@@ -71,7 +65,7 @@ describe 'rundeck' do
           end
         end
 
-        describe 'ssl_enabled with non-default SSL port' do
+        context 'ssl_enabled with non-default SSL port' do
           let(:params) do
             {
               ssl_enabled: true,
@@ -86,13 +80,13 @@ describe 'rundeck' do
           end
         end
 
-        describe 'ssl_enabled with non-default framework.server.hostname' do
+        context 'ssl_enabled with non-default framework.server.hostname' do
           let(:params) do
             {
               ssl_enabled: true,
               ssl_port: 443,
               framework_config: {
-                'framework.server.hostname' => 'rundeck.example.com'
+                'framework.server.name' => 'rundeck.example.com'
               }
             }
           end

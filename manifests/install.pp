@@ -26,7 +26,6 @@ class rundeck::install {
       uid    => $rundeck::user_id,
       gid    => $rundeck::group_id,
       system => true,
-      before => File['/var/rundeck'],
     }
 
     if $rundeck::user != 'rundeck' {

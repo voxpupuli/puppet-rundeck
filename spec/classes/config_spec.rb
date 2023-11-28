@@ -12,7 +12,7 @@ describe 'rundeck' do
         facts
       end
 
-      describe "rundeck::config class without any parameters on #{os}" do
+      context 'without any parameters test rundeck::config' do
         it { is_expected.to contain_file('/var/lib/rundeck').with('ensure' => 'directory') }
         it { is_expected.to contain_file('/var/lib/rundeck/libext').with('ensure' => 'directory') }
         it { is_expected.to contain_file('/etc/rundeck').with('ensure' => 'directory') }
@@ -31,10 +31,10 @@ describe 'rundeck' do
 
         it 'generates valid content for the profile overrides file' do
           content = catalogue.resource('file', overrides)[:content]
-          expect(content).to include('RDECK_BASE=/var/lib/rundeck')
-          expect(content).to include('RDECK_CONFIG=/etc/rundeck')
-          expect(content).to include('RDECK_CONFIG_FILE=$RDECK_CONFIG/rundeck-config.properties')
-          expect(content).to include('RDECK_INSTALL=$RDECK_BASE')
+          expect(content).to include('RDECK_BASE="/var/lib/rundeck"')
+          expect(content).to include('RDECK_CONFIG="/etc/rundeck"')
+          expect(content).to include('RDECK_CONFIG_FILE="$RDECK_CONFIG/rundeck-config.properties"')
+          expect(content).to include('RDECK_INSTALL="$RDECK_BASE"')
           expect(content).to include('LOGIN_MODULE=authentication')
           expect(content).to include('RDECK_JVM_SETTINGS="-Xmx1024m -Xms256m -server"')
           expect(content).to include('RDECK_HTTP_PORT=4440')
@@ -43,8 +43,8 @@ describe 'rundeck' do
         it { is_expected.to contain_class('rundeck::config::jaas_auth') }
         it { is_expected.to contain_class('rundeck::config::framework') }
 
-        it { is_expected.to contain_file('/etc/project.properties').with('ensure' => 'absent') }
-        it { is_expected.to contain_file('/etc/rundeck-config.properties').with('ensure' => 'file') }
+        it { is_expected.to contain_file('/etc/rundeck/project.properties').with('ensure' => 'absent') }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.properties').with('ensure' => 'file') }
 
         it 'generates valid content for rundeck-config.properties' do
           content = catalogue.resource('file', '/etc/rundeck/rundeck-config.properties')[:content]
@@ -60,7 +60,7 @@ describe 'rundeck' do
         end
       end
 
-      describe 'rundeck::config with override_template set' do
+      context 'with override_template set' do
         template = 'rundeck/../spec/fixtures/files/override.template'
         let(:params) { { override_template: template } }
 
@@ -72,7 +72,7 @@ describe 'rundeck' do
         end
       end
 
-      describe 'rundeck::config with jvm_args set' do
+      context 'with jvm_args set' do
         jvm_args = '-Dserver.http.port=8008 -Xms2048m -Xmx2048m -server'
         let(:params) { { jvm_args: jvm_args } }
 

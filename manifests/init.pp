@@ -47,7 +47,7 @@
 #   Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 # @param framework_config
 #   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
-#   This hash will be merged some [defaults](https://github.com/voxpupuli/puppet-rundeck/blob/ffcc77ea943f2ee52257004ec6385ab3a3aa6f91/manifests/config.pp#L8C12-L8C12) # TODO: Update ref
+#   This hash will be merged with the [Rundeck defaults](https://github.com/voxpupuli/puppet-rundeck/blob/4eb3f4158f49cd1176090897aa88098f1e4507ab/manifests/config.pp#L8-L20) # TODO: Update ref
 # @param gui_config
 #   Hash of properties for customizing the [Rundeck GUI](https://docs.rundeck.com/docs/administration/configuration/gui-customization.html)
 # @param mail_config
@@ -179,14 +179,14 @@ class rundeck (
   Integer                        $quartz_job_threadcount = 10,
   Rundeck::Auth_config           $auth_config = {
     'file' => {
-      'auth_flag'   => 'required',
-      'jaas_config' => {
+      'auth_flag'    => 'required',
+      'jaas_config'  => {
         'file' => '/etc/rundeck/realm.properties',
       },
       'realm_config' => {
         'admin_user'     => 'admin',
         'admin_password' => 'admin',
-        'auth_users'     => {},
+        'auth_users'     => [],
       },
     },
   },

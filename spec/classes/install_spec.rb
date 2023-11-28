@@ -9,28 +9,21 @@ describe 'rundeck' do
         facts
       end
 
-      describe "rundeck class without any parameters on #{os}" do
+      context 'without any parameters test rundeck::install' do
         let(:params) { {} }
 
         it { is_expected.not_to contain_user('rundeck') }
-
-        it do
-          is_expected.to contain_file('/var/rundeck').with(
-            ensure: 'directory',
-            owner: 'rundeck',
-            group: 'rundeck',
-            recurse: true
-          )
-        end
 
         case facts[:os]['family']
         when 'RedHat'
           it do
             is_expected.to contain_yumrepo('rundeck').with(
               baseurl: 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
-              gpgcheck: 0,
-              repo_gpgcheck: 1,
-              gpgkey: 'https://packagecloud.io/pagerduty/rundeck/gpgkey'
+              descr: 'Rundeck repository',
+              enabled: 1,
+              gpgcheck: 1,
+              gpgkey: 'https://packagecloud.io/pagerduty/rundeck/gpgkey',
+              repo_gpgcheck: 1
             ).that_comes_before('Package[rundeck]')
           end
         when 'Debian'
@@ -40,7 +33,7 @@ describe 'rundeck' do
         end
       end
 
-      describe 'different user and group' do
+      context 'with different user and group' do
         let(:params) do
           {
             manage_user: true,
@@ -59,7 +52,7 @@ describe 'rundeck' do
         it { is_expected.to contain_user('rundeck').with('ensure' => 'absent') }
       end
 
-      describe 'different user and group with ids' do
+      context 'different user and group with ids' do
         let(:params) do
           {
             manage_user: true,

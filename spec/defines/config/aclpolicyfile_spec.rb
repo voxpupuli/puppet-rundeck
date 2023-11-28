@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'rundeck::config::aclpolicyfile', type: :define do
-  test_policies = [
+  admin_policy = [
     {
       'description' => 'Admin, all access',
       'context' => {
@@ -11,12 +11,21 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
       },
       'for' => {
         'resource' => [
-          { 'equals' => { 'kind' => 'job' }, 'allow' => ['create'] }
-        ]
+          { 'allow' => '*' }
+        ],
+        'adhoc' => [
+          { 'allow' => '*' }
+        ],
+        'job' => [
+          { 'allow' => '*' }
+        ],
+        'node' => [
+          { 'allow' => '*' }
+        ],
       },
       'by' => [
         { 'group' => ['admin'] }
-      ]
+      ],
     },
     {
       'description' => 'Admin, all access',
@@ -24,23 +33,15 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         'application' => 'rundeck'
       },
       'for' => {
-        'resource' => [
-          { 'equals' => { 'kind' => 'project' }, 'allow' => ['create'] }
-        ]
-      },
-      'by' => [
-        { 'group' => ['admin'] }
-      ]
-    },
-    {
-      'description' => 'System-level read access to a specific project',
-      'context' => {
-        'application' => 'rundeck'
-      },
-      'for' => {
         'project' => [
-          { 'equals' => { 'name' => 'project' }, 'allow' => ['read'] }
-        ]
+          { 'allow' => '*' }
+        ],
+        'resource' => [
+          { 'allow' => '*' }
+        ],
+        'storage' => [
+          { 'allow' => '*' }
+        ],
       },
       'by' => [
         { 'group' => ['admin'] }
@@ -48,36 +49,76 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
     }
   ]
 
-  context 'default parameters' do
-    let(:title) { 'defaultPolicy' }
+  admin_acl = <<~CONFIG.gsub(%r{[^\S\n]{10}}, '')
+    description: Admin, all access
+    context:
+      project: '.*'
+    for:
+      resource:
+        - allow: '*'
+      adhoc:
+        - allow: '*'
+      job:
+        - allow: '*'
+      node:
+        - allow: '*'
+    by:
+      group:
+        - 'admin'
+
+    ---
+
+    description: Admin, all access
+    context:
+      application: 'rundeck'
+    for:
+      project:
+        - allow: '*'
+      resource:
+        - allow: '*'
+      storage:
+        - allow: '*'
+    by:
+      group:
+        - 'admin'
+  CONFIG
+
+  context 'with admin acl and default parameters' do
+    let(:title) { 'admin' }
     let(:params) do
       {
-        acl_policies: test_policies
+        acl_policies: admin_policy,
       }
     end
 
-    it do
-      is_expected.to contain_file('/etc/rundeck/defaultPolicy.aclpolicy').with('owner' => 'rundeck',
-                                                                               'group' => 'rundeck',
-                                                                               'mode' => '0640')
-    end
+    it {
+      is_expected.to contain_file('/etc/rundeck/admin.aclpolicy').with(
+        owner: 'rundeck',
+        group: 'rundeck',
+        mode: '0644',
+        content: admin_acl
+      )
+    }
   end
 
-  context 'custom parameters' do
-    let(:title) { 'myPolicy' }
+  context 'with admin acl and custom parameters' do
+    let(:title) { 'admin' }
     let(:params) do
       {
-        acl_policies: test_policies,
+        acl_policies: admin_policy,
         properties_dir: '/etc/rundeck-acl',
         owner: 'myUser',
         group: 'myGroup'
       }
     end
 
-    it do
-      is_expected.to contain_file('/etc/rundeck-acl/myPolicy.aclpolicy').with('owner' => 'myUser',
-                                                                              'group' => 'myGroup',
-                                                                              'mode' => '0640')
-    end
+    it {
+      is_expected.to contain_file('/etc/rundeck-acl/admin.aclpolicy').with(
+        owner: 'myUser',
+        group: 'myGroup',
+        mode: '0644',
+        content: admin_acl
+      )
+    }
   end
 end
