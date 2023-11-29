@@ -3,7 +3,7 @@
 # @param manage_repo
 #   Whether to manage the package repository.
 # @param repo_config
-#   A hash of repository types and attributes for configuring the rundeck package repositories.
+#   A hash of repository attributes for configuring the rundeck package repositories.
 #   Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
 # @param package_ensure
 #   Ensure the state of the rundeck package, either present, absent or a specific version.
@@ -108,18 +108,18 @@
 #   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
 #
 class rundeck (
-  Stdlib::Absolutepath           $override_dir,
-  Hash                           $repo_config,
-  Boolean                        $manage_repo = true,
+  Stdlib::Absolutepath $override_dir,
+  Hash $repo_config,
+  Boolean $manage_repo = true,
   String[1] $package_ensure = 'installed',
-  Boolean                        $manage_home = true,
-  String                         $user = 'rundeck',
-  String                         $group = 'rundeck',
-  Boolean                        $manage_user = false,
-  Boolean                        $manage_group = false,
-  Optional[Integer]              $user_id = undef,
-  Optional[Integer]              $group_id = undef,
-  Array[Hash]                    $admin_policies = [
+  Boolean $manage_home = true,
+  String[1] $user = 'rundeck',
+  String[1] $group = 'rundeck',
+  Boolean $manage_user = false,
+  Boolean $manage_group = false,
+  Optional[Integer] $user_id = undef,
+  Optional[Integer] $group_id = undef,
+  Array[Hash] $admin_policies = [
     {
       'description' => 'Admin, all access',
       'context'     => { 'project' => '.*' },
@@ -142,7 +142,7 @@ class rundeck (
       'by'          => [{ 'group' => ['admin'] }],
     },
   ],
-  Array[Hash]                    $api_policies = [
+  Array[Hash] $api_policies = [
     {
       'description' => 'API project level access control',
       'context'     => { 'project' => '.*' },
@@ -169,15 +169,15 @@ class rundeck (
       'by'          => [{ 'group' => ['api_token_group'] }],
     },
   ],
-  Boolean                        $manage_default_admin_policy = true,
-  Boolean                        $manage_default_api_policy = true,
-  Stdlib::HTTPUrl                $grails_server_url = "http://${facts['networking']['fqdn']}:4440",
-  Boolean                        $clustermode_enabled = false,
-  Enum['active', 'passive']      $execution_mode = 'active',
+  Boolean $manage_default_admin_policy = true,
+  Boolean $manage_default_api_policy = true,
+  Stdlib::HTTPUrl $grails_server_url = "http://${facts['networking']['fqdn']}:4440",
+  Boolean $clustermode_enabled = false,
+  Enum['active', 'passive'] $execution_mode = 'active',
   Optional[Stdlib::Absolutepath] $java_home = undef,
-  String                         $jvm_args = '-Xmx1024m -Xms256m -server',
-  Integer                        $quartz_job_threadcount = 10,
-  Rundeck::Auth_config           $auth_config = {
+  String $jvm_args = '-Xmx1024m -Xms256m -server',
+  Integer $quartz_job_threadcount = 10,
+  Rundeck::Auth_config $auth_config = {
     'file' => {
       'auth_flag'    => 'required',
       'jaas_config'  => {
@@ -190,37 +190,37 @@ class rundeck (
       },
     },
   },
-  Rundeck::Db_config             $database_config = { 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' },
-  Hash                           $framework_config = {},
-  Hash                           $gui_config = {},
-  Rundeck::Mail_config           $mail_config = {},
-  Hash                           $security_config = {},
-  Hash                           $preauthenticated_config = {},
-  Rundeck::Key_storage_config    $key_storage_config = [{ 'type' => 'db', 'path' => 'keys' }],
-  Array[Hash]                    $key_storage_encrypt_config = [],
-  Rundeck::Loglevel              $app_log_level = 'info',
-  Rundeck::Loglevel              $audit_log_level = 'info',
-  String                         $config_template = 'rundeck/rundeck-config.properties.epp',
-  String                         $override_template = 'rundeck/profile_overrides.epp',
-  String                         $realm_template = 'rundeck/realm.properties.epp',
-  String                         $log_properties_template = 'rundeck/log4j2.properties.epp',
-  Boolean                        $rss_enabled = false,
-  Optional[String]               $server_web_context = undef,
-  Boolean                        $ssl_enabled = false,
-  Stdlib::Port                   $ssl_port = 4443,
-  Stdlib::Absolutepath           $ssl_certificate = '/etc/rundeck/ssl/rundeck.crt',
-  Stdlib::Absolutepath           $ssl_private_key = '/etc/rundeck/ssl/rundeck.key',
-  Optional[String]               $key_password = undef,
-  Stdlib::Absolutepath           $keystore = '/etc/rundeck/ssl/keystore',
-  String                         $keystore_password = 'adminadmin',
-  Stdlib::Absolutepath           $truststore = '/etc/rundeck/ssl/truststore',
-  String                         $truststore_password = 'adminadmin',
-  String                         $service_name = 'rundeckd',
-  Enum['stopped', 'running']     $service_ensure = 'running',
-  Stdlib::Absolutepath           $service_logs_dir = '/var/log/rundeck',
-  Boolean                        $service_notify = true,
-  Optional[String]               $service_config = undef,
-  Optional[String]               $service_script = undef,
+  Rundeck::Db_config $database_config = { 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' },
+  Hash $framework_config = {},
+  Hash $gui_config = {},
+  Rundeck::Mail_config $mail_config = {},
+  Hash $security_config = {},
+  Hash $preauthenticated_config = {},
+  Rundeck::Key_storage_config $key_storage_config = [{ 'type' => 'db', 'path' => 'keys' }],
+  Array[Hash] $key_storage_encrypt_config = [],
+  Rundeck::Loglevel $app_log_level = 'info',
+  Rundeck::Loglevel $audit_log_level = 'info',
+  String[1] $config_template = 'rundeck/rundeck-config.properties.epp',
+  String[1] $override_template = 'rundeck/profile_overrides.epp',
+  String[1] $realm_template = 'rundeck/realm.properties.epp',
+  String[1] $log_properties_template = 'rundeck/log4j2.properties.epp',
+  Boolean $rss_enabled = false,
+  Optional[String[1]] $server_web_context = undef,
+  Boolean $ssl_enabled = false,
+  Stdlib::Port $ssl_port = 4443,
+  Stdlib::Absolutepath $ssl_certificate = '/etc/rundeck/ssl/rundeck.crt',
+  Stdlib::Absolutepath $ssl_private_key = '/etc/rundeck/ssl/rundeck.key',
+  Optional[String[1]] $key_password = undef,
+  Stdlib::Absolutepath $keystore = '/etc/rundeck/ssl/keystore',
+  String[1] $keystore_password = 'adminadmin',
+  Stdlib::Absolutepath $truststore = '/etc/rundeck/ssl/truststore',
+  String[1] $truststore_password = 'adminadmin',
+  String[1] $service_name = 'rundeckd',
+  Enum['stopped', 'running'] $service_ensure = 'running',
+  Stdlib::Absolutepath $service_logs_dir = '/var/log/rundeck',
+  Boolean $service_notify = true,
+  Optional[String[1]] $service_config = undef,
+  Optional[String[1]] $service_script = undef,
 ) {
   validate_rd_policy($admin_policies)
   validate_rd_policy($api_policies)

@@ -36,16 +36,39 @@ class rundeck::install {
   }
 
   case $facts['os']['family'] {
-    /RedHat|Debian/: {
+    'RedHat': {
       if $rundeck::manage_repo {
-        $rundeck::repo_config.each() | String $_resource_type, Hash $_resources | {
-          if downcase($_resource_type) == 'apt::source' {
-            Class['Apt::Update'] -> Package['rundeck']
+        $rundeck::repo_config.each | String $_repo_name, Hash $_attributes| {
+          yumrepo { $_repo_name:
+            *      => $_attributes,
+            before => Package['rundeck'],
           }
-          create_resources($_resource_type, $_resources, { 'before' => Package['rundeck'] })
         }
       }
-      ensure_packages(['rundeck'], { 'ensure' => $rundeck::package_ensure, notify => Class['rundeck::service'] })
+
+      package { 'rundeck':
+        ensure => $rundeck::package_ensure,
+        notify => Class['rundeck::service'],
+      }
+    }
+    'Debian': {
+      if $rundeck::manage_repo {
+        include apt
+
+        $rundeck::repo_config.each | String $_repo_name, Hash $_attributes | {
+          apt::source { $_repo_name:
+            *      => $_attributes,
+            before => Package['rundeck'],
+          }
+        }
+
+        Class['Apt::Update'] -> Package['rundeck']
+      }
+
+      package { 'rundeck':
+        ensure => $rundeck::package_ensure,
+        notify => Class['rundeck::service'],
+      }
     }
     default: {
       err("The osfamily: ${facts['os']['family']} is not supported")

@@ -112,12 +112,12 @@ Default value: `true`
 
 Data type: `Hash`
 
-A hash of repository types and attributes for configuring the rundeck package repositories.
+A hash of repository attributes for configuring the rundeck package repositories.
 Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
 
 ##### <a name="-rundeck--package_ensure"></a>`package_ensure`
 
-Data type: `String`
+Data type: `String[1]`
 
 Ensure the state of the rundeck package, either present, absent or a specific version.
 
@@ -133,7 +133,7 @@ Default value: `true`
 
 ##### <a name="-rundeck--user"></a>`user`
 
-Data type: `String`
+Data type: `String[1]`
 
 The user that rundeck is installed as.
 
@@ -141,7 +141,7 @@ Default value: `'rundeck'`
 
 ##### <a name="-rundeck--group"></a>`group`
 
-Data type: `String`
+Data type: `String[1]`
 
 The group permission that rundeck is installed as.
 
@@ -422,7 +422,7 @@ Default value: `'info'`
 
 ##### <a name="-rundeck--config_template"></a>`config_template`
 
-Data type: `String`
+Data type: `String[1]`
 
 The template used for rundeck-config properties. Needs to be in epp format.
 
@@ -430,7 +430,7 @@ Default value: `'rundeck/rundeck-config.properties.epp'`
 
 ##### <a name="-rundeck--override_template"></a>`override_template`
 
-Data type: `String`
+Data type: `String[1]`
 
 The template used for rundeck profile overrides. Needs to be in epp format.
 
@@ -438,7 +438,7 @@ Default value: `'rundeck/profile_overrides.epp'`
 
 ##### <a name="-rundeck--realm_template"></a>`realm_template`
 
-Data type: `String`
+Data type: `String[1]`
 
 The template used for jaas realm properties. Needs to be in epp format.
 
@@ -446,7 +446,7 @@ Default value: `'rundeck/realm.properties.epp'`
 
 ##### <a name="-rundeck--log_properties_template"></a>`log_properties_template`
 
-Data type: `String`
+Data type: `String[1]`
 
 The template used for log properties. Needs to be in epp format.
 
@@ -462,7 +462,7 @@ Default value: `false`
 
 ##### <a name="-rundeck--server_web_context"></a>`server_web_context`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
 
@@ -502,7 +502,7 @@ Default value: `'/etc/rundeck/ssl/rundeck.key'`
 
 ##### <a name="-rundeck--key_password"></a>`key_password`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 The password used to protect the key in keystore.
 
@@ -518,7 +518,7 @@ Default value: `'/etc/rundeck/ssl/keystore'`
 
 ##### <a name="-rundeck--keystore_password"></a>`keystore_password`
 
-Data type: `String`
+Data type: `String[1]`
 
 The password for the given keystore.
 
@@ -534,7 +534,7 @@ Default value: `'/etc/rundeck/ssl/truststore'`
 
 ##### <a name="-rundeck--truststore_password"></a>`truststore_password`
 
-Data type: `String`
+Data type: `String[1]`
 
 The password for the given truststore.
 
@@ -542,7 +542,7 @@ Default value: `'adminadmin'`
 
 ##### <a name="-rundeck--service_name"></a>`service_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 The name of the rundeck service.
 
@@ -574,7 +574,7 @@ Default value: `true`
 
 ##### <a name="-rundeck--service_config"></a>`service_config`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Allows you to use your own override template instead to config rundeckd init script.
 
@@ -582,7 +582,7 @@ Default value: `undef`
 
 ##### <a name="-rundeck--service_script"></a>`service_script`
 
-Data type: `Optional[String]`
+Data type: `Optional[String[1]]`
 
 Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
 
@@ -658,7 +658,7 @@ Default value: `'present'`
 
 ##### <a name="-rundeck--config--aclpolicyfile--owner"></a>`owner`
 
-Data type: `String`
+Data type: `String[1]`
 
 The user that rundeck is installed as.
 
@@ -666,7 +666,7 @@ Default value: `'rundeck'`
 
 ##### <a name="-rundeck--config--aclpolicyfile--group"></a>`group`
 
-Data type: `String`
+Data type: `String[1]`
 
 The group permission that rundeck is installed as.
 
@@ -707,7 +707,7 @@ The following parameters are available in the `rundeck::config::plugin` defined 
 
 ##### <a name="-rundeck--config--plugin--source"></a>`source`
 
-Data type: `String`
+Data type: `String[1]`
 
 The http source or local path from which to get the plugin.
 
@@ -721,7 +721,7 @@ Default value: `'present'`
 
 ##### <a name="-rundeck--config--plugin--owner"></a>`owner`
 
-Data type: `String`
+Data type: `String[1]`
 
 The user that rundeck is installed as.
 
@@ -729,7 +729,7 @@ Default value: `'rundeck'`
 
 ##### <a name="-rundeck--config--plugin--group"></a>`group`
 
-Data type: `String`
+Data type: `String[1]`
 
 The group permission that rundeck is installed as.
 

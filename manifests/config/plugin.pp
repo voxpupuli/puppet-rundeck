@@ -19,11 +19,11 @@
 #   Get the plugin trough a proxy server.
 #
 define rundeck::config::plugin (
-  String                    $source,
-  Enum['present', 'absent'] $ensure       = 'present',
-  String                    $owner        = 'rundeck',
-  String                    $group        = 'rundeck',
-  Stdlib::Absolutepath      $plugins_dir  = '/var/lib/rundeck/libext',
+  String[1] $source,
+  Enum['present', 'absent'] $ensure = 'present',
+  String[1] $owner = 'rundeck',
+  String[1] $group = 'rundeck',
+  Stdlib::Absolutepath $plugins_dir = '/var/lib/rundeck/libext',
   Optional[Stdlib::HTTPUrl] $proxy_server = undef,
 ) {
   ensure_resource('file', $plugins_dir, { 'ensure' => 'directory', 'owner' => $owner, 'group' => $group, 'mode' => '0755' })

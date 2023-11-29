@@ -39,11 +39,11 @@
 #   The rundeck configuration directory.
 #
 define rundeck::config::aclpolicyfile (
-  Array[Hash]               $acl_policies,
-  Enum['present', 'absent'] $ensure         = 'present',
-  String                    $owner          = 'rundeck',
-  String                    $group          = 'rundeck',
-  Stdlib::Absolutepath      $properties_dir = '/etc/rundeck',
+  Array[Hash] $acl_policies,
+  Enum['present', 'absent'] $ensure = 'present',
+  String[1] $owner = 'rundeck',
+  String[1] $group = 'rundeck',
+  Stdlib::Absolutepath $properties_dir = '/etc/rundeck',
 ) {
   validate_rd_policy($acl_policies)
 

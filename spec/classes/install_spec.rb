@@ -18,18 +18,17 @@ describe 'rundeck' do
         when 'RedHat'
           it do
             is_expected.to contain_yumrepo('rundeck').with(
-              baseurl: 'https://packagecloud.io/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
-              descr: 'Rundeck repository',
+              baseurl: 'https://packages.rundeck.com/pagerduty/rundeckpro/rpm_any/rpm_any/$basearch',
+              repo_gpgcheck: 1,
+              gpgcheck: 1,
               enabled: 1,
-              gpgcheck: 0,
-              gpgkey: 'https://packagecloud.io/pagerduty/rundeck/gpgkey',
-              repo_gpgcheck: 1
+              gpgkey: 'https://packages.rundeck.com/pagerduty/rundeckpro/gpgkey,https://docs.rundeck.com/keys/BUILD-GPG-KEY-20230105.key'
             ).that_comes_before('Package[rundeck]')
           end
         when 'Debian'
-          it { is_expected.to contain_apt__source('rundeck').with_location('https://packagecloud.io/pagerduty/rundeck/any') }
+          it { is_expected.to contain_apt__source('rundeck').with_location('https://packages.rundeck.com/pagerduty/rundeck/any') }
+          it { is_expected.to contain_class('apt::update').that_comes_before('Package[rundeck]') }
           it { is_expected.to contain_package('rundeck').that_notifies('Class[rundeck::service]') }
-          it { is_expected.to contain_package('rundeck').that_requires('Class[apt::update]') }
         end
       end
 
