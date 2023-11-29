@@ -7,4 +7,4 @@ rundeck::repo_config:
     repo_gpgcheck: 1
     gpgcheck: 1
     enabled: 1
-    gpgkey: https://packages.rundeck.com/pagerduty/rundeckpro/gpgkey,https://docs.rundeck.com/keys/BUILD-GPG-KEY-20230105.key
+    gpgkey: https://packages.rundeck.com/pagerduty/rundeck/gpgkey
