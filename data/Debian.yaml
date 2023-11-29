@@ -7,5 +7,5 @@ rundeck::repo_config:
     release: any
     repos: main
     key:
-      id: rundeck.asc
+      name: rundeck.gpg
       source: https://packages.rundeck.com/pagerduty/rundeck/gpgkey

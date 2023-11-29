@@ -18,11 +18,11 @@ describe 'rundeck' do
         when 'RedHat'
           it do
             is_expected.to contain_yumrepo('rundeck').with(
-              baseurl: 'https://packages.rundeck.com/pagerduty/rundeckpro/rpm_any/rpm_any/$basearch',
+              baseurl: 'https://packages.rundeck.com/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
               repo_gpgcheck: 1,
-              gpgcheck: 1,
+              gpgcheck: 0,
               enabled: 1,
-              gpgkey: 'https://packages.rundeck.com/pagerduty/rundeckpro/gpgkey,https://docs.rundeck.com/keys/BUILD-GPG-KEY-20230105.key'
+              gpgkey: 'https://packages.rundeck.com/pagerduty/rundeck/gpgkey'
             ).that_comes_before('Package[rundeck]')
           end
         when 'Debian'

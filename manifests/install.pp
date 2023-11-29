@@ -53,8 +53,6 @@ class rundeck::install {
     }
     'Debian': {
       if $rundeck::manage_repo {
-        include apt
-
         $rundeck::repo_config.each | String $_repo_name, Hash $_attributes | {
           apt::source { $_repo_name:
             *      => $_attributes,
