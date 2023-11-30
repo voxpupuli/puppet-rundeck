@@ -792,7 +792,7 @@ Struct[{
     'url'                                  => String,
     Optional['driverClassName']            => String,
     Optional['username']                   => String,
-    Optional['password']                   => String,
+    Optional['password']                   => Variant[String[8], Sensitive[String[8]]],
     Optional['dialect']                    => String,
     Optional['properties.validationQuery'] => String,
 }]
@@ -829,7 +829,7 @@ Struct[{
     Optional['host']         => String,
     Optional['port']         => Integer,
     Optional['username']     => String,
-    Optional['password']     => String,
+    Optional['password']     => Variant[String[8], Sensitive[String[8]]],
     Optional['props']        => Array[Hash],
     Optional['default.from'] => String,
     Optional['default.to']   => String,
