@@ -19,8 +19,6 @@
 
 ## Overview
 
-# TODO: Update readme
-
 The rundeck puppet module for installing and managing [Rundeck](http://rundeck.org/)
 
 ### Supported Versions of Rundeck
@@ -66,14 +64,13 @@ class { 'rundeck':
   key_storage_config => [
     {
       'type' => 'db',
-      'path' => '/',
+      'path' => 'keys',
     },
   ],
-  database_config       => {
-    'type'            => 'mysql',
-    'url'             => $db_url,
+  database_config    => {
+    'url'             => 'jdbc:mysql://myserver/rundeck',
     'username'        => 'rundeck',
-    'password'        => $db_pass,
+    'password'        => 'verysecure',
     'driverClassName' => 'com.mysql.jdbc.Driver',
   },
 }
@@ -83,9 +80,9 @@ class { 'rundeck':
 
 ```Puppet
 class { 'rundeck':
-  ssl_enabled  => true,
-  ssl_keyfile  => $ssl_keyfile,
-  ssl_certfile => $ssl_certfile,
+  ssl_enabled       => true,
+  ssl_certificate   => '/path/to/cert',
+  ssl_private_key   => '/path/to/key',
 }
 ```
 
@@ -98,7 +95,7 @@ class { 'rundeck':
   key_storage_config => [
     {
       'type'   => 'vault-storage',
-      'path'   => '/',
+      'path'   => 'keys',
       'config' => {
         'prefix'           => 'rundeck',
         'address'          => 'https://vault.example.com',
@@ -122,14 +119,14 @@ class { 'rundeck':
   key_storage_config => [
     {
       'type'   => 'file',
-      'path'   => '/keys',
+      'path'   => 'keys',
       'config' => {
         'baseDir => '/path/to/dir',
       },
     },
     {
       'type' => 'db',
-      'path' => '/keys/database',
+      'path' => 'keys/database',
     },
   ],
 }
@@ -143,33 +140,46 @@ To perform LDAP authentication and file authorization following code can be used
 class { 'rundeck':
   auth_config => {
     'file' => {
-      'auth_users' => [
-        {
-          'username' => 'rooty',
-          'roles'    => ['admin'],
-        },
-        {
-          'username' => 'stan',
-          'roles'    => ['sre'],
-        }
-      ],
+      'auth_flag'    => 'sufficient',
+      'jaas_config'  => {
+        'file' => '/etc/rundeck/realm.properties',
+      },
+      'realm_config' => {
+        'admin_user'     => 'admin',
+        'admin_password' => 'admin',
+        'auth_users'     => [
+          {
+            'username' => 'testuser',
+            'password' => 'password',
+            'roles' => %w[user deploy]
+          },
+          {
+            'username' => 'anotheruser',
+            'password' => 'anotherpassword',
+            'roles' => ['user']
+          },
+        ],
+      },
     },
     'ldap' => {
-      'url'                            => 'ldap://ldap:389',
-      'force_binding'                  => true,
-      'bind_dn'                        => 'cn=ProxyUser,dc=example,dc=com',
-      'bind_password'                  => 'secret',
-      'user_base_dn'                   => 'ou=Users,dc=example,dc=com',
-      'user_rdn_attribute'             => 'uid',
-      'user_id_attribute'              => 'uid',
-      'user_object_class'              => 'inetOrgPerson',
-      'role_base_dn'                   => 'ou=Groups,dc=example,dc=com',
-      'role_name_attribute'            => 'cn',
-      'role_member_attribute'          => 'memberUid',
-      'role_username_member_attribute' => 'memberUid',
-      'role_object_class'              => 'posixGroup',
-      'supplemental_roles'             => 'user',
-      'nested_groups'                  => false,
+      'jaas_config' => {
+        'debug' => 'true',
+        'providerUrl' => 'ldap://server:389',
+        'bindDn' => 'cn=Manager,dc=example,dc=com',
+        'bindPassword' => 'secret',
+        'authenticationMethod' => 'simple',
+        'forceBindingLogin' => 'false',
+        'userBaseDn' => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
+        'userRdnAttribute' => 'sAMAccountName',
+        'userIdAttribute' => 'sAMAccountName',
+        'userPasswordAttribute' => 'unicodePwd',
+        'userObjectClass' => 'user',
+        'roleBaseDn' => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
+        'roleNameAttribute' => 'cn',
+        'roleMemberAttribute' => 'member',
+        'roleObjectClass' => 'group',
+        'nestedGroups' => 'true'
+      },
     },
   },
 }

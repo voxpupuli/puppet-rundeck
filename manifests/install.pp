@@ -45,31 +45,26 @@ class rundeck::install {
           }
         }
       }
-
-      package { 'rundeck':
-        ensure => $rundeck::package_ensure,
-        notify => Class['rundeck::service'],
-      }
     }
     'Debian': {
       if $rundeck::manage_repo {
-        $rundeck::repo_config.each | String $_repo_name, Hash $_attributes | {
+        $rundeck::repo_config.each | String $_repo_name, Hash $_attributes| {
           apt::source { $_repo_name:
             *      => $_attributes,
             before => Package['rundeck'],
           }
         }
-
-        Class['Apt::Update'] -> Package['rundeck']
       }
 
-      package { 'rundeck':
-        ensure => $rundeck::package_ensure,
-        notify => Class['rundeck::service'],
-      }
+      Class['Apt::Update'] -> Package['rundeck']
     }
     default: {
       err("The osfamily: ${facts['os']['family']} is not supported")
     }
+  }
+
+  package { 'rundeck':
+    ensure => $rundeck::package_ensure,
+    notify => Class['rundeck::service'],
   }
 }
