@@ -26,6 +26,7 @@ rundeck.storage.provider.<%= $_i+1 %>.removePathPrefix = <%= $_cfg['removePathPr
 rundeck.storage.provider.<%= $_i+1 %>.config.<%= $_k %> = <%= $_v %>
 <%- } -%>
 <%- } -%>
+
 <%- } -%>
 
 <%- $rundeck::key_storage_encrypt_config.each |$_i, $_cfg| { -%>
@@ -39,6 +40,7 @@ rundeck.storage.converter.<%= $_i+1 %>.resourceSelector = <%= $_cfg['resourceSel
 rundeck.storage.converter.<%= $_i+1 %>.config.<%= $_k %> = <%= $_v %>
 <%- } -%>
 <%- } -%>
+
 <%- } -%>
 
 <%- $rundeck::mail_config.each |$_k, $_v| {-%>
