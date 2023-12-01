@@ -784,9 +784,9 @@ Alias of
 
 ```puppet
 Struct[{
-    Optional['file'] => Hash[String, Data],
-    Optional['ldap'] => Hash[String, Data],
-    Optional['pam']  => Hash[String, Data],
+    Optional['file'] => Hash[String, Any],
+    Optional['ldap'] => Hash[String, Any],
+    Optional['pam']  => Hash[String, Any],
 }]
 ```
 
