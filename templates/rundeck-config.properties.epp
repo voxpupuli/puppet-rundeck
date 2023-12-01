@@ -7,6 +7,7 @@ grails.serverURL = <%= $rundeck::grails_server_url %>
 
 rundeck.clusterMode.enabled = <%= $rundeck::clustermode_enabled %>
 rundeck.executionMode = <%= $rundeck::execution_mode %>
+rundeck.api.tokens.duration.max = <%= $rundeck::api_token_max_duration %>
 
 quartz.threadPool.threadCount = <%= $rundeck::quartz_job_threadcount %>
 

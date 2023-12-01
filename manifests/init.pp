@@ -174,6 +174,7 @@ class rundeck (
   Stdlib::HTTPUrl $grails_server_url = "http://${facts['networking']['fqdn']}:4440",
   Boolean $clustermode_enabled = false,
   Enum['active', 'passive'] $execution_mode = 'active',
+  String[1] $api_token_max_duration = '30d',
   Optional[Stdlib::Absolutepath] $java_home = undef,
   String $jvm_args = '-Xmx1024m -Xms256m -server',
   Integer $quartz_job_threadcount = 10,

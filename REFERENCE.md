@@ -99,6 +99,7 @@ The following parameters are available in the `rundeck` class:
 * [`service_config`](#-rundeck--service_config)
 * [`service_script`](#-rundeck--service_script)
 * [`override_dir`](#-rundeck--override_dir)
+* [`api_token_max_duration`](#-rundeck--api_token_max_duration)
 
 ##### <a name="-rundeck--manage_repo"></a>`manage_repo`
 
@@ -593,6 +594,14 @@ Default value: `undef`
 Data type: `Stdlib::Absolutepath`
 
 
+
+##### <a name="-rundeck--api_token_max_duration"></a>`api_token_max_duration`
+
+Data type: `String[1]`
+
+
+
+Default value: `'30d'`
 
 ## Defined types
 
