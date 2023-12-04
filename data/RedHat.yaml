@@ -1,0 +1,10 @@
+---
+rundeck::override_dir: /etc/sysconfig
+
+rundeck::repo_config:
+  rundeck:
+    baseurl: https://packages.rundeck.com/pagerduty/rundeck/rpm_any/rpm_any/$basearch
+    repo_gpgcheck: 1
+    gpgcheck: 0
+    enabled: 1
+    gpgkey: https://packages.rundeck.com/pagerduty/rundeck/gpgkey

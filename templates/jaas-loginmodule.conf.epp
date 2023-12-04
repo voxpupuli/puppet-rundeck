@@ -1,0 +1,33 @@
+authentication {
+<%- $_auth_config.keys.each |$_type| { -%>
+<%- if $_type == 'file' { -%>
+<%- if $_auth_config['file']['auth_flag'] { -%>
+  org.eclipse.jetty.jaas.spi.PropertyFileLoginModule <%= $_auth_config['file']['auth_flag'] %>
+<%- } else { -%>
+  org.eclipse.jetty.jaas.spi.PropertyFileLoginModule required
+<%- } -%>
+<%- $_auth_config['file']['jaas_config'].each |$_k, $_v| { -%>
+    <%= $_k -%>=<% if keys($_auth_config['file']['jaas_config'])[-1] == $_k { -%>"<%= $_v %>";<% } else { -%>"<%= $_v %>"<%- } %>
+<%- } -%>
+<%- }  elsif $_type == 'ldap' { -%>
+<%- if $_auth_config['ldap']['auth_flag'] { -%>
+  com.dtolabs.rundeck.jetty.jaas.<%= $_ldap_login_module %> <%= $_auth_config['ldap']['auth_flag'] %>
+<%- } else { -%>
+  com.dtolabs.rundeck.jetty.jaas.<%= $_ldap_login_module %> required
+<%- } -%>
+    contextFactory="com.sun.jndi.ldap.LdapCtxFactory"
+<%- $_auth_config['ldap']['jaas_config'].each |$_k, $_v| { -%>
+    <%= $_k -%>=<% if keys($_auth_config['ldap']['jaas_config'])[-1] == $_k { -%>"<%= $_v %>";<% } else { -%>"<%= $_v %>"<%- } %>
+<%- } -%>
+<%- } elsif $_type == 'pam' { -%>
+<%- if $_auth_config['pam']['auth_flag'] { -%>
+  org.rundeck.jaas.jetty.JettyPamLoginModule <%= $_auth_config['pam']['auth_flag'] %>
+<%- } else { -%>
+  org.rundeck.jaas.jetty.JettyPamLoginModule required
+<%- } -%>
+<%- $_auth_config['pam']['jaas_config'].each |$_k, $_v| { -%>
+    <%= $_k -%>=<% if keys($_auth_config['pam']['jaas_config'])[-1] == $_k { -%>"<%= $_v %>";<% } else { -%>"<%= $_v %>"<%- } %>
+<%- } -%>
+<%- } -%>
+<%- } -%>
+};

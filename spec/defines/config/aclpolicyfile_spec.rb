@@ -3,81 +3,131 @@
 require 'spec_helper'
 
 describe 'rundeck::config::aclpolicyfile', type: :define do
-  test_policies = [
+  test_policy = [
     {
-      'description' => 'Admin, all access',
+      'description' => 'Test project access',
       'context' => {
         'project' => '.*'
       },
       'for' => {
         'resource' => [
-          { 'equals' => { 'kind' => 'job' }, 'allow' => ['create'] }
-        ]
+          { 'allow' => '*' }
+        ],
+        'adhoc' => [
+          { 'allow' => '*' }
+        ],
+        'job' => [
+          { 'allow' => '*' }
+        ],
+        'node' => [
+          { 'allow' => '*' }
+        ],
       },
       'by' => [
-        { 'group' => ['admin'] }
-      ]
+        { 'group' => ['test'] }
+      ],
     },
     {
-      'description' => 'Admin, all access',
-      'context' => {
-        'application' => 'rundeck'
-      },
-      'for' => {
-        'resource' => [
-          { 'equals' => { 'kind' => 'project' }, 'allow' => ['create'] }
-        ]
-      },
-      'by' => [
-        { 'group' => ['admin'] }
-      ]
-    },
-    {
-      'description' => 'System-level read access to a specific project',
+      'description' => 'Test application access',
       'context' => {
         'application' => 'rundeck'
       },
       'for' => {
         'project' => [
-          { 'equals' => { 'name' => 'project' }, 'allow' => ['read'] }
-        ]
+          { 'allow' => '*' }
+        ],
+        'resource' => [
+          { 'allow' => '*' }
+        ],
+        'storage' => [
+          { 'allow' => '*' }
+        ],
       },
       'by' => [
-        { 'group' => ['admin'] }
+        { 'group' => ['test'] }
       ]
     }
   ]
 
-  context 'default parameters' do
-    let(:title) { 'defaultPolicy' }
+  test_acl = <<~CONFIG.gsub(%r{[^\S\n]{10}}, '')
+    description: Test project access
+    context:
+      project: '.*'
+    for:
+      resource:
+        - allow: '*'
+      adhoc:
+        - allow: '*'
+      job:
+        - allow: '*'
+      node:
+        - allow: '*'
+    by:
+      group:
+        - 'test'
+
+    ---
+
+    description: Test application access
+    context:
+      application: 'rundeck'
+    for:
+      project:
+        - allow: '*'
+      resource:
+        - allow: '*'
+      storage:
+        - allow: '*'
+    by:
+      group:
+        - 'test'
+  CONFIG
+
+  context 'with test acl and default parameters' do
+    let(:title) { 'test' }
     let(:params) do
       {
-        acl_policies: test_policies
+        acl_policies: test_policy,
       }
     end
 
-    it do
-      is_expected.to contain_file('/etc/rundeck/defaultPolicy.aclpolicy').with('owner' => 'rundeck',
-                                                                               'group' => 'rundeck',
-                                                                               'mode' => '0640')
-    end
+    it {
+      is_expected.to contain_file('/etc/rundeck/test.aclpolicy').with(
+        owner: 'rundeck',
+        group: 'rundeck',
+        mode: '0644',
+        content: test_acl
+      )
+    }
   end
 
-  context 'custom parameters' do
-    let(:title) { 'myPolicy' }
+  context 'with test acl and custom parameters' do
+    let(:title) { 'test' }
     let(:params) do
       {
-        acl_policies: test_policies,
+        acl_policies: test_policy,
         properties_dir: '/etc/rundeck-acl',
         owner: 'myUser',
         group: 'myGroup'
       }
     end
 
-    it do
-      is_expected.to contain_file('/etc/rundeck-acl/myPolicy.aclpolicy').with('owner' => 'myUser',
-                                                                              'group' => 'myGroup',
-                                                                              'mode' => '0640')
-    end
+    it {
+      is_expected.to contain_file('/etc/rundeck-acl').with(
+        ensure: 'directory',
+        owner: 'myUser',
+        group: 'myGroup',
+        mode: '0755'
+      )
+    }
+
+    it {
+      is_expected.to contain_file('/etc/rundeck-acl/test.aclpolicy').with(
+        owner: 'myUser',
+        group: 'myGroup',
+        mode: '0644',
+        content: test_acl
+      )
+    }
   end
 end

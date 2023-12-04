@@ -4,63 +4,56 @@
 #   rundeck::config::aclpolicyfile { 'myPolicyFile':
 #     acl_policies => [
 #       {
-#         'description'    => 'Admin, all access',
-#         'context'        => {
-#           'type' => 'project',
-#           'rule' => '.*',
+#         'description' => 'Admin, all access',
+#         'context'     => { 'project' => '.*' },
+#         'for'         => {
+#           'resource' => [{ 'allow' => '*' }],
+#           'adhoc'    => [{ 'allow' => '*' }],
+#           'job'      => [{ 'allow' => '*' }],
+#           'node'     => [{ 'allow' => '*' }],
 #         },
-#         'resource_types' => [
-#           { 'type'  => 'resource', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#           { 'type'  => 'adhoc', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#           { 'type'  => 'job', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#           { 'type'  => 'node', 'rules' => [{ 'name' => 'allow','rule' => '*' }] }
-#         ],
-#         'by'             => {
-#           'group'    => ['admin'],
-#           'username' => undef,
-#         }
+#         'by'          => [{ 'group' => ['admin'] }],
 #       },
 #       {
-#         'description'    => 'Admin, all access',
-#         'context'        => {
-#           'type' => 'application',
-#           'rule' => 'rundeck',
+#         'description' => 'Admin, all access',
+#         'context'     => { 'application' => 'rundeck' },
+#         'for'         => {
+#           'project'     => [{ 'allow' => '*' }],
+#           'resource'    => [{ 'allow' => '*' }],
+#           'storage'     => [{ 'allow' => '*' }],
 #         },
-#         'resource_types' => [
-#           { 'type'  => 'resource', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#           { 'type'  => 'project', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#           { 'type'  => 'storage', 'rules' => [{ 'name' => 'allow','rule' => '*' }] },
-#         ],
-#         'by'             => {
-#           'group'    => ['admin'],
-#           'username' => undef,
-#         }
-#       }
+#         'by'          => [{ 'group' => ['admin'] }],
+#       },
 #     ],
 #   }
 #
 # @param acl_policies
 #   An array of hashes containing acl policies. See example.
-# @param group
-#   The group permission that rundeck is installed as.
+# @param ensure
+#   Set present or absent to add or remove the acl policy file.
 # @param owner
 #   The user that rundeck is installed as.
+# @param group
+#   The group permission that rundeck is installed as.
 # @param properties_dir
 #   The rundeck configuration directory.
-# @param template_file
-#   The template used for acl policy. Default is rundeck/aclpolicy.erb
 #
 define rundeck::config::aclpolicyfile (
-  Array                $acl_policies,
-  String               $group          = 'rundeck',
-  String               $owner          = 'rundeck',
+  Array[Hash] $acl_policies,
+  Enum['present', 'absent'] $ensure = 'present',
+  String[1] $owner = 'rundeck',
+  String[1] $group = 'rundeck',
   Stdlib::Absolutepath $properties_dir = '/etc/rundeck',
-  String               $template_file  = "${module_name}/aclpolicy.erb",
 ) {
+  validate_rd_policy($acl_policies)
+
+  ensure_resource('file', $properties_dir, { 'ensure' => 'directory', 'owner' => $owner, 'group' => $group, 'mode' => '0755' })
+
   file { "${properties_dir}/${name}.aclpolicy":
+    ensure  => $ensure,
     owner   => $owner,
     group   => $group,
-    mode    => '0640',
-    content => template($template_file),
+    mode    => '0644',
+    content => epp('rundeck/aclpolicy.epp', { _acl_policies => $acl_policies }),
   }
 }

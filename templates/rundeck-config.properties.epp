@@ -1,0 +1,61 @@
+loglevel.default = <%= $rundeck::app_log_level %>
+rdeck.base = <%= $rundeck::config::base_dir %>
+
+rss.enabled = <%= $rundeck::rss_enabled %>
+
+grails.serverURL = <%= $rundeck::grails_server_url %>
+
+rundeck.clusterMode.enabled = <%= $rundeck::clustermode_enabled %>
+rundeck.executionMode = <%= $rundeck::execution_mode %>
+rundeck.api.tokens.duration.max = <%= $rundeck::api_token_max_duration %>
+
+quartz.threadPool.threadCount = <%= $rundeck::quartz_job_threadcount %>
+
+dataSource.dbCreate = update
+<%- $rundeck::database_config.each |$_k, $_v| {-%>
+dataSource.<%= $_k %> = <%= $_v %>
+<%- } -%>
+
+<%- $rundeck::key_storage_config.each |$_i, $_cfg| { -%>
+rundeck.storage.provider.<%= $_i+1 %>.type = <%= $_cfg['type'] %>
+rundeck.storage.provider.<%= $_i+1 %>.path = <%= $_cfg['path'] %>
+<%- if $_cfg['removePathPrefix'] { -%>
+rundeck.storage.provider.<%= $_i+1 %>.removePathPrefix = <%= $_cfg['removePathPrefix'] %>
+<%- } -%>
+<%- if $_cfg['config'] { -%>
+<%- $_cfg['config'].each |$_k, $_v| { -%>
+rundeck.storage.provider.<%= $_i+1 %>.config.<%= $_k %> = <%= $_v %>
+<%- } -%>
+<%- } -%>
+
+<%- } -%>
+
+<%- $rundeck::key_storage_encrypt_config.each |$_i, $_cfg| { -%>
+rundeck.storage.converter.<%= $_i+1 %>.type = <%= $_cfg['type'] %>
+rundeck.storage.converter.<%= $_i+1 %>.path = <%= $_cfg['path'] %>
+<%- if $_cfg['resourceSelector'] { -%>
+rundeck.storage.converter.<%= $_i+1 %>.resourceSelector = <%= $_cfg['resourceSelector'] %>
+<%- } -%>
+<%- if $_cfg['config'] { -%>
+<%- $_cfg['config'].each |$_k, $_v| { -%>
+rundeck.storage.converter.<%= $_i+1 %>.config.<%= $_k %> = <%= $_v %>
+<%- } -%>
+<%- } -%>
+
+<%- } -%>
+
+<%- $rundeck::mail_config.each |$_k, $_v| {-%>
+grails.mail.<%= $_k %> = <%= $_v %>
+<%- } -%>
+
+<%- $rundeck::security_config.each |$_k, $_v| {-%>
+rundeck.security.<%= $_k %> = <%= $_v %>
+<%- } -%>
+
+<%- $rundeck::preauthenticated_config.each  |$_k, $_v| { -%>
+rundeck.security.authorization.preauthenticated.<%= $_k %> = <%= $_v %>
+<%- } -%>
+
+<%- $rundeck::gui_config.each |$_k, $_v| {-%>
+rundeck.gui.<%= $_k %> = <%= $_v %>
+<%- } -%>

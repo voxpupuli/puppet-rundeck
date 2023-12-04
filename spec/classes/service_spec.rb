@@ -9,7 +9,7 @@ describe 'rundeck' do
         facts
       end
 
-      describe "rundeck class without any parameters on #{os}" do
+      context 'without any parameters test rundeck::service' do
         let(:params) { {} }
 
         it { is_expected.to contain_service('rundeckd') }

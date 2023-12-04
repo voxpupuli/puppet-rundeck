@@ -5,42 +5,43 @@
 #     source => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar',
 #   }
 #
-# @param ensure
-#   Set present or absent to add or remove the plugin
 # @param source
 #   The http source or local path from which to get the plugin.
+# @param ensure
+#   Set present or absent to add or remove the plugin.
+# @param owner
+#   The user that rundeck is installed as.
+# @param group
+#   The group permission that rundeck is installed as.
+# @param plugins_dir
+#   Directory where plugins will be installed.
+# @param proxy_server
+#   Get the plugin trough a proxy server.
 #
 define rundeck::config::plugin (
-  String                    $source,
+  String[1] $source,
   Enum['present', 'absent'] $ensure = 'present',
+  String[1] $owner = 'rundeck',
+  String[1] $group = 'rundeck',
+  Stdlib::Absolutepath $plugins_dir = '/var/lib/rundeck/libext',
+  Optional[Stdlib::HTTPUrl] $proxy_server = undef,
 ) {
-  include rundeck
-  include archive
-
-  $framework_config = deep_merge($rundeck::params::framework_config, $rundeck::framework_config)
-
-  $user = $rundeck::user
-  $group = $rundeck::group
-  $plugin_dir = $framework_config['framework.libext.dir']
+  ensure_resource('file', $plugins_dir, { 'ensure' => 'directory', 'owner' => $owner, 'group' => $group, 'mode' => '0755' })
 
   if $ensure == 'present' {
     archive { "download plugin ${name}":
-      ensure  => present,
-      source  => $source,
-      path    => "${plugin_dir}/${name}",
-      require => File[$plugin_dir],
-      before  => File["${plugin_dir}/${name}"],
-    }
-
-    file { "${plugin_dir}/${name}":
-      mode  => '0644',
-      owner => $user,
-      group => $group,
+      ensure       => present,
+      source       => $source,
+      path         => "${plugins_dir}/${name}",
+      proxy_server => $proxy_server,
+      before       => File["${plugins_dir}/${name}"],
     }
   }
-  elsif $ensure == 'absent' {
-    file { "${plugin_dir}/${name}":
-      ensure => 'absent',
-    }
+
+  file { "${plugins_dir}/${name}":
+    ensure => $ensure,
+    owner  => $owner,
+    group  => $group,
+    mode   => '0644',
   }
 }

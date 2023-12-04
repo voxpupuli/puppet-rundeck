@@ -1,0 +1,46 @@
+<%- $_acl_policies.each |$_index, $_policy| { -%>
+description: <%= $_policy['description'] %>
+context:
+  <%= $_policy['context'].keys[0] %>: '<%= $_policy['context'].values[0] %>'
+for:
+<%- $_policy['for'].each |$_resource, $_kind| { -%>
+  <%= $_resource %>:
+  <%- $_kind.each |$_rules| { -%>
+  <%- $_rules.each |$_type, $_action| { -%>
+  <%- if keys($_rules)[0] == $_type { -%>
+  <%- $_first_key = '- ' -%>
+  <% } else { -%>
+  <%- $_first_key = '  ' -%>
+  <% } -%>
+  <%- if $_type in ['allow', 'deny'] { -%>
+  <%= $_first_key %><%= $_type %>: <% if $_action =~ String { -%>'<%= $_action %>'<% } else { -%><%= $_action %><%- } %>
+  <%- } elsif $_type in ['match', 'equals', 'contains', 'subset'] { -%>
+  <%= $_first_key %><%= $_type %>:
+  <%- $_action.each |$_k, $_v| { -%>
+        <%= $_k %>: <% if $_v =~ String { -%>'<%= $_v %>'<% } else { -%><%= $_v %><%- } %>
+  <%- } -%>
+  <%- } -%>
+  <%- } -%>
+  <%- } -%>
+<%- } -%>
+by:
+<%- $_policy['by'].each |$_by| { -%>
+<%- if $_by['group'] { -%>
+  group:
+  <%- $_by['group'].each |$_group| { -%>
+    - '<%= $_group %>'
+  <%- } -%>
+<%- } -%>
+<%- if $_by['username'] { -%>
+  username:
+  <%- $_by['username'].each |$_username| { -%>
+    - '<%= $_username %>'
+  <%- } -%>
+<%- } -%>
+<%- } -%>
+<%- if $_index != ( $_acl_policies.length -1 ) {-%>
+
+---
+
+<%- } -%>
+<%- } -%>

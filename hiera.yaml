@@ -1,0 +1,10 @@
+---
+version: 5
+
+defaults:
+  datadir: 'data'
+  data_hash: 'yaml_data'
+
+hierarchy:
+  - name: 'Rundeck Operating System Family defaults'
+    path: '%{facts.os.family}.yaml'

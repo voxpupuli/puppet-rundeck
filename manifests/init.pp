@@ -1,244 +1,242 @@
 # @summary Class to manage installation and configuration of Rundeck.
 #
-# @param acl_policies
-#   Admin acl policies.
-# @param acl_template
-#   The template used for admin acl policy. Default is rundeck/aclpolicy.erb.
-# @param api_policies
-#   apitoken acl policies.
-# @param api_template
-#   The template used for apitoken acl policy. Default is rundeck/aclpolicy.erb.
-# @param auth_config
-#   Authentication configuration.
-# @param auth_template
-#   The template used for authentication config. Default is rundeck/jaas-auth.conf.epp.
-# @param auth_types
-#   The method used to authenticate to rundeck. Default is file.
-# @param clustermode_enabled
-#   Boolean value if set to true enables cluster mode
-# @param database_config
-#   Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
-# @param execution_mode
-#   If set, allows setting the execution mode to 'active' or 'passive'.
-# @param file_keystorage_dir
-#   Path to dir where the keystorage should be located.
-# @param file_keystorage_keys
-#   Add keys to file keystorage.
-# @param framework_config
-#   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
-# @param grails_server_url
-#   Sets `grails.serverURL` so that Rundeck knows its external address.
-# @param gui_config
-#   Hash of properties for customizing the [Rundeck GUI](https://docs.rundeck.com/docs/administration/configuration/gui-customization.html)
-# @param java_home
-#   Set the home directory of java.
-# @param jvm_args
-#   Extra arguments for the JVM.
-# @param kerberos_realms
-#   A hash of mappings between Kerberos domain DNS names and realm names
-# @param key_password
-#   The default key password.
-# @param key_storage_config
-#   An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
-# @param keystore
-#   Full path to the java keystore to be used by Rundeck.
-# @param keystore_password
-#   The password for the given keystore.
-# @param log_properties_template
-#   The template used for log properties. Default is rundeck/log4j.properties.erb.
-# @param mail_config
-#   A hash of the notification email configuraton.
-# @param sshkey_manage
-#   Should this module manage the sshkey used by rundeck at all.
-# @param ssl_keyfile
-#   Full path to the SSL private key to be used by Rundeck.
-# @param ssl_certfile
-#   Full path to the SSL public key to be used by Rundeck.
-# @param manage_default_admin_policy
-#   Boolean value if set to true enables default admin policy management
-# @param manage_default_api_policy
-#   Boolean value if set to true enables default api policy management
 # @param manage_repo
-#   Whether to manage the package repository. Defaults to true.
+#   Whether to manage the package repository.
+# @param repo_config
+#   A hash of repository attributes for configuring the rundeck package repositories.
+#   Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
 # @param package_ensure
-#   Ensure the state of the rundeck package, either present, absent or a specific version
-# @param preauthenticated_config
-#   A hash of the rundeck preauthenticated config mode
-# @param projects
-#   The hash of projects in your instance.
-# @param projects_description
-#   The description that will be set by default for any projects.
-# @param projects_organization
-#   The organization value that will be set by default for any projects.
-# @param projects_storage_type
-#   The storage type for any projects. Must be 'filesystem' or 'db'
-# @param quartz_job_threadcount
-#   The maximum number of threads used by Rundeck for concurrent jobs by default is set to 10.
-# @param rd_loglevel
-#   The log4j logging level to be set for the Rundeck application.
-# @param rd_auditlevel
-#   The log4j logging level to be set for the Rundeck application.
-# @param rdeck_config_template
-#   Allows you to override the rundeck-config template.
-# @param rdeck_home
-#   Directory under which the projects directories live.
+#   Ensure the state of the rundeck package, either present, absent or a specific version.
 # @param manage_home
-#   Whether to manage rundeck home dir. Defaults to true.
-# @param rdeck_profile_template
-#   Allows you to use your own profile template instead of the default from the package maintainer
-# @param rdeck_override_template
-#   Allows you to use your own override template instead of the default from the package maintainer
-# @param realm_template
-#   Allows you to use your own override template instead of the default from the package maintainer
-# @param repo_yum_source
-#   Baseurl for the yum repo
-# @param repo_yum_gpgkey
-#   URL or path for the GPG key for the rpm
-# @param repo_apt_source
-#   Baseurl for the apt repo
-# @param repo_apt_key_id
-#   Key ID for the GPG key for the Debian package
-# @param repo_apt_gpgkey
-#   Location where the GPG key can be found
-# @param repo_apt_keyserver
-#   Keysever for the GPG key for the Debian package
-# @param rss_enabled
-#   Boolean value if set to true enables RSS feeds that are public (non-authenticated)
-# @param security_config
-#   A hash of the rundeck security configuration.
-# @param security_role
-#   Name of the role that is required for all users to be allowed access.
-# @param server_web_context
-#   Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
-# @param service_config
-#   The name of the rundeck service.
-# @param service_logs_dir
-#   The path to the directory to store logs.
-# @param service_name
-#   The name of the rundeck service.
-# @param service_restart
-#   The restart of the rundeck service (default to true)
-# @param service_script
-#   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
-# @param service_ensure
-#   State of the rundeck service (defaults to 'running')
-# @param session_timeout
-#   Session timeout is an expired time limit for a logged in Rundeck GUI user which as been inactive for a period of time.
-# @param ssl_enabled
-#   Enable ssl for the rundeck web application.
-# @param ssl_port
-#   Ssl port of the rundeck web application (default to '4443').
-# @param truststore
-#   The full path to the java truststore to be used by Rundeck.
-# @param truststore_password
-#   The password for the given truststore.
+#   Whether to manage rundeck home dir.
 # @param user
 #   The user that rundeck is installed as.
 # @param group
 #   The group permission that rundeck is installed as.
 # @param manage_user
-#   Whether to manage `user` (and enforce `user_id` if set). Defaults to false.
+#   Whether to manage `user` (and enforce `user_id` if set).
 # @param manage_group
-#   Whether to manage `group` (and enforce `group_id` if set). Defaults to false.
+#   Whether to manage `group` (and enforce `group_id` if set).
 # @param user_id
-#   If you want to have always the same user id. Eg. because of the NFS share.
+#   If you want to have always the same user id. Eg. because of a NFS share.
 # @param group_id
-#   If you want to have always the same group id. Eg. because of the NFS share.
-# @param file_default_mode
-#   Default file mode for managed files. Default to 0640
-# @param security_roles_array_enabled
-#   Boolean value if you need more roles. false or true (default is false).
-# @param security_roles_array
-#   Array value if you need more roles and you set true the "security_roles_array_enabled" value.
-# @param storage_encrypt_config
-#   Hash containing the necessary values to configure a plugin for key storage encryption.
-#   https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins
+#   If you want to have always the same group id. Eg. because of a NFS share.
+# @param admin_policies
+#   Admin acl policies.
+# @param api_policies
+#   Apitoken acl policies.
+# @param manage_default_admin_policy
+#   Whether to manage the default admin policy.
+# @param manage_default_api_policy
+#   Whether to manage default api policy.
+# @param grails_server_url
+#   Sets `grails.serverURL` so that Rundeck knows its external address.
+# @param clustermode_enabled
+#   Wheter to enable cluster mode.
+# @param execution_mode
+#   Set the execution mode to 'active' or 'passive'.
+# @param java_home
+#   Set the home directory of java.
+# @param jvm_args
+#   Extra arguments for the JVM.
+# @param quartz_job_threadcount
+#   The maximum number of threads used by Rundeck for concurrent jobs.
+# @param auth_config
+#   Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
+# @param database_config
+#   Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
+# @param framework_config
+#   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
+#   This hash will be merged with the [Rundeck defaults](https://github.com/voxpupuli/puppet-rundeck/blob/master/manifests/config.pp#L8-L20)
+# @param gui_config
+#   Hash of properties for customizing the [Rundeck GUI](https://docs.rundeck.com/docs/administration/configuration/gui-customization.html)
+# @param mail_config
+#   A hash of the notification email configuraton.
+# @param security_config
+#   A hash of the rundeck security configuration.
+# @param preauthenticated_config
+#   A hash of the rundeck preauthenticated configuration.
+# @param key_storage_config
+#   An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
+# @param key_storage_encrypt_config
+#   An array with hashes of properties for customizing the [Rundeck Key Storage converter](https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins)
+# @param app_log_level
+#   The log4j logging level to be set for the Rundeck application.
+# @param audit_log_level
+#   The log4j logging level to be set for the Rundeck autorization.
+# @param config_template
+#   The template used for rundeck-config properties. Needs to be in epp format.
+# @param override_template
+#   The template used for rundeck profile overrides. Needs to be in epp format.
+# @param realm_template
+#   The template used for jaas realm properties. Needs to be in epp format.
+# @param log_properties_template
+#   The template used for log properties. Needs to be in epp format.
+# @param rss_enabled
+#   Boolean value if set to true enables RSS feeds that are public (non-authenticated)
+# @param server_web_context
+#   Web context path to use, such as "/rundeck". http://host.domain:port/server_web_context
+# @param ssl_enabled
+#   Enable ssl for the rundeck web application.
+# @param ssl_port
+#   Ssl port of the rundeck web application.
+# @param ssl_certificate
+#   Full path to the SSL public key to be used by Rundeck.
+# @param ssl_private_key
+#   Full path to the SSL private key to be used by Rundeck.
+# @param key_password
+#   The password used to protect the key in keystore.
+# @param keystore
+#   Full path to the java keystore to be used by Rundeck.
+# @param keystore_password
+#   The password for the given keystore.
+# @param truststore
+#   The full path to the java truststore to be used by Rundeck.
+# @param truststore_password
+#   The password for the given truststore.
+# @param service_name
+#   The name of the rundeck service.
+# @param service_ensure
+#   State of the rundeck service.
+# @param service_logs_dir
+#   The path to the directory to store service related logs.
+# @param service_notify
+#   Wheter to notify and restart the rundeck service if config changes.
+# @param service_config
+#   Allows you to use your own override template instead to config rundeckd init script.
+# @param service_script
+#   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
 #
 class rundeck (
-  Array[Hash]                         $acl_policies                       = $rundeck::params::acl_policies,
-  String                              $acl_template                       = $rundeck::params::acl_template,
-  Array[Hash]                         $api_policies                       = $rundeck::params::api_policies,
-  String                              $api_template                       = $rundeck::params::api_template,
-  Hash                                $auth_config                        = $rundeck::params::auth_config,
-  String                              $auth_template                      = $rundeck::params::auth_template,
-  Array                               $auth_types                         = $rundeck::params::auth_types,
-  Boolean                             $clustermode_enabled                = $rundeck::params::clustermode_enabled,
-  Hash                                $database_config                    = $rundeck::params::database_config,
-  Optional[Enum['active', 'passive']] $execution_mode                     = undef,
-  Stdlib::Absolutepath                $file_keystorage_dir                = $rundeck::params::file_keystorage_dir,
-  Hash                                $file_keystorage_keys               = $rundeck::params::file_keystorage_keys,
-  Hash                                $framework_config                   = $rundeck::params::framework_config,
-  Stdlib::HTTPUrl                     $grails_server_url                  = $rundeck::params::grails_server_url,
-  Hash                                $gui_config                         = $rundeck::params::gui_config,
-  Optional[Stdlib::Absolutepath]      $java_home                          = undef,
-  String                              $jvm_args                           = $rundeck::params::jvm_args,
-  Hash                                $kerberos_realms                    = $rundeck::params::kerberos_realms,
-  String                              $key_password                       = $rundeck::params::key_password,
-  Array[Hash]                         $key_storage_config                 = $rundeck::params::key_storage_config,
-  Stdlib::Absolutepath                $keystore                           = $rundeck::params::keystore,
-  String                              $keystore_password                  = $rundeck::params::keystore_password,
-  String                              $log_properties_template            = $rundeck::params::log_properties_template,
-  Hash                                $mail_config                        = $rundeck::params::mail_config,
-  Boolean                             $sshkey_manage                      = $rundeck::params::sshkey_manage,
-  Stdlib::Absolutepath                $ssl_keyfile                        = $rundeck::params::ssl_keyfile,
-  Stdlib::Absolutepath                $ssl_certfile                       = $rundeck::params::ssl_certfile,
-  Boolean                             $manage_default_admin_policy        = $rundeck::params::manage_default_admin_policy,
-  Boolean                             $manage_default_api_policy          = $rundeck::params::manage_default_api_policy,
-  Boolean                             $manage_repo                        = $rundeck::params::manage_repo,
-  String                              $package_ensure                     = $rundeck::params::package_ensure,
-  Hash                                $preauthenticated_config            = $rundeck::params::preauthenticated_config,
-  Hash                                $projects                           = $rundeck::params::projects,
-  String                              $projects_description               = $rundeck::params::projects_default_desc,
-  String                              $projects_organization              = $rundeck::params::projects_default_org,
-  Enum['db', 'filesystem']            $projects_storage_type              = $rundeck::params::projects_storage_type,
-  Integer                             $quartz_job_threadcount             = $rundeck::params::quartz_job_threadcount,
-  Rundeck::Loglevel                   $rd_loglevel                        = $rundeck::params::loglevel,
-  Rundeck::Loglevel                   $rd_auditlevel                      = $rundeck::params::loglevel,
-  String                              $rdeck_config_template              = $rundeck::params::rdeck_config_template,
-  Stdlib::Absolutepath                $rdeck_home                         = $rundeck::params::rdeck_home,
-  Boolean                             $manage_home                        = $rundeck::params::manage_home,
-  Optional[String]                    $rdeck_profile_template             = undef,
-  String                              $rdeck_override_template            = 'rundeck/profile_overrides.erb',
-  String                              $realm_template                     = $rundeck::params::realm_template,
-  Stdlib::HTTPUrl                     $repo_yum_source                    = $rundeck::params::repo_yum_source,
-  String                              $repo_yum_gpgkey                    = $rundeck::params::repo_yum_gpgkey,
-  Stdlib::HTTPUrl                     $repo_apt_source                    = $rundeck::params::repo_apt_source,
-  String                              $repo_apt_key_id                    = $rundeck::params::repo_apt_key_id,
-  Stdlib::Httpsurl                    $repo_apt_gpgkey                    = $rundeck::params::repo_apt_gpgkey,
-  String                              $repo_apt_keyserver                 = $rundeck::params::repo_apt_keyserver,
-  Boolean                             $rss_enabled                        = $rundeck::params::rss_enabled,
-  Hash                                $security_config                    = $rundeck::params::security_config,
-  String                              $security_role                      = $rundeck::params::security_role,
-  Optional[String]                    $server_web_context                 = undef,
-  Optional[String]                    $service_config                     = undef,
-  Stdlib::Absolutepath                $service_logs_dir                   = $rundeck::params::service_logs_dir,
-  String                              $service_name                       = $rundeck::params::service_name,
-  Boolean                             $service_restart                    = true,
-  Optional[String]                    $service_script                     = undef,
-  Enum['stopped', 'running']          $service_ensure                     = $rundeck::params::service_ensure,
-  Integer                             $session_timeout                    = $rundeck::params::session_timeout,
-  Boolean                             $ssl_enabled                        = $rundeck::params::ssl_enabled,
-  Stdlib::Port                        $ssl_port                           = $rundeck::params::ssl_port,
-  Stdlib::Absolutepath                $truststore                         = $rundeck::params::truststore,
-  String                              $truststore_password                = $rundeck::params::truststore_password,
-  String                              $user                               = $rundeck::params::user,
-  String                              $group                              = $rundeck::params::group,
-  Boolean                             $manage_user                        = $rundeck::params::manage_user,
-  Boolean                             $manage_group                       = $rundeck::params::manage_group,
-  Optional[Integer]                   $user_id                            = undef,
-  Optional[Integer]                   $group_id                           = undef,
-  String                              $file_default_mode                  = $rundeck::params::file_default_mode,
-  Boolean                             $security_roles_array_enabled       = $rundeck::params::security_roles_array_enabled,
-  Array                               $security_roles_array               = $rundeck::params::security_roles_array,
-  Hash[String,String]                 $storage_encrypt_config             = {},
-) inherits rundeck::params {
-  validate_rd_policy($acl_policies)
+  Stdlib::Absolutepath $override_dir,
+  Hash $repo_config,
+  Boolean $manage_repo = true,
+  String[1] $package_ensure = 'installed',
+  Boolean $manage_home = true,
+  String[1] $user = 'rundeck',
+  String[1] $group = 'rundeck',
+  Boolean $manage_user = false,
+  Boolean $manage_group = false,
+  Optional[Integer] $user_id = undef,
+  Optional[Integer] $group_id = undef,
+  Array[Hash] $admin_policies = [
+    {
+      'description' => 'Admin, all access',
+      'context'     => { 'project' => '.*' },
+      'for'         => {
+        'resource' => [{ 'allow' => '*' }],
+        'adhoc'    => [{ 'allow' => '*' }],
+        'job'      => [{ 'allow' => '*' }],
+        'node'     => [{ 'allow' => '*' }],
+      },
+      'by'          => [{ 'group' => ['admin'] }],
+    },
+    {
+      'description' => 'Admin, all access',
+      'context'     => { 'application' => 'rundeck' },
+      'for'         => {
+        'project'  => [{ 'allow' => '*' }],
+        'resource' => [{ 'allow' => '*' }],
+        'storage'  => [{ 'allow' => '*' }],
+      },
+      'by'          => [{ 'group' => ['admin'] }],
+    },
+  ],
+  Array[Hash] $api_policies = [
+    {
+      'description' => 'API project level access control',
+      'context'     => { 'project' => '.*' },
+      'for'         => {
+        'resource' => [
+          { 'equals' => { 'kind' => 'job' }, 'allow' => ['create', 'delete'] },
+          { 'equals' => { 'kind' => 'node' }, 'allow' => ['read', 'create', 'update', 'refresh'] },
+          { 'equals' => { 'kind' => 'event' }, 'allow' => ['read', 'create'] },
+        ],
+        'adhoc'    => [{ 'allow' => ['read', 'run', 'kill'] }],
+        'job'      => [{ 'allow' => ['read', 'create', 'update', 'delete', 'run', 'kill'] }],
+        'node'     => [{ 'allow' => ['read', 'run'] }],
+      },
+      'by'          => [{ 'group' => ['api_token_group'] }],
+    },
+    {
+      'description' => 'API Application level access control',
+      'context'     => { 'application' => 'rundeck' },
+      'for'         => {
+        'project'  => [{ 'match' => { 'name' => '.*' }, 'allow' => ['read'] }],
+        'resource' => [{ 'equals' => { 'kind' => 'system' }, 'allow' => ['read'] }],
+        'storage'  => [{ 'match' => { 'path' => '(keys|keys/.*)' }, 'allow' => '*' }],
+      },
+      'by'          => [{ 'group' => ['api_token_group'] }],
+    },
+  ],
+  Boolean $manage_default_admin_policy = true,
+  Boolean $manage_default_api_policy = true,
+  Stdlib::HTTPUrl $grails_server_url = "http://${facts['networking']['fqdn']}:4440",
+  Boolean $clustermode_enabled = false,
+  Enum['active', 'passive'] $execution_mode = 'active',
+  String[1] $api_token_max_duration = '30d',
+  Optional[Stdlib::Absolutepath] $java_home = undef,
+  String $jvm_args = '-Xmx1024m -Xms256m -server',
+  Integer $quartz_job_threadcount = 10,
+  Rundeck::Auth_config $auth_config = {
+    'file' => {
+      'auth_flag'    => 'required',
+      'jaas_config'  => {
+        'file' => '/etc/rundeck/realm.properties',
+      },
+      'realm_config' => {
+        'admin_user'     => 'admin',
+        'admin_password' => 'admin',
+        'auth_users'     => [],
+      },
+    },
+  },
+  Rundeck::Db_config $database_config = { 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' },
+  Hash $framework_config = {},
+  Hash $gui_config = {},
+  Rundeck::Mail_config $mail_config = {},
+  Hash $security_config = {},
+  Hash $preauthenticated_config = {},
+  Rundeck::Key_storage_config $key_storage_config = [{ 'type' => 'db', 'path' => 'keys' }],
+  Array[Hash] $key_storage_encrypt_config = [],
+  Rundeck::Loglevel $app_log_level = 'info',
+  Rundeck::Loglevel $audit_log_level = 'info',
+  String[1] $config_template = 'rundeck/rundeck-config.properties.epp',
+  String[1] $override_template = 'rundeck/profile_overrides.epp',
+  String[1] $realm_template = 'rundeck/realm.properties.epp',
+  String[1] $log_properties_template = 'rundeck/log4j2.properties.epp',
+  Boolean $rss_enabled = false,
+  Optional[String[1]] $server_web_context = undef,
+  Boolean $ssl_enabled = false,
+  Stdlib::Port $ssl_port = 4443,
+  Stdlib::Absolutepath $ssl_certificate = '/etc/rundeck/ssl/rundeck.crt',
+  Stdlib::Absolutepath $ssl_private_key = '/etc/rundeck/ssl/rundeck.key',
+  Optional[String[1]] $key_password = undef,
+  Stdlib::Absolutepath $keystore = '/etc/rundeck/ssl/keystore',
+  String[1] $keystore_password = 'adminadmin',
+  Stdlib::Absolutepath $truststore = '/etc/rundeck/ssl/truststore',
+  String[1] $truststore_password = 'adminadmin',
+  String[1] $service_name = 'rundeckd',
+  Enum['stopped', 'running'] $service_ensure = 'running',
+  Stdlib::Absolutepath $service_logs_dir = '/var/log/rundeck',
+  Boolean $service_notify = true,
+  Optional[String[1]] $service_config = undef,
+  Optional[String[1]] $service_script = undef,
+) {
+  validate_rd_policy($admin_policies)
+  validate_rd_policy($api_policies)
 
   contain rundeck::install
   contain rundeck::config
   contain rundeck::service
 
-  Class['rundeck::install']
-  -> Class['rundeck::config']
-  ~> Class['rundeck::service']
+  if $service_notify {
+    Class['rundeck::install']
+    -> Class['rundeck::config']
+    ~> Class['rundeck::service']
+  } else {
+    Class['rundeck::install']
+    -> Class['rundeck::config']
+    -> Class['rundeck::service']
+  }
 }

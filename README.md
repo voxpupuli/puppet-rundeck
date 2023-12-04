@@ -25,39 +25,13 @@ The rundeck puppet module for installing and managing [Rundeck](http://rundeck.o
 
 | Rundeck Version  | Rundeck Puppet module versions |
 | ---------------- | -------------------------------|
-| 2.x - 3.0.X      | v5.4.0 and older               |
-| 3.1 - up         | v6.0.0 and newer               |
-
-Since [Rundeck v3.1](https://docs.rundeck.com/docs/upgrading/upgrade-to-rundeck-3.1.html),
-it is not required the installtion of `rundeck-config` package for RHEL based distributions anymore.
-
-Rundeck Team decided to mark this package _obsolete_, making it difficult to maintain
-backwards compatibility with releases older than 3.1.
-
-Trying to install any version prior to 3.1.0 will throw the following error message:
-
-```console
-Resolving Dependencies
---> Running transaction check
----> Package rundeck.noarch 0:2.11.5-1.56.GA will be installed
---> Processing Dependency: rundeck-config for package: rundeck-2.11.5-1.56.GA.noarch
-Package rundeck-config is obsoleted by rundeck, but obsoleting package does not provide for requirements
-...
-```
-
-If you need to downgrade and/or install a specific version of Rundeck older than 3.1.0, you can still use this module
-to do it (v5.4.0 and prior), although you would need to [manually install the packages](https://github.com/rundeck/rundeck/issues/5168) disabling yum's obsoletes processing logic when performing updates.
-
-```console
-yum reinstall --setopt=obsoletes=0 rundeck-config-3.0.24.20190719-1.201907192053 rundeck-3.0.24.20190719-1.201907192053
-```
-
-The latest version of this puppet module only supports Rundeck 3.1 and up.
+| 2.x   - 3.0.X    | v5.4.0 and older               |
+| 3.1.x - 3.3.x    | v8.0.1 until v6.0.0            |
+| 3.4.x - up       | v9.0.0 and newer               |
 
 ## Module Description
 
-This module provides a way to manage the installation and configuration of
-rundeck, its projects, jobs and plugins.
+This module provides a way to manage the installation and configuration of rundeck and plugins.
 
 ## Setup
 
@@ -90,15 +64,13 @@ class { 'rundeck':
   key_storage_config => [
     {
       'type' => 'db',
-      'path' => '/',
+      'path' => 'keys',
     },
   ],
-  projects_storage_type => 'db',
-  database_config       => {
-    'type'            => 'mysql',
-    'url'             => $db_url,
+  database_config    => {
+    'url'             => 'jdbc:mysql://myserver/rundeck',
     'username'        => 'rundeck',
-    'password'        => $db_pass,
+    'password'        => 'verysecure',
     'driverClassName' => 'com.mysql.jdbc.Driver',
   },
 }
@@ -108,9 +80,9 @@ class { 'rundeck':
 
 ```Puppet
 class { 'rundeck':
-  ssl_enabled  => true,
-  ssl_keyfile  => $ssl_keyfile,
-  ssl_certfile => $ssl_certfile,
+  ssl_enabled       => true,
+  ssl_certificate   => '/path/to/cert',
+  ssl_private_key   => '/path/to/key',
 }
 ```
 
@@ -123,7 +95,7 @@ class { 'rundeck':
   key_storage_config => [
     {
       'type'   => 'vault-storage',
-      'path'   => '/',
+      'path'   => 'keys',
       'config' => {
         'prefix'           => 'rundeck',
         'address'          => 'https://vault.example.com',
@@ -147,14 +119,14 @@ class { 'rundeck':
   key_storage_config => [
     {
       'type'   => 'file',
-      'path'   => '/keys',
+      'path'   => 'keys',
       'config' => {
         'baseDir => '/path/to/dir',
       },
     },
     {
       'type' => 'db',
-      'path' => '/keys/database',
+      'path' => 'keys/database',
     },
   ],
 }
@@ -166,36 +138,48 @@ To perform LDAP authentication and file authorization following code can be used
 
 ```puppet
 class { 'rundeck':
-  auth_types  => ['ldap_shared'],
   auth_config => {
     'file' => {
-      'auth_users' => [
-        {
-          'username' => 'rooty',
-          'roles'    => ['admin'],
-        },
-        {
-          'username' => 'stan',
-          'roles'    => ['sre'],
-        }
-      ],
+      'auth_flag'    => 'sufficient',
+      'jaas_config'  => {
+        'file' => '/etc/rundeck/realm.properties',
+      },
+      'realm_config' => {
+        'admin_user'     => 'admin',
+        'admin_password' => 'admin',
+        'auth_users'     => [
+          {
+            'username' => 'testuser',
+            'password' => 'password',
+            'roles' => %w[user deploy]
+          },
+          {
+            'username' => 'anotheruser',
+            'password' => 'anotherpassword',
+            'roles' => ['user']
+          },
+        ],
+      },
     },
     'ldap' => {
-      'url'                            => 'ldap://ldap:389',
-      'force_binding'                  => true,
-      'bind_dn'                        => 'cn=ProxyUser,dc=example,dc=com',
-      'bind_password'                  => 'secret',
-      'user_base_dn'                   => 'ou=Users,dc=example,dc=com',
-      'user_rdn_attribute'             => 'uid',
-      'user_id_attribute'              => 'uid',
-      'user_object_class'              => 'inetOrgPerson',
-      'role_base_dn'                   => 'ou=Groups,dc=example,dc=com',
-      'role_name_attribute'            => 'cn',
-      'role_member_attribute'          => 'memberUid',
-      'role_username_member_attribute' => 'memberUid',
-      'role_object_class'              => 'posixGroup',
-      'supplemental_roles'             => 'user',
-      'nested_groups'                  => false,
+      'jaas_config' => {
+        'debug' => 'true',
+        'providerUrl' => 'ldap://server:389',
+        'bindDn' => 'cn=Manager,dc=example,dc=com',
+        'bindPassword' => 'secret',
+        'authenticationMethod' => 'simple',
+        'forceBindingLogin' => 'false',
+        'userBaseDn' => 'ou=users,ou=accounts,ou=corp,dc=xyz,dc=com',
+        'userRdnAttribute' => 'sAMAccountName',
+        'userIdAttribute' => 'sAMAccountName',
+        'userPasswordAttribute' => 'unicodePwd',
+        'userObjectClass' => 'user',
+        'roleBaseDn' => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
+        'roleNameAttribute' => 'cn',
+        'roleMemberAttribute' => 'member',
+        'roleObjectClass' => 'group',
+        'nestedGroups' => 'true'
+      },
     },
   },
 }
