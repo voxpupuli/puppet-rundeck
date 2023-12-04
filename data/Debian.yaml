@@ -3,9 +3,9 @@ rundeck::override_dir: /etc/default
 
 rundeck::repo_config:
   rundeck:
-    location: https://packagecloud.io/pagerduty/rundeck/any
+    location: https://packages.rundeck.com/pagerduty/rundeck/any
     release: any
     repos: main
     key:
       name: rundeck.gpg
-      source: https://packagecloud.io/pagerduty/rundeck/gpgkey
+      source: https://docs.rundeck.com/keys/BUILD-GPG-KEY-20230105.key
