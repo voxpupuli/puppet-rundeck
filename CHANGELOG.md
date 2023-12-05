@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v9.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.0.0) (2023-12-04)
+## [v9.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v9.0.1) (2023-12-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.0.0...v9.0.1)
+
+**Fixed bugs:**
+
+- Fix key storage config [\#524](https://github.com/voxpupuli/puppet-rundeck/pull/524) ([Joris29](https://github.com/Joris29))
+
+## [v9.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.0.0) (2023-12-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v8.0.1...v9.0.0)
 
