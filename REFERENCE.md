@@ -815,9 +815,10 @@ Alias of
 
 ```puppet
 Array[Struct[{
-      'type'             => String,
-      'path'             => String,
-      Optional['config'] => Hash,
+      'type'                       => String,
+      'path'                       => String,
+      Optional['removePathPrefix'] => Boolean,
+      Optional['config']           => Hash,
   }]]
 ```
 
