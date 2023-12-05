@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v9.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.0.0) (2023-12-04)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v8.0.1...v9.0.0)
+
+**Breaking changes:**
+
+- Module quality update [\#520](https://github.com/voxpupuli/puppet-rundeck/pull/520) ([Joris29](https://github.com/Joris29))
+- Update key storage parameters and update documentation [\#516](https://github.com/voxpupuli/puppet-rundeck/pull/516) ([Joris29](https://github.com/Joris29))
+
+**Fixed bugs:**
+
+- Support for Rundeck 3.3.x [\#452](https://github.com/voxpupuli/puppet-rundeck/issues/452)
+- Fix vault key storage options [\#515](https://github.com/voxpupuli/puppet-rundeck/pull/515) ([Joris29](https://github.com/Joris29))
+-  Add syncLdapUser param to security\_config [\#511](https://github.com/voxpupuli/puppet-rundeck/pull/511) ([nosrio](https://github.com/nosrio))
+
+**Closed issues:**
+
+- Missing rundeck.security.syncLdapUser config setting [\#510](https://github.com/voxpupuli/puppet-rundeck/issues/510)
+- Rundeck 3.4 no longer supports the rundeck.projectsStorageType configuration property [\#472](https://github.com/voxpupuli/puppet-rundeck/issues/472)
+- on VMWare, UUID is created in framework.properties that is overwritten by rundeck [\#451](https://github.com/voxpupuli/puppet-rundeck/issues/451)
+- secrets / keys are not stored in the database when using rundeck::key\_storage\_type: db  [\#426](https://github.com/voxpupuli/puppet-rundeck/issues/426)
+- \[FR\] Change rundeck-config.erb to key,value iterator only pattern [\#406](https://github.com/voxpupuli/puppet-rundeck/issues/406)
+- Add resourcejson [\#398](https://github.com/voxpupuli/puppet-rundeck/issues/398)
+- rdeck\_base is documented but not in the param list [\#197](https://github.com/voxpupuli/puppet-rundeck/issues/197)
+
+**Merged pull requests:**
+
+- Convert documentation to Puppet Strings format [\#519](https://github.com/voxpupuli/puppet-rundeck/pull/519) ([Joris29](https://github.com/Joris29))
+- Bump version requirements of dependencies to allow for their latest version [\#518](https://github.com/voxpupuli/puppet-rundeck/pull/518) ([dandunckelman](https://github.com/dandunckelman))
+
 ## [v8.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v8.0.1) (2023-10-03)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v8.0.0...v8.0.1)
