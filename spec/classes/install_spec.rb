@@ -16,7 +16,7 @@ describe 'rundeck' do
 
         case facts[:os]['family']
         when 'RedHat'
-          it do
+          it {
             is_expected.to contain_yumrepo('rundeck').with(
               baseurl: 'https://packages.rundeck.com/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
               repo_gpgcheck: 1,
@@ -24,12 +24,24 @@ describe 'rundeck' do
               enabled: 1,
               gpgkey: 'https://packages.rundeck.com/pagerduty/rundeck/gpgkey'
             ).that_comes_before('Package[rundeck]')
-          end
+          }
         when 'Debian'
-          it { is_expected.to contain_apt__source('rundeck').with_location('https://packages.rundeck.com/pagerduty/rundeck/any') }
+          it {
+            is_expected.to contain_apt__source('rundeck').with(
+              location: 'https://packages.rundeck.com/pagerduty/rundeck/any',
+              release: 'any',
+              repos: 'main',
+              key: {
+                'id' => '0DDD2FA79B15D736ECEA32B89B5206167C5C34C0',
+                'server' => 'keyserver.ubuntu.com',
+              }
+            )
+          }
+
           it { is_expected.to contain_class('apt::update').that_comes_before('Package[rundeck]') }
-          it { is_expected.to contain_package('rundeck').that_notifies('Class[rundeck::service]') }
         end
+
+        it { is_expected.to contain_package('rundeck').that_notifies('Class[rundeck::service]') }
       end
 
       context 'with different user and group' do
