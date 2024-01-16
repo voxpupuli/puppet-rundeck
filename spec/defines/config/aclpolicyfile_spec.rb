@@ -91,14 +91,14 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
       }
     end
 
-    it {
+    it do
       is_expected.to contain_file('/etc/rundeck/test.aclpolicy').with(
         owner: 'rundeck',
         group: 'rundeck',
         mode: '0644',
         content: test_acl
       )
-    }
+    end
   end
 
   context 'with test acl and custom parameters' do
@@ -112,22 +112,22 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
       }
     end
 
-    it {
+    it do
       is_expected.to contain_file('/etc/rundeck-acl').with(
         ensure: 'directory',
         owner: 'myUser',
         group: 'myGroup',
         mode: '0755'
       )
-    }
+    end
 
-    it {
+    it do
       is_expected.to contain_file('/etc/rundeck-acl/test.aclpolicy').with(
         owner: 'myUser',
         group: 'myGroup',
         mode: '0644',
         content: test_acl
       )
-    }
+    end
   end
 end
