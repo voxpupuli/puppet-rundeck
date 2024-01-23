@@ -16,7 +16,7 @@ describe 'rundeck' do
 
         case facts[:os]['family']
         when 'RedHat'
-          it {
+          it do
             is_expected.to contain_yumrepo('rundeck').with(
               baseurl: 'https://packages.rundeck.com/pagerduty/rundeck/rpm_any/rpm_any/$basearch',
               repo_gpgcheck: 1,
@@ -24,9 +24,9 @@ describe 'rundeck' do
               enabled: 1,
               gpgkey: 'https://packages.rundeck.com/pagerduty/rundeck/gpgkey'
             ).that_comes_before('Package[rundeck]')
-          }
+          end
         when 'Debian'
-          it {
+          it do
             is_expected.to contain_apt__source('rundeck').with(
               location: 'https://packages.rundeck.com/pagerduty/rundeck/any',
               release: 'any',
@@ -36,7 +36,7 @@ describe 'rundeck' do
                 'server' => 'keyserver.ubuntu.com',
               }
             )
-          }
+          end
 
           it { is_expected.to contain_class('apt::update').that_comes_before('Package[rundeck]') }
         end
