@@ -10,7 +10,7 @@ describe 'rundeck class' do
         distribution => 'jre'
       }
       class { 'rundeck':
-        package_ensure => '4.17.2.20231107-1'
+        package_ensure => '4.8.*'
       }
 
       Class['java'] -> Class['rundeck']
@@ -31,11 +31,11 @@ describe 'rundeck class' do
     end
   end
 
-  context 'updrade to latest version' do
+  context 'updrade to latest rundeck 4 version' do
     it 'applies successfully' do
       pp = <<-EOS
       class { 'rundeck':
-        package_ensure => '4.17.4.20231216-1'
+        package_ensure => '4.*'
       }
       EOS
 
