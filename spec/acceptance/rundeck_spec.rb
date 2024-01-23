@@ -35,7 +35,7 @@ describe 'rundeck class' do
     it 'applies successfully' do
       pp = <<-EOS
       class { 'rundeck':
-        package_ensure => 'latest'
+        package_ensure => '4.17.4.20231216-1'
       }
       EOS
 
