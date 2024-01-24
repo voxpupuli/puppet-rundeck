@@ -7,5 +7,70 @@ rundeck::repo_config:
     release: any
     repos: main
     key:
-      name: rundeck.gpg
-      source: https://packages.rundeck.com/pagerduty/rundeck/gpgkey
+      name: rundeck.asc
+      content: |
+        -----BEGIN PGP PUBLIC KEY BLOCK-----
+        
+        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
+        R/VlCBb26ePKjXxliSmEdA==
+        =5ilI
+        -----END PGP PUBLIC KEY BLOCK-----
