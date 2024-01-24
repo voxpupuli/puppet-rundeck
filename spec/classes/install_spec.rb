@@ -32,8 +32,8 @@ describe 'rundeck' do
               release: 'any',
               repos: 'main',
               key: {
-                'id' => '0DDD2FA79B15D736ECEA32B89B5206167C5C34C0',
-                'server' => 'keyserver.ubuntu.com',
+                'name' => 'rundeck.asc',
+                'content' => %r{^-----BEGIN PGP PUBLIC KEY BLOCK-----},
               }
             )
           end
