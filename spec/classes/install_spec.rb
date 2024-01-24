@@ -26,10 +26,22 @@ describe 'rundeck' do
             ).that_comes_before('Package[rundeck]')
           end
         when 'Debian'
-          it { is_expected.to contain_apt__source('rundeck').with_location('https://packages.rundeck.com/pagerduty/rundeck/any') }
+          it do
+            is_expected.to contain_apt__source('rundeck').with(
+              location: 'https://packages.rundeck.com/pagerduty/rundeck/any',
+              release: 'any',
+              repos: 'main',
+              key: {
+                'name' => 'rundeck.asc',
+                'content' => %r{^-----BEGIN PGP PUBLIC KEY BLOCK-----},
+              }
+            )
+          end
+
           it { is_expected.to contain_class('apt::update').that_comes_before('Package[rundeck]') }
-          it { is_expected.to contain_package('rundeck').that_notifies('Class[rundeck::service]') }
         end
+
+        it { is_expected.to contain_package('rundeck').that_notifies('Class[rundeck::service]') }
       end
 
       context 'with different user and group' do
