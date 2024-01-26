@@ -8,3 +8,5 @@ rundeck::repo_config:
     gpgcheck: 0
     enabled: 1
     gpgkey: https://packages.rundeck.com/pagerduty/rundeck/gpgkey
+
+rundeck::cli::repo_config: "%{alias('rundeck::repo_config')}"

@@ -74,3 +74,5 @@ rundeck::repo_config:
         R/VlCBb26ePKjXxliSmEdA==
         =5ilI
         -----END PGP PUBLIC KEY BLOCK-----
+
+rundeck::cli::repo_config: "%{alias('rundeck::repo_config')}"

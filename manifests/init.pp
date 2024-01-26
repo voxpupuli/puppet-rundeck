@@ -1,10 +1,13 @@
 # @summary Class to manage installation and configuration of Rundeck.
 #
-# @param manage_repo
-#   Whether to manage the package repository.
+# @param override_dir
+#   An absolute path to the overrides directory.
+#   Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
 # @param repo_config
 #   A hash of repository attributes for configuring the rundeck package repositories.
 #   Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
+# @param manage_repo
+#   Whether to manage the package repository.
 # @param package_ensure
 #   Ensure the state of the rundeck package, either present, absent or a specific version.
 # @param manage_home
@@ -35,6 +38,8 @@
 #   Wheter to enable cluster mode.
 # @param execution_mode
 #   Set the execution mode to 'active' or 'passive'.
+# @param api_token_max_duration
+#   Set the token max duration.
 # @param java_home
 #   Set the home directory of java.
 # @param jvm_args
@@ -106,6 +111,18 @@
 #   Allows you to use your own override template instead to config rundeckd init script.
 # @param service_script
 #   Allows you to use your own override template instead of the default from the package maintainer for rundeckd init script.
+# @param manage_cli
+#   Whether to manage rundeck cli config and resource with the rundeck class or not.
+# @param cli_version
+#   Ensure the state of the rundeck cli package, either present, absent or a specific version.
+# @param cli_user
+#   Cli user to authenticate.
+# @param cli_password
+#   Cli password to authenticate.
+# @param cli_token
+#   Cli token to authenticate.
+# @param cli_projects
+#   Cli projects config.
 #
 class rundeck (
   Stdlib::Absolutepath $override_dir,
@@ -222,6 +239,12 @@ class rundeck (
   Boolean $service_notify = true,
   Optional[String[1]] $service_config = undef,
   Optional[String[1]] $service_script = undef,
+  Boolean $manage_cli = true,
+  String[1] $cli_version = 'installed',
+  String[1] $cli_user = 'admin',
+  String[1] $cli_password = 'admin',
+  Optional[String[8]] $cli_token = undef,
+  Hash[String, Rundeck::Project] $cli_projects = {},
 ) {
   validate_rd_policy($admin_policies)
   validate_rd_policy($api_policies)
@@ -238,5 +261,21 @@ class rundeck (
     Class['rundeck::install']
     -> Class['rundeck::config']
     -> Class['rundeck::service']
+  }
+
+  if $manage_cli {
+    class { 'rundeck::cli':
+      manage_repo => false,
+      version     => $cli_version,
+      url         => $rundeck::config::framework_config['framework.server.url'],
+      bypass_url  => $grails_server_url,
+      user        => $cli_user,
+      password    => $cli_password,
+      token       => $cli_token,
+      projects    => $cli_projects,
+    }
+
+    Class['rundeck::service']
+    -> Class['rundeck::cli']
   }
 }

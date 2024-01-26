@@ -44,10 +44,18 @@ On systems that use apt, there's a soft dependency on the [puppetlabs/apt](https
 
 ### Beginning with rundeck
 
-To install a server with the default options:
+To install a server and cli with the default options:
 
 ```puppet
 include rundeck
+```
+
+### Beginning with rundeck cli
+
+To install rundeck cli with the default options:
+
+```puppet
+include rundeck::cli
 ```
 
 ## Usage
@@ -185,6 +193,61 @@ class { 'rundeck':
 }
 ```
 
+### Configure rundeck class with projects
+
+To add and manage rundeck projects through cli with the rundeck class following code can be used.
+
+```puppet
+class { 'rundeck':
+  'cli_token'    => 'very_secure',
+  'cli_projects' => {
+    'MyProject'   => {
+      'update_method' => 'set',
+      'config'        => {
+        'project.description'        => 'This is My rundeck project',
+        'project.disable.executions' => 'false',
+      },
+    },
+    'TestProject' => {
+      'config' => {
+        'project.description'      => 'This is a rundeck test project',
+        'project.disable.schedule' => 'false',
+      },
+    },
+  },
+}
+```
+
+### Configure rundeck cli class with projects separately
+
+To add and manage rundeck projects through cli with the rundeck class following code can be used.
+
+```puppet
+class { 'rundeck':
+  'manage_cli' => false,
+}
+
+class { 'rundeck::cli':
+  'manage_repo' => false,
+  'token'       => 'very_secure',
+  'projects'    => {
+    'MyProject'   => {
+      'update_method' => 'set',
+      'config'        => {
+        'project.description'        => 'This is My rundeck project',
+        'project.disable.executions' => 'false',
+      },
+    },
+    'TestProject' => {
+      'config' => {
+        'project.description'      => 'This is a rundeck test project',
+        'project.disable.schedule' => 'false',
+      },
+    },
+  },
+}
+```
+
 ## Reference
 
 See [REFERENCE.md](https://github.com/voxpupuli/puppet-rundeck/blob/master/REFERENCE.md)
@@ -193,11 +256,14 @@ See [REFERENCE.md](https://github.com/voxpupuli/puppet-rundeck/blob/master/REFER
 
 This module is tested on the following platforms:
 
-- CentOS 6
-- CentOS 7
-- Debian 8
+- CentOS 8
+- CentOS 9
+- Debian 10
+- Debian 11
 - RedHat 8
-- Ubuntu 16.04
+- Ubuntu 18.04
+- Ubuntu 20.04
+- Ubuntu 22.04
 
 It is tested with the OSS version of Puppet only.
 

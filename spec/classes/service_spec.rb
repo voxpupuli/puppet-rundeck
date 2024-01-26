@@ -9,10 +9,8 @@ describe 'rundeck' do
         facts
       end
 
-      context 'without any parameters test rundeck::service' do
-        let(:params) { {} }
-
-        it { is_expected.to contain_service('rundeckd') }
+      context 'with default parameters test rundeck::service' do
+        it { is_expected.to contain_service('rundeckd').with(ensure: 'running') }
       end
     end
   end

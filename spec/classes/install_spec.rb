@@ -9,9 +9,8 @@ describe 'rundeck' do
         facts
       end
 
-      context 'without any parameters test rundeck::install' do
-        let(:params) { {} }
-
+      context 'with default parameters test rundeck::install' do
+        it { is_expected.not_to contain_group('rundeck') }
         it { is_expected.not_to contain_user('rundeck') }
 
         case facts[:os]['family']
@@ -35,7 +34,7 @@ describe 'rundeck' do
                 'name' => 'rundeck.asc',
                 'content' => %r{^-----BEGIN PGP PUBLIC KEY BLOCK-----},
               }
-            )
+            ).that_comes_before('Package[rundeck]')
           end
 
           it { is_expected.to contain_class('apt::update').that_comes_before('Package[rundeck]') }
@@ -54,13 +53,13 @@ describe 'rundeck' do
           }
         end
 
-        it { is_expected.to contain_group('A1234').with('ensure' => 'present') }
+        it { is_expected.to contain_group('A1234').with(ensure: 'present') }
 
-        it { is_expected.to contain_group('rundeck').with('ensure' => 'absent') }
+        it { is_expected.to contain_group('rundeck').with(ensure: 'absent') }
 
-        it { is_expected.to contain_user('A1234').with('ensure' => 'present') }
+        it { is_expected.to contain_user('A1234').with(ensure: 'present') }
 
-        it { is_expected.to contain_user('rundeck').with('ensure' => 'absent') }
+        it { is_expected.to contain_user('rundeck').with(ensure: 'absent') }
       end
 
       context 'different user and group with ids' do
@@ -75,20 +74,8 @@ describe 'rundeck' do
           }
         end
 
-        it do
-          is_expected.to contain_group('A1234').with(
-            'ensure' => 'present',
-            'gid' => 10_000
-          )
-        end
-
-        it do
-          is_expected.to contain_user('A1234').with(
-            'ensure' => 'present',
-            'gid' => '10000',
-            'uid' => '10000'
-          )
-        end
+        it { is_expected.to contain_group('A1234').with(ensure: 'present', gid: 10_000) }
+        it { is_expected.to contain_user('A1234').with(ensure: 'present', gid: 10_000, uid: 10_000) }
       end
     end
   end

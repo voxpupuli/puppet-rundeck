@@ -9,6 +9,7 @@
 #### Public Classes
 
 * [`rundeck`](#rundeck): Class to manage installation and configuration of Rundeck.
+* [`rundeck::cli`](#rundeck--cli): Class to manage installation and configuration of Rundeck CLI.
 
 #### Private Classes
 
@@ -23,6 +24,7 @@
 
 * [`rundeck::config::aclpolicyfile`](#rundeck--config--aclpolicyfile): This define will create a custom acl policy file.
 * [`rundeck::config::plugin`](#rundeck--config--plugin): This define will install a rundeck plugin.
+* [`rundeck::config::project`](#rundeck--config--project): This define will create and manage a rundeck project.
 
 ### Functions
 
@@ -35,6 +37,7 @@
 * [`Rundeck::Key_storage_config`](#Rundeck--Key_storage_config): Rundeck key storage config type.
 * [`Rundeck::Loglevel`](#Rundeck--Loglevel): Rundeck log level type.
 * [`Rundeck::Mail_config`](#Rundeck--Mail_config): Rundeck mail config type.
+* [`Rundeck::Project`](#Rundeck--Project): Rundeck project config type.
 
 ## Classes
 
@@ -46,8 +49,9 @@ Class to manage installation and configuration of Rundeck.
 
 The following parameters are available in the `rundeck` class:
 
-* [`manage_repo`](#-rundeck--manage_repo)
+* [`override_dir`](#-rundeck--override_dir)
 * [`repo_config`](#-rundeck--repo_config)
+* [`manage_repo`](#-rundeck--manage_repo)
 * [`package_ensure`](#-rundeck--package_ensure)
 * [`manage_home`](#-rundeck--manage_home)
 * [`user`](#-rundeck--user)
@@ -63,6 +67,7 @@ The following parameters are available in the `rundeck` class:
 * [`grails_server_url`](#-rundeck--grails_server_url)
 * [`clustermode_enabled`](#-rundeck--clustermode_enabled)
 * [`execution_mode`](#-rundeck--execution_mode)
+* [`api_token_max_duration`](#-rundeck--api_token_max_duration)
 * [`java_home`](#-rundeck--java_home)
 * [`jvm_args`](#-rundeck--jvm_args)
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
@@ -98,8 +103,26 @@ The following parameters are available in the `rundeck` class:
 * [`service_notify`](#-rundeck--service_notify)
 * [`service_config`](#-rundeck--service_config)
 * [`service_script`](#-rundeck--service_script)
-* [`override_dir`](#-rundeck--override_dir)
-* [`api_token_max_duration`](#-rundeck--api_token_max_duration)
+* [`manage_cli`](#-rundeck--manage_cli)
+* [`cli_version`](#-rundeck--cli_version)
+* [`cli_user`](#-rundeck--cli_user)
+* [`cli_password`](#-rundeck--cli_password)
+* [`cli_token`](#-rundeck--cli_token)
+* [`cli_projects`](#-rundeck--cli_projects)
+
+##### <a name="-rundeck--override_dir"></a>`override_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+An absolute path to the overrides directory.
+Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
+
+##### <a name="-rundeck--repo_config"></a>`repo_config`
+
+Data type: `Hash`
+
+A hash of repository attributes for configuring the rundeck package repositories.
+Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
 
 ##### <a name="-rundeck--manage_repo"></a>`manage_repo`
 
@@ -108,13 +131,6 @@ Data type: `Boolean`
 Whether to manage the package repository.
 
 Default value: `true`
-
-##### <a name="-rundeck--repo_config"></a>`repo_config`
-
-Data type: `Hash`
-
-A hash of repository attributes for configuring the rundeck package repositories.
-Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
 
 ##### <a name="-rundeck--package_ensure"></a>`package_ensure`
 
@@ -291,6 +307,14 @@ Data type: `Enum['active', 'passive']`
 Set the execution mode to 'active' or 'passive'.
 
 Default value: `'active'`
+
+##### <a name="-rundeck--api_token_max_duration"></a>`api_token_max_duration`
+
+Data type: `String[1]`
+
+Set the token max duration.
+
+Default value: `'30d'`
 
 ##### <a name="-rundeck--java_home"></a>`java_home`
 
@@ -589,19 +613,170 @@ Allows you to use your own override template instead of the default from the pac
 
 Default value: `undef`
 
-##### <a name="-rundeck--override_dir"></a>`override_dir`
+##### <a name="-rundeck--manage_cli"></a>`manage_cli`
 
-Data type: `Stdlib::Absolutepath`
+Data type: `Boolean`
 
+Whether to manage rundeck cli config and resource with the rundeck class or not.
 
+Default value: `true`
 
-##### <a name="-rundeck--api_token_max_duration"></a>`api_token_max_duration`
+##### <a name="-rundeck--cli_version"></a>`cli_version`
 
 Data type: `String[1]`
 
+Ensure the state of the rundeck cli package, either present, absent or a specific version.
 
+Default value: `'installed'`
 
-Default value: `'30d'`
+##### <a name="-rundeck--cli_user"></a>`cli_user`
+
+Data type: `String[1]`
+
+Cli user to authenticate.
+
+Default value: `'admin'`
+
+##### <a name="-rundeck--cli_password"></a>`cli_password`
+
+Data type: `String[1]`
+
+Cli password to authenticate.
+
+Default value: `'admin'`
+
+##### <a name="-rundeck--cli_token"></a>`cli_token`
+
+Data type: `Optional[String[8]]`
+
+Cli token to authenticate.
+
+Default value: `undef`
+
+##### <a name="-rundeck--cli_projects"></a>`cli_projects`
+
+Data type: `Hash[String, Rundeck::Project]`
+
+Cli projects config.
+
+Default value: `{}`
+
+### <a name="rundeck--cli"></a>`rundeck::cli`
+
+Class to manage installation and configuration of Rundeck CLI.
+
+#### Examples
+
+##### Use cli with token and project config.
+
+```puppet
+class { 'rundeck::cli':
+  manage_repo => false,
+  url         => 'https://rundeck01.example.com',
+  bypass_url  => 'https://rundeck.example.com',
+  token       => 'very_secure',
+  projects    => {
+    'MyProject'   => {
+      'update_method' => 'set',
+      'config'        => {
+        'project.description'        => 'This is My rundeck project',
+        'project.disable.executions' => 'false',
+      },
+    },
+    'TestProject' => {
+      'config' => {
+        'project.description'      => 'This is a rundeck test project',
+        'project.disable.schedule' => 'false',
+      },
+    },
+  },
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `rundeck::cli` class:
+
+* [`repo_config`](#-rundeck--cli--repo_config)
+* [`manage_repo`](#-rundeck--cli--manage_repo)
+* [`version`](#-rundeck--cli--version)
+* [`url`](#-rundeck--cli--url)
+* [`bypass_url`](#-rundeck--cli--bypass_url)
+* [`user`](#-rundeck--cli--user)
+* [`password`](#-rundeck--cli--password)
+* [`token`](#-rundeck--cli--token)
+* [`projects`](#-rundeck--cli--projects)
+
+##### <a name="-rundeck--cli--repo_config"></a>`repo_config`
+
+Data type: `Hash`
+
+A hash of repository attributes for configuring the rundeck cli package repositories.
+Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
+
+##### <a name="-rundeck--cli--manage_repo"></a>`manage_repo`
+
+Data type: `Boolean`
+
+Whether to manage the cli package repository.
+
+Default value: `true`
+
+##### <a name="-rundeck--cli--version"></a>`version`
+
+Data type: `String[1]`
+
+Ensure the state of the rundeck cli package, either present, absent or a specific version.
+
+Default value: `'installed'`
+
+##### <a name="-rundeck--cli--url"></a>`url`
+
+Data type: `Stdlib::HTTPUrl`
+
+Rundeck instance/api url.
+
+Default value: `'http://localhost:4440'`
+
+##### <a name="-rundeck--cli--bypass_url"></a>`bypass_url`
+
+Data type: `Stdlib::HTTPUrl`
+
+Rundeck external url to bypass. This will rewrite any redirect to $bypass_url as $url
+
+Default value: `'http://localhost:4440'`
+
+##### <a name="-rundeck--cli--user"></a>`user`
+
+Data type: `String[1]`
+
+Cli user to authenticate.
+
+Default value: `'admin'`
+
+##### <a name="-rundeck--cli--password"></a>`password`
+
+Data type: `String[1]`
+
+Cli password to authenticate.
+
+Default value: `'admin'`
+
+##### <a name="-rundeck--cli--token"></a>`token`
+
+Data type: `Optional[String[8]]`
+
+Cli token to authenticate.
+
+Default value: `undef`
+
+##### <a name="-rundeck--cli--projects"></a>`projects`
+
+Data type: `Hash[String, Rundeck::Project]`
+
+Cli projects config. See example for structure and rundeck::config::project for available params.
+
+Default value: `{}`
 
 ## Defined types
 
@@ -760,6 +935,62 @@ Get the plugin trough a proxy server.
 
 Default value: `undef`
 
+### <a name="rundeck--config--project"></a>`rundeck::config::project`
+
+This define will create and manage a rundeck project.
+
+#### Examples
+
+##### Basic usage.
+
+```puppet
+rundeck::config::project { 'MyProject':
+  config => {
+    'project.description'      => 'My test project',
+    'project.disable.schedule' => 'false',
+  },
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `rundeck::config::project` defined type:
+
+* [`update_method`](#-rundeck--config--project--update_method)
+* [`config`](#-rundeck--config--project--config)
+
+##### <a name="-rundeck--config--project--update_method"></a>`update_method`
+
+Data type: `Enum['set', 'update']`
+
+set: Overwrite all configuration properties for a project. Any config keys not included will be removed.
+update: Modify configuration properties for a project. Only the specified keys will be updated.
+
+Default value: `'update'`
+
+##### <a name="-rundeck--config--project--config"></a>`config`
+
+Data type: `Hash[String, String]`
+
+Configuration properties for a project.
+
+Default value:
+
+```puppet
+{
+    'project.description'                                 => "${name} project",
+    'project.label'                                       => $name,
+    'project.disable.executions'                          => 'false',
+    'project.disable.schedule'                            => 'false',
+    'project.execution.history.cleanup.batch'             => '500',
+    'project.execution.history.cleanup.enabled'           => 'true',
+    'project.execution.history.cleanup.retention.days'    => '60',
+    'project.execution.history.cleanup.retention.minimum' => '50',
+    'project.execution.history.cleanup.schedule'          => '0 0 0 1/1 * ? *',
+    'project.jobs.gui.groupExpandLevel'                   => '1',
+  }
+```
+
 ## Functions
 
 ### <a name="validate_rd_policy"></a>`validate_rd_policy`
@@ -844,6 +1075,19 @@ Struct[{
     Optional['default.from'] => String,
     Optional['default.to']   => String,
     Optional['disabled']     => Boolean,
+}]
+```
+
+### <a name="Rundeck--Project"></a>`Rundeck::Project`
+
+Rundeck project config type.
+
+Alias of
+
+```puppet
+Struct[{
+    Optional['config']        => Hash[String, String],
+    Optional['update_method'] => String,
 }]
 ```
 

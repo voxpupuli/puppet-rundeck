@@ -12,11 +12,15 @@ describe 'rundeck' do
         facts
       end
 
-      context 'without any parameters test rundeck::config' do
-        it { is_expected.to contain_file('/var/lib/rundeck').with('ensure' => 'directory') }
-        it { is_expected.to contain_file('/var/lib/rundeck/libext').with('ensure' => 'directory') }
-        it { is_expected.to contain_file('/etc/rundeck').with('ensure' => 'directory') }
-        it { is_expected.to contain_file('/var/log/rundeck').with('ensure' => 'directory') }
+      context 'with default parameters test rundeck::config' do
+        it { is_expected.to contain_file('/var/lib/rundeck').with(ensure: 'directory') }
+        it { is_expected.to contain_file('/var/lib/rundeck/libext').with(ensure: 'directory') }
+        it { is_expected.to contain_file('/etc/rundeck').with(ensure: 'directory') }
+        it { is_expected.to contain_file('/var/lib/rundeck/var').with(ensure: 'directory') }
+        it { is_expected.to contain_file('/var/lib/rundeck/var/tmp').with(ensure: 'directory') }
+        it { is_expected.to contain_file('/var/lib/rundeck/var/logs').with(ensure: 'directory') }
+
+        it { is_expected.to contain_file('/var/log/rundeck').with(ensure: 'directory') }
 
         it { is_expected.to contain_file('/etc/rundeck/log4j2.properties') }
 
@@ -46,8 +50,8 @@ describe 'rundeck' do
         it { is_expected.to contain_class('rundeck::config::jaas_auth') }
         it { is_expected.to contain_class('rundeck::config::framework') }
 
-        it { is_expected.to contain_file('/etc/rundeck/project.properties').with('ensure' => 'absent') }
-        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.properties').with('ensure' => 'file') }
+        it { is_expected.to contain_file('/etc/rundeck/project.properties').with(ensure: 'absent') }
+        it { is_expected.to contain_file('/etc/rundeck/rundeck-config.properties').with(ensure: 'file') }
 
         it 'generates valid content for rundeck-config.properties' do
           content = catalogue.resource('file', '/etc/rundeck/rundeck-config.properties')[:content]
