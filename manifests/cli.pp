@@ -28,6 +28,8 @@
 #   Examples/defaults for yumrepo can be found at RedHat.yaml, and for apt at Debian.yaml
 # @param manage_repo
 #   Whether to manage the cli package repository.
+# @param notify_conn_check
+#   Wheter to notify the cli connection check if rundeck service changes.
 # @param version
 #   Ensure the state of the rundeck cli package, either present, absent or a specific version.
 # @param url
@@ -46,6 +48,7 @@
 class rundeck::cli (
   Hash $repo_config,
   Boolean $manage_repo = true,
+  Boolean $notify_conn_check = false,
   String[1] $version = 'installed',
   Stdlib::HTTPUrl $url = 'http://localhost:4440',
   Stdlib::HTTPUrl $bypass_url = 'http://localhost:4440',
@@ -55,6 +58,10 @@ class rundeck::cli (
   Hash[String, Rundeck::Project] $projects = {},
 ) {
   ensure_resource('package', 'jq', { 'ensure' => 'present' })
+
+  if $notify_conn_check {
+    Class['rundeck::service'] ~> Exec['Check rundeck cli connection']
+  }
 
   case $facts['os']['family'] {
     'RedHat': {

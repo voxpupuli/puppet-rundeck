@@ -41,23 +41,23 @@ describe 'rundeck::cli' do
           it { is_expected.to contain_class('apt::update').that_comes_before('Package[rundeck-cli]') }
           it { is_expected.to contain_package('rundeck-cli').with(ensure: 'installed') }
           it { is_expected.to contain_file('/usr/local/bin/rd_project_diff.sh').with(ensure: 'file', mode: '0755') }
+        end
 
-          it do
-            is_expected.to contain_exec('Check rundeck cli connection').with(
-              command: 'rd system info',
-              path: ['/bin', '/usr/bin', '/usr/local/bin'],
-              environment: [
-                'RD_FORMAT=json',
-                'RD_URL=http://localhost:4440',
-                'RD_BYPASS_URL=http://localhost:4440',
-                'RD_USER=admin',
-                'RD_PASSWORD=admin',
-              ],
-              tries: 60,
-              try_sleep: 5,
-              unless: 'rd system info &> /dev/null'
-            ).that_requires('Package[rundeck-cli]')
-          end
+        it do
+          is_expected.to contain_exec('Check rundeck cli connection').with(
+            command: 'rd system info',
+            path: ['/bin', '/usr/bin', '/usr/local/bin'],
+            environment: [
+              'RD_FORMAT=json',
+              'RD_URL=http://localhost:4440',
+              'RD_BYPASS_URL=http://localhost:4440',
+              'RD_USER=admin',
+              'RD_PASSWORD=admin',
+            ],
+            tries: 60,
+            try_sleep: 5,
+            unless: 'rd system info &> /dev/null'
+          ).that_requires('Package[rundeck-cli]')
         end
       end
 
