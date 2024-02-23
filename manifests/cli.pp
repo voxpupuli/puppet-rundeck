@@ -95,10 +95,17 @@ class rundeck::cli (
     ensure => $version,
   }
 
-  file { '/usr/local/bin/rd_project_diff.sh':
-    ensure  => file,
-    content => file('rundeck/rd_project_diff.sh'),
-    mode    => '0755',
+  file {
+    default:
+      ensure => file,
+      mode   => '0755',
+      ;
+    '/usr/local/bin/rd_project_diff.sh':
+      content => file('rundeck/rd_project_diff.sh'),
+      ;
+    '/usr/local/bin/rd_job_diff.sh':
+      content => file('rundeck/rd_job_diff.sh'),
+      ;
   }
 
   $_default_env_vars = [

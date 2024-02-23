@@ -8,14 +8,15 @@
 #     },
 #   }
 #
+# @param config
+#   Configuration properties for a project.
 # @param update_method
 #   set: Overwrite all configuration properties for a project. Any config keys not included will be removed.
 #   update: Modify configuration properties for a project. Only the specified keys will be updated.
-# @param config
-#   Configuration properties for a project.
+# @param jobs
+#   Rundeck jobs related to a project.
 #
 define rundeck::config::project (
-  Enum['set', 'update'] $update_method = 'update',
   Hash[String, String] $config = {
     'project.description'                                 => "${name} project",
     'project.label'                                       => $name,
@@ -28,6 +29,8 @@ define rundeck::config::project (
     'project.execution.history.cleanup.schedule'          => '0 0 0 1/1 * ? *',
     'project.jobs.gui.groupExpandLevel'                   => '1',
   },
+  Enum['set', 'update'] $update_method = 'update',
+  Hash[String, Rundeck::Job] $jobs = {},
 ) {
   include rundeck::cli
 
@@ -59,5 +62,23 @@ define rundeck::config::project (
       command => "rd projects configure ${update_method} -p ${name} -- ${_cmd_line_cfg.shellquote}",
       unless  => $_project_diff,
       ;
+  }
+
+  $jobs.each |$_name, $_attr| {
+    if $_attr['ensure'] == 'absent' {
+      exec { "Remove rundeck job: ${_name}":
+        command     => "rd jobs purge -y -p '${name}' -J '${_name}'",
+        path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+        environment => $rundeck::cli::environment,
+        onlyif      => "rd jobs list -p '${name}' -J '${_name}' | grep -q '${_name}'",
+      }
+    }
+
+    exec { "Create/update rundeck job: ${_name}":
+      command     => "rd jobs load -r -d update -p '${name}' -f '${_attr['path']}' -F ${_attr['format']}",
+      path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+      environment => $rundeck::cli::environment,
+      unless      => "rd_job_diff.sh '${name}' '${_name}' '${_attr['path']}' ${_attr['format']}",
+    }
   }
 }
