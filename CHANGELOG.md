@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v9.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v9.0.1) (2023-12-05)
+## [v9.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.1.0) (2024-02-29)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.0.1...v9.1.0)
+
+**Implemented enhancements:**
+
+- Add support for adding readme.md and motd.md for projects. [\#67](https://github.com/voxpupuli/puppet-rundeck/issues/67)
+- Type/provider for managing jobs [\#33](https://github.com/voxpupuli/puppet-rundeck/issues/33)
+- Add Job management [\#530](https://github.com/voxpupuli/puppet-rundeck/pull/530) ([Joris29](https://github.com/Joris29))
+- Add rundeck cli and project management [\#527](https://github.com/voxpupuli/puppet-rundeck/pull/527) ([Joris29](https://github.com/Joris29))
+
+**Fixed bugs:**
+
+- Fix debian gpg validation and improve rundeck::install spec file [\#528](https://github.com/voxpupuli/puppet-rundeck/pull/528) ([Joris29](https://github.com/Joris29))
+- Add aditional required framework config [\#526](https://github.com/voxpupuli/puppet-rundeck/pull/526) ([Joris29](https://github.com/Joris29))
+
+## [v9.0.1](https://github.com/voxpupuli/puppet-rundeck/tree/v9.0.1) (2023-12-06)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.0.0...v9.0.1)
 
