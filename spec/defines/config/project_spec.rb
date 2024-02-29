@@ -63,6 +63,64 @@ describe 'rundeck::config::project', type: :define do
         it { is_expected.to contain_exec('Create rundeck project: TestProject') }
         it { is_expected.to contain_exec('Manage rundeck project: TestProject') }
       end
+
+      context 'Add rundeck project: MyJobProject with jobs' do
+        name = 'MyJobProject'
+
+        let(:title) { name }
+        let(:params) do
+          {
+            config: {
+              'project.description'      => 'This is a rundeck project with jobs',
+              'project.disable.schedule' => 'true',
+            },
+            jobs: {
+              'MyJob1' => {
+                'path'   => '/etc/myjob1',
+                'format' => 'yaml',
+              },
+              'MyJob2' => {
+                'path'   => '/etc/myjob2',
+                'format' => 'xml',
+              },
+              'TestJob1' => {
+                'path'   => '/etc/testjob1',
+                'format' => 'yaml',
+              },
+            },
+          }
+        end
+
+        it do
+          is_expected.to contain_rundeck__config__project('MyJobProject').with(
+            update_method: 'update',
+            config: {
+              'project.description' => 'This is a rundeck project with jobs',
+              'project.disable.schedule' => 'true',
+            },
+            jobs: {
+              'MyJob1' => {
+                'path'   => '/etc/myjob1',
+                'format' => 'yaml',
+              },
+              'MyJob2' => {
+                'path'   => '/etc/myjob2',
+                'format' => 'xml',
+              },
+              'TestJob1' => {
+                'path'   => '/etc/testjob1',
+                'format' => 'yaml',
+              }
+            }
+          )
+        end
+
+        it { is_expected.to contain_exec('Create rundeck project: MyJobProject') }
+        it { is_expected.to contain_exec('Manage rundeck project: MyJobProject') }
+        it { is_expected.to contain_exec('Create/update rundeck job: MyJob1') }
+        it { is_expected.to contain_exec('Create/update rundeck job: MyJob2') }
+        it { is_expected.to contain_exec('Create/update rundeck job: TestJob1') }
+      end
     end
   end
 end

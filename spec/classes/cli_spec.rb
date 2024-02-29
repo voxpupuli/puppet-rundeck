@@ -41,23 +41,24 @@ describe 'rundeck::cli' do
           it { is_expected.to contain_class('apt::update').that_comes_before('Package[rundeck-cli]') }
           it { is_expected.to contain_package('rundeck-cli').with(ensure: 'installed') }
           it { is_expected.to contain_file('/usr/local/bin/rd_project_diff.sh').with(ensure: 'file', mode: '0755') }
+          it { is_expected.to contain_file('/usr/local/bin/rd_job_diff.sh').with(ensure: 'file', mode: '0755') }
+        end
 
-          it do
-            is_expected.to contain_exec('Check rundeck cli connection').with(
-              command: 'rd system info',
-              path: ['/bin', '/usr/bin', '/usr/local/bin'],
-              environment: [
-                'RD_FORMAT=json',
-                'RD_URL=http://localhost:4440',
-                'RD_BYPASS_URL=http://localhost:4440',
-                'RD_USER=admin',
-                'RD_PASSWORD=admin',
-              ],
-              tries: 60,
-              try_sleep: 5,
-              unless: 'rd system info &> /dev/null'
-            ).that_requires('Package[rundeck-cli]')
-          end
+        it do
+          is_expected.to contain_exec('Check rundeck cli connection').with(
+            command: 'rd system info',
+            path: ['/bin', '/usr/bin', '/usr/local/bin'],
+            environment: [
+              'RD_FORMAT=json',
+              'RD_URL=http://localhost:4440',
+              'RD_BYPASS_URL=http://localhost:4440',
+              'RD_USER=admin',
+              'RD_PASSWORD=admin',
+            ],
+            tries: 60,
+            try_sleep: 5,
+            unless: 'rd system info &> /dev/null'
+          ).that_requires('Package[rundeck-cli]')
         end
       end
 
@@ -92,11 +93,27 @@ describe 'rundeck::cli' do
                   'project.description' => 'This is My rundeck project',
                   'project.disable.executions' => 'false',
                 },
+                'jobs' => {
+                  'MyJob1' => {
+                    'path'   => '/etc/myjob1',
+                    'format' => 'yaml',
+                  },
+                  'MyJob2' => {
+                    'path'   => '/etc/myjob2',
+                    'format' => 'xml',
+                  },
+                },
               },
               'TestProject' => {
                 'config' => {
                   'project.description' => 'This is a rundeck test project',
                   'project.disable.schedule' => 'false',
+                },
+                'jobs' => {
+                  'TestJob1' => {
+                    'path'   => '/etc/testjob1',
+                    'format' => 'yaml',
+                  },
                 },
               },
             },
@@ -109,24 +126,34 @@ describe 'rundeck::cli' do
             config: {
               'project.description' => 'This is My rundeck project',
               'project.disable.executions' => 'false',
+            },
+            jobs: {
+              'MyJob1' => {
+                'path'   => '/etc/myjob1',
+                'format' => 'yaml',
+              },
+              'MyJob2' => {
+                'path'   => '/etc/myjob2',
+                'format' => 'xml',
+              },
             }
           )
         end
-
-        it { is_expected.to contain_exec('Create rundeck project: MyProject') }
-        it { is_expected.to contain_exec('Manage rundeck project: MyProject') }
 
         it do
           is_expected.to contain_rundeck__config__project('TestProject').with(
             config: {
               'project.description' => 'This is a rundeck test project',
               'project.disable.schedule' => 'false',
+            },
+            jobs: {
+              'TestJob1' => {
+                'path'   => '/etc/testjob1',
+                'format' => 'yaml',
+              }
             }
           )
         end
-
-        it { is_expected.to contain_exec('Create rundeck project: TestProject') }
-        it { is_expected.to contain_exec('Manage rundeck project: TestProject') }
       end
     end
   end

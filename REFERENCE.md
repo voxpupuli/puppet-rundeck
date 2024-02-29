@@ -34,10 +34,11 @@
 
 * [`Rundeck::Auth_config`](#Rundeck--Auth_config): Rundeck authentication config type.
 * [`Rundeck::Db_config`](#Rundeck--Db_config): Rundeck database config type.
+* [`Rundeck::Job`](#Rundeck--Job): Rundeck job type.
 * [`Rundeck::Key_storage_config`](#Rundeck--Key_storage_config): Rundeck key storage config type.
 * [`Rundeck::Loglevel`](#Rundeck--Loglevel): Rundeck log level type.
 * [`Rundeck::Mail_config`](#Rundeck--Mail_config): Rundeck mail config type.
-* [`Rundeck::Project`](#Rundeck--Project): Rundeck project config type.
+* [`Rundeck::Project`](#Rundeck--Project): Rundeck project type.
 
 ## Classes
 
@@ -699,6 +700,7 @@ The following parameters are available in the `rundeck::cli` class:
 
 * [`repo_config`](#-rundeck--cli--repo_config)
 * [`manage_repo`](#-rundeck--cli--manage_repo)
+* [`notify_conn_check`](#-rundeck--cli--notify_conn_check)
 * [`version`](#-rundeck--cli--version)
 * [`url`](#-rundeck--cli--url)
 * [`bypass_url`](#-rundeck--cli--bypass_url)
@@ -721,6 +723,14 @@ Data type: `Boolean`
 Whether to manage the cli package repository.
 
 Default value: `true`
+
+##### <a name="-rundeck--cli--notify_conn_check"></a>`notify_conn_check`
+
+Data type: `Boolean`
+
+Wheter to notify the cli connection check if rundeck service changes.
+
+Default value: `false`
 
 ##### <a name="-rundeck--cli--version"></a>`version`
 
@@ -956,17 +966,9 @@ rundeck::config::project { 'MyProject':
 
 The following parameters are available in the `rundeck::config::project` defined type:
 
-* [`update_method`](#-rundeck--config--project--update_method)
 * [`config`](#-rundeck--config--project--config)
-
-##### <a name="-rundeck--config--project--update_method"></a>`update_method`
-
-Data type: `Enum['set', 'update']`
-
-set: Overwrite all configuration properties for a project. Any config keys not included will be removed.
-update: Modify configuration properties for a project. Only the specified keys will be updated.
-
-Default value: `'update'`
+* [`update_method`](#-rundeck--config--project--update_method)
+* [`jobs`](#-rundeck--config--project--jobs)
 
 ##### <a name="-rundeck--config--project--config"></a>`config`
 
@@ -990,6 +992,23 @@ Default value:
     'project.jobs.gui.groupExpandLevel'                   => '1',
   }
 ```
+
+##### <a name="-rundeck--config--project--update_method"></a>`update_method`
+
+Data type: `Enum['set', 'update']`
+
+set: Overwrite all configuration properties for a project. Any config keys not included will be removed.
+update: Modify configuration properties for a project. Only the specified keys will be updated.
+
+Default value: `'update'`
+
+##### <a name="-rundeck--config--project--jobs"></a>`jobs`
+
+Data type: `Hash[String, Rundeck::Job]`
+
+Rundeck jobs related to a project.
+
+Default value: `{}`
 
 ## Functions
 
@@ -1038,6 +1057,19 @@ Struct[{
 }]
 ```
 
+### <a name="Rundeck--Job"></a>`Rundeck::Job`
+
+Rundeck job type.
+
+Alias of
+
+```puppet
+Struct[{
+    'path'   => Stdlib::Absolutepath,
+    'format' => Enum['yaml', 'xml', 'json'],
+}]
+```
+
 ### <a name="Rundeck--Key_storage_config"></a>`Rundeck::Key_storage_config`
 
 Rundeck key storage config type.
@@ -1080,14 +1112,15 @@ Struct[{
 
 ### <a name="Rundeck--Project"></a>`Rundeck::Project`
 
-Rundeck project config type.
+Rundeck project type.
 
 Alias of
 
 ```puppet
 Struct[{
     Optional['config']        => Hash[String, String],
-    Optional['update_method'] => String,
+    Optional['update_method'] => Enum['set', 'update'],
+    Optional['jobs']          => Hash[String, Rundeck::Job],
 }]
 ```
 

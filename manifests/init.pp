@@ -265,14 +265,15 @@ class rundeck (
 
   if $manage_cli {
     class { 'rundeck::cli':
-      manage_repo => false,
-      version     => $cli_version,
-      url         => $rundeck::config::framework_config['framework.server.url'],
-      bypass_url  => $grails_server_url,
-      user        => $cli_user,
-      password    => $cli_password,
-      token       => $cli_token,
-      projects    => $cli_projects,
+      manage_repo       => false,
+      notify_conn_check => true,
+      version           => $cli_version,
+      url               => $rundeck::config::framework_config['framework.server.url'],
+      bypass_url        => $grails_server_url,
+      user              => $cli_user,
+      password          => $cli_password,
+      token             => $cli_token,
+      projects          => $cli_projects,
     }
 
     Class['rundeck::service']
