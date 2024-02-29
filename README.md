@@ -1,11 +1,14 @@
 # Rundeck module for Puppet
 
 [![Build Status](https://github.com/voxpupuli/puppet-rundeck/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-rundeck/actions?query=workflow%3ACI)
-[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-rundeck/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-rundeck)
+[![Release](https://github.com/voxpupuli/puppet-rundeck/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-rundeck/actions/workflows/release.yml)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/rundeck.svg)](https://forge.puppetlabs.com/puppet/rundeck)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/rundeck.svg)](https://forge.puppetlabs.com/puppet/rundeck)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/rundeck.svg)](https://forge.puppetlabs.com/puppet/rundeck)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/rundeck.svg)](https://forge.puppetlabs.com/puppet/rundeck)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/puppet-rundeck)
+[![MIT License](https://img.shields.io/github/license/voxpupuli/puppet-rundeck.svg)](LICENSE)
+[![Donated by OpenTable](https://img.shields.io/badge/donated%20by-opentable-fb7047.svg)](#transfer-notice)
 
 ## Table of Contents
 
@@ -254,18 +257,7 @@ See [REFERENCE.md](https://github.com/voxpupuli/puppet-rundeck/blob/master/REFER
 
 ## Limitations
 
-This module is tested on the following platforms:
-
-- CentOS 8
-- CentOS 9
-- Debian 10
-- Debian 11
-- RedHat 8
-- Ubuntu 18.04
-- Ubuntu 20.04
-- Ubuntu 22.04
-
-It is tested with the OSS version of Puppet only.
+For a list of supported operating systems please check the [metadata.json](https://github.com/voxpupuli/puppet-rundeck/blob/master/metadata.json)
 
 ## Development
 
@@ -276,3 +268,9 @@ welcomes new contributions to this module, especially those that include
 documentation and rspec tests. We are happy to provide guidance if necessary.
 
 Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for more details.
+
+## Transfer Notice
+
+This plugin was originally authored by [OpenTable Inc](https://www.opentable.com/).
+The maintainer preferred that Vox Pupuli take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred over, please fork and continue to contribute here instead of Camptocamp.
