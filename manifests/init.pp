@@ -65,10 +65,18 @@
 #   An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
 # @param key_storage_encrypt_config
 #   An array with hashes of properties for customizing the [Rundeck Key Storage converter](https://docs.rundeck.com/docs/administration/configuration/plugins/configuring.html#storage-converter-plugins)
+# @param root_log_level
+#   The log4j root logging level to be set for Rundeck.
 # @param app_log_level
 #   The log4j logging level to be set for the Rundeck application.
 # @param audit_log_level
 #   The log4j logging level to be set for the Rundeck autorization.
+# @param webhook_plugins_log_level
+#   The log4j logging level to be set for the Rundeck plugin webhooks.
+# @param execution_cleanup_log_level
+#   The log4j logging level to be set for the Rundeck execution cleanup.
+# @param jaas_log_level
+#   The log4j logging level to be set for the Rundeck jaas security.
 # @param config_template
 #   The template used for rundeck-config properties. Needs to be in epp format.
 # @param override_template
@@ -216,8 +224,12 @@ class rundeck (
   Hash $preauthenticated_config = {},
   Rundeck::Key_storage_config $key_storage_config = [{ 'type' => 'db', 'path' => 'keys' }],
   Array[Hash] $key_storage_encrypt_config = [],
+  Rundeck::Loglevel $root_log_level = 'info',
   Rundeck::Loglevel $app_log_level = 'info',
   Rundeck::Loglevel $audit_log_level = 'info',
+  Rundeck::Loglevel $webhook_plugins_log_level = 'info',
+  Rundeck::Loglevel $execution_cleanup_log_level = 'info',
+  Rundeck::Loglevel $jaas_log_level = 'info',
   String[1] $config_template = 'rundeck/rundeck-config.properties.epp',
   String[1] $override_template = 'rundeck/profile_overrides.epp',
   String[1] $realm_template = 'rundeck/realm.properties.epp',
