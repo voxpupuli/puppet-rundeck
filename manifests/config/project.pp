@@ -72,13 +72,13 @@ define rundeck::config::project (
         environment => $rundeck::cli::environment,
         onlyif      => "rd jobs list -p '${name}' -J '${_name}' | grep -q '${_name}'",
       }
-    }
-
-    exec { "Create/update rundeck job: ${_name}":
-      command     => "rd jobs load -d update -p '${name}' -f '${_attr['path']}' -F ${_attr['format']}",
-      path        => ['/bin', '/usr/bin', '/usr/local/bin'],
-      environment => $rundeck::cli::environment,
-      unless      => "rd_job_diff.sh '${name}' '${_name}' '${_attr['path']}' ${_attr['format']}",
+    } else {
+      exec { "Create/update rundeck job: ${_name}":
+        command     => "rd jobs load -d update -p '${name}' -f '${_attr['path']}' -F ${_attr['format']}",
+        path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+        environment => $rundeck::cli::environment,
+        unless      => "rd_job_diff.sh '${name}' '${_name}' '${_attr['path']}' ${_attr['format']}",
+      }
     }
   }
 }

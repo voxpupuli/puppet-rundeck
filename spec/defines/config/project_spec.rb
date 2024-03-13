@@ -87,6 +87,11 @@ describe 'rundeck::config::project', type: :define do
                 'path'   => '/etc/testjob1',
                 'format' => 'yaml',
               },
+              'DeleteJob1' => {
+                'ensure' => 'absent',
+                'path'   => '/etc/testjob1',
+                'format' => 'yaml',
+              },
             },
           }
         end
@@ -110,6 +115,11 @@ describe 'rundeck::config::project', type: :define do
               'TestJob1' => {
                 'path'   => '/etc/testjob1',
                 'format' => 'yaml',
+              },
+              'DeleteJob1' => {
+                'ensure' => 'absent',
+                'path'   => '/etc/testjob1',
+                'format' => 'yaml',
               }
             }
           )
@@ -120,6 +130,7 @@ describe 'rundeck::config::project', type: :define do
         it { is_expected.to contain_exec('Create/update rundeck job: MyJob1') }
         it { is_expected.to contain_exec('Create/update rundeck job: MyJob2') }
         it { is_expected.to contain_exec('Create/update rundeck job: TestJob1') }
+        it { is_expected.to contain_exec('Remove rundeck job: DeleteJob1') }
       end
     end
   end
