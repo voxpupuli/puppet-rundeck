@@ -81,8 +81,12 @@ The following parameters are available in the `rundeck` class:
 * [`preauthenticated_config`](#-rundeck--preauthenticated_config)
 * [`key_storage_config`](#-rundeck--key_storage_config)
 * [`key_storage_encrypt_config`](#-rundeck--key_storage_encrypt_config)
+* [`root_log_level`](#-rundeck--root_log_level)
 * [`app_log_level`](#-rundeck--app_log_level)
 * [`audit_log_level`](#-rundeck--audit_log_level)
+* [`webhook_plugins_log_level`](#-rundeck--webhook_plugins_log_level)
+* [`execution_cleanup_log_level`](#-rundeck--execution_cleanup_log_level)
+* [`jaas_log_level`](#-rundeck--jaas_log_level)
 * [`config_template`](#-rundeck--config_template)
 * [`override_template`](#-rundeck--override_template)
 * [`realm_template`](#-rundeck--realm_template)
@@ -430,6 +434,14 @@ An array with hashes of properties for customizing the [Rundeck Key Storage conv
 
 Default value: `[]`
 
+##### <a name="-rundeck--root_log_level"></a>`root_log_level`
+
+Data type: `Rundeck::Loglevel`
+
+The log4j root logging level to be set for Rundeck.
+
+Default value: `'info'`
+
 ##### <a name="-rundeck--app_log_level"></a>`app_log_level`
 
 Data type: `Rundeck::Loglevel`
@@ -443,6 +455,30 @@ Default value: `'info'`
 Data type: `Rundeck::Loglevel`
 
 The log4j logging level to be set for the Rundeck autorization.
+
+Default value: `'info'`
+
+##### <a name="-rundeck--webhook_plugins_log_level"></a>`webhook_plugins_log_level`
+
+Data type: `Rundeck::Loglevel`
+
+The log4j logging level to be set for the Rundeck plugin webhooks.
+
+Default value: `'info'`
+
+##### <a name="-rundeck--execution_cleanup_log_level"></a>`execution_cleanup_log_level`
+
+Data type: `Rundeck::Loglevel`
+
+The log4j logging level to be set for the Rundeck execution cleanup.
+
+Default value: `'info'`
+
+##### <a name="-rundeck--jaas_log_level"></a>`jaas_log_level`
+
+Data type: `Rundeck::Loglevel`
+
+The log4j logging level to be set for the Rundeck jaas security.
 
 Default value: `'info'`
 
@@ -1065,8 +1101,9 @@ Alias of
 
 ```puppet
 Struct[{
-    'path'   => Stdlib::Absolutepath,
-    'format' => Enum['yaml', 'xml', 'json'],
+    'path'             => Stdlib::Absolutepath,
+    'format'           => Enum['yaml', 'xml', 'json'],
+    Optional['ensure'] => Enum['absent', 'present'],
 }]
 ```
 

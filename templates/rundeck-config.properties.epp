@@ -1,4 +1,4 @@
-loglevel.default = <%= $rundeck::app_log_level %>
+loglevel.default = <%= $rundeck::root_log_level %>
 rdeck.base = <%= $rundeck::config::base_dir %>
 
 rss.enabled = <%= $rundeck::rss_enabled %>
