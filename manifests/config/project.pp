@@ -66,14 +66,14 @@ define rundeck::config::project (
 
   $jobs.each |$_name, $_attr| {
     if $_attr['ensure'] == 'absent' {
-      exec { "Remove rundeck job: ${_name}":
+      exec { "(${name}) Remove job: ${_name}":
         command     => "rd jobs purge -y -p '${name}' -J '${_name}'",
         path        => ['/bin', '/usr/bin', '/usr/local/bin'],
         environment => $rundeck::cli::environment,
         onlyif      => "rd jobs list -p '${name}' -J '${_name}' | grep -q '${_name}'",
       }
     } else {
-      exec { "Create/update rundeck job: ${_name}":
+      exec { "(${name}) Create/update job: ${_name}":
         command     => "rd jobs load -d update -p '${name}' -f '${_attr['path']}' -F ${_attr['format']}",
         path        => ['/bin', '/usr/bin', '/usr/local/bin'],
         environment => $rundeck::cli::environment,

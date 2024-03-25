@@ -127,10 +127,10 @@ describe 'rundeck::config::project', type: :define do
 
         it { is_expected.to contain_exec('Create rundeck project: MyJobProject') }
         it { is_expected.to contain_exec('Manage rundeck project: MyJobProject') }
-        it { is_expected.to contain_exec('Create/update rundeck job: MyJob1') }
-        it { is_expected.to contain_exec('Create/update rundeck job: MyJob2') }
-        it { is_expected.to contain_exec('Create/update rundeck job: TestJob1') }
-        it { is_expected.to contain_exec('Remove rundeck job: DeleteJob1') }
+        it { is_expected.to contain_exec('(MyJobProject) Create/update job: MyJob1') }
+        it { is_expected.to contain_exec('(MyJobProject) Create/update job: MyJob2') }
+        it { is_expected.to contain_exec('(MyJobProject) Create/update job: TestJob1') }
+        it { is_expected.to contain_exec('(MyJobProject) Remove job: DeleteJob1') }
       end
     end
   end
