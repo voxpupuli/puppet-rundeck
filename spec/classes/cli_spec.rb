@@ -140,6 +140,9 @@ describe 'rundeck::cli' do
           )
         end
 
+        it { is_expected.to contain_exec('(MyProject) Create/update job: MyJob1') }
+        it { is_expected.to contain_exec('(MyProject) Create/update job: MyJob2') }
+
         it do
           is_expected.to contain_rundeck__config__project('TestProject').with(
             config: {
@@ -154,6 +157,8 @@ describe 'rundeck::cli' do
             }
           )
         end
+
+        it { is_expected.to contain_exec('(TestProject) Create/update job: TestJob1') }
       end
     end
   end
