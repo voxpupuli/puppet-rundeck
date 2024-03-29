@@ -2,9 +2,9 @@ authentication {
 <%- $_auth_config.keys.each |$_type| { -%>
 <%- if $_type == 'file' { -%>
 <%- if $_auth_config['file']['auth_flag'] { -%>
-  org.eclipse.jetty.jaas.spi.PropertyFileLoginModule <%= $_auth_config['file']['auth_flag'] %>
+  org.rundeck.jaas.jetty.ReloadablePropertyFileLoginModule <%= $_auth_config['file']['auth_flag'] %>
 <%- } else { -%>
-  org.eclipse.jetty.jaas.spi.PropertyFileLoginModule required
+  org.rundeck.jaas.jetty.ReloadablePropertyFileLoginModule required
 <%- } -%>
 <%- $_auth_config['file']['jaas_config'].each |$_k, $_v| { -%>
     <%= $_k -%>=<% if keys($_auth_config['file']['jaas_config'])[-1] == $_k { -%>"<%= $_v %>";<% } else { -%>"<%= $_v %>"<%- } %>
