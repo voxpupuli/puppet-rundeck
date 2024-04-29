@@ -1,4 +1,4 @@
-# Rundeck key storage config type.
+# @summary Rundeck key storage config type.
 type Rundeck::Key_storage_config = Array[
   Struct[{
       'type'                       => String,

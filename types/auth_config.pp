@@ -1,4 +1,4 @@
-# Rundeck authentication config type.
+# @summary Rundeck authentication config type.
 type Rundeck::Auth_config = Struct[{
     Optional['file'] => Hash[String, Any],
     Optional['ldap'] => Hash[String, Any],
