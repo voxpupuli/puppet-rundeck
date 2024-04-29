@@ -24,7 +24,7 @@
 
 * [`rundeck::config::aclpolicyfile`](#rundeck--config--aclpolicyfile): This define will create a custom acl policy file.
 * [`rundeck::config::plugin`](#rundeck--config--plugin): This define will install a rundeck plugin.
-* [`rundeck::config::project`](#rundeck--config--project): This define will create and manage a rundeck project.
+* [`rundeck::config::project`](#rundeck--config--project): This define will manage projects and jobs.
 
 ### Functions
 
@@ -983,7 +983,7 @@ Default value: `undef`
 
 ### <a name="rundeck--config--project"></a>`rundeck::config::project`
 
-This define will create and manage a rundeck project.
+This define will manage projects and jobs.
 
 #### Examples
 
@@ -1002,9 +1002,18 @@ rundeck::config::project { 'MyProject':
 
 The following parameters are available in the `rundeck::config::project` defined type:
 
+* [`ensure`](#-rundeck--config--project--ensure)
 * [`config`](#-rundeck--config--project--config)
 * [`update_method`](#-rundeck--config--project--update_method)
 * [`jobs`](#-rundeck--config--project--jobs)
+
+##### <a name="-rundeck--config--project--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Whether or not the project should be present.
+
+Default value: `'present'`
 
 ##### <a name="-rundeck--config--project--config"></a>`config`
 
@@ -1155,6 +1164,7 @@ Alias of
 
 ```puppet
 Struct[{
+    Optional['ensure']        => Enum['absent', 'present'],
     Optional['config']        => Hash[String, String],
     Optional['update_method'] => Enum['set', 'update'],
     Optional['jobs']          => Hash[String, Rundeck::Job],
