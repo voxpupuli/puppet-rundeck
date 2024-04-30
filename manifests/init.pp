@@ -50,6 +50,8 @@
 #   Hash of properties for configuring [Rundeck JAAS Authentication](https://docs.rundeck.com/docs/administration/security/authentication.html#jetty-and-jaas-authentication)
 # @param database_config
 #   Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
+# @param feature_config
+#   A hash of rundeck features.
 # @param framework_config
 #   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
 #   This hash will be merged with the [Rundeck defaults](https://github.com/voxpupuli/puppet-rundeck/blob/master/manifests/config.pp#L8-L20)
@@ -217,6 +219,7 @@ class rundeck (
     },
   },
   Rundeck::Db_config $database_config = { 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' },
+  Hash $feature_config = {},
   Hash $framework_config = {},
   Hash $gui_config = {},
   Rundeck::Mail_config $mail_config = {},

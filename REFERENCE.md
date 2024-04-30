@@ -74,6 +74,7 @@ The following parameters are available in the `rundeck` class:
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`auth_config`](#-rundeck--auth_config)
 * [`database_config`](#-rundeck--database_config)
+* [`feature_config`](#-rundeck--feature_config)
 * [`framework_config`](#-rundeck--framework_config)
 * [`gui_config`](#-rundeck--gui_config)
 * [`mail_config`](#-rundeck--mail_config)
@@ -376,6 +377,14 @@ Data type: `Rundeck::Db_config`
 Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 
 Default value: `{ 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' }`
+
+##### <a name="-rundeck--feature_config"></a>`feature_config`
+
+Data type: `Hash`
+
+A hash of rundeck features.
+
+Default value: `{}`
 
 ##### <a name="-rundeck--framework_config"></a>`framework_config`
 
