@@ -7,10 +7,10 @@ describe 'rundeck class' do
     it 'applies successfully' do
       pp = <<-EOS
       class { 'java':
-        distribution => 'jre'
+        distribution => 'jre',
       }
       class { 'rundeck':
-        package_ensure => '4.17.2.20231107-1'
+        package_ensure => '5.0.2.20240212-1',
       }
 
       Class['java'] -> Class['rundeck']
@@ -35,7 +35,7 @@ describe 'rundeck class' do
     it 'applies successfully' do
       pp = <<-EOS
       class { 'rundeck':
-        package_ensure => '4.17.4.20231216-1'
+        package_ensure => '5.2.0.20240410-1',
       }
       EOS
 

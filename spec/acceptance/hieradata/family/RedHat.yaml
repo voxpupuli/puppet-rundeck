@@ -1,0 +1,3 @@
+---
+# Rundeck 5.0.0 or newer requires Java 11 minimum
+java::package: java-11-openjdk-headless

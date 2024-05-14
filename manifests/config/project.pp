@@ -1,4 +1,4 @@
-# @summary This define will create and manage a rundeck project.
+# @summary This define will manage projects and jobs.
 #
 # @example Basic usage.
 #   rundeck::config::project { 'MyProject':
@@ -8,6 +8,8 @@
 #     },
 #   }
 #
+# @param ensure
+#   Whether or not the project should be present.
 # @param config
 #   Configuration properties for a project.
 # @param update_method
@@ -17,6 +19,7 @@
 #   Rundeck jobs related to a project.
 #
 define rundeck::config::project (
+  Enum['absent', 'present'] $ensure = 'present',
   Hash[String, String] $config = {
     'project.description'                                 => "${name} project",
     'project.label'                                       => $name,
@@ -49,35 +52,44 @@ define rundeck::config::project (
     default => "rd_project_diff.sh '${name}' ${update_method} '${_final_cfg.to_json}' '${_final_cfg.keys}'",
   }
 
-  exec {
-    default:
+  if $ensure == 'absent' {
+    exec { "Remove rundeck project: ${name}":
+      command     => "rd projects delete -y -p '${name}'",
       path        => ['/bin', '/usr/bin', '/usr/local/bin'],
       environment => $rundeck::cli::environment,
-      ;
-    "Create rundeck project: ${name}":
-      command => "rd projects create -p ${name}",
-      unless  => "rd projects info -p ${name}",
-      ;
-    "Manage rundeck project: ${name}":
-      command => "rd projects configure ${update_method} -p ${name} -- ${_cmd_line_cfg.shellquote}",
-      unless  => $_project_diff,
-      ;
-  }
+      onlyif      => "rd projects info -p '${name}'",
+    }
+  } else {
+    exec {
+      default:
+        path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+        environment => $rundeck::cli::environment,
+        ;
+      "Create rundeck project: ${name}":
+        command => "rd projects create -p '${name}' -- ${_cmd_line_cfg.shellquote}",
+        unless  => "rd projects info -p '${name}'",
+        ;
+      "Manage rundeck project: ${name}":
+        command => "rd projects configure ${update_method} -p '${name}' -- ${_cmd_line_cfg.shellquote}",
+        unless  => $_project_diff,
+        ;
+    }
 
-  $jobs.each |$_name, $_attr| {
-    if $_attr['ensure'] == 'absent' {
-      exec { "(${name}) Remove job: ${_name}":
-        command     => "rd jobs purge -y -p '${name}' -J '${_name}'",
-        path        => ['/bin', '/usr/bin', '/usr/local/bin'],
-        environment => $rundeck::cli::environment,
-        onlyif      => "rd jobs list -p '${name}' -J '${_name}' | grep -q '${_name}'",
-      }
-    } else {
-      exec { "(${name}) Create/update job: ${_name}":
-        command     => "rd jobs load -d update -p '${name}' -f '${_attr['path']}' -F ${_attr['format']}",
-        path        => ['/bin', '/usr/bin', '/usr/local/bin'],
-        environment => $rundeck::cli::environment,
-        unless      => "rd_job_diff.sh '${name}' '${_name}' '${_attr['path']}' ${_attr['format']}",
+    $jobs.each |$_name, $_attr| {
+      if $_attr['ensure'] == 'absent' {
+        exec { "(${name}) Remove job: ${_name}":
+          command     => "rd jobs purge -y -p '${name}' -J '${_name}'",
+          path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+          environment => $rundeck::cli::environment,
+          onlyif      => "rd jobs list -p '${name}' -J '${_name}' | grep -q '${_name}'",
+        }
+      } else {
+        exec { "(${name}) Create/update job: ${_name}":
+          command     => "rd jobs load -d update -p '${name}' -f '${_attr['path']}' -F ${_attr['format']}",
+          path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+          environment => $rundeck::cli::environment,
+          unless      => "rd_job_diff.sh '${name}' '${_name}' '${_attr['path']}' ${_attr['format']}",
+        }
       }
     }
   }

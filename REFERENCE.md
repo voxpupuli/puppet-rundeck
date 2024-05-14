@@ -24,7 +24,7 @@
 
 * [`rundeck::config::aclpolicyfile`](#rundeck--config--aclpolicyfile): This define will create a custom acl policy file.
 * [`rundeck::config::plugin`](#rundeck--config--plugin): This define will install a rundeck plugin.
-* [`rundeck::config::project`](#rundeck--config--project): This define will create and manage a rundeck project.
+* [`rundeck::config::project`](#rundeck--config--project): This define will manage projects and jobs.
 
 ### Functions
 
@@ -74,6 +74,7 @@ The following parameters are available in the `rundeck` class:
 * [`quartz_job_threadcount`](#-rundeck--quartz_job_threadcount)
 * [`auth_config`](#-rundeck--auth_config)
 * [`database_config`](#-rundeck--database_config)
+* [`feature_config`](#-rundeck--feature_config)
 * [`framework_config`](#-rundeck--framework_config)
 * [`gui_config`](#-rundeck--gui_config)
 * [`mail_config`](#-rundeck--mail_config)
@@ -376,6 +377,14 @@ Data type: `Rundeck::Db_config`
 Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 
 Default value: `{ 'url' => 'jdbc:h2:file:/var/lib/rundeck/data/rundeckdb' }`
+
+##### <a name="-rundeck--feature_config"></a>`feature_config`
+
+Data type: `Hash`
+
+A hash of rundeck features.
+
+Default value: `{}`
 
 ##### <a name="-rundeck--framework_config"></a>`framework_config`
 
@@ -983,7 +992,7 @@ Default value: `undef`
 
 ### <a name="rundeck--config--project"></a>`rundeck::config::project`
 
-This define will create and manage a rundeck project.
+This define will manage projects and jobs.
 
 #### Examples
 
@@ -1002,9 +1011,18 @@ rundeck::config::project { 'MyProject':
 
 The following parameters are available in the `rundeck::config::project` defined type:
 
+* [`ensure`](#-rundeck--config--project--ensure)
 * [`config`](#-rundeck--config--project--config)
 * [`update_method`](#-rundeck--config--project--update_method)
 * [`jobs`](#-rundeck--config--project--jobs)
+
+##### <a name="-rundeck--config--project--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Whether or not the project should be present.
+
+Default value: `'present'`
 
 ##### <a name="-rundeck--config--project--config"></a>`config`
 
@@ -1155,6 +1173,7 @@ Alias of
 
 ```puppet
 Struct[{
+    Optional['ensure']        => Enum['absent', 'present'],
     Optional['config']        => Hash[String, String],
     Optional['update_method'] => Enum['set', 'update'],
     Optional['jobs']          => Hash[String, Rundeck::Job],

@@ -16,6 +16,7 @@ describe 'rundeck::config::project', type: :define do
 
         it do
           is_expected.to contain_rundeck__config__project('MyProject').with(
+            ensure: 'present',
             update_method: 'update',
             config: {
               'project.description' => 'MyProject project',
@@ -52,6 +53,7 @@ describe 'rundeck::config::project', type: :define do
 
         it do
           is_expected.to contain_rundeck__config__project('TestProject').with(
+            ensure: 'present',
             update_method: 'set',
             config: {
               'project.description' => 'This is a rundeck test project',
@@ -62,6 +64,20 @@ describe 'rundeck::config::project', type: :define do
 
         it { is_expected.to contain_exec('Create rundeck project: TestProject') }
         it { is_expected.to contain_exec('Manage rundeck project: TestProject') }
+      end
+
+      context 'Remove rundeck project: RemoveProject' do
+        name = 'RemoveProject'
+
+        let(:title) { name }
+        let(:params) do
+          {
+            ensure: 'absent',
+          }
+        end
+
+        it { is_expected.to contain_rundeck__config__project('RemoveProject').with(ensure: 'absent') }
+        it { is_expected.to contain_exec('Remove rundeck project: RemoveProject') }
       end
 
       context 'Add rundeck project: MyJobProject with jobs' do
@@ -98,6 +114,7 @@ describe 'rundeck::config::project', type: :define do
 
         it do
           is_expected.to contain_rundeck__config__project('MyJobProject').with(
+            ensure: 'present',
             update_method: 'update',
             config: {
               'project.description' => 'This is a rundeck project with jobs',

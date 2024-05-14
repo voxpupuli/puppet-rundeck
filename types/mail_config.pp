@@ -1,4 +1,4 @@
-# Rundeck mail config type.
+# @summary Rundeck mail config type.
 type Rundeck::Mail_config = Struct[{
     Optional['host']         => String,
     Optional['port']         => Integer,

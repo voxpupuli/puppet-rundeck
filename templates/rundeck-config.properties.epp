@@ -59,3 +59,7 @@ rundeck.security.authorization.preauthenticated.<%= $_k %> = <%= $_v %>
 <%- $rundeck::gui_config.each |$_k, $_v| {-%>
 rundeck.gui.<%= $_k %> = <%= $_v %>
 <%- } -%>
+
+<%- $rundeck::feature_config.each |$_k, $_v| {-%>
+rundeck.feature.<%= $_k %> = <%= $_v %>
+<%- } -%>
