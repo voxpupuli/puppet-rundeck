@@ -19,6 +19,7 @@ describe 'rundeck' do
         it { is_expected.to contain_file('/var/lib/rundeck/var').with(ensure: 'directory') }
         it { is_expected.to contain_file('/var/lib/rundeck/var/tmp').with(ensure: 'directory') }
         it { is_expected.to contain_file('/var/lib/rundeck/logs').with(ensure: 'directory') }
+        it { is_expected.to contain_file('/var/lib/rundeck/projects').with(ensure: 'directory') }
 
         it { is_expected.to contain_file('/var/log/rundeck').with(ensure: 'directory') }
 
