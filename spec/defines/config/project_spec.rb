@@ -149,6 +149,74 @@ describe 'rundeck::config::project', type: :define do
         it { is_expected.to contain_exec('(MyJobProject) Create/update job: TestJob1') }
         it { is_expected.to contain_exec('(MyJobProject) Remove job: DeleteJob1') }
       end
+
+      context 'Add rundeck project: TestSCM with scm config' do
+        name = 'TestSCM'
+
+        let(:title) { name }
+        let(:params) do
+          {
+            scm_config: {
+              'import' => {
+                'type'   => 'git-import',
+                'config' => {
+                  'strictHostKeyChecking' => 'yes',
+                  'gitPasswordPath'       => 'keys/example-access-token',
+                  'format'                => 'xml',
+                  'dir'                   => '/var/lib/rundeck/projects/MyProject/ScmImport',
+                  'branch'                => 'master',
+                  'url'                   => 'https://myuser@example.com/example/example.git',
+                  'filePattern'           => '*.xml',
+                  'useFilePattern'        => 'true',
+                  'pathTemplate'          => '${job.id}.${config.format}',
+                  'importUuidBehavior'    => 'preserve',
+                  'sshPrivateKeyPath'     => '',
+                  'fetchAutomatically'    => 'true',
+                  'pullAutomatically'     => 'true',
+                },
+              },
+            },
+          }
+        end
+
+        it { is_expected.to contain_exec('Create rundeck project: TestSCM') }
+        it { is_expected.to contain_exec('Manage rundeck project: TestSCM') }
+        it { is_expected.to contain_file('/var/lib/rundeck/projects/TestSCM').with(ensure: 'directory', owner: 'rundeck', group: 'rundeck', mode: '0755') }
+        it { is_expected.to contain_file('/var/lib/rundeck/projects/TestSCM/scm-import.json').with(ensure: 'file', owner: 'rundeck', group: 'rundeck', mode: '0644') }
+        it { is_expected.to contain_exec('Setup/update SCM import config for rundeck project: TestSCM').that_requires('File[/var/lib/rundeck/projects/TestSCM/scm-import.json]') }
+      end
+
+      context 'Add rundeck project: TestWrongSCM with wrong scm config' do
+        name = 'TestWrongSCM'
+
+        let(:title) { name }
+        let(:params) do
+          {
+            scm_config: {
+              'wrong_key' => {
+                'type'   => 'git-import',
+                'config' => {
+                  'strictHostKeyChecking' => 'yes',
+                  'gitPasswordPath'       => 'keys/example-access-token',
+                  'format'                => 'xml',
+                  'dir'                   => '/var/lib/rundeck/projects/MyProject/ScmImport',
+                  'branch'                => 'master',
+                  'url'                   => 'https://myuser@example.com/example/example.git',
+                  'filePattern'           => '*.xml',
+                  'useFilePattern'        => 'true',
+                  'pathTemplate'          => '${job.id}.${config.format}',
+                  'importUuidBehavior'    => 'preserve',
+                  'sshPrivateKeyPath'     => '',
+                  'fetchAutomatically'    => 'true',
+                  'pullAutomatically'     => 'true',
+                },
+              },
+            },
+          }
+        end
+
+        it { is_expected.not_to compile }
+      end
     end
   end
 end
