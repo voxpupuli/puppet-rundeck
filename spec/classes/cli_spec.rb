@@ -42,6 +42,7 @@ describe 'rundeck::cli' do
           it { is_expected.to contain_package('rundeck-cli').with(ensure: 'installed') }
           it { is_expected.to contain_file('/usr/local/bin/rd_project_diff.sh').with(ensure: 'file', mode: '0755') }
           it { is_expected.to contain_file('/usr/local/bin/rd_job_diff.sh').with(ensure: 'file', mode: '0755') }
+          it { is_expected.to contain_file('/usr/local/bin/rd_scm_diff.sh').with(ensure: 'file', mode: '0755') }
         end
 
         it do
