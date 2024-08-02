@@ -40,6 +40,7 @@
 * [`Rundeck::Loglevel`](#Rundeck--Loglevel): Rundeck log level type.
 * [`Rundeck::Mail_config`](#Rundeck--Mail_config): Rundeck mail config type.
 * [`Rundeck::Project`](#Rundeck--Project): Rundeck project type.
+* [`Rundeck::Scm`](#Rundeck--Scm): Rundeck scm type.
 
 ## Classes
 
@@ -1008,6 +1009,63 @@ rundeck::config::project { 'MyProject':
 }
 ```
 
+##### Advanced usage with jobs.
+
+```puppet
+rundeck::config::project { 'MyProject':
+  config => {
+    'project.description'      => 'My test project',
+    'project.disable.schedule' => 'false',
+  },
+  jobs   => {
+    'MyJob1' => {
+      'path'   => '/etc/myjob1',
+      'format' => 'yaml',
+    },
+    'MyJob2' => {
+      'path'   => '/etc/myjob2',
+      'format' => 'xml',
+    },
+    'DeleteJob1' => {
+      'ensure' => 'absent',
+      'path'   => '/etc/testjob1',
+      'format' => 'yaml',
+    },
+  },
+}
+```
+
+##### Advanced usage with scm_config.
+
+```puppet
+rundeck::config::project { 'MyProject':
+  config     => {
+    'project.description'      => 'My test project',
+    'project.disable.schedule' => 'false',
+  },
+  scm_config => {
+    'import' => {
+      'type'   => 'git-import',
+      'config' => {
+        'strictHostKeyChecking' => 'yes',
+        'gitPasswordPath'       => 'keys/example-access-token',
+        'format'                => 'xml',
+        'dir'                   => '/var/lib/rundeck/projects/MyProject/ScmImport',
+        'branch'                => 'master',
+        'url'                   => 'https://myuser@example.com/example/example.git',
+        'filePattern'           => '*.xml',
+        'useFilePattern'        => 'true',
+        'pathTemplate'          => "\${job.id}.\${config.format}",
+        'importUuidBehavior'    => 'preserve',
+        'sshPrivateKeyPath'     => '',
+        'fetchAutomatically'    => 'true',
+        'pullAutomatically'     => 'true',
+      },
+    },
+  },
+}
+```
+
 #### Parameters
 
 The following parameters are available in the `rundeck::config::project` defined type:
@@ -1016,6 +1074,10 @@ The following parameters are available in the `rundeck::config::project` defined
 * [`config`](#-rundeck--config--project--config)
 * [`update_method`](#-rundeck--config--project--update_method)
 * [`jobs`](#-rundeck--config--project--jobs)
+* [`owner`](#-rundeck--config--project--owner)
+* [`group`](#-rundeck--config--project--group)
+* [`projects_dir`](#-rundeck--config--project--projects_dir)
+* [`scm_config`](#-rundeck--config--project--scm_config)
 
 ##### <a name="-rundeck--config--project--ensure"></a>`ensure`
 
@@ -1064,6 +1126,38 @@ Data type: `Hash[String, Rundeck::Job]`
 Rundeck jobs related to a project.
 
 Default value: `{}`
+
+##### <a name="-rundeck--config--project--owner"></a>`owner`
+
+Data type: `String[1]`
+
+The user that rundeck is installed as.
+
+Default value: `'rundeck'`
+
+##### <a name="-rundeck--config--project--group"></a>`group`
+
+Data type: `String[1]`
+
+The group permission that rundeck is installed as.
+
+Default value: `'rundeck'`
+
+##### <a name="-rundeck--config--project--projects_dir"></a>`projects_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Directory where some project config will be stored.
+
+Default value: `'/var/lib/rundeck/projects'`
+
+##### <a name="-rundeck--config--project--scm_config"></a>`scm_config`
+
+Data type: `Optional[Rundeck::Scm]`
+
+A hash of name value pairs representing properties for the scm.json file.
+
+Default value: `undef`
 
 ### <a name="rundeck--config--secret"></a>`rundeck::config::secret`
 
@@ -1259,5 +1353,33 @@ Struct[{
     Optional['update_method'] => Enum['set', 'update'],
     Optional['jobs']          => Hash[String, Rundeck::Job],
 }]
+```
+
+### <a name="Rundeck--Scm"></a>`Rundeck::Scm`
+
+Rundeck scm type.
+
+Alias of
+
+```puppet
+Variant[Struct[{
+      'import' => Struct[{
+          'type'   => String[1],
+          'config' => Hash[String[1], String],
+      }],
+      Optional['export'] => Struct[{
+          'type'   => String[1],
+          'config' => Hash[String[1], String],
+      }],
+  }], Struct[{
+      'export' => Struct[{
+          'type'   => String[1],
+          'config' => Hash[String[1], String],
+      }],
+      Optional['import'] => Struct[{
+          'type'   => String[1],
+          'config' => Hash[String[1], String],
+      }],
+  }]]
 ```
 
