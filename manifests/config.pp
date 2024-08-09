@@ -14,7 +14,7 @@ class rundeck::config {
     'framework.etc.dir'         => '/etc/rundeck',
     'framework.var.dir'         => '/var/lib/rundeck/var',
     'framework.tmp.dir'         => '/var/lib/rundeck/var/tmp',
-    'framework.logs.dir'        => '/var/lib/rundeck/var/logs',
+    'framework.logs.dir'        => '/var/lib/rundeck/logs',
     'framework.libext.dir'      => '/var/lib/rundeck/libext',
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
     'framework.ssh.user'        => 'rundeck',
