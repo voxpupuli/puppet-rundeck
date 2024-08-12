@@ -15,6 +15,7 @@ class rundeck::config {
     'framework.var.dir'         => '/var/lib/rundeck/var',
     'framework.tmp.dir'         => '/var/lib/rundeck/var/tmp',
     'framework.logs.dir'        => '/var/lib/rundeck/logs',
+    'framework.projects.dir'    => '/var/lib/rundeck/projects',
     'framework.libext.dir'      => '/var/lib/rundeck/libext',
     'framework.ssh.keypath'     => '/var/lib/rundeck/.ssh/id_rsa',
     'framework.ssh.user'        => 'rundeck',

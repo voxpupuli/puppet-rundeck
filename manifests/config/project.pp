@@ -8,6 +8,57 @@
 #     },
 #   }
 #
+# @example Advanced usage with jobs.
+#   rundeck::config::project { 'MyProject':
+#     config => {
+#       'project.description'      => 'My test project',
+#       'project.disable.schedule' => 'false',
+#     },
+#     jobs   => {
+#       'MyJob1' => {
+#         'path'   => '/etc/myjob1',
+#         'format' => 'yaml',
+#       },
+#       'MyJob2' => {
+#         'path'   => '/etc/myjob2',
+#         'format' => 'xml',
+#       },
+#       'DeleteJob1' => {
+#         'ensure' => 'absent',
+#         'path'   => '/etc/testjob1',
+#         'format' => 'yaml',
+#       },
+#     },
+#   }
+#
+# @example Advanced usage with scm_config.
+#   rundeck::config::project { 'MyProject':
+#     config     => {
+#       'project.description'      => 'My test project',
+#       'project.disable.schedule' => 'false',
+#     },
+#     scm_config => {
+#       'import' => {
+#         'type'   => 'git-import',
+#         'config' => {
+#           'strictHostKeyChecking' => 'yes',
+#           'gitPasswordPath'       => 'keys/example-access-token',
+#           'format'                => 'xml',
+#           'dir'                   => '/var/lib/rundeck/projects/MyProject/ScmImport',
+#           'branch'                => 'master',
+#           'url'                   => 'https://myuser@example.com/example/example.git',
+#           'filePattern'           => '*.xml',
+#           'useFilePattern'        => 'true',
+#           'pathTemplate'          => "\${job.id}.\${config.format}",
+#           'importUuidBehavior'    => 'preserve',
+#           'sshPrivateKeyPath'     => '',
+#           'fetchAutomatically'    => 'true',
+#           'pullAutomatically'     => 'true',
+#         },
+#       },
+#     },
+#   }
+#
 # @param ensure
 #   Whether or not the project should be present.
 # @param config
@@ -17,6 +68,14 @@
 #   update: Modify configuration properties for a project. Only the specified keys will be updated.
 # @param jobs
 #   Rundeck jobs related to a project.
+# @param owner
+#   The user that rundeck is installed as.
+# @param group
+#   The group permission that rundeck is installed as.
+# @param projects_dir
+#   Directory where some project config will be stored.
+# @param scm_config
+#   A hash of name value pairs representing properties for the scm.json file.
 #
 define rundeck::config::project (
   Enum['absent', 'present'] $ensure = 'present',
@@ -34,6 +93,10 @@ define rundeck::config::project (
   },
   Enum['set', 'update'] $update_method = 'update',
   Hash[String, Rundeck::Job] $jobs = {},
+  String[1] $owner = 'rundeck',
+  String[1] $group = 'rundeck',
+  Stdlib::Absolutepath $projects_dir = '/var/lib/rundeck/projects',
+  Optional[Rundeck::Scm] $scm_config = undef,
 ) {
   include rundeck::cli
 
@@ -89,6 +152,43 @@ define rundeck::config::project (
           path        => ['/bin', '/usr/bin', '/usr/local/bin'],
           environment => $rundeck::cli::environment,
           unless      => "rd_job_diff.sh '${name}' '${_name}' '${_attr['path']}' ${_attr['format']}",
+        }
+      }
+    }
+
+    if $scm_config {
+      ensure_resource('file', "${projects_dir}/${name}",
+        {
+          'ensure' => 'directory',
+          'owner' => $owner,
+          'group' => $group,
+          'mode' => '0755'
+        }
+      )
+
+      $scm_config.each |$integration, $config| {
+        file { "${projects_dir}/${name}/scm-${integration}.json":
+          ensure  => file,
+          owner   => $owner,
+          group   => $group,
+          mode    => '0644',
+          content => stdlib::to_json($config),
+        }
+
+        $_command = [
+          'rd projects scm setup',
+          "-p '${name}'",
+          "-i ${integration}",
+          "-t ${config['type']}",
+          "-f ${projects_dir}/${name}/scm-${integration}.json",
+        ].join(' ')
+
+        exec { "Setup/update SCM ${integration} config for rundeck project: ${name}":
+          command     => $_command,
+          path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+          environment => $rundeck::cli::environment,
+          unless      => "rd_scm_diff.sh ${projects_dir} '${name}' ${integration}",
+          require     => File["${projects_dir}/${name}/scm-${integration}.json"],
         }
       }
     }
