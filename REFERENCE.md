@@ -25,6 +25,7 @@
 * [`rundeck::config::aclpolicyfile`](#rundeck--config--aclpolicyfile): This define will create a custom acl policy file.
 * [`rundeck::config::plugin`](#rundeck--config--plugin): This define will install a rundeck plugin.
 * [`rundeck::config::project`](#rundeck--config--project): This define will manage projects and jobs.
+* [`rundeck::config::secret`](#rundeck--config--secret): This define will manage secrets in key storage.
 
 ### Functions
 
@@ -1063,6 +1064,86 @@ Data type: `Hash[String, Rundeck::Job]`
 Rundeck jobs related to a project.
 
 Default value: `{}`
+
+### <a name="rundeck--config--secret"></a>`rundeck::config::secret`
+
+This define will manage secrets in key storage.
+
+#### Examples
+
+##### Basic usage.
+
+```puppet
+rundeck::config::secret { 'keys/mysecret':
+  content => 'very_secure_password',
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `rundeck::config::secret` defined type:
+
+* [`content`](#-rundeck--config--secret--content)
+* [`ensure`](#-rundeck--config--secret--ensure)
+* [`type`](#-rundeck--config--secret--type)
+* [`keystorage_path`](#-rundeck--config--secret--keystorage_path)
+* [`owner`](#-rundeck--config--secret--owner)
+* [`group`](#-rundeck--config--secret--group)
+* [`keystorage_dir`](#-rundeck--config--secret--keystorage_dir)
+
+##### <a name="-rundeck--config--secret--content"></a>`content`
+
+Data type: `Variant[String, Sensitive[String]]`
+
+The secret content.
+
+##### <a name="-rundeck--config--secret--ensure"></a>`ensure`
+
+Data type: `Enum['absent', 'present']`
+
+Whether or not the secret should be present.
+
+Default value: `'present'`
+
+##### <a name="-rundeck--config--secret--type"></a>`type`
+
+Data type: `Enum['password', 'privateKey', 'publicKey']`
+
+The type of the secret.
+
+Default value: `'password'`
+
+##### <a name="-rundeck--config--secret--keystorage_path"></a>`keystorage_path`
+
+Data type: `String[1]`
+
+The path in rundeck key storage.
+
+Default value: `$name`
+
+##### <a name="-rundeck--config--secret--owner"></a>`owner`
+
+Data type: `String[1]`
+
+The user that rundeck is installed as.
+
+Default value: `'rundeck'`
+
+##### <a name="-rundeck--config--secret--group"></a>`group`
+
+Data type: `String[1]`
+
+The group permission that rundeck is installed as.
+
+Default value: `'rundeck'`
+
+##### <a name="-rundeck--config--secret--keystorage_dir"></a>`keystorage_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The directory on filesystem where the secret files are stored.
+
+Default value: `'/var/lib/rundeck/keystorage'`
 
 ## Functions
 
