@@ -78,6 +78,7 @@ The following parameters are available in the `rundeck` class:
 * [`database_config`](#-rundeck--database_config)
 * [`feature_config`](#-rundeck--feature_config)
 * [`framework_config`](#-rundeck--framework_config)
+* [`grails_config`](#-rundeck--grails_config)
 * [`gui_config`](#-rundeck--gui_config)
 * [`mail_config`](#-rundeck--mail_config)
 * [`security_config`](#-rundeck--security_config)
@@ -394,6 +395,14 @@ Data type: `Hash`
 
 Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
 This hash will be merged with the [Rundeck defaults](https://github.com/voxpupuli/puppet-rundeck/blob/master/manifests/config.pp#L8-L20)
+
+Default value: `{}`
+
+##### <a name="-rundeck--grails_config"></a>`grails_config`
+
+Data type: `Hash`
+
+A hash of the rundeck grails configuration.
 
 Default value: `{}`
 
