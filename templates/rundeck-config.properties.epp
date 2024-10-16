@@ -15,6 +15,10 @@ quartz.threadPool.threadCount = <%= $rundeck::quartz_job_threadcount %>
 dataSource.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
+<%- $rundeck::grails_config.each |$_k, $_v| {-%>
+grails.<%= $_k %> = <%= $_v %>
+<%- } -%>
+
 <%- $rundeck::key_storage_config.each |$_i, $_cfg| { -%>
 rundeck.storage.provider.<%= $_i+1 %>.type = <%= $_cfg['type'] %>
 rundeck.storage.provider.<%= $_i+1 %>.path = <%= $_cfg['path'] %>
