@@ -11,9 +11,12 @@ rundeck.api.tokens.duration.max = <%= $rundeck::api_token_max_duration %>
 
 quartz.threadPool.threadCount = <%= $rundeck::quartz_job_threadcount %>
 
-dataSource.dbCreate = update
 <%- $rundeck::database_config.each |$_k, $_v| {-%>
 dataSource.<%= $_k %> = <%= $_v %>
+<%- } -%>
+
+<%- $rundeck::grails_config.each |$_k, $_v| {-%>
+grails.<%= $_k %> = <%= $_v %>
 <%- } -%>
 
 <%- $rundeck::key_storage_config.each |$_i, $_cfg| { -%>
