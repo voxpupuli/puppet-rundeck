@@ -4,21 +4,38 @@ require 'spec_helper_acceptance'
 
 describe 'rundeck class' do
   context 'default parameters' do
-    it 'applies successfully' do
-      pp = <<-EOS
-      class { 'java':
-        distribution => 'jre',
-      }
-      class { 'rundeck':
-        package_ensure => '5.0.2.20240212-1',
-      }
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+        class { 'java':
+          distribution => 'jre',
+        }
+        class { 'rundeck':
+          package_ensure => '5.0.2.20240212-1',
+        }
+        Class['java'] -> Class['rundeck']
+        PUPPET
+      end
+    end
+    describe package('rundeck') do
+      it { is_expected.to be_installed }
+    end
 
-      Class['java'] -> Class['rundeck']
-      EOS
+    describe service('rundeckd') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+  end
 
-      # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true, debug: true)
-      apply_manifest(pp, catch_changes: true, debug: true)
+  context 'updrade to 5.2.0.20240410-1' do
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+         class { 'rundeck':
+          package_ensure => '5.2.0.20240410-1',
+        }
+        PUPPET
+      end
     end
 
     describe package('rundeck') do
@@ -31,17 +48,15 @@ describe 'rundeck class' do
     end
   end
 
-  context 'updrade to latest version' do
-    it 'applies successfully' do
-      pp = <<-EOS
-      class { 'rundeck':
-        package_ensure => '5.2.0.20240410-1',
-      }
-      EOS
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+  context 'updrade to 5.7.0.20241021-1' do
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+         class { 'rundeck':
+          package_ensure => '5.7.0.20241021-1',
+        }
+        PUPPET
+      end
     end
 
     describe package('rundeck') do
