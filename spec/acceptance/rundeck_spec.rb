@@ -68,4 +68,25 @@ describe 'rundeck class' do
       it { is_expected.to be_running }
     end
   end
+
+  context 'remove rundeck' do
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+         class { 'rundeck':
+          package_ensure => 'absent',
+        }
+        PUPPET
+      end
+    end
+
+    describe package('rundeck') do
+      it { is_expected.not_to be_installed }
+    end
+
+    describe service('rundeckd') do
+      it { is_expected.not_to be_enabled }
+      it { is_expected.not_to be_running }
+    end
+  end
 end
