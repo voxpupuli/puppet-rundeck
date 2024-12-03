@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v9.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.2.0) (2024-12-03)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.1.0...v9.2.0)
+
+**Implemented enhancements:**
+
+- Allow setting Grails configuration in `rundeck-config.properties` [\#553](https://github.com/voxpupuli/puppet-rundeck/pull/553) ([Joris29](https://github.com/Joris29))
+- Add scm config options to project define [\#546](https://github.com/voxpupuli/puppet-rundeck/pull/546) ([Joris29](https://github.com/Joris29))
+- Add code for secrets management in keystorage [\#545](https://github.com/voxpupuli/puppet-rundeck/pull/545) ([Joris29](https://github.com/Joris29))
+- Add multiple small code additions and improvements [\#540](https://github.com/voxpupuli/puppet-rundeck/pull/540) ([Joris29](https://github.com/Joris29))
+- Add more log levels and fix job loop [\#535](https://github.com/voxpupuli/puppet-rundeck/pull/535) ([Joris29](https://github.com/Joris29))
+- Add Debian 12 support [\#532](https://github.com/voxpupuli/puppet-rundeck/pull/532) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- framework.logs.dir from the module different than from the RPM [\#547](https://github.com/voxpupuli/puppet-rundeck/issues/547)
+- fix: `framework.logs.dir` path [\#548](https://github.com/voxpupuli/puppet-rundeck/pull/548) ([nosrio](https://github.com/nosrio))
+- Fix jaas-loginmodule template [\#537](https://github.com/voxpupuli/puppet-rundeck/pull/537) ([Joris29](https://github.com/Joris29))
+- Avoid duplicate resources by including project name [\#536](https://github.com/voxpupuli/puppet-rundeck/pull/536) ([Joris29](https://github.com/Joris29))
+- Remove command opt which caused an infinite loop [\#534](https://github.com/voxpupuli/puppet-rundeck/pull/534) ([Joris29](https://github.com/Joris29))
+
+**Merged pull requests:**
+
+- Add Test for latest rundeck v5.7.0-20241021 [\#555](https://github.com/voxpupuli/puppet-rundeck/pull/555) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v9.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.1.0) (2024-02-29)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.0.1...v9.1.0)
