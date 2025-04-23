@@ -98,7 +98,7 @@ define rundeck::config::project (
   Stdlib::Absolutepath $projects_dir = '/var/lib/rundeck/projects',
   Optional[Rundeck::Scm] $scm_config = undef,
 ) {
-  include rundeck::cli
+  require rundeck::cli
 
   $_default_cfg = {
     'project.name' => $name,
