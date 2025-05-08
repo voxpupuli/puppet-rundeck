@@ -183,11 +183,16 @@ define rundeck::config::project (
           "-f ${projects_dir}/${name}/scm-${integration}.json",
         ].join(' ')
 
-        exec { "Setup/update SCM ${integration} config for rundeck project: ${name}":
+        $_unless = [
+          "rd projects scm status -p '${name}' -i ${integration} | grep -q .",
+          "rd_scm_diff.sh ${projects_dir} '${name}' ${integration}",
+        ].join(' && ')
+
+        exec { "Setup/update/enable SCM ${integration} for rundeck project: ${name}":
           command     => $_command,
           path        => ['/bin', '/usr/bin', '/usr/local/bin'],
           environment => $rundeck::cli::environment,
-          unless      => "rd_scm_diff.sh ${projects_dir} '${name}' ${integration}",
+          unless      => $_unless,
           require     => File["${projects_dir}/${name}/scm-${integration}.json"],
         }
       }

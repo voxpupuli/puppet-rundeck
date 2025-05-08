@@ -183,7 +183,7 @@ describe 'rundeck::config::project', type: :define do
         it { is_expected.to contain_exec('Manage rundeck project: TestSCM') }
         it { is_expected.to contain_file('/var/lib/rundeck/projects/TestSCM').with(ensure: 'directory', owner: 'rundeck', group: 'rundeck', mode: '0755') }
         it { is_expected.to contain_file('/var/lib/rundeck/projects/TestSCM/scm-import.json').with(ensure: 'file', owner: 'rundeck', group: 'rundeck', mode: '0644') }
-        it { is_expected.to contain_exec('Setup/update SCM import config for rundeck project: TestSCM').that_requires('File[/var/lib/rundeck/projects/TestSCM/scm-import.json]') }
+        it { is_expected.to contain_exec('Setup/update/enable SCM import for rundeck project: TestSCM').that_requires('File[/var/lib/rundeck/projects/TestSCM/scm-import.json]') }
       end
 
       context 'Add rundeck project: TestWrongSCM with wrong scm config' do
