@@ -69,7 +69,7 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.25.0 < 10.0.0"
+      "version_requirement": ">= 9.1.0 < 10.0.0"
     },
     {
       "name": "puppetlabs/java_ks",

@@ -29,7 +29,7 @@ define rundeck::config::secret (
   String[1] $group = 'rundeck',
   Stdlib::Absolutepath $keystorage_dir = '/var/lib/rundeck/keystorage',
 ) {
-  include rundeck::cli
+  require rundeck::cli
 
   ensure_resource('file', $keystorage_dir, { 'ensure' => 'directory', 'owner' => $owner, 'group' => $group, 'mode' => '0755' })
 
