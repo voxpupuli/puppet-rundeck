@@ -175,6 +175,26 @@ describe 'rundeck::config::project', type: :define do
                   'pullAutomatically'     => 'true',
                 },
               },
+              'export' => {
+                'type'   => 'git-export',
+                'config' => {
+                  'strictHostKeyChecking' => 'yes',
+                  'gitPasswordPath'       => 'keys/example-access-token',
+                  'format'                => 'xml',
+                  'baseBranch'            => 'master',
+                  'exportUuidBehavior'    => 'preserve',
+                  'dir'                   => '/var/lib/rundeck/projects/MyProject/ScmExport',
+                  'committerEmail'        => '${user.email}',
+                  'branch'                => 'master',
+                  'url'                   => 'https://myuser@example.com/example/export.git',
+                  'pathTemplate'          => '${job.id}.${config.format}',
+                  'sshPrivateKeyPath'     => '',
+                  'committerName'         => '${user.fullName}',
+                  'fetchAutomatically'    => 'true',
+                  '_createBranch'         => '',
+                  'pullAutomatically'     => 'true',
+                },
+              },
             },
           }
         end
@@ -184,6 +204,8 @@ describe 'rundeck::config::project', type: :define do
         it { is_expected.to contain_file('/var/lib/rundeck/projects/TestSCM').with(ensure: 'directory', owner: 'rundeck', group: 'rundeck', mode: '0755') }
         it { is_expected.to contain_file('/var/lib/rundeck/projects/TestSCM/scm-import.json').with(ensure: 'file', owner: 'rundeck', group: 'rundeck', mode: '0644') }
         it { is_expected.to contain_exec('Setup/update/enable SCM import for rundeck project: TestSCM').that_requires('File[/var/lib/rundeck/projects/TestSCM/scm-import.json]') }
+        it { is_expected.to contain_file('/var/lib/rundeck/projects/TestSCM/scm-export.json').with(ensure: 'file', owner: 'rundeck', group: 'rundeck', mode: '0644') }
+        it { is_expected.to contain_exec('Setup/update/enable SCM export for rundeck project: TestSCM').that_requires('File[/var/lib/rundeck/projects/TestSCM/scm-export.json]') }
       end
 
       context 'Add rundeck project: TestWrongSCM with wrong scm config' do
