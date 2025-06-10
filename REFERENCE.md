@@ -77,12 +77,14 @@ The following parameters are available in the `rundeck` class:
 * [`auth_config`](#-rundeck--auth_config)
 * [`database_config`](#-rundeck--database_config)
 * [`feature_config`](#-rundeck--feature_config)
+* [`rundeck_config`](#-rundeck--rundeck_config)
 * [`framework_config`](#-rundeck--framework_config)
 * [`grails_config`](#-rundeck--grails_config)
 * [`gui_config`](#-rundeck--gui_config)
 * [`mail_config`](#-rundeck--mail_config)
 * [`security_config`](#-rundeck--security_config)
 * [`preauthenticated_config`](#-rundeck--preauthenticated_config)
+* [`scmloader_config`](#-rundeck--scmloader_config)
 * [`key_storage_config`](#-rundeck--key_storage_config)
 * [`key_storage_encrypt_config`](#-rundeck--key_storage_encrypt_config)
 * [`root_log_level`](#-rundeck--root_log_level)
@@ -389,6 +391,15 @@ A hash of rundeck features.
 
 Default value: `{}`
 
+##### <a name="-rundeck--rundeck_config"></a>`rundeck_config`
+
+Data type: `Hash`
+
+A hash of the rundeck configuration.
+Beware when using with other parameters.
+
+Default value: `{}`
+
 ##### <a name="-rundeck--framework_config"></a>`framework_config`
 
 Data type: `Hash`
@@ -435,6 +446,14 @@ Default value: `{}`
 Data type: `Hash`
 
 A hash of the rundeck preauthenticated configuration.
+
+Default value: `{}`
+
+##### <a name="-rundeck--scmloader_config"></a>`scmloader_config`
+
+Data type: `Hash`
+
+A hash of the rundeck scmloader configuration.
 
 Default value: `{}`
 
