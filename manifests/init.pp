@@ -52,6 +52,9 @@
 #   Hash of properties for configuring the [Rundeck Database](https://docs.rundeck.com/docs/administration/configuration/database)
 # @param feature_config
 #   A hash of rundeck features.
+# @param rundeck_config
+#   A hash of the rundeck configuration.
+#   Beware when using with other parameters.
 # @param framework_config
 #   Hash of properties for configuring the [Rundeck Framework](https://docs.rundeck.com/docs/administration/configuration/config-file-reference.html#framework-properties)
 #   This hash will be merged with the [Rundeck defaults](https://github.com/voxpupuli/puppet-rundeck/blob/master/manifests/config.pp#L8-L20)
@@ -228,6 +231,7 @@ class rundeck (
   Hash $grails_config = {},
   Hash $gui_config = {},
   Rundeck::Mail_config $mail_config = {},
+  Hash $rundeck_config = {},
   Hash $security_config = {},
   Hash $scmloader_config = {},
   Hash $preauthenticated_config = {},
