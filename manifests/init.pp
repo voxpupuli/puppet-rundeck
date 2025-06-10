@@ -65,6 +65,8 @@
 #   A hash of the rundeck security configuration.
 # @param preauthenticated_config
 #   A hash of the rundeck preauthenticated configuration.
+# @param scmloader_config
+#   A hash of the rundeck scmloader configuration.
 # @param key_storage_config
 #   An array with hashes of properties for customizing the [Rundeck Key Storage](https://docs.rundeck.com/docs/manual/key-storage/key-storage.html)
 # @param key_storage_encrypt_config
@@ -227,6 +229,7 @@ class rundeck (
   Hash $gui_config = {},
   Rundeck::Mail_config $mail_config = {},
   Hash $security_config = {},
+  Hash $scmloader_config = {},
   Hash $preauthenticated_config = {},
   Rundeck::Key_storage_config $key_storage_config = [{ 'type' => 'db', 'path' => 'keys' }],
   Array[Hash] $key_storage_encrypt_config = [],

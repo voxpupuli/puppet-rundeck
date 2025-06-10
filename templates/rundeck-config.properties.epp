@@ -66,3 +66,7 @@ rundeck.gui.<%= $_k %> = <%= $_v %>
 <%- $rundeck::feature_config.each |$_k, $_v| {-%>
 rundeck.feature.<%= $_k %> = <%= $_v %>
 <%- } -%>
+
+<%- $rundeck::scmloader_config.each |$_k, $_v| {-%>
+rundeck.scmLoader.<%= $_k %> = <%= $_v %>
+<%- } -%>
