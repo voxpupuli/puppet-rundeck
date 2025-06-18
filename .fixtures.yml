@@ -1,9 +1,9 @@
 ---
 fixtures:
   repositories:
-    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    archive: "https://github.com/puppet-community/puppet-archive.git"
-    java_ks: "https://github.com/puppetlabs/puppetlabs-java_ks.git"
-    apt: "https://github.com/puppetlabs/puppetlabs-apt.git"
-    yumrepo_core: 'https://github.com/puppetlabs/puppetlabs-yumrepo_core.git'
-    augeas_core: 'https://github.com/puppetlabs/puppetlabs-augeas_core.git'
+    apt: https://github.com/puppetlabs/puppetlabs-apt.git
+    archive: https://github.com/puppet-community/puppet-archive.git
+    augeas_core: https://github.com/puppetlabs/puppetlabs-augeas_core.git
+    java_ks: https://github.com/puppetlabs/puppetlabs-java_ks.git
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
+    yumrepo_core: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git
