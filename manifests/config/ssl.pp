@@ -9,12 +9,12 @@ class rundeck::config::ssl {
     "${rundeck::config::properties_dir}/ssl":
       ensure => directory,
       mode   => '0755',
-      ;
+    ;
     "${rundeck::config::properties_dir}/ssl/ssl.properties":
       ensure  => file,
       content => Sensitive(epp('rundeck/ssl.properties.epp')),
       mode    => '0400',
-      ;
+    ;
   }
 
   java_ks {
@@ -24,14 +24,14 @@ class rundeck::config::ssl {
       private_key  => $rundeck::ssl_private_key,
       destkeypass  => $rundeck::key_password,
       trustcacerts => true,
-      ;
+    ;
     'keystore':
       password => $rundeck::keystore_password,
       target   => "${rundeck::config::properties_dir}/ssl/keystore",
-      ;
+    ;
     'truststore':
       password => $rundeck::truststore_password,
       target   => "${rundeck::config::properties_dir}/ssl/truststore",
-      ;
+    ;
   }
 }

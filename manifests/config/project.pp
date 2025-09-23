@@ -127,15 +127,15 @@ define rundeck::config::project (
       default:
         path        => ['/bin', '/usr/bin', '/usr/local/bin'],
         environment => $rundeck::cli::environment,
-        ;
+      ;
       "Create rundeck project: ${name}":
         command => "rd projects create -p '${name}' -- ${_cmd_line_cfg.shellquote}",
         unless  => "rd projects info -p '${name}'",
-        ;
+      ;
       "Manage rundeck project: ${name}":
         command => "rd projects configure ${update_method} -p '${name}' -- ${_cmd_line_cfg.shellquote}",
         unless  => $_project_diff,
-        ;
+      ;
     }
 
     $jobs.each |$_name, $_attr| {
