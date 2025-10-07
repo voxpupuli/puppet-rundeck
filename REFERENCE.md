@@ -1291,9 +1291,9 @@ Alias of
 
 ```puppet
 Struct[{
-    Optional['file'] => Hash[String, Any],
-    Optional['ldap'] => Hash[String, Any],
-    Optional['pam']  => Hash[String, Any],
+  Optional['file'] => Hash[String, Any],
+  Optional['ldap'] => Hash[String, Any],
+  Optional['pam']  => Hash[String, Any],
 }]
 ```
 
@@ -1305,12 +1305,12 @@ Alias of
 
 ```puppet
 Struct[{
-    'url'                                  => String,
-    Optional['driverClassName']            => String,
-    Optional['username']                   => String,
-    Optional['password']                   => Variant[String[8], Sensitive[String[8]]],
-    Optional['dialect']                    => String,
-    Optional['properties.validationQuery'] => String,
+  'url'                                  => String,
+  Optional['driverClassName']            => String,
+  Optional['username']                   => String,
+  Optional['password']                   => Variant[String[8], Sensitive[String[8]]],
+  Optional['dialect']                    => String,
+  Optional['properties.validationQuery'] => String,
 }]
 ```
 
@@ -1322,9 +1322,9 @@ Alias of
 
 ```puppet
 Struct[{
-    'path'             => Stdlib::Absolutepath,
-    'format'           => Enum['yaml', 'xml', 'json'],
-    Optional['ensure'] => Enum['absent', 'present'],
+  'path'             => Stdlib::Absolutepath,
+  'format'           => Enum['yaml', 'xml', 'json'],
+  Optional['ensure'] => Enum['absent', 'present'],
 }]
 ```
 
@@ -1336,10 +1336,10 @@ Alias of
 
 ```puppet
 Array[Struct[{
-      'type'                       => String,
-      'path'                       => String,
-      Optional['removePathPrefix'] => Boolean,
-      Optional['config']           => Hash,
+    'type'                       => String,
+    'path'                       => String,
+    Optional['removePathPrefix'] => Boolean,
+    Optional['config']           => Hash,
   }]]
 ```
 
@@ -1357,14 +1357,14 @@ Alias of
 
 ```puppet
 Struct[{
-    Optional['host']         => String,
-    Optional['port']         => Integer,
-    Optional['username']     => String,
-    Optional['password']     => Variant[String[8], Sensitive[String[8]]],
-    Optional['props']        => Array[Hash],
-    Optional['default.from'] => String,
-    Optional['default.to']   => String,
-    Optional['disabled']     => Boolean,
+  Optional['host']         => String,
+  Optional['port']         => Integer,
+  Optional['username']     => String,
+  Optional['password']     => Variant[String[8], Sensitive[String[8]]],
+  Optional['props']        => Array[Hash],
+  Optional['default.from'] => String,
+  Optional['default.to']   => String,
+  Optional['disabled']     => Boolean,
 }]
 ```
 
@@ -1376,10 +1376,10 @@ Alias of
 
 ```puppet
 Struct[{
-    Optional['ensure']        => Enum['absent', 'present'],
-    Optional['config']        => Hash[String, String],
-    Optional['update_method'] => Enum['set', 'update'],
-    Optional['jobs']          => Hash[String, Rundeck::Job],
+  Optional['ensure']        => Enum['absent', 'present'],
+  Optional['config']        => Hash[String, String],
+  Optional['update_method'] => Enum['set', 'update'],
+  Optional['jobs']          => Hash[String, Rundeck::Job],
 }]
 ```
 
@@ -1391,23 +1391,23 @@ Alias of
 
 ```puppet
 Variant[Struct[{
-      'import' => Struct[{
-          'type'   => String[1],
-          'config' => Hash[String[1], String],
-      }],
-      Optional['export'] => Struct[{
-          'type'   => String[1],
-          'config' => Hash[String[1], String],
-      }],
+    'import' => Struct[{
+      'type'   => String[1],
+      'config' => Hash[String[1], String],
+    }],
+    Optional['export'] => Struct[{
+      'type'   => String[1],
+      'config' => Hash[String[1], String],
+    }],
   }], Struct[{
-      'export' => Struct[{
-          'type'   => String[1],
-          'config' => Hash[String[1], String],
-      }],
-      Optional['import'] => Struct[{
-          'type'   => String[1],
-          'config' => Hash[String[1], String],
-      }],
+    'export' => Struct[{
+      'type'   => String[1],
+      'config' => Hash[String[1], String],
+    }],
+    Optional['import'] => Struct[{
+      'type'   => String[1],
+      'config' => Hash[String[1], String],
+    }],
   }]]
 ```
 
