@@ -52,19 +52,19 @@ define rundeck::config::secret (
     }
   } else {
     exec {
-      default:
+      "Create rundeck ${type}: ${keystorage_path}":
+        command     => "rd keys create -t ${type} -p '${keystorage_path}' -f '${keystorage_dir}/${_filename}'",
         path        => ['/bin', '/usr/bin', '/usr/local/bin'],
         environment => $rundeck::cli::environment,
-      ;
-      "Create rundeck ${type}: ${keystorage_path}":
-        command => "rd keys create -t ${type} -p '${keystorage_path}' -f '${keystorage_dir}/${_filename}'",
-        unless  => "rd keys info -p '${keystorage_path}'",
-        require => File["${keystorage_dir}/${_filename}"],
+        unless      => "rd keys info -p '${keystorage_path}'",
+        require     => File["${keystorage_dir}/${_filename}"],
       ;
       "Update rundeck ${type}: ${keystorage_path}":
         command     => "rd keys update -t ${type} -p '${keystorage_path}' -f '${keystorage_dir}/${_filename}'",
         onlyif      => "rd keys info -p '${keystorage_path}'",
         refreshonly => true,
+        path        => ['/bin', '/usr/bin', '/usr/local/bin'],
+        environment => $rundeck::cli::environment,
         subscribe   => File["${keystorage_dir}/${_filename}"],
         require     => Exec["Create rundeck ${type}: ${keystorage_path}"],
       ;
