@@ -2,7 +2,7 @@
 fixtures:
   repositories:
     apt: https://github.com/puppetlabs/puppetlabs-apt.git
-    archive: https://github.com/puppet-community/puppet-archive.git
+    archive: https://github.com/voxpupuli/puppet-archive.git
     augeas_core: https://github.com/puppetlabs/puppetlabs-augeas_core.git
     java_ks: https://github.com/puppetlabs/puppetlabs-java_ks.git
     stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
