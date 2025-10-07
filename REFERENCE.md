@@ -1306,6 +1306,7 @@ Alias of
 ```puppet
 Struct[{
   'url'                                  => String,
+  Optional['dbCreate']                   => String,
   Optional['driverClassName']            => String,
   Optional['username']                   => String,
   Optional['password']                   => Variant[String[8], Sensitive[String[8]]],
