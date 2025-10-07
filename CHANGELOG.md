@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v10.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v10.0.0) (2025-10-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.2.0...v10.0.0)
+
+**Breaking changes:**
+
+- stdlib version requirement is wrong [\#562](https://github.com/voxpupuli/puppet-rundeck/issues/562)
+- Drop puppet, update openvox minimum version to 8.19 [\#573](https://github.com/voxpupuli/puppet-rundeck/pull/573) ([TheMeier](https://github.com/TheMeier))
+- Various module fixes [\#566](https://github.com/voxpupuli/puppet-rundeck/pull/566) ([Joris29](https://github.com/Joris29))
+
+**Implemented enhancements:**
+
+- add: dbCreate property [\#576](https://github.com/voxpupuli/puppet-rundeck/pull/576) ([yoannrt](https://github.com/yoannrt))
+- puppet/archive: Allow 8.x [\#572](https://github.com/voxpupuli/puppet-rundeck/pull/572) ([TheMeier](https://github.com/TheMeier))
+- Add config parameters [\#569](https://github.com/voxpupuli/puppet-rundeck/pull/569) ([Joris29](https://github.com/Joris29))
+- Add Ubuntu 24.04 support [\#556](https://github.com/voxpupuli/puppet-rundeck/pull/556) ([bastelfreak](https://github.com/bastelfreak))
+
+**Closed issues:**
+
+- Bug: rd\_scm\_diff.sh uses fixed filename scm-import.json [\#563](https://github.com/voxpupuli/puppet-rundeck/issues/563)
+- Missing Puppet resource orderings / dependencies [\#561](https://github.com/voxpupuli/puppet-rundeck/issues/561)
+- New release [\#549](https://github.com/voxpupuli/puppet-rundeck/issues/549)
+
 ## [v9.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.2.0) (2024-12-03)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.1.0...v9.2.0)
