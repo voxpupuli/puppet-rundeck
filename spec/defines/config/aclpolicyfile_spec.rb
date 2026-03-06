@@ -7,46 +7,46 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
     {
       'description' => 'Test project access',
       'context' => {
-        'project' => '.*'
+        'project' => '.*',
       },
       'for' => {
         'resource' => [
-          { 'allow' => '*' }
+          { 'allow' => '*' },
         ],
         'adhoc' => [
-          { 'allow' => '*' }
+          { 'allow' => '*' },
         ],
         'job' => [
-          { 'allow' => '*' }
+          { 'allow' => '*' },
         ],
         'node' => [
-          { 'allow' => '*' }
+          { 'allow' => '*' },
         ],
       },
       'by' => [
-        { 'group' => ['test'] }
+        { 'group' => ['test'] },
       ],
     },
     {
       'description' => 'Test application access',
       'context' => {
-        'application' => 'rundeck'
+        'application' => 'rundeck',
       },
       'for' => {
         'project' => [
-          { 'allow' => '*' }
+          { 'allow' => '*' },
         ],
         'resource' => [
-          { 'allow' => '*' }
+          { 'allow' => '*' },
         ],
         'storage' => [
-          { 'allow' => '*' }
+          { 'allow' => '*' },
         ],
       },
       'by' => [
-        { 'group' => ['test'] }
-      ]
-    }
+        { 'group' => ['test'] },
+      ],
+    },
   ]
 
   test_acl = <<~CONFIG.gsub(%r{[^\S\n]{10}}, '')
@@ -96,7 +96,7 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         owner: 'rundeck',
         group: 'rundeck',
         mode: '0644',
-        content: test_acl
+        content: test_acl,
       )
     end
   end
@@ -108,7 +108,7 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         acl_policies: test_policy,
         properties_dir: '/etc/rundeck-acl',
         owner: 'myUser',
-        group: 'myGroup'
+        group: 'myGroup',
       }
     end
 
@@ -117,7 +117,7 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         ensure: 'directory',
         owner: 'myUser',
         group: 'myGroup',
-        mode: '0755'
+        mode: '0755',
       )
     end
 
@@ -126,7 +126,7 @@ describe 'rundeck::config::aclpolicyfile', type: :define do
         owner: 'myUser',
         group: 'myGroup',
         mode: '0644',
-        content: test_acl
+        content: test_acl,
       )
     end
   end

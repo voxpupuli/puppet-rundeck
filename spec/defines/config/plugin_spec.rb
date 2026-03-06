@@ -17,13 +17,13 @@ describe 'rundeck::config::plugin', type: :define do
         let(:title) { name }
         let(:params) do
           {
-            'source' => source
+            'source' => source,
           }
         end
 
         it do
           is_expected.to contain_archive("download plugin #{name}").with(
-            'source' => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar'
+            'source' => 'http://search.maven.org/remotecontent?filepath=com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.0.0/rundeck-hipchat-plugin-1.0.0.jar',
           )
         end
 
@@ -31,7 +31,7 @@ describe 'rundeck::config::plugin', type: :define do
           is_expected.to contain_file("#{plugin_dir}/#{name}").with(
             'mode' => '0644',
             'owner' => 'rundeck',
-            'group' => 'rundeck'
+            'group' => 'rundeck',
           )
         end
       end
@@ -45,13 +45,13 @@ describe 'rundeck::config::plugin', type: :define do
         let(:params) do
           {
             'source' => source,
-            'ensure' => 'absent'
+            'ensure' => 'absent',
           }
         end
 
         it do
           is_expected.to contain_file("#{plugin_dir}/#{name}").with(
-            'ensure' => 'absent'
+            'ensure' => 'absent',
           )
         end
       end

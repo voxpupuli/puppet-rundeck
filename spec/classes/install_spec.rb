@@ -21,7 +21,7 @@ describe 'rundeck' do
               repo_gpgcheck: 1,
               gpgcheck: 0,
               enabled: 1,
-              gpgkey: 'https://packages.rundeck.com/pagerduty/rundeck/gpgkey'
+              gpgkey: 'https://packages.rundeck.com/pagerduty/rundeck/gpgkey',
             ).that_comes_before('Package[rundeck]')
           end
         when 'Debian'
@@ -33,7 +33,7 @@ describe 'rundeck' do
               key: {
                 'name' => 'rundeck.asc',
                 'content' => %r{^-----BEGIN PGP PUBLIC KEY BLOCK-----},
-              }
+              },
             ).that_comes_before('Package[rundeck]')
           end
 
@@ -49,7 +49,7 @@ describe 'rundeck' do
             manage_user: true,
             manage_group: true,
             user: 'A1234',
-            group: 'A1234'
+            group: 'A1234',
           }
         end
 
@@ -70,7 +70,7 @@ describe 'rundeck' do
             user: 'A1234',
             group: 'A1234',
             user_id: 10_000,
-            group_id: 10_000
+            group_id: 10_000,
           }
         end
 

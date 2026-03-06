@@ -8,16 +8,16 @@ describe 'validate_rd_policy' do
       test_policy = {
         'description' => 'Admin, all access',
         'context' => {
-          'project' => '.*'
+          'project' => '.*',
         },
         'for' => {
           'resource' => [
-            { 'equals' => { 'kind' => 'job' }, 'allow' => ['create'] }
-          ]
+            { 'equals' => { 'kind' => 'job' }, 'allow' => ['create'] },
+          ],
         },
         'by' => [{
-          'group' => ['admin']
-        }]
+          'group' => ['admin'],
+        }],
       }
 
       it { is_expected.to run.with_params(test_policy) }
@@ -29,7 +29,7 @@ describe 'validate_rd_policy' do
       context 'description' do
         it do
           is_expected.to run.with_params('context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - description is not a String')
         end
 
@@ -58,14 +58,14 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'fubar' => ''
+                                           'fubar' => '',
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - context can only be project or application')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => {}
+                                           'project' => {},
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - context:project is not a String')
         end
       end
@@ -74,7 +74,7 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => '').and_raise_error(Puppet::ParseError, 'The policy is invalid - for is not a Hash')
         end
@@ -82,7 +82,7 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {}).and_raise_error(Puppet::ParseError, 'The policy is invalid - for is empty')
         end
@@ -90,10 +90,10 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'fubar' => {}
+                                           'fubar' => {},
                                          }).and_raise_error(Puppet::ParseError, "The policy is invalid - for section must only contain ['job', 'node', 'adhoc', 'project', 'resource']")
         end
       end
@@ -102,53 +102,53 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'resource' => ''
+                                           'resource' => '',
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'resource' => {}
+                                           'resource' => {},
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'resource' => []
+                                           'resource' => [],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource is empty')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'resource' => [{}]
+                                           'resource' => [{}],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource does not contain a rule action of [allow,deny]')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'resource' => [
                                              { 'equals' => { 'kind' => 'job' }, 'allow' => ['create'] },
-                                             ''
-                                           ]
+                                             '',
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource entry is not a Hash')
         end
       end
@@ -157,12 +157,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'job' }, 'fubar' => ['create'] }
-                                           ]
+                                             { 'equals' => { 'kind' => 'job' }, 'fubar' => ['create'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource does not contain a rule action of [allow,deny]')
         end
       end
@@ -171,12 +171,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'fubar' => { 'kind' => 'job' }, 'deny' => ['create'] }
-                                           ]
+                                             { 'fubar' => { 'kind' => 'job' }, 'deny' => ['create'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource does not contain a matching statement of [match,equals,contains]')
         end
       end
@@ -185,12 +185,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] }
-                                           ]
+                                             { 'equals' => { 'kind' => 'job' }, 'allow' => ['x'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:job can only contain actions})
         end
       end
@@ -199,12 +199,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'node' }, 'allow' => ['x'] }
-                                           ]
+                                             { 'equals' => { 'kind' => 'node' }, 'allow' => ['x'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:node can only contain actions})
         end
       end
@@ -213,12 +213,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'resource' => [
-                                             { 'equals' => { 'kind' => 'event' }, 'allow' => ['x'] }
-                                           ]
+                                             { 'equals' => { 'kind' => 'event' }, 'allow' => ['x'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:resource kind:event can only contain actions})
         end
       end
@@ -227,53 +227,53 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'adhoc' => ''
+                                           'adhoc' => '',
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:adhoc is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'adhoc' => {}
+                                           'adhoc' => {},
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:adhoc is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'adhoc' => []
+                                           'adhoc' => [],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:adhoc is empty')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'adhoc' => [{}]
+                                           'adhoc' => [{}],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:adhoc does not contain a rule action of [allow,deny]')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'resource' => [
                                              { 'equals' => { 'kind' => 'job' }, 'allow' => ['create'] },
-                                             ''
-                                           ]
+                                             '',
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:resource entry is not a Hash')
         end
       end
@@ -282,24 +282,24 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'adhoc' => [
-                                             { 'fubar' => ['create'] }
-                                           ]
+                                             { 'fubar' => ['create'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:adhoc does not contain a rule action of [allow,deny]')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'adhoc' => [
-                                             { 'allow' => ['x'] }
-                                           ]
+                                             { 'allow' => ['x'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:adhoc can only contain actions})
         end
       end
@@ -308,53 +308,53 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'job' => ''
+                                           'job' => '',
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'job' => {}
+                                           'job' => {},
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'job' => []
+                                           'job' => [],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job is empty')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'job' => [{}]
+                                           'job' => [{}],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job does not contain a rule action of [allow,deny]')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'job' => [
                                              { 'allow' => ['create'] },
-                                             ''
-                                           ]
+                                             '',
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job entry is not a Hash')
         end
       end
@@ -363,12 +363,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'equals' => { 'name' => 'job' }, 'fubar' => ['create'] }
-                                           ]
+                                             { 'equals' => { 'name' => 'job' }, 'fubar' => ['create'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job does not contain a rule action of [allow,deny]')
         end
       end
@@ -377,12 +377,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['create'] }
-                                           ]
+                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['create'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:job does not contain a matching statement of [match,equals,contains]')
         end
       end
@@ -391,12 +391,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'equals' => { 'name' => 'test-job' }, 'allow' => ['x'] }
-                                           ]
+                                             { 'equals' => { 'name' => 'test-job' }, 'allow' => ['x'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:job name:test-job can only contain actions})
         end
       end
@@ -405,12 +405,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'job' => [
-                                             { 'equals' => { 'group' => 'test-group' }, 'allow' => ['x'] }
-                                           ]
+                                             { 'equals' => { 'group' => 'test-group' }, 'allow' => ['x'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:job group:test-group can only contain actions})
         end
       end
@@ -419,53 +419,53 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'node' => ''
+                                           'node' => '',
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'node' => {}
+                                           'node' => {},
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node is not an Array')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'node' => []
+                                           'node' => [],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node is empty')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
-                                           'node' => [{}]
+                                           'node' => [{}],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node does not contain a rule action of [allow,deny]')
         end
 
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
                                              { 'allow' => ['read'] },
-                                             ''
-                                           ]
+                                             '',
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node entry is not a Hash')
         end
       end
@@ -474,12 +474,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'name' => 'test.mycorp.com' }, 'fubar' => ['read'] }
-                                           ]
+                                             { 'equals' => { 'name' => 'test.mycorp.com' }, 'fubar' => ['read'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node does not contain a rule action of [allow,deny]')
         end
       end
@@ -488,12 +488,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['read'] }
-                                           ]
+                                             { 'fubar' => { 'name' => 'job' }, 'deny' => ['read'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, 'The policy is invalid - for:node does not contain a matching statement of [match,equals,contains]')
         end
       end
@@ -502,12 +502,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['x'] }
-                                           ]
+                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['x'] },
+                                           ],
                                          }).and_raise_error(Puppet::ParseError, %r{^The policy is invalid - for:node can only contain actions})
         end
       end
@@ -516,12 +516,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] }
-                                           ]
+                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] },
+                                           ],
                                          },
                                          'by' => '').and_raise_error(Puppet::ParseError, 'The policy is invalid - by is not an Array')
         end
@@ -529,12 +529,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] }
-                                           ]
+                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] },
+                                           ],
                                          },
                                          'by' => {}).and_raise_error(Puppet::ParseError, 'The policy is invalid - by is not an Array')
         end
@@ -542,12 +542,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] }
-                                           ]
+                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] },
+                                           ],
                                          },
                                          'by' => []).and_raise_error(Puppet::ParseError, 'The policy is invalid - by is empty')
         end
@@ -555,12 +555,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] }
-                                           ]
+                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] },
+                                           ],
                                          },
                                          'by' => [{}]).and_raise_error(Puppet::ParseError, 'The policy is invalid - by is empty')
         end
@@ -568,12 +568,12 @@ describe 'validate_rd_policy' do
         it do
           is_expected.to run.with_params('description' => 'test',
                                          'context' => {
-                                           'project' => '.*'
+                                           'project' => '.*',
                                          },
                                          'for' => {
                                            'node' => [
-                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] }
-                                           ]
+                                             { 'equals' => { 'hostname' => 'test.mycorp.com' }, 'allow' => ['read'] },
+                                           ],
                                          },
                                          'by' => [{ 'username' => 'test' }, '']).and_raise_error(Puppet::ParseError, 'The policy is invalid - by: is not a Hash')
         end
