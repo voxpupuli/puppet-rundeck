@@ -23,7 +23,7 @@ describe 'rundeck' do
       context 'with service_notify => false' do
         let(:params) do
           {
-            service_notify: false
+            service_notify: false,
           }
         end
 
@@ -36,7 +36,7 @@ describe 'rundeck' do
       context 'with ssl_enabled => true' do
         let(:params) do
           {
-            ssl_enabled: true
+            ssl_enabled: true,
           }
         end
 
@@ -61,7 +61,7 @@ describe 'rundeck' do
       context 'with manage_cli => false' do
         let(:params) do
           {
-            manage_cli: false
+            manage_cli: false,
           }
         end
 

@@ -22,7 +22,7 @@ describe 'rundeck::cli' do
               repo_gpgcheck: 1,
               gpgcheck: 0,
               enabled: 1,
-              gpgkey: 'https://packages.rundeck.com/pagerduty/rundeck/gpgkey'
+              gpgkey: 'https://packages.rundeck.com/pagerduty/rundeck/gpgkey',
             ).that_comes_before('Package[rundeck-cli]')
           end
         when 'Debian'
@@ -34,7 +34,7 @@ describe 'rundeck::cli' do
               key: {
                 'name' => 'rundeck.asc',
                 'content' => %r{^-----BEGIN PGP PUBLIC KEY BLOCK-----},
-              }
+              },
             ).that_comes_before('Package[rundeck-cli]')
           end
 
@@ -58,7 +58,7 @@ describe 'rundeck::cli' do
             ],
             tries: 60,
             try_sleep: 5,
-            unless: 'rd system info &> /dev/null'
+            unless: 'rd system info &> /dev/null',
           ).that_requires('Package[rundeck-cli]')
         end
       end
@@ -68,7 +68,7 @@ describe 'rundeck::cli' do
           {
             url: 'http://rundeck01.example.com',
             bypass_url: 'http://rundeck.example.com',
-            token: 'very_secure'
+            token: 'very_secure',
           }
         end
 
@@ -79,7 +79,7 @@ describe 'rundeck::cli' do
               'RD_URL=http://rundeck01.example.com',
               'RD_BYPASS_URL=http://rundeck.example.com',
               'RD_TOKEN=very_secure',
-            ]
+            ],
           )
         end
       end
@@ -137,7 +137,7 @@ describe 'rundeck::cli' do
                 'path'   => '/etc/myjob2',
                 'format' => 'xml',
               },
-            }
+            },
           )
         end
 
@@ -154,8 +154,8 @@ describe 'rundeck::cli' do
               'TestJob1' => {
                 'path'   => '/etc/testjob1',
                 'format' => 'yaml',
-              }
-            }
+              },
+            },
           )
         end
 

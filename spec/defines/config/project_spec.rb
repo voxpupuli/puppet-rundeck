@@ -29,7 +29,7 @@ describe 'rundeck::config::project', type: :define do
               'project.execution.history.cleanup.retention.minimum' => '50',
               'project.execution.history.cleanup.schedule' => '0 0 0 1/1 * ? *',
               'project.jobs.gui.groupExpandLevel' => '1',
-            }
+            },
           )
         end
 
@@ -58,7 +58,7 @@ describe 'rundeck::config::project', type: :define do
             config: {
               'project.description' => 'This is a rundeck test project',
               'project.disable.executions' => 'false',
-            }
+            },
           )
         end
 
@@ -137,8 +137,8 @@ describe 'rundeck::config::project', type: :define do
                 'ensure' => 'absent',
                 'path'   => '/etc/testjob1',
                 'format' => 'yaml',
-              }
-            }
+              },
+            },
           )
         end
 

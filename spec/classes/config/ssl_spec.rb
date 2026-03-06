@@ -12,7 +12,7 @@ describe 'rundeck' do
       context 'with ssl_enabled => true' do
         let(:params) do
           {
-            ssl_enabled: true
+            ssl_enabled: true,
           }
         end
 
@@ -20,7 +20,7 @@ describe 'rundeck' do
           'keystore' => '/etc/rundeck/ssl/keystore',
           'keystore.password' => 'adminadmin',
           'truststore' => '/etc/rundeck/ssl/truststore',
-          'truststore.password' => 'adminadmin'
+          'truststore.password' => 'adminadmin',
         }
 
         it { is_expected.to contain_file('/etc/rundeck/ssl').with('ensure' => 'directory') }
@@ -33,7 +33,7 @@ describe 'rundeck' do
             private_key: '/etc/rundeck/ssl/rundeck.key',
             trustcacerts: true,
             password: 'adminadmin',
-            target: '/etc/rundeck/ssl/keystore'
+            target: '/etc/rundeck/ssl/keystore',
           )
         end
 
@@ -41,7 +41,7 @@ describe 'rundeck' do
           is_expected.to contain_java_ks('truststore').with(
             ensure: 'present',
             password: 'adminadmin',
-            target: '/etc/rundeck/ssl/truststore'
+            target: '/etc/rundeck/ssl/truststore',
           )
         end
 
@@ -57,21 +57,21 @@ describe 'rundeck' do
         let(:params) do
           {
             ssl_enabled: true,
-            key_password: 'verysecure'
+            key_password: 'verysecure',
           }
         end
 
         it do
           is_expected.to contain_java_ks('keystore').with(
             ensure: 'present',
-            destkeypass: 'verysecure'
+            destkeypass: 'verysecure',
           )
         end
 
         it do
           is_expected.to contain_java_ks('truststore').with(
             ensure: 'present',
-            destkeypass: 'verysecure'
+            destkeypass: 'verysecure',
           )
         end
 

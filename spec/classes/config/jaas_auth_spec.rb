@@ -12,7 +12,7 @@ describe 'rundeck' do
       context 'with empty auth config test rundeck::config::jaas_auth' do
         let(:params) do
           {
-            auth_config: {}
+            auth_config: {},
           }
         end
 
@@ -42,7 +42,7 @@ describe 'rundeck' do
                   'auth_users'     => [],
                 },
               },
-            }
+            },
           }
         end
 
@@ -74,12 +74,12 @@ describe 'rundeck' do
                   'auth_users'     => [
                     {
                       'username' => 'testuser',
-                      'password' => 'password'
-                    }
-                  ]
+                      'password' => 'password',
+                    },
+                  ],
                 },
               },
-            }
+            },
           }
         end
 
@@ -110,12 +110,12 @@ describe 'rundeck' do
                     {
                       'username' => 'testuser',
                       'password' => 'password',
-                      'roles'    => %w[user deploy]
-                    }
-                  ]
+                      'roles'    => %w[user deploy],
+                    },
+                  ],
                 },
               },
-            }
+            },
           }
         end
 
@@ -147,17 +147,17 @@ describe 'rundeck' do
                     {
                       'username' => 'testuser',
                       'password' => 'password',
-                      'roles' => %w[user deploy]
+                      'roles' => %w[user deploy],
                     },
                     {
                       'username' => 'anotheruser',
                       'password' => 'anotherpassword',
-                      'roles' => ['user']
+                      'roles' => ['user'],
                     },
                   ],
                 },
               },
-            }
+            },
           }
         end
 
@@ -194,13 +194,13 @@ describe 'rundeck' do
                   'roleBaseDn' => 'ou=role based,ou=security,ou=groups,ou=test,dc=xyz,dc=com',
                   'roleNameAttribute' => 'cn',
                   'roleMemberAttribute' => 'member',
-                  'roleObjectClass' => 'group'
-                }
-              }
+                  'roleObjectClass' => 'group',
+                },
+              },
             },
             security_config: {
-              'syncLdapUser' => true
-            }
+              'syncLdapUser' => true,
+            },
           }
         end
 
@@ -239,12 +239,12 @@ describe 'rundeck' do
                     {
                       'username' => 'testuser',
                       'password' => 'password',
-                      'roles' => %w[user deploy]
+                      'roles' => %w[user deploy],
                     },
                     {
                       'username' => 'anotheruser',
                       'password' => 'anotherpassword',
-                      'roles' => ['user']
+                      'roles' => ['user'],
                     },
                   ],
                 },
@@ -266,10 +266,10 @@ describe 'rundeck' do
                   'roleNameAttribute' => 'cn',
                   'roleMemberAttribute' => 'member',
                   'roleObjectClass' => 'group',
-                  'nestedGroups' => 'true'
+                  'nestedGroups' => 'true',
                 },
-              }
-            }
+              },
+            },
           }
         end
 

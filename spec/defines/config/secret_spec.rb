@@ -28,7 +28,7 @@ describe 'rundeck::config::secret', type: :define do
             owner: 'rundeck',
             group: 'rundeck',
             mode: '0400',
-            content: 'very_secure_secret'
+            content: 'very_secure_secret',
           )
         end
 
@@ -42,7 +42,7 @@ describe 'rundeck::config::secret', type: :define do
         let(:title) { name }
         let(:params) do
           super().merge(
-            'type' => 'privateKey'
+            'type' => 'privateKey',
           )
         end
 
@@ -54,7 +54,7 @@ describe 'rundeck::config::secret', type: :define do
             owner: 'rundeck',
             group: 'rundeck',
             mode: '0400',
-            content: 'very_secure_secret'
+            content: 'very_secure_secret',
           )
         end
 
@@ -68,7 +68,7 @@ describe 'rundeck::config::secret', type: :define do
         let(:title) { name }
         let(:params) do
           super().merge(
-            'ensure' => 'absent'
+            'ensure' => 'absent',
           )
         end
 
@@ -80,7 +80,7 @@ describe 'rundeck::config::secret', type: :define do
             owner: 'rundeck',
             group: 'rundeck',
             mode: '0400',
-            content: 'very_secure_secret'
+            content: 'very_secure_secret',
           )
         end
 

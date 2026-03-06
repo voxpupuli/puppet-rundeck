@@ -88,14 +88,14 @@ module PuppetX
             'resource' => {
               'job' => %w[create delete],
               'node' => %w[read create update refresh],
-              'event' => %w[read create]
+              'event' => %w[read create],
             },
             'adhoc' => %w[read run runAs kill killAs],
             'job' => {
               'name' => %w[read update delete run runAs kill killAs create],
-              'group' => %w[read update delete run runAs kill killAs create]
+              'group' => %w[read update delete run runAs kill killAs create],
             },
-            'node' => %w[read run]
+            'node' => %w[read run],
           }
 
           case type
@@ -128,13 +128,13 @@ module PuppetX
               'project' => ['create'],
               'system' => ['read'],
               'user' => ['admin'],
-              'job' => ['admin']
+              'job' => ['admin'],
             },
             'project' => { 'name' => %w[read configure delete import export delete_execution admin] },
             'storage' => {
               'name' => %w[create update read delete],
-              'path' => %w[create update read delete]
-            }
+              'path' => %w[create update read delete],
+            },
           }
 
           case type

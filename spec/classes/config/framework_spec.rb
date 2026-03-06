@@ -19,7 +19,7 @@ describe 'rundeck' do
           'framework.libext.dir' => '/var/lib/rundeck/libext',
           'framework.ssh.keypath' => '/var/lib/rundeck/.ssh/id_rsa',
           'framework.ssh.user' => 'rundeck',
-          'framework.ssh.timeout' => '0'
+          'framework.ssh.timeout' => '0',
         }
 
         it { is_expected.to contain_file('/etc/rundeck/framework.properties') }
@@ -36,8 +36,8 @@ describe 'rundeck' do
         let(:params) do
           {
             framework_config: {
-              'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700'
-            }
+              'framework.plugin.StreamingLogWriter.LogstashPlugin.port' => '9700',
+            },
           }
         end
 
@@ -53,8 +53,8 @@ describe 'rundeck' do
           let(:params) do
             {
               framework_config: {
-                'framework.server.url' => 'http://rundeck.example.com:4440'
-              }
+                'framework.server.url' => 'http://rundeck.example.com:4440',
+              },
             }
           end
 
@@ -68,7 +68,7 @@ describe 'rundeck' do
           let(:params) do
             {
               ssl_enabled: true,
-              ssl_port: 443
+              ssl_port: 443,
             }
           end
 
@@ -85,8 +85,8 @@ describe 'rundeck' do
               ssl_enabled: true,
               ssl_port: 443,
               framework_config: {
-                'framework.server.name' => 'rundeck.example.com'
-              }
+                'framework.server.name' => 'rundeck.example.com',
+              },
             }
           end
 
