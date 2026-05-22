@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v11.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v11.0.0) (2026-05-22)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v10.0.0...v11.0.0)
+
+**Breaking changes:**
+
+- drop eol operating systems RedHat 7, CentOS 8, Debian 10, Ubuntu 18.04/20.04 [\#579](https://github.com/voxpupuli/puppet-rundeck/pull/579) ([Joris29](https://github.com/Joris29))
+
+**Closed issues:**
+
+- This function is deprecated, please use stdlib::to\_json instead [\#584](https://github.com/voxpupuli/puppet-rundeck/issues/584)
+
+**Merged pull requests:**
+
+- Use stdlib::to\_json\(\) instead of to\_json\(\) [\#585](https://github.com/voxpupuli/puppet-rundeck/pull/585) ([tuxmea](https://github.com/tuxmea))
+
 ## [v10.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v10.0.0) (2025-10-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v9.2.0...v10.0.0)
@@ -25,7 +41,6 @@ These should not affect the functionality of the module.
 
 - Bug: rd\_scm\_diff.sh uses fixed filename scm-import.json [\#563](https://github.com/voxpupuli/puppet-rundeck/issues/563)
 - Missing Puppet resource orderings / dependencies [\#561](https://github.com/voxpupuli/puppet-rundeck/issues/561)
-- New release [\#549](https://github.com/voxpupuli/puppet-rundeck/issues/549)
 
 ## [v9.2.0](https://github.com/voxpupuli/puppet-rundeck/tree/v9.2.0) (2024-12-03)
 
