@@ -1,0 +1,36 @@
+# Thin caller for the org-wide Claude PR review (ApicaSystem/shared-workflows,
+# pinned @v1) — model, prompt, auth, guards, and tuning are all central; see
+# that repo's README. Don't rename the workflow name or the `claude` job id,
+# and never add the `synchronize` trigger (cost) — re-review via "@claude".
+
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened]
+    paths-ignore:
+      - '**/*.lock'
+      - 'Puppetfile.lock'
+      - '**/vendor/**'
+      - 'spec/fixtures/modules/**'
+      - '.modules/**'
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude:
+    uses: ApicaSystem/shared-workflows/.github/workflows/claude-review.reusable.yml@v1
+    # Required — a called workflow cannot elevate beyond the caller's grant.
+    # id-token:write = OIDC posting; checks/actions read = future CI-aware use.
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      checks: read
+      actions: read
+    secrets: inherit
