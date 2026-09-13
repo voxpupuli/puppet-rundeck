@@ -5,9 +5,9 @@
 # Purpose: Retrieve rundeck version and commitid if installed
 #
 
-if Facter::Util::Resolution.which('rd-acl')
+if Facter::Core::Execution.which('rd-acl')
 
-  rd_acl_help = Facter::Util::Resolution.exec('rd-acl -h')
+  rd_acl_help = Facter::Core::Execution.execute('rd-acl -h')
   pattern = %r{^\[RUNDECK version (?<rd_ver>[\w.]+)-?(?<rd_commitid>\w*) \((\w+)\)\]} # rubocop:disable Lint/MixedRegexpCaptureTypes
 
   pattern.match(rd_acl_help) do |m|
