@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v11.1.0](https://github.com/voxpupuli/puppet-rundeck/tree/v11.1.0) (2026-09-14)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v11.0.0...v11.1.0)
+
+**Implemented enhancements:**
+
+- replace deprecated calls with Facter::Core::Execution [\#591](https://github.com/voxpupuli/puppet-rundeck/pull/591) ([corporate-gadfly](https://github.com/corporate-gadfly))
+
 ## [v11.0.0](https://github.com/voxpupuli/puppet-rundeck/tree/v11.0.0) (2026-05-22)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rundeck/compare/v10.0.0...v11.0.0)
