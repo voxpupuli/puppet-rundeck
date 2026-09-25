@@ -112,7 +112,7 @@ define rundeck::config::project (
 
   $_project_diff = $update_method ? {
     'set'   => "rd_project_diff.sh '${name}' ${update_method} '${_final_cfg.stdlib::to_json}'",
-    default => "rd_project_diff.sh '${name}' ${update_method} '${_final_cfg.stdlib::to_json}' '${_final_cfg.keys}'",
+    default => "rd_project_diff.sh '${name}' ${update_method} '${_final_cfg.to_json}' '${_final_cfg.keys}'",
   }
 
   if $ensure == 'absent' {
