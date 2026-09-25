@@ -116,9 +116,7 @@ The following parameters are available in the `rundeck` class:
 * [`service_script`](#-rundeck--service_script)
 * [`manage_cli`](#-rundeck--manage_cli)
 * [`cli_version`](#-rundeck--cli_version)
-* [`cli_user`](#-rundeck--cli_user)
-* [`cli_password`](#-rundeck--cli_password)
-* [`cli_token`](#-rundeck--cli_token)
+* [`cli_env_config`](#-rundeck--cli_env_config)
 * [`cli_projects`](#-rundeck--cli_projects)
 
 ##### <a name="-rundeck--override_dir"></a>`override_dir`
@@ -705,29 +703,22 @@ Ensure the state of the rundeck cli package, either present, absent or a specifi
 
 Default value: `'installed'`
 
-##### <a name="-rundeck--cli_user"></a>`cli_user`
+##### <a name="-rundeck--cli_env_config"></a>`cli_env_config`
 
-Data type: `String[1]`
+Data type: `Hash[String[1], String[1]]`
 
-Cli user to authenticate.
+A hash of environment attributes for configuring the [rundeck cli](https://docs.rundeck.com/docs/rd-cli/configuration.html).
 
-Default value: `'admin'`
+Default value:
 
-##### <a name="-rundeck--cli_password"></a>`cli_password`
-
-Data type: `String[1]`
-
-Cli password to authenticate.
-
-Default value: `'admin'`
-
-##### <a name="-rundeck--cli_token"></a>`cli_token`
-
-Data type: `Optional[String[8]]`
-
-Cli token to authenticate.
-
-Default value: `undef`
+```puppet
+{
+    'RD_URL' => $grails_server_url,
+    'RD_BYPASS_URL' => $grails_server_url,
+    'RD_USER' => 'admin',
+    'RD_PASSWORD' => 'admin',
+  }
+```
 
 ##### <a name="-rundeck--cli_projects"></a>`cli_projects`
 
@@ -748,9 +739,13 @@ Class to manage installation and configuration of Rundeck CLI.
 ```puppet
 class { 'rundeck::cli':
   manage_repo => false,
-  url         => 'https://rundeck01.example.com',
-  bypass_url  => 'https://rundeck.example.com',
-  token       => 'very_secure',
+  env_config  => {
+    'RD_URL'              => 'https://rundeck01.example.com',
+    'RD_BYPASS_URL'       => 'https://rundeck.example.com',
+    'RD_TOKEN'            => 'very_secure',
+    'RD_DEBUG'            => '2',
+    'RD_ALT_SSL_HOSTNAME' => 'rundeck.example.com',
+  },
   projects    => {
     'MyProject'   => {
       'update_method' => 'set',
@@ -777,11 +772,7 @@ The following parameters are available in the `rundeck::cli` class:
 * [`manage_repo`](#-rundeck--cli--manage_repo)
 * [`notify_conn_check`](#-rundeck--cli--notify_conn_check)
 * [`version`](#-rundeck--cli--version)
-* [`url`](#-rundeck--cli--url)
-* [`bypass_url`](#-rundeck--cli--bypass_url)
-* [`user`](#-rundeck--cli--user)
-* [`password`](#-rundeck--cli--password)
-* [`token`](#-rundeck--cli--token)
+* [`env_config`](#-rundeck--cli--env_config)
 * [`projects`](#-rundeck--cli--projects)
 
 ##### <a name="-rundeck--cli--repo_config"></a>`repo_config`
@@ -815,45 +806,22 @@ Ensure the state of the rundeck cli package, either present, absent or a specifi
 
 Default value: `'installed'`
 
-##### <a name="-rundeck--cli--url"></a>`url`
+##### <a name="-rundeck--cli--env_config"></a>`env_config`
 
-Data type: `Stdlib::HTTPUrl`
+Data type: `Hash[String[1], String[1]]`
 
-Rundeck instance/api url.
+A hash of environment attributes for configuring the [rundeck cli](https://docs.rundeck.com/docs/rd-cli/configuration.html).
 
-Default value: `'http://localhost:4440'`
+Default value:
 
-##### <a name="-rundeck--cli--bypass_url"></a>`bypass_url`
-
-Data type: `Stdlib::HTTPUrl`
-
-Rundeck external url to bypass. This will rewrite any redirect to $bypass_url as $url
-
-Default value: `'http://localhost:4440'`
-
-##### <a name="-rundeck--cli--user"></a>`user`
-
-Data type: `String[1]`
-
-Cli user to authenticate.
-
-Default value: `'admin'`
-
-##### <a name="-rundeck--cli--password"></a>`password`
-
-Data type: `String[1]`
-
-Cli password to authenticate.
-
-Default value: `'admin'`
-
-##### <a name="-rundeck--cli--token"></a>`token`
-
-Data type: `Optional[String[8]]`
-
-Cli token to authenticate.
-
-Default value: `undef`
+```puppet
+{
+    'RD_URL' => 'http://localhost:4440',
+    'RD_BYPASS_URL' => 'http://localhost:4440',
+    'RD_USER' => 'admin',
+    'RD_PASSWORD' => 'admin',
+  }
+```
 
 ##### <a name="-rundeck--cli--projects"></a>`projects`
 

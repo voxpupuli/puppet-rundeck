@@ -3,9 +3,13 @@
 # @example Use cli with token and project config.
 #   class { 'rundeck::cli':
 #     manage_repo => false,
-#     url         => 'https://rundeck01.example.com',
-#     bypass_url  => 'https://rundeck.example.com',
-#     token       => 'very_secure',
+#     env_config  => {
+#       'RD_URL'              => 'https://rundeck01.example.com',
+#       'RD_BYPASS_URL'       => 'https://rundeck.example.com',
+#       'RD_TOKEN'            => 'very_secure',
+#       'RD_DEBUG'            => '2',
+#       'RD_ALT_SSL_HOSTNAME' => 'rundeck.example.com',
+#     },
 #     projects    => {
 #       'MyProject'   => {
 #         'update_method' => 'set',
@@ -32,16 +36,8 @@
 #   Wheter to notify the cli connection check if rundeck service changes.
 # @param version
 #   Ensure the state of the rundeck cli package, either present, absent or a specific version.
-# @param url
-#   Rundeck instance/api url.
-# @param bypass_url
-#   Rundeck external url to bypass. This will rewrite any redirect to $bypass_url as $url
-# @param user
-#   Cli user to authenticate.
-# @param password
-#   Cli password to authenticate.
-# @param token
-#   Cli token to authenticate.
+# @param env_config
+#   A hash of environment attributes for configuring the [rundeck cli](https://docs.rundeck.com/docs/rd-cli/configuration.html).
 # @param projects
 #   Cli projects config. See example for structure and rundeck::config::project for available params.
 #
@@ -50,11 +46,12 @@ class rundeck::cli (
   Boolean $manage_repo = true,
   Boolean $notify_conn_check = false,
   String[1] $version = 'installed',
-  Stdlib::HTTPUrl $url = 'http://localhost:4440',
-  Stdlib::HTTPUrl $bypass_url = 'http://localhost:4440',
-  String[1] $user = 'admin',
-  String[1] $password = 'admin',
-  Optional[String[8]] $token = undef,
+  Hash[String[1], String[1]] $env_config = {
+    'RD_URL' => 'http://localhost:4440',
+    'RD_BYPASS_URL' => 'http://localhost:4440',
+    'RD_USER' => 'admin',
+    'RD_PASSWORD' => 'admin',
+  },
   Hash[String, Rundeck::Project] $projects = {},
 ) {
   stdlib::ensure_packages(['jq'])
@@ -111,17 +108,7 @@ class rundeck::cli (
     ;
   }
 
-  $_default_env_vars = [
-    'RD_FORMAT=json',
-    "RD_URL=${url}",
-    "RD_BYPASS_URL=${bypass_url}",
-  ]
-
-  if $token {
-    $environment = $_default_env_vars + ["RD_TOKEN=${token}"]
-  } else {
-    $environment = $_default_env_vars + ["RD_USER=${user}", "RD_PASSWORD=${password}"]
-  }
+  $environment = ($env_config + { 'RD_FORMAT' => 'json' }).map |$k, $v| { "${k}=${v}" }.flatten
 
   exec { 'Check rundeck cli connection':
     command     => 'rd system info',

@@ -50,11 +50,11 @@ describe 'rundeck::cli' do
             command: 'rd system info',
             path: ['/bin', '/usr/bin', '/usr/local/bin'],
             environment: [
-              'RD_FORMAT=json',
               'RD_URL=http://localhost:4440',
               'RD_BYPASS_URL=http://localhost:4440',
               'RD_USER=admin',
               'RD_PASSWORD=admin',
+              'RD_FORMAT=json',
             ],
             tries: 60,
             try_sleep: 5,
@@ -63,22 +63,25 @@ describe 'rundeck::cli' do
         end
       end
 
-      context 'with different urls and token auth' do
+      context 'with different env_config' do
         let(:params) do
           {
-            url: 'http://rundeck01.example.com',
-            bypass_url: 'http://rundeck.example.com',
-            token: 'very_secure',
+            env_config: {
+              'RD_URL'        => 'http://rundeck01.example.com',
+              'RD_BYPASS_URL' => 'http://rundeck.example.com',
+              'RD_TOKEN'      => 'very_secure',
+              'RD_FORMAT'     => 'yaml',
+            },
           }
         end
 
         it do
           is_expected.to contain_exec('Check rundeck cli connection').with(
             environment: [
-              'RD_FORMAT=json',
               'RD_URL=http://rundeck01.example.com',
               'RD_BYPASS_URL=http://rundeck.example.com',
               'RD_TOKEN=very_secure',
+              'RD_FORMAT=json',
             ],
           )
         end
