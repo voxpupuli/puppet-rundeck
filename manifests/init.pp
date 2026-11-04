@@ -132,12 +132,8 @@
 #   Whether to manage rundeck cli config and resource with the rundeck class or not.
 # @param cli_version
 #   Ensure the state of the rundeck cli package, either present, absent or a specific version.
-# @param cli_user
-#   Cli user to authenticate.
-# @param cli_password
-#   Cli password to authenticate.
-# @param cli_token
-#   Cli token to authenticate.
+# @param cli_env_config
+#   A hash of environment attributes for configuring the [rundeck cli](https://docs.rundeck.com/docs/rd-cli/configuration.html).
 # @param cli_projects
 #   Cli projects config.
 #
@@ -266,9 +262,12 @@ class rundeck (
   Optional[String[1]] $service_script = undef,
   Boolean $manage_cli = true,
   String[1] $cli_version = 'installed',
-  String[1] $cli_user = 'admin',
-  String[1] $cli_password = 'admin',
-  Optional[String[8]] $cli_token = undef,
+  Hash[String[1], String[1]] $cli_env_config = {
+    'RD_URL' => $grails_server_url,
+    'RD_BYPASS_URL' => $grails_server_url,
+    'RD_USER' => 'admin',
+    'RD_PASSWORD' => 'admin',
+  },
   Hash[String, Rundeck::Project] $cli_projects = {},
 ) {
   validate_rd_policy($admin_policies)
@@ -293,12 +292,8 @@ class rundeck (
       manage_repo       => false,
       notify_conn_check => true,
       version           => $cli_version,
-      url               => $rundeck::config::framework_config['framework.server.url'],
-      bypass_url        => $grails_server_url,
-      user              => $cli_user,
-      password          => $cli_password,
-      token             => $cli_token,
       projects          => $cli_projects,
+      env_config        => $cli_env_config,
     }
 
     Class['rundeck::service']
